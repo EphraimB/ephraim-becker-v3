@@ -1,2 +1,3 @@
-# ephraim-becker-v3
-Third version of my website with the Mars habitat environment
+# Ares City OS
+
+Third version of my website, designed as an immersive spatial operating system simulation of a highly advanced, utopian future Mars city (Ares City) featuring your personal Citizen Suite, portfolio projects, and interests.

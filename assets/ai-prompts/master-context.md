@@ -1,34 +1,33 @@
-# 🪐 MASTER CONTEXT — Mars Habitat OS
+# 🪐 MASTER CONTEXT — Ares City OS
 
 ## WHAT THIS PROJECT IS
-A fictional operating system simulation of a Mars colony habitat.
+A fictional, immersive spatial operating system simulation of a highly advanced, utopian Martian city (Ares City).
 
-The user navigates through physical rooms inside a Mars base via a web interface.
+The user navigates through pristine futuristic city sectors via a web-based spatial interface.
 
 ---
 
 ## STRUCTURE
-- Each room is a full-screen environment
-- UI is layered on top of environment
-- Navigation is spatial (map-based)
+- Each sector is a high-fidelity, full-screen environment.
+- UI is layered on top of the environment as a glassmorphic floating HUD.
+- Navigation is spatial, powered by an interactive City Grid Matrix node-map.
 
 ---
 
-## CORE ROOMS
-- Command Center (system overview)
-- Life Support (oxygen, pressure, stability)
-- Communications (logs, external signals)
-- Habitat Quarters (living/ambient space)
+## CORE SECTORS
+- **Metropolis Core**: Central transit, city grid matrix, power distribution overlays.
+- **Atmospheric & Biosphere Dome**: Megastructure climate controls, dome shielding, and integrated cyber-botanical life support.
+- **Quantum Net Comms**: Deep space communications, interstellar logs, quantum telemetry streams.
+- **Citizen Suite**: Your private penthouse and personalized portfolio hub, showcasing your background, interests, skills, and project archives.
 
 ---
 
 ## DESIGN GOAL
-Create a believable, functional Mars base OS interface that feels immersive and operational, not decorative.
+Create a premium, state-of-the-art futuristic Mars city interface that feels pristine, functional, and highly immersive—serving as a spectacular, custom showcase for your engineering portfolio.
 
 ---
 
 ## VISUAL STYLE
-- NASA-inspired realism
-- minimal sci-fi UI overlays
-- functional dashboards
-- grounded industrial design
+- **Utopian & Pristine Futurism**: Clean, elegant structures, bright aesthetics, and integrated plant life (avoiding any grungy, low-life "cyberpunk" elements).
+- **Glassmorphic HUD Layouts**: Frosted translucent glass panels, subtle border glows, and glowing vector data.
+- **Cyber-Luminescent Diagnostics**: High-fidelity charts, dynamic parameters, and sleek holographic widgets.

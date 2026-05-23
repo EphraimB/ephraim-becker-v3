@@ -1,0 +1,636 @@
+/* 🪐 Ares City OS — Next.js Global Stylesheet */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Fonts */
+  --font-tech: 'Orbitron', sans-serif;
+  --font-sans: 'Outfit', sans-serif;
+
+  /* Global Colors */
+  --bg-dark: #04060c;
+  --text-primary: #f2f6fc;
+  --text-secondary: #8a9bb5;
+  
+  /* Theme Accents (Neon Cyber-luminescence) */
+  --neon-cyan: #00f0ff;
+  --neon-emerald: #00ff88;
+  --neon-amber: #ffb300;
+  --neon-violet: #c259ff;
+  
+  /* Default Active Accent */
+  --color-accent: var(--neon-violet);
+  --color-accent-rgb: 194, 89, 255;
+  
+  /* Glassmorphism Variables */
+  --glass-bg: rgba(6, 9, 20, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-glow: rgba(194, 89, 255, 0.12);
+  --glass-blur: blur(16px);
+  
+  /* Transitions */
+  --transition-fast: 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-normal: 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
+  --transition-slow: 0.85s cubic-bezier(0.25, 0.8, 0.25, 1);
+  
+  --panel-radius: 14px;
+}
+
+/* Page Accent Theme Overrides (Dynamic per tab if needed) */
+[data-theme="metropolis"] {
+  --color-accent: var(--neon-cyan);
+  --color-accent-rgb: 0, 240, 255;
+  --glass-glow: rgba(0, 240, 255, 0.12);
+}
+
+[data-theme="biosphere"] {
+  --color-accent: var(--neon-emerald);
+  --color-accent-rgb: 0, 255, 136;
+  --glass-glow: rgba(0, 255, 136, 0.12);
+}
+
+[data-theme="quantum"] {
+  --color-accent: var(--neon-amber);
+  --color-accent-rgb: 255, 179, 0;
+  --glass-glow: rgba(255, 179, 0, 0.12);
+}
+
+[data-theme="suite"] {
+  --color-accent: var(--neon-violet);
+  --color-accent-rgb: 194, 89, 255;
+  --glass-glow: rgba(194, 89, 255, 0.12);
+}
+
+/* --- Core Reset & Immersive Viewport Layout --- */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Full-Screen Immersive Penthouse Background */
+.background-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.75);
+  animation: bg-fade-in 1.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes bg-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(1.02);
+    filter: blur(5px) brightness(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0) brightness(0.75);
+  }
+}
+
+.city-matrix-underlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at 50% 50%, rgba(var(--color-accent-rgb), 0.03) 0%, transparent 70%),
+              linear-gradient(rgba(255,255,255,0.002) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(255,255,255,0.002) 1px, transparent 1px);
+  background-size: 100% 100%, 45px 45px, 45px 45px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hud-scanline {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.08) 50%
+  );
+  background-size: 100% 4px;
+  z-index: 4;
+  pointer-events: none;
+  opacity: 0.25;
+}
+
+/* Global OS Workspace Grid */
+.os-workspace {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  min-height: 0;
+}
+
+/* Top status HUD bar */
+.system-hud-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 24px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--panel-radius);
+  backdrop-filter: var(--glass-blur);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.06);
+  margin-bottom: 20px;
+  font-family: var(--font-tech);
+  font-size: 0.85rem;
+  letter-spacing: 1px;
+}
+
+/* Transparent content deck shell */
+.citizen-card-shell {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 0;
+  width: 100%;
+  position: relative;
+  z-index: 2;
+}
+
+/* Floating Bubbly HUD panels (Frosted-glass bubbles) */
+.bubbly-panel {
+  background: rgba(6, 9, 20, 0.68);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.06),
+              0 0 25px var(--glass-glow);
+  padding: 24px;
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.bubbly-panel:hover {
+  border-color: rgba(var(--color-accent-rgb), 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.08),
+              0 0 35px rgba(var(--color-accent-rgb), 0.12);
+  transform: translateY(-2px);
+}
+
+/* Floating top navigation bar bubble */
+.floating-nav-bubble {
+  background: rgba(6, 9, 20, 0.72);
+  border: 1px solid var(--glass-border);
+  border-radius: 30px;
+  backdrop-filter: var(--glass-blur);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.06);
+  padding: 8px 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 20px auto;
+  width: fit-content;
+  z-index: 10;
+}
+
+/* Navigation map at top of card */
+.map-nav-header {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding: 15px 30px;
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  z-index: 4;
+}
+
+/* Sliding animation frame for active sector tab content */
+.sector-viewport {
+  flex: 1;
+  position: relative;
+  min-height: 0;
+  overflow: hidden;
+  padding: 30px;
+}
+
+.walking-content-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  transition: transform var(--transition-normal), opacity var(--transition-normal);
+}
+
+/* Horizontal slide states (Walking Transition) */
+.slide-active {
+  transform: translateX(0);
+  opacity: 1;
+}
+
+.slide-left {
+  transform: translateX(-30px);
+  opacity: 0;
+}
+
+.slide-right {
+  transform: translateX(30px);
+  opacity: 0;
+}
+
+/* Custom Scrollbar for Card columns */
+.custom-scroll {
+  overflow-y: auto;
+  padding-right: 12px;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background: rgba(var(--color-accent-rgb), 0.2);
+  border-radius: 4px;
+  transition: background var(--transition-fast);
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--color-accent-rgb), 0.5);
+}
+
+/* Modern Glowing Badge Chip (for Interests/Tags) */
+.hud-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  color: var(--text-primary);
+  transition: all var(--transition-fast);
+}
+
+.hud-badge:hover {
+  background: rgba(var(--color-accent-rgb), 0.08);
+  border-color: rgba(var(--color-accent-rgb), 0.4);
+  box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.2);
+  transform: translateY(-1px);
+}
+
+/* Glowing links chips for Social Ports */
+.social-link-port {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(var(--color-accent-rgb), 0.05);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.25);
+  border-radius: 8px;
+  padding: 10px 18px;
+  color: var(--text-primary);
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: all var(--transition-fast);
+}
+
+.social-link-port:hover {
+  background: rgba(var(--color-accent-rgb), 0.14);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.4);
+  transform: translateY(-2px);
+}
+
+.social-link-port:active {
+  transform: translateY(0);
+}
+
+/* Standard Button */
+.hud-btn {
+  background: rgba(var(--color-accent-rgb), 0.06);
+  border: 1px solid rgba(var(--color-accent-rgb), 0.35);
+  color: var(--text-primary);
+  font-family: var(--font-tech);
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+}
+
+.hud-btn:hover {
+  background: rgba(var(--color-accent-rgb), 0.16);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.35);
+}
+
+/* SVG Telemetric signal line */
+.wave-line {
+  stroke: var(--neon-amber);
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  animation: wave-draw 8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  filter: drop-shadow(0 0 4px rgba(255, 179, 0, 0.4));
+}
+
+@keyframes wave-draw {
+  0% { stroke-dashoffset: 800; }
+  50% { stroke-dashoffset: 0; }
+  100% { stroke-dashoffset: -800; }
+}
+
+/* Interstellar comms input styles */
+.net-form-group {
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.net-label {
+  font-family: var(--font-tech);
+  font-size: 0.65rem;
+  color: var(--color-accent);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.net-input, .net-textarea {
+  background: rgba(4, 6, 12, 0.8);
+  border: 1px solid var(--glass-border);
+  border-radius: 5px;
+  padding: 9px 12px;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  outline: none;
+  transition: all var(--transition-fast);
+}
+
+.net-input:focus, .net-textarea:focus {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 8px rgba(var(--color-accent-rgb), 0.25);
+  background: rgba(4, 6, 12, 0.9);
+}
+
+.net-textarea {
+  resize: none;
+  height: 90px;
+}
+
+.transmission-log-entry {
+  margin-bottom: 10px;
+  border-left: 2px solid var(--color-accent);
+  padding-left: 8px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  animation: log-slide-in 0.3s ease-out forwards;
+}
+
+@keyframes log-slide-in {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Horizontal slide walking motion flash overlay */
+.walking-motion-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.04), transparent);
+  opacity: 0;
+  transform: translateX(-100%);
+}
+
+.walking-transit-active .walking-motion-overlay {
+  animation: corridor-sweep 0.45s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
+}
+
+@keyframes corridor-sweep {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Responsive Overrides */
+@media (max-width: 900px) {
+  body {
+    overflow-y: auto;
+    height: auto;
+  }
+  .os-workspace {
+    height: auto;
+    padding: 10px;
+  }
+  .citizen-card-shell {
+    height: auto;
+    padding-bottom: 20px;
+  }
+  .citizen-card {
+    max-height: none;
+    height: auto;
+  }
+  .walking-content-container {
+    height: auto;
+  }
+  .system-hud-bar {
+    flex-direction: column;
+    gap: 8px;
+    text-align: center;
+  }
+  .map-nav-header {
+    padding: 10px;
+  }
+}
+
+/* Scrollable left column inside card */
+.left-card-column {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow-y: auto;
+  min-height: 0;
+  padding-right: 4px;
+}
+
+.left-card-column::-webkit-scrollbar {
+  width: 3px;
+}
+
+.left-card-column::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.left-card-column::-webkit-scrollbar-thumb {
+  background: rgba(var(--color-accent-rgb), 0.15);
+  border-radius: 2px;
+}
+
+/* Immersive roomscale deck layout (No frames, bubbles float dynamically) */
+.workspace-deck {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 30px;
+  flex: 1;
+  width: 100%;
+  max-width: 1250px;
+  min-height: 0;
+  padding-bottom: 10px;
+  margin: 0 auto;
+  position: relative;
+}
+
+/* Roomscale standing citizen figure - natural cutout standing in Mars background */
+.roomscale-natural-body {
+  position: absolute;
+  bottom: -55px; /* Shifted down to hide leg cut-offs */
+  left: 28%;
+  height: 80%;
+  max-height: 600px;
+  width: auto;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.roomscale-natural-img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 15px 30px rgba(0,0,0,0.6));
+  animation: natural-breath 4s infinite alternate ease-in-out;
+}
+
+@keyframes natural-breath {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.006) translateY(-2px);
+  }
+}
+
+/* Responsive natural layout rules */
+@media (max-width: 1200px) {
+  .roomscale-natural-body {
+    left: 22%;
+    height: 70%;
+  }
+}
+
+@media (max-width: 900px) {
+  .roomscale-natural-body {
+    display: none !important;
+  }
+  .workspace-deck {
+    flex-direction: column;
+    gap: 20px;
+  }
+}
+
+/* Page-specific positioning: Citizen Suite Homepage (far-left placement) */
+.roomscale-natural-body.page-suite {
+  left: 2%;
+  height: 85%;
+  max-height: 650px;
+  bottom: -60px; /* Shifted down to hide leg cut-offs */
+}
+
+@media (max-width: 1200px) {
+  .roomscale-natural-body.page-suite {
+    left: 1%;
+    height: 75%;
+    bottom: -45px; /* Shifted down to hide leg cut-offs */
+  }
+}
+
+/* Homepage 3-column grid layout (spacer, left column, right column) */
+.homepage-grid {
+  display: grid;
+  grid-template-columns: 320px 290px 1fr;
+  gap: 25px;
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 1200px) {
+  .homepage-grid {
+    grid-template-columns: 260px 290px 1fr;
+    gap: 15px;
+  }
+}
+
+@media (max-width: 900px) {
+  .homepage-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 20px !important;
+  }
+  .roomscale-profile-spacer {
+    display: none !important;
+  }
+}
+

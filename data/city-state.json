@@ -1,0 +1,89 @@
+{
+  "citizen": {
+    "name": "Ephraim Becker",
+    "earthBirthdate": "July 19, 1996",
+    "marsBirthYear": "Martian Year 23 (MY23)",
+    "currentMarsYear": "Martian Year 38 (MY38)",
+    "status": "ACTIVE / SENIOR SYS ARCHITECT",
+    "clearance": "CLASS-A CITIZEN",
+    "homeSector": "Citizen Suite"
+  },
+  "sectors": [
+    {
+      "id": "metropolis",
+      "name": "Metropolis Core",
+      "path": "index.html",
+      "coordinates": { "x": "50%", "y": "50%" },
+      "icon": "⚡",
+      "status": "NOMINAL",
+      "description": "City-wide system overview, power grids, central transit matrices."
+    },
+    {
+      "id": "biosphere",
+      "name": "Biosphere Dome",
+      "path": "pages/atmosphere-dome.html",
+      "coordinates": { "x": "15%", "y": "30%" },
+      "icon": "🌿",
+      "status": "NOMINAL",
+      "description": "Climate systems, geodesic dome shielding, water recycling."
+    },
+    {
+      "id": "quantum",
+      "name": "Quantum Net",
+      "path": "pages/quantum-net.html",
+      "coordinates": { "x": "85%", "y": "30%" },
+      "icon": "🛰️",
+      "status": "NOMINAL",
+      "description": "Interstellar transmission grids, quantum telemetry waves."
+    },
+    {
+      "id": "suite",
+      "name": "Citizen Suite",
+      "path": "pages/citizen-suite.html",
+      "coordinates": { "x": "50%", "y": "15%" },
+      "icon": "🏨",
+      "status": "NOMINAL",
+      "description": "Ephraim Becker's private penthouse & holographic portfolio hub."
+    }
+  ],
+  "portfolio": [
+    {
+      "title": "Ares City Grid Matrix",
+      "category": "Systems Engineering",
+      "date": "MY37 - Present",
+      "description": "Designed and deployed a highly resilient, distributed transit routing algorithm coordinating autonomous hyperloops and bullet pods across all 4 key domes. Achieved a 99.98% transit efficiency index.",
+      "techStack": ["Vanilla ES6+", "HTML5 Canvas", "Vector Grid Matrices"],
+      "status": "OPERATIONAL"
+    },
+    {
+      "title": "Quantum Net Link (QNL-1)",
+      "category": "Interstellar Comms",
+      "date": "MY36",
+      "description": "Authored the primary sub-atomic noise-filtering library for deep space communications. Enables clear signal transmission through high-density solar storm radiation fields using custom spectral algorithms.",
+      "techStack": ["WebSockets Sync", "JS Audio API", "Signal Processors"],
+      "status": "ONLINE"
+    },
+    {
+      "title": "Eco-Dome Microclimate Automator",
+      "category": "Biotech Controls",
+      "date": "MY35",
+      "description": "Engineered automated feedback loops for cascading hydroponic columns. Coordinates humidity, light frequencies, and nutrient drips based on real-time botanical oxygen-exhaust telemetry.",
+      "techStack": ["SVG Telemetry Charts", "JSON State Sync", "CSS Variables"],
+      "status": "NOMINAL"
+    }
+  ],
+  "interests": [
+    {
+      "title": "Utopian Martian Architecture",
+      "desc": "Researching carbon-composite geodesic dome construction, solar-shield glass, and spatial layout optimizations for deep-space human settlements."
+    },
+    {
+      "title": "High-Tech Green Ecosystems",
+      "desc": "Merging technological monitoring grids with indoor botanical ecosystems to build self-sustaining solarpunk quarters."
+    },
+    {
+      "title": "Holographic Glassmorphic HUDs",
+      "desc": "Crafting premium user interfaces that prioritize depth, tactile interaction, and high clarity for operational environments."
+    }
+  ]
+}

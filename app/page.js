@@ -322,35 +322,18 @@ export default function CitizenSuite() {
           <div className="comic-speech-bubble" style={{ display: 'flex', flexDirection: 'column', minHeight: '305px', justifyContent: 'space-between' }}>
             
             {/* Stepper Header (Telemetry indicators) */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px', borderBottom: '1px solid rgba(0,0,0,0.06)', paddingBottom: '6px' }}>
-              <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.58rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '0.5px' }}>
+            <div className="bubble-telemetry-header">
+              <span className="bubble-telemetry-coord">
                 TRANSMITTING COORD: PENTHOUSE_A-02
               </span>
-              <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.55rem', color: 'rgba(0,0,0,0.4)' }}>
+              <span className="bubble-telemetry-status">
                 TELEMETRY ACTIVE
               </span>
             </div>
 
             {/* Non-Clickable HUD Active Topic Indicator */}
-            <div style={{
-              display: 'flex',
-              background: 'rgba(0, 0, 0, 0.03)',
-              borderRadius: '8px',
-              padding: '6px 12px',
-              marginBottom: '14px',
-              gap: '4px',
-              alignItems: 'center',
-              border: '1px solid rgba(0, 0, 0, 0.05)',
-              justifyContent: 'center'
-            }}>
-              <span style={{
-                fontSize: '0.66rem',
-                fontFamily: 'var(--font-tech)',
-                fontWeight: 800,
-                color: 'var(--color-accent)',
-                letterSpacing: '0.5px',
-                textShadow: '0 0 4px rgba(var(--color-accent-rgb), 0.15)'
-              }}>
+            <div className="bubble-topic-indicator">
+              <span className="bubble-topic-text">
                 [ 💬 ACTIVE TOPIC: {activeTitle.replace(/^[^\w\s]+/g, '').trim().toUpperCase()} ]
               </span>
             </div>

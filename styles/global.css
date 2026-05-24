@@ -577,11 +577,29 @@ body {
 
 @media (max-width: 900px) {
   .roomscale-natural-body {
-    display: none !important;
+    display: flex !important;
+    position: relative !important;
+    left: auto !important;
+    bottom: 0 !important;
+    height: 210px !important;
+    max-height: 210px !important;
+    width: 100% !important;
+    margin: 0 auto -45px auto !important;
+    justify-content: center !important;
+    align-items: flex-end !important;
+    z-index: 1 !important;
+  }
+  .roomscale-natural-img {
+    height: 100% !important;
+    width: auto !important;
   }
   .workspace-deck {
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
+  }
+  .comic-speech-bubble {
+    position: relative !important;
+    z-index: 2 !important;
   }
 }
 
@@ -689,6 +707,81 @@ body {
   .comic-speech-bubble::before, .comic-speech-bubble::after,
   .comic-callout-bubble::before, .comic-callout-bubble::after {
     display: none !important;
+  }
+}
+
+/* ================= TELEMETRY HEADER & ACTIVE TOPIC MOBILE OPTIMIZATIONS ================= */
+.bubble-telemetry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  padding-bottom: 6px;
+  width: 100%;
+}
+
+.bubble-telemetry-coord {
+  font-family: var(--font-tech);
+  font-size: 0.58rem;
+  color: var(--color-accent);
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.bubble-telemetry-status {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  color: rgba(0,0,0,0.4);
+}
+
+.bubble-topic-indicator {
+  display: flex;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  padding: 6px 12px;
+  margin-bottom: 14px;
+  gap: 4px;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  justify-content: center;
+  width: 100%;
+}
+
+.bubble-topic-text {
+  font-size: 0.66rem;
+  font-family: var(--font-tech);
+  font-weight: 800;
+  color: var(--color-accent);
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 4px rgba(var(--color-accent-rgb), 0.15);
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .comic-speech-bubble {
+    padding: 16px 18px !important;
+  }
+  .bubble-telemetry-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+  }
+  .bubble-telemetry-coord {
+    font-size: 0.52rem !important;
+  }
+  .bubble-telemetry-status {
+    font-size: 0.50rem !important;
+  }
+  .bubble-topic-indicator {
+    padding: 4px 8px !important;
+    margin-bottom: 10px !important;
+  }
+  .bubble-topic-text {
+    font-size: 0.56rem !important;
+    letter-spacing: 0.2px !important;
+    white-space: normal !important;
   }
 }
 

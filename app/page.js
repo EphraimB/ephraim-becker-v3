@@ -401,11 +401,6 @@ export default function CitizenSuite() {
                 ))}
               </div>
 
-              {/* Monospace quick keyboard help hint */}
-              <span style={{ fontSize: '0.45rem', color: 'rgba(0,0,0,0.35)', fontFamily: 'var(--font-tech)', fontWeight: 700, marginTop: '8px', letterSpacing: '0.2px' }}>
-                HINT: KEYBOARD LEFT / RIGHT ARROW KEYS WORK TOO
-              </span>
-
             </div>
 
           </div>

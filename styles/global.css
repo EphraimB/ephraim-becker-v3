@@ -1062,155 +1062,622 @@ body {
   }
 }
 
-/* High-Tech Dossier Card & Expandable Hobbies */
-.dossier-card {
+/* ================= PORTFOLIO-STYLE HIGH-TECH OS DASHBOARD LAYOUT ================= */
+
+/* Hide background roomscale cutout when Data Deck mode is active to give layout full width */
+.workspace-deck:has(.datadeck-active) .roomscale-natural-body {
+  display: none !important;
+}
+
+/* Premium Segment Switcher Control */
+.datadeck-switcher-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.datadeck-switcher-bar {
+  background: rgba(6, 9, 20, 0.82);
+  border: 2px solid var(--color-accent);
+  border-radius: 30px;
+  padding: 4px;
+  display: flex;
+  gap: 4px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.45), 
+              0 0 15px rgba(var(--color-accent-rgb), 0.2);
+  backdrop-filter: var(--glass-blur);
+}
+
+.datadeck-switcher-btn {
+  padding: 8px 24px;
+  font-family: var(--font-tech);
+  font-size: 0.72rem;
+  font-weight: 800;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  background: transparent;
+  color: var(--text-secondary);
+}
+
+.datadeck-switcher-btn.active {
+  background: var(--color-accent);
+  color: #fff !important;
+  box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.5);
+}
+
+.datadeck-switcher-btn:hover:not(.active) {
+  color: #fff;
+  background: rgba(255,255,255,0.05);
+}
+
+/* Top Profile Sidebar Card */
+.datadeck-profile-card {
+  background: rgba(6, 9, 20, 0.72);
+  border: 1.5px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
   display: flex;
   flex-direction: column;
-  min-height: 305px;
-  background: rgba(10, 14, 30, 0.85);
-  border: 2.5px solid var(--color-accent);
-  border-radius: 20px;
-  padding: 24px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 0 0 25px rgba(var(--color-accent-rgb), 0.2);
-  color: var(--text-primary);
-  backdrop-filter: blur(12px);
+  align-items: center;
+  text-align: center;
   transition: all 0.3s ease;
 }
 
-.dossier-header {
+.datadeck-profile-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--color-accent-rgb), 0.3);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 
+              0 0 15px rgba(var(--color-accent-rgb), 0.15);
+}
+
+.datadeck-profile-img-container {
+  width: 100%;
+  height: 280px;
+  background: radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.06) 0%, rgba(0,0,0,0.15) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1.5px solid rgba(var(--color-accent-rgb), 0.25);
-  padding-bottom: 12px;
+  align-items: flex-end;
+  justify-content: center;
+  position: relative;
   margin-bottom: 16px;
 }
 
-.dossier-title {
+.datadeck-profile-img {
+  height: 95%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.45));
+  transition: transform 0.35s ease;
+  pointer-events: none;
+}
+
+.datadeck-profile-card:hover .datadeck-profile-img {
+  transform: scale(1.03) translateY(-1px);
+}
+
+.datadeck-profile-name {
   font-family: var(--font-tech);
   font-size: 1.25rem;
   font-weight: 700;
-  color: #fff;
+  color: var(--text-primary) !important;
   letter-spacing: 0.5px;
-  text-align: left;
+  margin: 0 0 4px 0;
 }
 
-.dossier-age {
+.datadeck-profile-age {
   font-family: var(--font-tech);
-  font-size: 0.72rem;
-  color: var(--neon-cyan);
+  font-size: 0.68rem;
   font-weight: 700;
-}
-
-.dossier-badges {
-  display: flex;
-  gap: 8px;
+  color: var(--color-accent) !important;
   margin-bottom: 16px;
-}
-
-.dossier-badge {
-  font-family: var(--font-tech);
-  font-size: 0.55rem;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(var(--color-accent-rgb), 0.1);
-  border: 1px solid rgba(var(--color-accent-rgb), 0.3);
-  color: var(--color-accent);
-  font-weight: 700;
   letter-spacing: 0.5px;
 }
 
-.interest-panel {
+.datadeck-badges-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.datadeck-badge {
+  font-family: var(--font-tech);
+  font-size: 0.54rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.datadeck-badge.badge-architect {
+  background: rgba(194, 89, 255, 0.08);
+  border: 1px solid rgba(194, 89, 255, 0.25);
+  color: var(--neon-violet) !important;
+}
+
+.datadeck-badge.badge-citizen {
+  background: rgba(0, 240, 255, 0.08);
+  border: 1px solid rgba(0, 240, 255, 0.25);
+  color: var(--neon-cyan) !important;
+}
+
+.datadeck-badge.badge-coord {
+  background: rgba(255, 179, 0, 0.08);
+  border: 1px solid rgba(255, 179, 0, 0.25);
+  color: var(--neon-amber) !important;
+}
+
+/* Sleek Standard Dashboard Card Panels */
+.datadeck-panel {
+  background: rgba(6, 9, 20, 0.72);
+  border: 1.5px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: visible;
+  color: var(--text-primary);
+}
+
+.datadeck-panel:hover {
+  transform: translateY(-2px);
+  border-color: rgba(var(--color-accent-rgb), 0.3);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 
+              0 0 15px rgba(var(--color-accent-rgb), 0.15);
+}
+
+.datadeck-panel p, .datadeck-panel span, .datadeck-panel strong, .datadeck-panel div, .datadeck-panel h3 {
+  color: var(--text-primary) !important;
+}
+
+.datadeck-panel .text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+/* 3-Column Hobbies & Interests Grid - Streamlined Horizontal Flex Scroll */
+.datadeck-hobbies-grid {
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  gap: 20px;
+  width: 100%;
+  padding: 12px 6px 16px 6px;
+  margin: -12px -6px 0 -6px;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Custom themed scrollbar for horizontal hobbies list */
+.datadeck-hobbies-grid::-webkit-scrollbar {
+  height: 6px;
+}
+.datadeck-hobbies-grid::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.02);
-  border: 1.5px solid var(--glass-border);
-  border-radius: 12px;
-  margin-bottom: 10px;
-  overflow: hidden;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 3px;
+}
+.datadeck-hobbies-grid::-webkit-scrollbar-thumb {
+  background: rgba(var(--color-accent-rgb), 0.25);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+.datadeck-hobbies-grid::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--color-accent-rgb), 0.45);
 }
 
-.interest-panel:hover {
-  background: rgba(var(--color-accent-rgb), 0.05);
-  border-color: rgba(var(--color-accent-rgb), 0.4);
-  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.15);
+/* Hobby Card (Matches Portfolio project-card style) */
+.datadeck-hobby-card {
+  background: rgba(6, 9, 20, 0.72);
+  border: 1.5px solid rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 290px;
+  flex: 0 0 310px;
+  max-width: 310px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: default;
 }
 
-.interest-panel.active {
-  border-color: var(--color-accent);
-  background: rgba(var(--color-accent-rgb), 0.06);
-  box-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.2);
+/* Custom glowing borders & shadows on hover representing each topic */
+.datadeck-hobby-card.tech:hover {
+  border-color: var(--neon-cyan);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(0, 240, 255, 0.25);
+  transform: translateY(-3px);
+}
+.datadeck-hobby-card.music:hover {
+  border-color: var(--neon-violet);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(194, 89, 255, 0.25);
+  transform: translateY(-3px);
+}
+.datadeck-hobby-card.scifi:hover {
+  border-color: var(--neon-amber);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(255, 179, 0, 0.25);
+  transform: translateY(-3px);
+}
+.datadeck-hobby-card.biking:hover {
+  border-color: var(--neon-emerald);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(0, 255, 136, 0.25);
+  transform: translateY(-3px);
+}
+.datadeck-hobby-card.football:hover {
+  border-color: var(--neon-violet);
+  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(194, 89, 255, 0.25);
+  transform: translateY(-3px);
 }
 
-.interest-header {
+.datadeck-hobby-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 18px;
-  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.datadeck-hobby-card-cat {
   font-family: var(--font-tech);
-  font-size: 0.78rem;
+  font-size: 0.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-secondary) !important;
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+.datadeck-hobby-card-title {
+  font-family: var(--font-tech);
+  font-size: 0.88rem;
+  color: var(--text-primary) !important;
+  text-align: left;
+  margin-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  padding-bottom: 6px;
   font-weight: 700;
-  color: var(--text-primary);
-  user-select: none;
+  letter-spacing: 0.5px;
 }
 
-.interest-icon {
-  font-size: 0.95rem;
-  margin-right: 8px;
-}
-
-.interest-chevron {
-  font-size: 0.65rem;
-  color: var(--color-accent);
-  transition: transform 0.3s ease;
-}
-
-.interest-panel.active .interest-chevron {
-  transform: rotate(180deg);
-}
-
-.interest-body {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1), padding 0.3s ease;
-  padding: 0 18px;
-  font-size: 0.74rem;
+.datadeck-hobby-card-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary) !important;
   line-height: 1.45;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+/* Custom classes for vibrant bubbly buttons */
+.social-btn-bubbly, .transit-btn-bubbly {
+  color: var(--text-primary) !important;
+  font-family: var(--font-tech);
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  text-decoration: none;
+  border-width: 1.5px !important;
+}
+
+.social-btn-bubbly.github {
+  border: 1.5px solid rgba(0, 240, 255, 0.3) !important;
+  background: rgba(0, 240, 255, 0.05) !important;
+}
+.social-btn-bubbly.github:hover {
+  background: var(--neon-cyan) !important;
+  color: #080b13 !important;
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.social-btn-bubbly.youtube {
+  border: 1.5px solid rgba(255, 179, 0, 0.3) !important;
+  background: rgba(255, 179, 0, 0.05) !important;
+}
+.social-btn-bubbly.youtube:hover {
+  background: var(--neon-amber) !important;
+  color: #080b13 !important;
+  border-color: var(--neon-amber) !important;
+  box-shadow: 0 0 15px rgba(255, 179, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.transit-btn-bubbly {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.transit-btn-bubbly.metropolis:hover {
+  background: var(--neon-violet) !important;
+  color: #ffffff !important;
+  border-color: var(--neon-violet) !important;
+  box-shadow: 0 0 12px rgba(194, 89, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+.transit-btn-bubbly.biosphere:hover {
+  background: var(--neon-emerald) !important;
+  color: #080b13 !important;
+  border-color: var(--neon-emerald) !important;
+  box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
+  transform: translateY(-2px);
+}
+
+.transit-btn-bubbly.quantum:hover {
+  background: var(--neon-amber) !important;
+  color: #080b13 !important;
+  border-color: var(--neon-amber) !important;
+  box-shadow: 0 0 12px rgba(255, 179, 0, 0.4);
+  transform: translateY(-2px);
+}
+
+.transit-btn-bubbly.portfolio:hover {
+  background: var(--neon-cyan) !important;
+  color: #080b13 !important;
+  border-color: var(--neon-cyan) !important;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
+  transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+  .datadeck-profile-card {
+    width: 100% !important;
+  }
+}
+
+/* ================= FLOATING HOLOGRAPHIC PROJECTOR OVERLAY ================= */
+
+.hologram-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle at center, rgba(4, 6, 12, 0.82) 0%, rgba(2, 3, 6, 0.94) 100%);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  animation: hologram-fade-in 0.3s ease-out forwards;
+}
+
+.hologram-modal-card {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(6, 10, 22, 0.96);
+  border-radius: 28px;
+  padding: 30px;
+  color: var(--text-primary);
+  backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 45px rgba(var(--color-accent-rgb), 0.25),
+              inset 0 0 20px rgba(var(--color-accent-rgb), 0.1);
+  border: 2.5px solid var(--color-accent);
+  transform-origin: center bottom;
+  animation: hologram-boot 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+/* High-tech grid and scanning scanline overlays */
+.hologram-modal-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(255, 255, 255, 0.05) 50%),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px);
+  background-size: 100% 4px, 30px 30px, 30px 30px;
+  opacity: 0.6;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.hologram-scanline-beam {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.08), transparent);
+  border-bottom: 1.5px solid rgba(var(--color-accent-rgb), 0.3);
+  z-index: 2;
+  pointer-events: none;
+  opacity: 0.8;
+  animation: hologram-scanline 3.2s linear infinite;
+}
+
+/* Cathode-ray flicker projection boot animation */
+@keyframes hologram-boot {
+  0% {
+    opacity: 0;
+    transform: scaleY(0.01) scaleX(0.05) translateY(100px);
+    filter: hue-rotate(90deg) brightness(4) blur(10px);
+  }
+  30% {
+    opacity: 0.65;
+    transform: scaleY(1.08) scaleX(0.92) translateY(5px);
+    filter: hue-rotate(45deg) brightness(2) blur(3px);
+  }
+  45% {
+    opacity: 0.45;
+    transform: scaleY(0.85) scaleX(1.08) translateY(-5px);
+    filter: blur(5px);
+  }
+  60% {
+    opacity: 0.85;
+    transform: scale(1.02);
+    filter: none;
+  }
+  75% {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: none;
+  }
+}
+
+@keyframes hologram-scanline {
+  0% {
+    transform: translateY(-60px);
+  }
+  100% {
+    transform: translateY(500px);
+  }
+}
+
+@keyframes hologram-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.hologram-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1.5px dashed rgba(var(--color-accent-rgb), 0.3);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  z-index: 3;
+}
+
+.hologram-telemetry-title {
+  font-family: var(--font-tech);
+  font-size: 0.62rem;
+  color: var(--color-accent);
+  font-weight: 700;
+  letter-spacing: 1.2px;
+}
+
+.hologram-telemetry-status {
+  font-family: var(--font-tech);
+  font-size: 0.55rem;
+  color: var(--neon-emerald);
+  animation: blink-led 1s infinite alternate;
+}
+
+.hologram-topic {
+  font-family: var(--font-tech);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #fff;
+  letter-spacing: 0.5px;
+  margin-bottom: 14px;
+  text-transform: uppercase;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 3;
+}
+
+.hologram-desc {
+  font-size: 0.8rem;
+  line-height: 1.55;
   color: var(--text-secondary);
   text-align: left;
+  margin-bottom: 22px;
+  position: relative;
+  z-index: 3;
 }
 
-.interest-panel.active .interest-body {
-  max-height: 200px;
-  padding-bottom: 14px;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  padding-top: 10px;
+.hologram-graphic-box {
+  margin-bottom: 22px;
+  position: relative;
+  z-index: 3;
+  width: 100%;
 }
 
-.social-ports-section {
+.hologram-footer {
   display: flex;
-  gap: 12px;
-  margin-top: 16px;
-  border-top: 1.5px solid rgba(255, 255, 255, 0.06);
-  padding-top: 14px;
+  justify-content: center;
+  border-top: 1.5px dashed rgba(var(--color-accent-rgb), 0.2);
+  padding-top: 18px;
+  position: relative;
+  z-index: 3;
 }
 
-.warp-transits-section {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 8px;
-  margin-top: 12px;
-  border-top: 1.5px solid rgba(255, 255, 255, 0.06);
-  padding-top: 12px;
+.hologram-close-btn {
+  background: rgba(234, 67, 53, 0.08);
+  border: 2px solid #ea4335;
+  color: #ea4335 !important;
+  font-family: var(--font-tech);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 10px 22px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+  text-transform: uppercase;
 }
 
-/* Reciprocal FAB dynamic CSS labels */
-.portfolio-conversational-fab.mode-conversation::after {
-  content: 'TALK TO ME!' !important;
+.hologram-close-btn:hover {
+  background: #ea4335;
+  color: #fff !important;
+  box-shadow: 0 0 15px rgba(234, 67, 53, 0.45);
+  transform: translateY(-2px);
 }
 
-.portfolio-conversational-fab.mode-datadeck::after {
-  content: 'DATA DECK' !important;
+@media (max-width: 900px) {
+  .datadeck-profile-card {
+    width: 100% !important;
+  }
 }
 
+/* Enable dynamic scrolling for the Data Deck dashboard */
+.citizen-card-shell:has(.datadeck-active) {
+  overflow-y: auto !important;
+  display: block !important;
+  padding-right: 8px;
+  max-height: calc(100vh - 120px); /* Leave room for HUD bar */
+}
 
+.citizen-card-shell:has(.datadeck-active)::-webkit-scrollbar {
+  width: 6px;
+}
+.citizen-card-shell:has(.datadeck-active)::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 3px;
+}
+.citizen-card-shell:has(.datadeck-active)::-webkit-scrollbar-thumb {
+  background: rgba(var(--color-accent-rgb), 0.25);
+  border-radius: 3px;
+  transition: background 0.3s ease;
+}
+.citizen-card-shell:has(.datadeck-active)::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--color-accent-rgb), 0.45);
+}
+
+/* Responsive styles for side-by-side layout in data deck */
+@media (max-width: 950px) {
+  .datadeck-dashboard-layout {
+    grid-template-columns: 1fr !important;
+  }
+}

@@ -307,19 +307,26 @@ export default function CitizenSuite() {
         <CityGridMap />
       </div>
 
-      {/* Spacious 2-Column Grid Centering Your Cutout & Speech Bubble */}
+      {/* Spacious Grid Centering Your Cutout & Speech Bubble / Dashboard */}
       <div 
-        className={`walking-content-container homepage-grid ${transitState}`} 
+        className={`walking-content-container homepage-grid ${transitState} ${isDataDeckMode ? 'datadeck-active' : ''}`} 
         style={{ 
           overflow: 'visible',
-          gridTemplateColumns: '210px min(580px, 62vw)', /* Shrunk spacer to bring bubble exactly next to mouth */
+          gridTemplateColumns: isDataDeckMode 
+            ? '1fr' 
+            : '210px min(580px, 62vw)',
           justifyContent: 'center',
-          alignItems: 'center'
+          alignItems: isDataDeckMode ? 'stretch' : 'center',
+          gap: isDataDeckMode ? '20px' : '25px',
+          maxWidth: isDataDeckMode ? '100%' : '1250px',
+          width: '100%'
         }}
       >
         
-        {/* Far-Left Column: Spatial gap overlaying the natural background cutout */}
-        <div className="roomscale-profile-spacer" style={{ width: '100%', height: '100%', pointerEvents: 'none' }}></div>
+        {/* Far-Left Column: Spatial gap overlaying the natural background cutout (conversational mode only) */}
+        {!isDataDeckMode && (
+          <div className="roomscale-profile-spacer" style={{ width: '100%', height: '100%', pointerEvents: 'none' }}></div>
+        )}
 
         {/* Right Column: Single High-Contrast Branching Stepper Speech Bubble */}
         {!isDataDeckMode ? (
@@ -893,173 +900,352 @@ export default function CitizenSuite() {
           </div>
         </div>
         ) : (
-          <div className="dossier-card">
-            {/* Dossier Header */}
-            <div className="dossier-header">
-              <span className="dossier-title">EPHRAIM BECKER</span>
-              <span className="dossier-age">15 MARS YEARS (MY23)</span>
-            </div>
-
-            {/* Dossier Badges */}
-            <div className="dossier-badges">
-              <span className="dossier-badge">ACTIVE / SENIOR SYS ARCHITECT</span>
-              <span className="dossier-badge">CLASS-A CITIZEN</span>
-              <span className="dossier-badge">COORDINATE: PENTHOUSE_A-02</span>
-            </div>
-
-            {/* Dossier Biography Intro */}
-            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: '0 0 16px 0', textAlign: 'left' }}>
-              Remote Cadet at Adelphi University on Earth, studying computer science, database structures, search index efficiencies, and college-level Calculus. Passionate about designing and building highly visual user interfaces, low-level TI graphing programs, and premium spatial simulation systems.
-            </p>
-
-            {/* 5 Expandable Hobbies */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-              <span style={{ display: 'block', fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1px', marginBottom: '4px', textTransform: 'uppercase', textAlign: 'left', fontWeight: 700 }}>
-                CITIZEN BIO-INTEREST CATALOG
-              </span>
-
-              {/* Hobby 1: Tech */}
-              <div className={`interest-panel ${expandedInterest === 'tech' ? 'active' : ''}`}>
-                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'tech' ? null : 'tech')}>
-                  <span><span className="interest-icon">💻</span> TECHNOLOGY & SOFTWARE</span>
-                  <span className="interest-chevron">▼</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', minHeight: 0, overflow: 'visible' }}>
+            
+            {/* Side-by-side 2-Column OS Dashboard Workspace */}
+            <div style={{ display: 'grid', gridTemplateColumns: '320px minmax(0, 1fr)', gap: '20px', width: '100%', alignItems: 'start' }} className="datadeck-dashboard-layout">
+              
+              {/* Left Column: Profile Card & Connections/Transits */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                
+                {/* Profile Card */}
+                <div className="datadeck-profile-card" style={{ width: '100%' }}>
+                  <div className="datadeck-profile-img-container">
+                    <img 
+                      src="/assets/images/profile.png" 
+                      alt="Ephraim Becker" 
+                      className="datadeck-profile-img"
+                    />
+                  </div>
+                  
+                  <h2 className="datadeck-profile-name">Ephraim Becker</h2>
+                  <div className="datadeck-profile-age">15 Mars Years (MY23)</div>
                 </div>
-                <div className="interest-body">
-                  Fascinated by GUI coordinate displays and responsive web systems. I enjoy coding advanced frontend interfaces, programming low-level menu engines like the Harry Potter wizard currency converter v7.3 on TI-84 Plus graphing kernels, and custom-building power-efficient hardware rigs (like assembling high-tech lego blocks).
+
+                {/* Connections & Warp Dock Panel (moved to left column to balance heights) */}
+                <div className="datadeck-panel" style={{ padding: '16px 20px' }}>
+                  <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.75rem', fontWeight: 800, margin: '0 0 14px 0', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px', textTransform: 'uppercase' }}>
+                    🔗 QUANTUM PORTALS
+                  </h3>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', marginBottom: '16px' }}>
+                    <a 
+                      href="https://github.com/EphraimB" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="social-btn-bubbly github"
+                      style={{ padding: '10px 12px', fontSize: '0.68rem', textAlign: 'center' }}
+                    >
+                      📂 GITHUB REPOSITORY
+                    </a>
+                    <a 
+                      href="https://www.youtube.com/@ephraimbecker544" 
+                      target="_blank" 
+                      rel="noopener noreferrer" 
+                      className="social-btn-bubbly youtube"
+                      style={{ padding: '10px 12px', fontSize: '0.68rem', textAlign: 'center' }}
+                    >
+                      🎬 YOUTUBE CHANNEL
+                    </a>
+                  </div>
+
+                  <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.75rem', fontWeight: 800, margin: '0 0 10px 0', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px', textTransform: 'uppercase' }}>
+                    🚀 WARP TRANSITS
+                  </h3>
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '6px' }}>
+                    <button 
+                      onClick={() => handleWarpFromStep(null, '/metropolis-core', 2)}
+                      className="transit-btn-bubbly metropolis"
+                      style={{ padding: '8px 6px', fontSize: '0.6rem' }}
+                    >
+                      🌆 METROPOLIS
+                    </button>
+                    <button 
+                      onClick={() => handleWarpFromStep(null, '/atmosphere-dome', 4)}
+                      className="transit-btn-bubbly biosphere"
+                      style={{ padding: '8px 6px', fontSize: '0.6rem' }}
+                    >
+                      🍀 BIOSPHERE
+                    </button>
+                    <button 
+                      onClick={() => handleWarpFromStep(null, '/quantum-net', 5)}
+                      className="transit-btn-bubbly quantum"
+                      style={{ padding: '8px 6px', fontSize: '0.6rem' }}
+                    >
+                      🛰️ QUANTUM NET
+                    </button>
+                    <button 
+                      onClick={() => handleWarpFromStep(null, '/portfolio', 3)}
+                      className="transit-btn-bubbly portfolio"
+                      style={{ padding: '8px 6px', fontSize: '0.6rem' }}
+                    >
+                      📂 PORTFOLIO
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+              {/* Right Column: Hobbies Grid */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                
+                {/* Hobbies Section Header */}
+                <div className="datadeck-panel" style={{ padding: '16px 20px' }}>
+                  <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.82rem', color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '1px', margin: 0, fontWeight: 700, textAlign: 'left' }}>
+                    🚴 CITIZEN BIO-INTEREST CATALOG & GRAPHICS MATRIX
+                  </h3>
+                </div>
+
+                {/* Hobbies Grid */}
+                <div className="datadeck-hobbies-grid">
+                  
+                  {/* Hobby 1: Tech */}
+                  <div className="datadeck-hobby-card tech">
+                    <div>
+                      <div className="datadeck-hobby-card-header">
+                        <span className="datadeck-hobby-card-cat">SOFTWARE DEV</span>
+                      </div>
+                      <h4 className="datadeck-hobby-card-title">💻 TECHNOLOGY & SOFTWARE</h4>
+                      <p className="datadeck-hobby-card-desc">
+                        Fascinated by GUI coordinate displays and responsive web systems. I enjoy coding advanced frontend interfaces, programming low-level menu engines like the Harry Potter wizard currency converter v7.3 on TI-84 Plus graphing kernels, and custom-building hardware rigs.
+                      </p>
+                    </div>
+                    
+                    {/* Custom animated GUI graphic */}
+                    <div style={{ width: '100%', marginTop: '10px' }}>
+                      <svg viewBox="0 0 320 95" width="100%" height="95px" style={{ background: '#080b13', borderRadius: '10px', border: '1px solid rgba(0, 240, 255, 0.22)' }}>
+                        <rect x="0" y="0" width="320" height="15" fill="#141a29" />
+                        <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
+                        <circle cx="20" cy="7.5" r="3" fill="#ffb300" />
+                        <circle cx="30" cy="7.5" r="3" fill="#00ff88" />
+                        <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="var(--font-tech)" textAnchor="middle">ARES_OS // DESKTOP_VIEWER</text>
+
+                        {/* Left Desktop Folders */}
+                        <g transform="translate(5, 20)">
+                          <rect x="5" y="5" width="16" height="12" rx="2" fill="none" stroke="var(--neon-cyan)" strokeWidth="1" />
+                          <path d="M 5,5 L 11,5 L 13,8 L 21,8 L 21,17 L 5,17 Z" fill="none" stroke="var(--neon-cyan)" strokeWidth="1" />
+                          <text x="13" y="27" fill="rgba(255,255,255,0.6)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">SYSTEMS</text>
+
+                          <rect x="35" y="5" width="16" height="12" rx="2" fill="none" stroke="#2979ff" strokeWidth="1" />
+                          <path d="M 35,5 L 41,5 L 43,8 L 51,8 L 51,17 L 35,17 Z" fill="none" stroke="#2979ff" strokeWidth="1" />
+                          <text x="43" y="27" fill="rgba(255,255,255,0.6)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">APPS</text>
+                        </g>
+
+                        {/* Right Telemetry Dial Graphs */}
+                        <g transform="translate(100, 20)">
+                          <circle cx="40" cy="25" r="16" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
+                          <path d="M 40,9 A 16 16 0 0 1 56,25" fill="none" stroke="var(--neon-cyan)" strokeWidth="2.5" />
+                          <text x="40" y="28" fill="#fff" fontSize="5.5" fontFamily="var(--font-tech)" textAnchor="middle">85%</text>
+                          <text x="40" y="49" fill="rgba(255,255,255,0.5)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">GUI INTEREST</text>
+                          
+                          <circle cx="120" cy="25" r="16" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
+                          <path d="M 120,9 A 16 16 0 1 1 104,25" fill="none" stroke="var(--neon-cyan)" strokeWidth="2.5" />
+                          <text x="120" y="28" fill="#fff" fontSize="5.5" fontFamily="var(--font-tech)" textAnchor="middle">ONLINE</text>
+                          <text x="120" y="49" fill="rgba(255,255,255,0.5)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">WARP CORES</text>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Hobby 2: Music */}
+                  <div className="datadeck-hobby-card music">
+                    <div>
+                      <div className="datadeck-hobby-card-header">
+                        <span className="datadeck-hobby-card-cat">PERFORMANCE</span>
+                      </div>
+                      <h4 className="datadeck-hobby-card-title">🎹 MUSIC & ACOUSTICS</h4>
+                      <p className="datadeck-hobby-card-desc">
+                        Deeply passionate about musical acoustics. In classical music, my absolute favorite instrument is the pipe organ because of its grand mechanical architecture. I also love storytelling pop albums (Taylor Swift and Noah Kahan), choir, and karaoke.
+                      </p>
+                    </div>
+
+                    {/* Custom animated vinyl graphic */}
+                    <div style={{ width: '100%', marginTop: '10px' }}>
+                      <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(194,89,255,0.2)' }}>
+                        <rect x="90" y="8" width="140" height="58" rx="6" fill="#141a29" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                        <g style={{ transformOrigin: '150px 37px', animation: 'spin-vinyl 3s linear infinite' }}>
+                          <circle cx="150" cy="37" r="24" fill="#0c0d12" stroke="#222" strokeWidth="1" />
+                          <circle cx="150" cy="37" r="20" fill="none" stroke="#242630" strokeWidth="0.8" />
+                          <circle cx="150" cy="37" r="16" fill="none" stroke="#242630" strokeWidth="0.8" />
+                          <circle cx="150" cy="37" r="12" fill="none" stroke="#242630" strokeWidth="0.8" />
+                          <circle cx="150" cy="37" r="7.5" fill="var(--neon-violet)" />
+                          <circle cx="150" cy="37" r="1.5" fill="#000" />
+                        </g>
+                        <path d="M 215,20 L 195,20 L 170,32" fill="none" stroke="#cfd8dc" strokeWidth="2.2" strokeLinecap="round" />
+                        <circle cx="215" cy="20" r="4.5" fill="#455a64" />
+                        <rect x="166" y="30" width="8" height="4" rx="1" fill="#ffb300" transform="rotate(25 170 32)" />
+
+                        <g fill="var(--neon-violet)" style={{ filter: 'drop-shadow(0 0 2px var(--neon-violet))' }}>
+                          <path d="M 60,30 L 60,20 L 70,18 L 70,25 M 60,30 A 2.5 2 0 1 1 55,30 A 2.5 2 0 1 1 60,30" style={{ animation: 'blink-led 1.5s infinite alternate' }} />
+                          <path d="M 255,40 L 255,30 L 265,28 L 265,35 M 255,40 A 2.5 2 0 1 1 250,40 A 2.5 2 0 1 1 255,40" style={{ animation: 'blink-led 1.2s infinite alternate-reverse' }} />
+                        </g>
+                        <text x="160" y="70" fill="rgba(255,255,255,0.4)" fontSize="5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>PLAYING: TAYLOR SWIFT // NOAH KAHAN</text>
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Hobby 3: Sci-Fi */}
+                  <div className="datadeck-hobby-card scifi">
+                    <div>
+                      <div className="datadeck-hobby-card-header">
+                        <span className="datadeck-hobby-card-cat">WORLDBUILDING</span>
+                      </div>
+                      <h4 className="datadeck-hobby-card-title">🚀 SCI-FI & FANTASY</h4>
+                      <p className="datadeck-hobby-card-desc">
+                        Inspired by detailed futuristic worldbuilding, legendary space operas, and magical lore. My top cinematic favorites are Star Wars, Harry Potter, Lord of the Rings, and Back to the Future. Recreated transporter beaming VFX in my bedroom using custom Blender chroma keying.
+                      </p>
+                    </div>
+
+                    {/* Custom animated sci-fi graphic */}
+                    <div style={{ width: '100%', marginTop: '10px' }}>
+                      <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(255,179,0,0.2)' }}>
+                        <line x1="80" y1="5" x2="80" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                        <line x1="160" y1="5" x2="160" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                        <line x1="240" y1="5" x2="240" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+
+                        {/* Panel 1: STAR WARS */}
+                        <g>
+                          <line x1="30" y1="46" x2="36" y2="40" stroke="#888" strokeWidth="2.5" strokeLinecap="round" />
+                          <line x1="36" y1="40" x2="58" y2="18" stroke="#00f0ff" strokeWidth="2" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
+                          <text x="40" y="64" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>STAR WARS</text>
+                        </g>
+
+                        {/* Panel 2: HARRY POTTER */}
+                        <g>
+                          <line x1="105" y1="46" x2="120" y2="31" stroke="#8d4a25" strokeWidth="1.8" strokeLinecap="round" />
+                          <path d="M 120,31 L 123,21 L 120,31 L 130,31 L 120,31 L 117,41 L 120,31 L 110,31" fill="none" stroke="#ffe082" strokeWidth="1.2" style={{ filter: 'drop-shadow(0 0 2px #ffe082)' }} />
+                          <path d="M 125,23 L 132,16 L 128,16 L 135,9" fill="none" stroke="#ffe082" strokeWidth="1.2" />
+                          <text x="120" y="64" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>H. POTTER</text>
+                        </g>
+
+                        {/* Panel 3: LORD OF THE RINGS */}
+                        <g>
+                          <ellipse cx="200" cy="28" rx="11" ry="7" fill="none" stroke="#ffb300" strokeWidth="1.8" style={{ filter: 'drop-shadow(0 0 3px #ffb300)' }} />
+                          <ellipse cx="200" cy="28" rx="7" ry="4.5" fill="none" stroke="rgba(255,179,0,0.4)" strokeWidth="0.8" />
+                          <text x="200" y="64" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>L.O.T.R.</text>
+                        </g>
+
+                        {/* Panel 4: BACK TO THE FUTURE */}
+                        <g>
+                          <rect x="252" y="14" width="36" height="24" rx="2" fill="#080b13" stroke="rgba(255,255,255,0.1)" />
+                          <text x="270" y="25" fill="#ff5722" fontSize="9" fontFamily="monospace" fontWeight="900" textAnchor="middle" style={{ filter: 'drop-shadow(0 0 2px #ff5722)' }}>88</text>
+                          <text x="270" y="35" fill="#ff5722" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">MPH</text>
+                          <text x="270" y="64" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>B.T.T.F.</text>
+                        </g>
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Hobby 4: Biking */}
+                  <div className="datadeck-hobby-card biking">
+                    <div>
+                      <div className="datadeck-hobby-card-header">
+                        <span className="datadeck-hobby-card-cat">AEROBIC ACTIVE</span>
+                      </div>
+                      <h4 className="datadeck-hobby-card-title">🚴 OUTDOOR CYCLING</h4>
+                      <p className="datadeck-hobby-card-desc">
+                        Biking represents pure physical freedom, allowing me to travel anywhere in the dome pathways without worrying about public transit grids. I enjoy the aerobic challenge of pedaling against strong headwinds to build endurance, and active recovery rides.
+                      </p>
+                    </div>
+
+                    {/* Custom animated bike graphic */}
+                    <div style={{ width: '100%', marginTop: '10px' }}>
+                      <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(0,255,136,0.2)' }}>
+                        <path d="M 0,60 Q 160,20 320,60" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+                        <line x1="0" y1="60" x2="320" y2="60" stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" />
+                        
+                        <g fill="rgba(255,255,255,0.08)">
+                          <ellipse cx="280" cy="20" rx="14" ry="4" style={{ animation: 'wind-vector 6s linear infinite' }} />
+                          <ellipse cx="140" cy="15" rx="10" ry="3" style={{ animation: 'wind-vector 8s linear infinite' }} />
+                        </g>
+
+                        <g transform="translate(130, 16)">
+                          <circle cx="10" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
+                          <circle cx="10" cy="36" r="6" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.6" strokeDasharray="2 2" style={{ animation: 'spin-vinyl 1.5s linear infinite' }} />
+                          
+                          <circle cx="34" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
+                          <circle cx="34" cy="36" r="6" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.6" strokeDasharray="2 2" style={{ animation: 'spin-vinyl 1.5s linear infinite' }} />
+
+                          <path d="M 10,36 L 20,36 L 26,24 L 14,24 Z" fill="none" stroke="var(--neon-emerald)" strokeWidth="1.6" strokeLinecap="round" />
+                          <line x1="20" y1="36" x2="26" y2="24" stroke="var(--neon-emerald)" strokeWidth="1.6" />
+                          <line x1="34" y1="36" x2="30" y2="20" stroke="var(--neon-emerald)" strokeWidth="1.6" />
+                          <path d="M 30,20 L 26,18 L 32,18" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
+                          <line x1="13" y1="22" x2="17" y2="22" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
+
+                          <line x1="15" y1="21" x2="23" y2="12" stroke="#fff" strokeWidth="2.8" strokeLinecap="round" />
+                          <circle cx="25" cy="8" r="3.2" fill="#fff" />
+                          <line x1="23" y1="12" x2="29" y2="19" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
+                          <g style={{ transformOrigin: '20px 36px', animation: 'pedal-legs 0.75s linear infinite' }}>
+                            <line x1="16" y1="21" x2="20" y2="29" stroke="var(--neon-emerald)" strokeWidth="1.8" strokeLinecap="round" />
+                            <line x1="20" y1="29" x2="20" y2="36" stroke="var(--neon-emerald)" strokeWidth="1.8" strokeLinecap="round" />
+                          </g>
+                        </g>
+                        <text x="160" y="70" fill="rgba(255,255,255,0.4)" fontSize="5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>BIKING COORD: BIKE_WAY-A5 (100% RELAXING & FREE)</text>
+                      </svg>
+                    </div>
+                  </div>
+
+                  {/* Hobby 5: Flag Football */}
+                  <div className="datadeck-hobby-card football">
+                    <div>
+                      <div className="datadeck-hobby-card-header">
+                        <span className="datadeck-hobby-card-cat">ATHLETICS STRATEGY</span>
+                      </div>
+                      <h4 className="datadeck-hobby-card-title">🏈 STRATEGIC FLAG FOOTBALL</h4>
+                      <p className="datadeck-hobby-card-desc">
+                        A high-speed strategic sport where I play both offense (route-running and receptions) and defense (pulling flags). As someone with autism, flag football huddles and structured team playbook scripts provide a comfortable, clear social environment to blend in.
+                      </p>
+                    </div>
+
+                    {/* Custom animated football graphic */}
+                    <div style={{ width: '100%', marginTop: '10px' }}>
+                      <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(194,89,255,0.2)' }}>
+                        <defs>
+                          <marker id="arrow" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#00f0ff" />
+                          </marker>
+                        </defs>
+
+                        {/* Field Grid lines */}
+                        <line x1="160" y1="0" x2="160" y2="75" stroke="rgba(255,255,255,0.1)" strokeWidth="1" strokeDasharray="3 3" />
+                        <line x1="80" y1="0" x2="80" y2="75" stroke="rgba(255,255,255,0.05)" strokeWidth="0.8" />
+                        <line x1="240" y1="0" x2="240" y2="75" stroke="rgba(255,255,255,0.05)" strokeWidth="0.8" />
+
+                        {/* Playbook Route Drawing lines */}
+                        <path d="M 70,20 Q 140,15 180,35 T 280,40" fill="none" stroke="#00f0ff" strokeWidth="2" strokeDasharray="4 2" style={{ strokeDashval: 40, strokeDashoffset: 40, animation: 'route-run 4s linear infinite' }} markerEnd="url(#arrow)" />
+                        
+                        {/* Offense Players (O) */}
+                        <g transform="translate(50, 40)" style={{ animation: 'qb-drop 4s infinite ease-in-out' }}>
+                          <circle cx="0" cy="0" r="4.5" fill="#1565c0" stroke="#fff" strokeWidth="1" />
+                          <text x="0" y="2" fill="#fff" fontSize="5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={900}>QB</text>
+                        </g>
+                        <g transform="translate(70, 20)" style={{ animation: 'receiver-catch 4s infinite ease-in-out' }}>
+                          <circle cx="0" cy="0" r="5" fill="#00c853" stroke="#fff" strokeWidth="1.2" style={{ filter: 'drop-shadow(0 0 3px #00c853)' }} />
+                          <text x="0" y="2" fill="#fff" fontSize="5.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={900}>WR</text>
+                        </g>
+
+                        {/* Defense Players (X) */}
+                        <g transform="translate(88, 20)" style={{ animation: 'cb1-chase 4s infinite ease-in-out' }}>
+                          <rect x="-4" y="-4" width="8" height="8" rx="1" fill="#c62828" stroke="#fff" strokeWidth="0.8" />
+                          <text x="0" y="2" fill="#fff" fontSize="5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>CB</text>
+                        </g>
+
+                        {/* Gliding football pass */}
+                        <g style={{ animation: 'ball-pass 4s ease-in-out infinite' }}>
+                          <ellipse cx="0" cy="0" rx="4.5" ry="2.2" fill="#8d4a25" stroke="#ffffff" strokeWidth="0.6" />
+                          <line x1="-3" y1="0" x2="3" y2="0" stroke="#ffffff" strokeWidth="0.6" />
+                        </g>
+
+                        {/* Touchdown Text celebration flashing */}
+                        <text x="160" y="45" fill="var(--neon-emerald)" fontSize="9" fontFamily="var(--font-tech)" fontWeight="900" textAnchor="middle" style={{ animation: 'touchdown-text 4s infinite', filter: 'drop-shadow(0 0 3px var(--neon-emerald))' }}>TOUCHDOWN!</text>
+                      </svg>
+                    </div>
+                  </div>
+
                 </div>
               </div>
 
-              {/* Hobby 2: Music */}
-              <div className={`interest-panel ${expandedInterest === 'music' ? 'active' : ''}`}>
-                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'music' ? null : 'music')}>
-                  <span><span className="interest-icon">🎹</span> MUSIC & PERFORMANCE</span>
-                  <span className="interest-chevron">▼</span>
-                </div>
-                <div className="interest-body">
-                  Deeply passionate about musical acoustics. In classical music, my absolute favorite instrument is the pipe organ because of its grand mechanical architecture and power. I also love the emotional storytelling of pop albums (Taylor Swift and Noah Kahan), singing in a choir, and performing high-energy solos at karaoke.
-                </div>
-              </div>
-
-              {/* Hobby 3: Sci-Fi */}
-              <div className={`interest-panel ${expandedInterest === 'scifi' ? 'active' : ''}`}>
-                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'scifi' ? null : 'scifi')}>
-                  <span><span className="interest-icon">🚀</span> SCI-FI & FANTASY</span>
-                  <span className="interest-chevron">▼</span>
-                </div>
-                <div className="interest-body">
-                  Inspired by detailed futuristic worldbuilding, legendary space operas, and magical lore. My top cinematic favorites are Star Wars, Harry Potter, Lord of the Rings, and Back to the Future. Recreated transporter beaming visual effects in my bedroom using custom Blender chroma key green screening and textured 3D meshes.
-                </div>
-              </div>
-
-              {/* Hobby 4: Biking */}
-              <div className={`interest-panel ${expandedInterest === 'biking' ? 'active' : ''}`}>
-                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'biking' ? null : 'biking')}>
-                  <span><span className="interest-icon">🚴</span> OUTDOOR CYCLING</span>
-                  <span className="interest-chevron">▼</span>
-                </div>
-                <div className="interest-body">
-                  Biking represents pure physical freedom, allowing me to travel anywhere in the dome pathways without worrying about public transit grids. I enjoy the aerobic challenge of pedaling against strong headwinds to build endurance, and the relaxing feeling of dome breezes during active recovery rides.
-                </div>
-              </div>
-
-              {/* Hobby 5: Flag Football */}
-              <div className={`interest-panel ${expandedInterest === 'football' ? 'active' : ''}`}>
-                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'football' ? null : 'football')}>
-                  <span><span className="interest-icon">🏈</span> FLAG FOOTBALL</span>
-                  <span className="interest-chevron">▼</span>
-                </div>
-                <div className="interest-body">
-                  A high-speed strategic sport where I play both offense (clean route-running and receptions) and defense (anticipating plays and pulling flags). As someone with autism, flag football huddles and structured team scripts ("nice catch!", "good job!") provide a comfortable, clear social environment to blend in easily.
-                </div>
-              </div>
             </div>
 
-            {/* Social Outlets */}
-            <div className="social-ports-section">
-              <a 
-                href="https://github.com/EphraimB" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="hud-btn"
-                style={{
-                  flex: 1,
-                  padding: '10px 16px',
-                  fontSize: '0.72rem',
-                  fontWeight: 700,
-                  borderRadius: '8px',
-                  borderColor: 'var(--neon-cyan)',
-                  background: 'rgba(0, 240, 255, 0.08)',
-                  color: '#fff',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  boxShadow: '0 0 10px rgba(0, 240, 255, 0.15)'
-                }}
-              >
-                📂 GITHUB REPOSITORY
-              </a>
-              <a 
-                href="https://www.youtube.com/@ephraimbecker544" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="hud-btn"
-                style={{
-                  flex: 1,
-                  padding: '10px 16px',
-                  fontSize: '0.72rem',
-                  fontWeight: 700,
-                  borderRadius: '8px',
-                  borderColor: 'var(--neon-amber)',
-                  background: 'rgba(255, 179, 0, 0.08)',
-                  color: '#fff',
-                  textDecoration: 'none',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '8px',
-                  boxShadow: '0 0 10px rgba(255, 179, 0, 0.15)'
-                }}
-              >
-                🎬 YOUTUBE CHANNEL
-              </a>
-            </div>
-
-            {/* OS Sector Warp Transits */}
-            <div className="warp-transits-section">
-              <span style={{ gridColumn: '1 / -1', fontFamily: 'var(--font-tech)', fontSize: '0.55rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center', fontWeight: 700, marginBottom: '4px' }}>
-                🚀 OS SECTOR WARP TRANSITS
-              </span>
-              <button 
-                onClick={() => handleWarpFromStep(null, '/metropolis-core', 2)}
-                className="hud-btn"
-                style={{ padding: '8px 12px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--color-accent)' }}
-              >
-                🌆 METROPOLIS CORE
-              </button>
-              <button 
-                onClick={() => handleWarpFromStep(null, '/atmosphere-dome', 4)}
-                className="hud-btn"
-                style={{ padding: '8px 12px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--neon-emerald)' }}
-              >
-                🍀 BIOSPHERE DOME
-              </button>
-              <button 
-                onClick={() => handleWarpFromStep(null, '/quantum-net', 5)}
-                className="hud-btn"
-                style={{ padding: '8px 12px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--neon-amber)' }}
-              >
-                🛰️ QUANTUM NET
-              </button>
-              <button 
-                onClick={() => handleWarpFromStep(null, '/portfolio', 3)}
-                className="hud-btn"
-                style={{ padding: '8px 12px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--neon-cyan)' }}
-              >
-                📂 PORTFOLIO DOME
-              </button>
-            </div>
           </div>
         )}
 
@@ -1223,28 +1409,81 @@ export default function CitizenSuite() {
           50% { transform: rotate(10deg) translateY(1.2px); }
           100% { transform: rotate(0deg) translateY(0); }
         }
+        
+        .portfolio-conversational-fab::after {
+          content: 'TOGGLE VIEW' !important;
+        }
       `}</style>
-
-      {/* IMMERSIVE EXPERIMENTAL CONVERSATIONAL FAB */}
-      <button 
-        className={`portfolio-conversational-fab ${isDataDeckMode ? 'mode-conversation' : 'mode-datadeck'}`}
-        onClick={() => {
-          setIsDataDeckMode(prev => !prev);
-          setExpandedInterest(null);
-        }}
+ 
+      {/* IMMERSIVE EXPERIMENTAL CONVERSATIONAL FAB WITH DYNAMIC STATUS BAR */}
+      <div 
+        className="portfolio-fab-wrapper"
         style={{
-          borderColor: isDataDeckMode ? 'var(--neon-cyan)' : 'var(--color-accent)'
+          position: 'fixed',
+          bottom: '24px',
+          right: '24px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '12px',
+          zIndex: 999
         }}
       >
-        <img 
-          src="/assets/images/profile.png" 
-          alt="Ephraim Becker" 
-          className="portfolio-conversational-avatar"
-        />
-        <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }}>
-          {isDataDeckMode ? '💬' : '📊'}
-        </span>
-      </button>
+        {/* Glow-mode status tag indicator */}
+        <div 
+          style={{
+            background: 'rgba(6, 9, 20, 0.88)',
+            border: `1.5px solid ${isDataDeckMode ? 'var(--neon-cyan)' : 'var(--neon-violet)'}`,
+            borderRadius: '20px',
+            padding: '6px 14px',
+            fontFamily: 'var(--font-tech)',
+            fontSize: '0.62rem',
+            fontWeight: 800,
+            color: '#fff',
+            letterSpacing: '1px',
+            boxShadow: `0 4px 15px rgba(0,0,0,0.5), 0 0 10px ${isDataDeckMode ? 'rgba(0,240,255,0.15)' : 'rgba(194,89,255,0.15)'}`,
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px',
+            backdropFilter: 'blur(10px)',
+            transition: 'all 0.3s ease',
+            pointerEvents: 'none'
+          }}
+        >
+          <span 
+            style={{
+              width: '6px',
+              height: '6px',
+              borderRadius: '50%',
+              background: isDataDeckMode ? 'var(--neon-cyan)' : 'var(--neon-violet)',
+              boxShadow: `0 0 8px ${isDataDeckMode ? 'var(--neon-cyan)' : 'var(--neon-violet)'}`,
+              display: 'inline-block',
+              animation: 'blink-led 1s infinite'
+            }}
+          />
+          {isDataDeckMode ? '📊 TERMINAL ACTIVE' : '💬 CHAT ACTIVE'}
+        </div>
+ 
+        <button 
+          className={`portfolio-conversational-fab ${isDataDeckMode ? 'mode-conversation' : 'mode-datadeck'}`}
+          onClick={() => {
+            setIsDataDeckMode(prev => !prev);
+            setExpandedInterest(null);
+          }}
+          style={{
+            position: 'static',
+            borderColor: isDataDeckMode ? 'var(--neon-cyan)' : 'var(--color-accent)'
+          }}
+        >
+          <img 
+            src="/assets/images/profile.png" 
+            alt="Ephraim Becker" 
+            className="portfolio-conversational-avatar"
+          />
+          <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }}>
+            {isDataDeckMode ? '💬' : '📊'}
+          </span>
+        </button>
+      </div>
     </div>
   );
 }

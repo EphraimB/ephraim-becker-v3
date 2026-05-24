@@ -709,23 +709,22 @@ export default function PortfolioDome() {
                 [ 📂 BACK TO PORTFOLIO GRID ]
               </button>
 
-              <Link href="/" passHref legacyBehavior>
-                <a 
-                  className="hud-btn"
-                  style={{
-                    padding: '6px 14px',
-                    fontSize: '0.65rem',
-                    borderColor: 'var(--color-accent)',
-                    borderRadius: '8px',
-                    background: 'rgba(var(--color-accent-rgb), 0.1)',
-                    cursor: 'pointer',
-                    color: '#fff',
-                    fontFamily: 'var(--font-tech)',
-                    textDecoration: 'none'
-                  }}
-                >
-                  [ 🏨 RETURN TO RESIDENCE ]
-                </a>
+              <Link 
+                href="/" 
+                className="hud-btn"
+                style={{
+                  padding: '6px 14px',
+                  fontSize: '0.65rem',
+                  borderColor: 'var(--color-accent)',
+                  borderRadius: '8px',
+                  background: 'rgba(var(--color-accent-rgb), 0.1)',
+                  cursor: 'pointer',
+                  color: '#fff',
+                  fontFamily: 'var(--font-tech)',
+                  textDecoration: 'none'
+                }}
+              >
+                [ 🏨 RETURN TO RESIDENCE ]
               </Link>
             </div>
           </div>

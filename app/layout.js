@@ -63,8 +63,8 @@ export default function RootLayout({ children }) {
 
             {/* Decoupled Floating Return Button */}
             {pathname !== '/' && (
-              <Link href="/" passHref legacyBehavior>
-                <a className="floating-residence-return">[ 🏨 RETURN TO RESIDENCE ]</a>
+              <Link href="/" className="floating-residence-return">
+                [ 🏨 RETURN TO RESIDENCE ]
               </Link>
             )}
 

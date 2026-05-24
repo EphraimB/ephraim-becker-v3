@@ -680,10 +680,38 @@ export default function PortfolioDome() {
 
       {/* EXPERIMENTAL FULL-SCREEN CONVERSATIONAL OVERLAY */}
       {isConversationalMode && (
-        <div className="hologram-chat-overlay">
+        <div className="hologram-chat-overlay" style={{ overflowY: 'auto' }}>
+          <style>{`
+            .floating-residence-return {
+              display: none !important;
+            }
+            @media (min-width: 901px) {
+              .hologram-chat-overlay .roomscale-natural-body {
+                left: 5% !important;
+                bottom: -55px !important;
+                height: 85% !important;
+                max-height: 650px !important;
+              }
+            }
+            @media (max-width: 900px) {
+              .novel-dialogue-grid {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 10px !important;
+                padding-bottom: 20px;
+              }
+              .roomscale-profile-spacer {
+                display: none !important;
+              }
+              .comic-speech-bubble {
+                padding: 16px 20px !important;
+                min-height: auto !important;
+              }
+            }
+          `}</style>
           
           {/* Header Bar */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: '1100px', margin: '0 auto 20px auto', borderBottom: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', paddingBottom: '12px' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: '1250px', margin: '0 auto 20px auto', borderBottom: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', paddingBottom: '12px', zIndex: 10 }}>
             <div>
               <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px' }}>
                 // COGNITIVE_CORE: EXPERIMENTAL HOLO-ASSISTANT v2.5
@@ -729,121 +757,153 @@ export default function PortfolioDome() {
             </div>
           </div>
 
-          {/* Core Chat Workspace */}
-          <div className="hologram-chat-container">
+          {/* Core Chat Workspace - Styled EXACTLY like Citizen Suite */}
+          <div className="hologram-chat-container" style={{
+            display: 'flex',
+            flex: 1,
+            width: '100%',
+            maxWidth: '1250px',
+            minHeight: 0,
+            margin: '0 auto',
+            position: 'relative',
+            justifyContent: 'center',
+            alignItems: 'center'
+          }}>
             
-            {/* Visual Novel Layout Section */}
-            <div className="dialogue-novel-row" style={{ display: 'flex', gap: '28px', alignItems: 'center', maxWidth: '820px', width: '100%', justifyContent: 'center' }}>
-              
-              {/* Left Side: Giant breathing cutout of Ephraim Becker */}
-              <div className="novel-avatar-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
-                <div style={{ width: '120px', height: '120px', borderRadius: '50%', border: '3px solid var(--color-accent)', overflow: 'hidden', boxShadow: '0 0 20px rgba(var(--color-accent-rgb), 0.4)' }}>
-                  <img 
-                    src="/assets/images/profile.png" 
-                    alt="Ephraim Becker" 
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
-                  />
-                </div>
-                <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px' }}>
-                  EPHRAIM BECKER
-                </span>
-                <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)' }}>
-                  PORTFOLIO COGNITIVE CORE
-                </span>
-              </div>
-
-              {/* Right Side: Comic dialogue speech bubble */}
-              <div className="comic-speech-bubble" style={{ 
-                flex: 1, 
-                background: 'rgba(255, 255, 255, 0.96)', 
-                color: '#080b13', 
-                borderRadius: '20px', 
-                padding: '24px 28px', 
-                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(var(--color-accent-rgb), 0.25)',
-                border: '3px solid var(--color-accent)',
-                position: 'relative',
-                minHeight: '140px',
-                display: 'flex',
-                flexDirection: 'column',
-                justifyContent: 'center'
-              }}>
-                {selectedConversationalProject && (
-                  <span style={{ display: 'block', fontSize: '0.55rem', color: 'var(--color-accent) !important', fontFamily: 'var(--font-tech)', fontWeight: 800, borderBottom: '1.5px solid rgba(0,0,0,0.08)', paddingBottom: '4px', marginBottom: '8px', letterSpacing: '1px' }}>
-                    // ACTIVE_SUBJECT: {selectedConversationalProject.title.toUpperCase()}
-                  </span>
-                )}
-                <p style={{ fontSize: '0.88rem', color: '#10141e !important', lineHeight: '1.5', margin: 0, textAlign: 'left' }}>
-                  {conversationalResponse}
-                </p>
-              </div>
-
+            {/* Roomscale standing citizen figure - metropolis themed */}
+            <div className="roomscale-natural-body page-metropolis" style={{ display: 'flex', zIndex: 1 }}>
+              <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
             </div>
 
-            {/* Prompt Choices Portal */}
-            <div style={{ marginTop: '30px', width: '100%', maxWidth: '820px' }}>
-              <span style={{ display: 'block', fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1.5px', marginBottom: '12px', textTransform: 'uppercase', textAlign: 'center', fontWeight: 700 }}>
-                {selectedConversationalProject ? "FOLLOW-UP TELEMETRY QUERIES" : "SELECT A PROJECT TO INITIATE CONVERSATION"}
-              </span>
+            {/* Spacious 2-Column Grid Centering Your Cutout & Speech Bubble */}
+            <div 
+              className="novel-dialogue-grid" 
+              style={{ 
+                overflow: 'visible',
+                gridTemplateColumns: '210px min(580px, 62vw)',
+                justifyContent: 'center',
+                alignItems: 'center',
+                display: 'grid',
+                width: '100%',
+                zIndex: 2
+              }}
+            >
+              
+              {/* Spacer overlaying the absolute roomscale cutout */}
+              <div className="roomscale-profile-spacer" style={{ width: '100%', height: '100%', pointerEvents: 'none' }}></div>
 
-              {selectedConversationalProject ? (
-                /* Sub-prompts: Ask details, ask takeaways, ask other */
-                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <button 
-                    onClick={() => setConversationalResponse(
-                      `Let me explain the development details for the ${selectedConversationalProject.title}! ${selectedConversationalProject.details}`
-                    )}
-                    className="conversational-choice-btn"
-                    style={{ background: 'rgba(var(--color-accent-rgb), 0.05)', borderColor: 'var(--color-accent)' }}
-                  >
-                    🚀 How did you build it? What challenges did you face?
-                  </button>
+              {/* Chat Dialogue Column */}
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', minHeight: 0, overflow: 'visible', width: '100%' }}>
+                
+                {/* Comic dialogue speech bubble */}
+                <div className="comic-speech-bubble" style={{ 
+                  display: 'flex', 
+                  flexDirection: 'column', 
+                  minHeight: '260px', 
+                  justifyContent: 'space-between',
+                  background: 'rgba(255, 255, 255, 0.96)', 
+                  color: '#080b13', 
+                  borderRadius: '20px', 
+                  padding: '20px 24px', 
+                  boxShadow: '0 12px 36px rgba(0, 0, 0, 0.5), 0 0 25px rgba(var(--color-accent-rgb), 0.2)',
+                  border: '2.5px solid var(--color-accent)'
+                }}>
+                  
+                  {/* Stepper Header (Telemetry indicators) */}
+                  <div className="bubble-telemetry-header">
+                    <span className="bubble-telemetry-coord">
+                      TRANSMITTING COORD: PORTFOLIO_ARCHIVE-X
+                    </span>
+                    <span className="bubble-telemetry-status">
+                      TELEMETRY ACTIVE
+                    </span>
+                  </div>
 
-                  <button 
-                    onClick={() => setConversationalResponse(
-                      `For the ${selectedConversationalProject.title}, the main learning experience was: ${selectedConversationalProject.takeaways}`
-                    )}
-                    className="conversational-choice-btn"
-                    style={{ background: 'rgba(0, 255, 136, 0.03)', borderColor: 'var(--neon-emerald)' }}
-                  >
-                    💡 What were your core takeaways and lessons learned?
-                  </button>
+                  {/* HUD Active Topic Indicator */}
+                  <div className="bubble-topic-indicator">
+                    <span className="bubble-topic-text">
+                      [ 💬 ACTIVE TOPIC: {selectedConversationalProject ? selectedConversationalProject.title.toUpperCase() : "PORTFOLIO COGNITIVE ASSISTANT"} ]
+                    </span>
+                  </div>
 
-                  <button 
-                    onClick={() => {
-                      setSelectedConversationalProject(null);
-                      setConversationalResponse(
-                        "No problem! What other engineering software system or configuration in my archives would you like to ask me about?"
-                      );
-                    }}
-                    className="conversational-choice-btn"
-                    style={{ background: 'rgba(255,255,255,0.03)' }}
-                  >
-                    ↩️ Ask about a different project...
-                  </button>
+                  {/* Stepper Body: Dynamic Dialogue */}
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 0 }}>
+                    <p style={{ fontSize: '0.85rem', lineHeight: '1.5', fontWeight: 500, color: 'rgba(0,0,0,0.82)', margin: 0, textAlign: 'left' }}>
+                      {conversationalResponse}
+                    </p>
+                  </div>
+
                 </div>
-              ) : (
-                /* General Prompt List of Projects */
-                <div className="conversational-portal-choices">
-                  {PROJECTS.map((project) => (
-                    <button
-                      key={project.id}
-                      onClick={() => {
-                        setSelectedConversationalProject(project);
-                        setConversationalResponse(
-                          `Ah, the ${project.title}! It's a fascinating system classification. ${project.description} What specific details would you like to know about it?`
-                        );
-                      }}
-                      className="conversational-choice-btn"
-                    >
-                      <span style={{ fontSize: '0.8rem' }}>📂</span>
-                      <div>
-                        <span style={{ display: 'block', fontSize: '0.68rem', fontWeight: 'bold' }}>{project.title}</span>
-                        <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>{project.category}</span>
-                      </div>
-                    </button>
-                  ))}
+
+                {/* Prompt Choices Portal */}
+                <div style={{ width: '100%', zIndex: 10 }}>
+                  <span style={{ display: 'block', fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1.5px', marginBottom: '10px', textTransform: 'uppercase', textAlign: 'center', fontWeight: 700 }}>
+                    {selectedConversationalProject ? "FOLLOW-UP TELEMETRY QUERIES" : "SELECT A PROJECT TO INITIATE CONVERSATION"}
+                  </span>
+
+                  {selectedConversationalProject ? (
+                    /* Sub-prompts: Ask details, ask takeaways, ask other */
+                    <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                      <button 
+                        onClick={() => setConversationalResponse(
+                          `Let me explain the development details for the ${selectedConversationalProject.title}! ${selectedConversationalProject.details}`
+                        )}
+                        className="conversational-choice-btn"
+                        style={{ background: 'rgba(var(--color-accent-rgb), 0.05)', borderColor: 'var(--color-accent)' }}
+                      >
+                        🚀 How did you build it? What challenges did you face?
+                      </button>
+
+                      <button 
+                        onClick={() => setConversationalResponse(
+                          `For the ${selectedConversationalProject.title}, the main learning experience was: ${selectedConversationalProject.takeaways}`
+                        )}
+                        className="conversational-choice-btn"
+                        style={{ background: 'rgba(0, 255, 136, 0.03)', borderColor: 'var(--neon-emerald)' }}
+                      >
+                        💡 What were your core takeaways and lessons learned?
+                      </button>
+
+                      <button 
+                        onClick={() => {
+                          setSelectedConversationalProject(null);
+                          setConversationalResponse(
+                            "No problem! What other engineering software system or configuration in my archives would you like to ask me about?"
+                          );
+                        }}
+                        className="conversational-choice-btn"
+                        style={{ background: 'rgba(255,255,255,0.03)' }}
+                      >
+                        ↩️ Ask about a different project...
+                      </button>
+                    </div>
+                  ) : (
+                    /* General Prompt List of Projects */
+                    <div className="conversational-portal-choices" style={{ margin: '0 auto', maxWidth: '720px' }}>
+                      {PROJECTS.map((project) => (
+                        <button
+                          key={project.id}
+                          onClick={() => {
+                            setSelectedConversationalProject(project);
+                            setConversationalResponse(
+                              `Ah, the ${project.title}! It's a fascinating system classification. ${project.description} What specific details would you like to know about it?`
+                            );
+                          }}
+                          className="conversational-choice-btn"
+                        >
+                          <span style={{ fontSize: '0.8rem' }}>📂</span>
+                          <div>
+                            <span style={{ display: 'block', fontSize: '0.68rem', fontWeight: 'bold' }}>{project.title}</span>
+                            <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>{project.category}</span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
                 </div>
-              )}
+
+              </div>
+
             </div>
 
           </div>

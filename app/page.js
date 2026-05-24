@@ -372,24 +372,114 @@ export default function CitizenSuite() {
                   <text x="300" y="50" fill="rgba(255, 255, 255, 0.2)" fontSize="6.5" fontFamily="var(--font-tech)" textAnchor="middle" transform="rotate(-90 300 50)" letterSpacing="1px">ENDZONE</text>
 
                   {/* Huddle strategic routes planned (dashed static background) */}
-                  <path d="M 50,75 L 140,75 Q 180,75 190,40 T 275,30" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <path d="M 70,25 L 140,25 Q 170,25 180,45 T 280,50" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.2" strokeDasharray="3 3" />
+                  <path d="M 70,75 L 140,75 Q 180,75 190,40 T 275,30" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="3 3" />
 
-                  {/* Active receiver route run (neon glowing slant route) */}
-                  <path d="M 50,50 L 120,50 Q 150,50 160,20 T 260,15 L 290,15" fill="none" stroke="#00f0ff" strokeWidth="2.2" strokeLinecap="round" strokeDasharray="6 4" style={{ animation: 'route-run 4s linear infinite' }} />
-                  <text x="75" y="44" fill="var(--neon-cyan)" fontSize="5.5" fontFamily="var(--font-tech)" fontWeight={700}>SLANT ROUTE</text>
+                  {/* Active receiver route run (neon glowing slant route for WR1) */}
+                  <path d="M 70,25 L 140,25 Q 170,25 180,45 T 280,50" fill="none" stroke="#00ff88" strokeWidth="2.2" strokeLinecap="round" strokeDasharray="6 4" style={{ animation: 'route-run 4s linear infinite' }} />
+                  <text x="95" y="19" fill="var(--neon-emerald)" fontSize="5" fontFamily="var(--font-tech)" fontWeight={700}>CO-ED 5v5 SLANT PLAY</text>
 
-                  {/* Quarterback point */}
-                  <circle cx="50" cy="50" r="5" fill="var(--color-accent)" style={{ filter: 'drop-shadow(0 0 3px var(--color-accent))' }} />
-                  <text x="50" y="52" fill="#fff" fontSize="6.5" fontWeight={700} fontFamily="var(--font-tech)" textAnchor="middle">QB</text>
-
-                  {/* Receiver running figure & flags */}
-                  <g style={{ animation: 'receiver-catch 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="4.5" fill="#00f0ff" style={{ filter: 'drop-shadow(0 0 4px #00f0ff)' }} />
-                    {/* Glowing Flag Belts */}
-                    <path d="M -3,2 L -7,6 M 3,2 L 7,6" stroke="#ffb300" strokeWidth="1.5" />
-                    <text x="0" y="-7" fill="#fff" fontSize="5.5" fontFamily="var(--font-tech)" textAnchor="middle">WR</text>
+                  {/* ================= OFFENSE (GREEN TEAM) ================= */}
+                  {/* QB (Female ♀ - animated dropback) */}
+                  <g style={{ animation: 'qb-drop 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
+                    {/* Female Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M 1.2,-1.8 C 2.2,-2.2 3,-1 2.8,0.5 C 2.5,1.8 1.8,2.2 1.5,2.5" fill="none" stroke="#ffffff" strokeWidth="0.8" strokeLinecap="round" />
+                    <path d="M -3,3 C -3,1.5 -1.5,1.2 0,1.2 C 1.5,1.2 3,1.5 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(0,255,136,0.8)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>QB ♀</text>
                   </g>
 
+                  {/* Center (Male ♂ - animated block shift) */}
+                  <g style={{ animation: 'center-block 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
+                    {/* Male Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
+                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">C ♂</text>
+                  </g>
+
+                  {/* Running Back (Male ♂ - animated flat route) */}
+                  <g style={{ animation: 'rb-run 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
+                    {/* Male Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
+                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">RB ♂</text>
+                  </g>
+
+                  {/* WR2 (Male ♂ - animated deep post route) */}
+                  <g style={{ animation: 'wr2-run 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
+                    {/* Male Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
+                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">WR2 ♂</text>
+                  </g>
+
+                  {/* WR1 (Female ♀ - Slant Catch Receiver & Flags) */}
+                  <g style={{ animation: 'receiver-catch 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="6" stroke="#00ff88" strokeWidth="1.5" fill="rgba(0,255,136,0.2)" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
+                    {/* Female Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M 1.2,-1.8 C 2.2,-2.2 3,-1 2.8,0.5 C 2.5,1.8 1.8,2.2 1.5,2.5" fill="none" stroke="#ffffff" strokeWidth="0.8" strokeLinecap="round" />
+                    <path d="M -3,3 C -3,1.5 -1.5,1.2 0,1.2 C 1.5,1.2 3,1.5 3,3" fill="#ffffff" />
+                    {/* Glowing Flag Belts */}
+                    <path d="M -3.5,2.5 L -7.5,6.5 M 3.5,2.5 L 7.5,6.5" stroke="#ffb300" strokeWidth="1.5" />
+                    <text x="0" y="-8" fill="#fff" fontSize="5" fontWeight={700} fontFamily="var(--font-tech)" textAnchor="middle">WR1 ♀</text>
+                  </g>
+
+
+                  {/* ================= DEFENSE (BLUE TEAM) ================= */}
+                  {/* Blitzer/Rusher (Male ♂ - rushes QB) */}
+                  <g style={{ animation: 'rusher-rush 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
+                    {/* Male Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
+                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(0,240,255,0.8)" fontSize="4.5" textAnchor="middle">R ♂</text>
+                  </g>
+
+                  {/* Linebacker (Female ♀ - drops zone) */}
+                  <g style={{ animation: 'lb-drop 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
+                    {/* Female Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M 1.2,-1.8 C 2.2,-2.2 3,-1 2.8,0.5 C 2.5,1.8 1.8,2.2 1.5,2.5" fill="none" stroke="#ffffff" strokeWidth="0.8" strokeLinecap="round" />
+                    <path d="M -3,3 C -3,1.5 -1.5,1.2 0,1.2 C 1.5,1.2 3,1.5 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">LB ♀</text>
+                  </g>
+
+                  {/* CB1 (Female ♀ - covers WR1) */}
+                  <g style={{ animation: 'cb1-chase 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
+                    {/* Female Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M 1.2,-1.8 C 2.2,-2.2 3,-1 2.8,0.5 C 2.5,1.8 1.8,2.2 1.5,2.5" fill="none" stroke="#ffffff" strokeWidth="0.8" strokeLinecap="round" />
+                    <path d="M -3,3 C -3,1.5 -1.5,1.2 0,1.2 C 1.5,1.2 3,1.5 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">CB1 ♀</text>
+                  </g>
+
+                  {/* CB2 (Male ♂ - covers WR2) */}
+                  <g style={{ animation: 'cb2-chase 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
+                    {/* Male Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
+                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">CB2 ♂</text>
+                  </g>
+
+                  {/* Safety (Male ♂ - deep safety) */}
+                  <g style={{ animation: 'safety-drop 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
+                    {/* Male Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
+                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">S ♂</text>
+                  </g>
+
+
+                  {/* ================= BALL & TEXT ================= */}
                   {/* Gliding football pass */}
                   <g style={{ animation: 'ball-pass 4s ease-in-out infinite' }}>
                     <ellipse cx="0" cy="0" rx="5.5" ry="3" fill="#8d4a25" stroke="#ffffff" strokeWidth="0.8" />
@@ -509,6 +599,66 @@ export default function CitizenSuite() {
           100% { stroke-dashoffset: 0; }
         }
 
+        @keyframes qb-drop {
+          0%, 30% { transform: translate(50px, 50px); }
+          45%, 100% { transform: translate(45px, 52px); }
+        }
+
+        @keyframes center-block {
+          0%, 30% { transform: translate(75px, 50px); }
+          45%, 100% { transform: translate(80px, 50px); }
+        }
+
+        @keyframes rb-run {
+          0%, 30% { transform: translate(45px, 60px); }
+          50% { transform: translate(90px, 75px); }
+          72%, 100% { transform: translate(140px, 75px); }
+        }
+
+        @keyframes wr2-run {
+          0%, 30% { transform: translate(70px, 75px); }
+          55% { transform: translate(160px, 75px); }
+          72%, 100% { transform: translate(240px, 45px); }
+        }
+
+        @keyframes receiver-catch {
+          0%, 30% { transform: translate(70px, 25px); }
+          45% { transform: translate(140px, 25px); }
+          60% { transform: translate(180px, 45px); }
+          72%, 100% { transform: translate(280px, 50px); }
+        }
+
+        @keyframes rusher-rush {
+          0%, 30% { transform: translate(90px, 42px); }
+          50% { transform: translate(65px, 48px); }
+          72%, 100% { transform: translate(48px, 52px); }
+        }
+
+        @keyframes lb-drop {
+          0%, 30% { transform: translate(100px, 55px); }
+          50% { transform: translate(125px, 58px); }
+          72%, 100% { transform: translate(145px, 60px); }
+        }
+
+        @keyframes cb1-chase {
+          0%, 30% { transform: translate(88px, 25px); }
+          45% { transform: translate(145px, 28px); }
+          60% { transform: translate(188px, 48px); }
+          72%, 100% { transform: translate(288px, 52px); }
+        }
+
+        @keyframes cb2-chase {
+          0%, 30% { transform: translate(88px, 75px); }
+          55% { transform: translate(168px, 77px); }
+          72%, 100% { transform: translate(246px, 48px); }
+        }
+
+        @keyframes safety-drop {
+          0%, 30% { transform: translate(130px, 50px); }
+          50% { transform: translate(165px, 35px); }
+          72%, 100% { transform: translate(270px, 46px); }
+        }
+
         @keyframes ball-pass {
           0%, 30% {
             transform: translate(50px, 50px) scale(0.6);
@@ -518,31 +668,16 @@ export default function CitizenSuite() {
             opacity: 1;
           }
           52% {
-            transform: translate(170px, 15px) scale(1.1) rotate(45deg);
+            transform: translate(165px, 25px) scale(1.1) rotate(45deg);
             opacity: 1;
           }
           72% {
-            transform: translate(280px, 15px) scale(0.8) rotate(120deg);
+            transform: translate(280px, 50px) scale(0.8) rotate(120deg);
             opacity: 1;
           }
           78%, 100% {
-            transform: translate(280px, 15px) scale(0.8);
+            transform: translate(280px, 50px) scale(0.8);
             opacity: 0;
-          }
-        }
-
-        @keyframes receiver-catch {
-          0%, 30% {
-            transform: translate(50px, 50px);
-          }
-          45% {
-            transform: translate(120px, 50px);
-          }
-          60% {
-            transform: translate(160px, 20px);
-          }
-          72%, 100% {
-            transform: translate(280px, 15px);
           }
         }
 

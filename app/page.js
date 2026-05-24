@@ -6,174 +6,224 @@ import CityGridMap from '../components/CityGridMap';
 
 const DIALOG_NODES = {
   greeting: {
-    title: "👋 1. GENERAL INTRODUCTION",
-    text: "Welcome to my Citizen Suite! I'm Ephraim Becker. From my home in Cedarhurst on Earth, I'm linked as a Remote Cadet to Adelphi University, studying computer science and keeping my logic sharp with Calculus. What topic would you like to explore?",
-    facts: [
-      "👤 IDENTITY: Ephraim Becker",
-      "🏫 EDUCATION: Computer Science Major (Adelphi University)",
-      "🌍 LOCATION: Cedarhurst, Earth (linked as a Remote Cadet)",
-      "🚴 HOBBIES: Biking, Sci-Fi, Music, and Flag Football"
-    ],
+    title: "👋 GENERAL INTRODUCTION",
+    text: "Welcome to my Citizen Suite! I'm Ephraim Becker. From my home in Cedarhurst on Earth, I'm linked as a Remote Cadet to Adelphi University, studying computer science and keeping my logic sharp with Calculus. I'm excited to share my world with you—whether you want to dive into my academic studies, explore my personal hobbies, or take a warp transit across Ares City!",
     choices: [
       { text: "Go to Studies & Logic 🎓", next: "studies" },
-      { text: "Explore Hobbies & Passions 🚴", next: "interests" }
+      { text: "Explore Hobbies & Passions 🚴", next: "interests" },
+      { text: "Hey, completely unrelated, but let's warp to my portfolio! 📂", next: "warp_portfolio" }
     ],
     graphic: 'space'
   },
   studies: {
-    title: "🎓 2. STUDIES & LOGIC",
-    text: "Earthside, I study computer science, database structures, and discrete logic pathways. I also tackle Calculus to sync earthside engineering with Mars municipal grids. It keeps my logic sharp, even though my real passion remains building visual software and responsive interfaces.",
-    facts: [
-      "🎓 PROGRAM: Computer Science BS degree",
-      "💾 FOCUS: Database indexing, algorithm structures",
-      "📐 LOGIC SHARPENER: Calculus coordinate math",
-      "🗺️ APPLICATIONS: Grid mapping & sector flows"
-    ],
+    title: "🎓 COMPUTER SCIENCE STUDIES",
+    text: "Earthside, I am a Computer Science major at Adelphi University, focusing on database structures, index search efficiency, and discrete logic pathways. To keep my logic sharp for building systems, I also tackle college-level Calculus. It's a great workout for my brain, even though my true design passion lies in crafting highly visual user interfaces and responsive web layouts.",
     choices: [
-      { text: "◀ Back to Introduction", next: "greeting" },
-      { text: "Explore Hobbies & Passions 🚴", next: "interests" },
-      { text: "Go to Ares Warp Dock 🚀", next: "travel" }
+      { text: "How does Calculus keep your logic sharp? 📐", next: "math" },
+      { text: "Let's explore your hobbies outside of CS! 🚴", next: "interests" },
+      { text: "By the way, let's abruptly check out your Ares warp dock! 🚀", next: "travel" },
+      { text: "Let's go back to your general background and introduction! 🏠", next: "greeting" }
+    ],
+    graphic: 'studies'
+  },
+  math: {
+    title: "📐 CALCULUS & GRID LOGIC",
+    text: "Calculus coordinate math is incredible for training analytical thinking. It requires absolute precision, much like programming database queries or routing network packets. I treat it as a dedicated logic sharpener, helping me visualize complex slopes and equations that translate directly into grid mapping and software coordinate calculations.",
+    choices: [
+      { text: "How does this logic apply to tech and coding? 💻", next: "tech" },
+      { text: "Show me your hobbies catalog! 🚴", next: "interests" },
+      { text: "Wait, a random thought popped up—can we warp to your Portfolio Dome? 📂", next: "warp_portfolio" },
+      { text: "I'd love to hear about your CS studies and major again! 🎓", next: "studies" }
     ],
     graphic: 'studies'
   },
   interests: {
-    title: "🚴 3. HOBBIES & PASSIONS",
-    text: "Select a hobby from the menu below to explore my personal interests, read factual details, and view interactive animations!",
-    facts: [],
-    choices: [],
-    graphic: 'interests'
+    title: "🚴 HOBBIES & PASSIONS",
+    text: "I have a wide range of hobbies that keep me balanced! I'm passionate about technology and coding, deep sci-fi and fantasy worldbuilding, both pop and classical music, long relaxing bike rides, and playing flag football. Let's go through them—where should we start?",
+    choices: [
+      { text: "Tech & GUI Coding 💻", next: "tech" },
+      { text: "Sci-Fi & Fantasy Movies 🎬", next: "scifi" },
+      { text: "Classical Organ & Pop Music 🎵", next: "music_organ" },
+      { text: "Smooth Biking & Headwinds 🚲", next: "biking_relax" },
+      { text: "Flag Football & Team Plays 🏈", next: "football" },
+      { text: "Wait, completely unrelated, but let's warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
+      { text: "Tell me more about your computer science studies and logic! 🎓", next: "studies" }
+    ],
+    graphic: ''
+  },
+  tech: {
+    title: "💻 TECH & GUI DESIGN",
+    text: "I got into technology because graphical user interfaces (GUIs) completely fascinated me! The idea of designing responsive, visual operating decks led me directly into coding. It's an amazing feeling to build entirely new digital environments and interactive software from scratch. Now, I apply that same design passion to building custom frontend decks like the Ares City OS!",
+    choices: [
+      { text: "Are you also into sci-fi and fantasy? 🎬", next: "scifi" },
+      { text: "Let's check out your music hobbies next! 🎵", next: "music_organ" },
+      { text: "By the way, let's abruptly warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
+      { text: "Let's go back to your main hobbies and passions directory! 🚴", next: "interests" }
+    ],
+    graphic: 'gui'
+  },
+  scifi: {
+    title: "🎬 SCI-FI & FANTASY WORLD-BUILDING",
+    text: "I am deeply passionate about sci-fi and fantasy cinematic universes. I love movies with cool futuristic worldbuilding, legendary space operas, and magical lore that spark my imagination. My top favorites are Star Wars, Harry Potter, Lord of the Rings, and Back to the Future—each one has such an engaging world and time-travel or magical logic!",
+    choices: [
+      { text: "Speaking of space, let's see the warp dock! 🚀", next: "travel" },
+      { text: "What kind of music do you listen to? 🎵", next: "music_organ" },
+      { text: "Hey, completely unrelated, let's check your CS studies! 🎓", next: "studies" },
+      { text: "Let's head back to the main list of your hobbies! 🚴", next: "interests" }
+    ],
+    graphic: 'scifi'
+  },
+  music_organ: {
+    title: "🎹 CLASSICAL MUSIC & PIPE ORGAN",
+    text: "I have a deep love for music, spanning both classical compositions and modern pop. In the classical realm, the pipe organ is my absolute favorite musical instrument because of its grand mechanical power, rich acoustics, and architectural sound. The complex coordination of manuals, pedals, and stops is just awe-inspiring.",
+    choices: [
+      { text: "Taylor Swift and Noah Kahan? Tell me about your pop albums! 💿", next: "music_pop" },
+      { text: "Do you sing or perform yourself? 🎤", next: "music_choir" },
+      { text: "By the way, let's abruptly jump to your flag football plays! 🏈", next: "football" },
+      { text: "Can we go back to the main hobbies and passions catalog? 🚴", next: "interests" }
+    ],
+    graphic: 'music_organ'
+  },
+  music_pop: {
+    title: "💿 POP STORYTELLING & ALBUMS",
+    text: "On the pop side, I love listening to complete pop albums from start to finish. Artists like Taylor Swift and Noah Kahan are my top favorites—their narrative lyrics, emotional storytelling, and acoustic folk-pop arrangements are incredibly engaging and relatable. Listening to a whole album is a wonderful immersive experience.",
+    choices: [
+      { text: "Tell me about singing in a choir or doing karaoke! 🎤", next: "music_choir" },
+      { text: "Tell me more about the classical pipe organ! 🎹", next: "music_organ" },
+      { text: "Wait, a random thought popped up—let's warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
+      { text: "Let's go back to your main hobbies catalog! 🚴", next: "interests" }
+    ],
+    graphic: 'music_pop'
+  },
+  music_choir: {
+    title: "🎤 CHOIR SINGING & KARAOKE",
+    text: "Music isn't just a listening hobby for me—I also participate! I love singing in a choir, where I can blend my voice in perfect harmony with others. When I want to sing solo, I absolutely love the fun and energy of doing karaoke. It's a wonderful way to express my passion for vocals!",
+    choices: [
+      { text: "Do you enjoy biking outdoors as well? 🚲", next: "biking_relax" },
+      { text: "Let's talk about Taylor Swift & Noah Kahan again! 💿", next: "music_pop" },
+      { text: "Completely unrelated, but can we see your CS studies? 🎓", next: "studies" },
+      { text: "Can we return to your main hobbies catalog? 🚴", next: "interests" }
+    ],
+    graphic: 'music_choir'
+  },
+  biking_relax: {
+    title: "🚲 SMOOTH CYCLING & FREEDOM",
+    text: "Biking is one of my favorite outdoor activities! What I love most is the sheer freedom it gives me—I don't have to rely on public transportation schedules and can travel whenever I want. Cruising along the dome pathways is incredibly relaxing and gives me a great mental reset.",
+    choices: [
+      { text: "What happens when there's a strong headwind? 💨", next: "biking_wind" },
+      { text: "Do you play flag football too? 🏈", next: "football" },
+      { text: "Wait, let's abruptly warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
+      { text: "Let's go back to the main list of hobbies! 🚴", next: "interests" }
+    ],
+    graphic: 'biking_relax'
+  },
+  biking_wind: {
+    title: "💨 CYCLING HEADWIND CHALLENGE",
+    text: "Biking is peaceful and relaxing—except when there is a strong headwind! Fighting against headwinds is a tough physical challenge that requires extra pedaling and pure grit. But I embrace the aerobic slogging because it keeps my cardiovascular endurance sharp and builds muscle.",
+    choices: [
+      { text: "That sounds intense! Tell me about flag football. 🏈", next: "football" },
+      { text: "Go back to the relaxing biking paths! 🚲", next: "biking_relax" },
+      { text: "Hey, completely unrelated, but let's see the Ares Warp Dock! 🚀", next: "travel" },
+      { text: "Can we return to the main hobbies menu? 🚴", next: "interests" }
+    ],
+    graphic: 'biking_wind'
+  },
+  football: {
+    title: "🏈 FLAG FOOTBALL OVERVIEW",
+    text: "I got hooked on flag football after watching exciting game highlights on YouTube! What caught my attention was how fast-paced and strategic the sport is. Because it is non-contact, it's all about speed, positioning, and clever plays rather than physical hits. I love playing both on offense and defense—offense is amazing for clean route-running and catching passes, while defense is an absolute blast for reading plays and shutting down the other team! There are so many distinct aspects of the game that thrill me!",
+    choices: [
+      { text: "What excites you most about huddles and playbook planning? 🗣️", next: "football_huddles" },
+      { text: "What does it feel like to catch a good pass on offense? 🏈", next: "football_passes" },
+      { text: "Playing defense is cool too, what is that like? 🛡️", next: "football_defense" },
+      { text: "How do predefined scripts help you coordinate and fit in? 🤝", next: "football_coordination" },
+      { text: "Wait, completely unrelated, let's warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
+      { text: "Let's go back to the main hobbies directory! 🚴", next: "interests" }
+    ],
+    graphic: 'football'
+  },
+  football_huddles: {
+    title: "🗣️ THE THRILL OF PLAYBOOK HUDDLES",
+    text: "For me, the huddle is one of the most exciting parts of the game. It is a quiet moment of absolute focus. Standing in a tight circle with my teammates, we review the blueprint of the play. There is a deep, shared understanding as we trace routes with our hands in the air. For someone like me who faces social hurdles, the huddle provides a structured, clear objective where everyone is completely aligned on the same page. It's incredibly satisfying!",
+    choices: [
+      { text: "What about playing on defense and making big stops? 🛡️", next: "football_defense" },
+      { text: "What does it feel like to catch a good pass on offense? 🏈", next: "football_passes" },
+      { text: "How do predefined social scripts help you fit in? 🤝", next: "football_coordination" },
+      { text: "Let's talk about the general sport of flag football! 🏈", next: "football" }
+    ],
+    graphic: 'football'
+  },
+  football_passes: {
+    title: "🏈 THE THRILL OF CATCHING A PASS",
+    text: "Catching a good pass is a pure adrenaline rush! You sprint along your pre-planned route, locking your eyes onto the football as it arcs through the sky. The world around you fades out, leaving only the physics of the ball's trajectory. You reach out, secure the ball with soft hands, tuck it in, and turn to run. That instant second where the ball tucks into your hands is a burst of accomplishment—you did your job perfectly, and the team moves forward!",
+    choices: [
+      { text: "What excites you most about playbook huddles? 🗣️", next: "football_huddles" },
+      { text: "What is it like playing on defense and stopping plays? 🛡️", next: "football_defense" },
+      { text: "How do predefined scripts help you socialize during the game? 🤝", next: "football_coordination" },
+      { text: "Tell me about the general flag football overview! 🏈", next: "football" }
+    ],
+    graphic: 'football'
+  },
+  football_defense: {
+    title: "🛡️ THE THRILL OF DEFENSIVE STOPS",
+    text: "Playing defense is just as cool and thrilling! There is an absolute rush in reading the quarterback's eyes, anticipating the route, and completely messing up the other team's carefully planned play. Whether it's rushing the QB to force a hurried throw, tipping a pass away, or pulling a flag just before the first down, my teammates and I go wild when we make a big stop. Celebrating that defensive block together is an amazing feeling of shared victory!",
+    choices: [
+      { text: "What is it like catching a good pass on offense? 🏈", next: "football_passes" },
+      { text: "What excites you most about playbook huddles? 🗣️", next: "football_huddles" },
+      { text: "How do predefined social scripts help you fit in? 🤝", next: "football_coordination" },
+      { text: "By the way, let's abruptly jump to your CS studies! 🎓", next: "studies" },
+      { text: "Let's talk about the general flag football overview! 🏈", next: "football" }
+    ],
+    graphic: 'football'
+  },
+  football_coordination: {
+    title: "🤝 TEAM BLENDING & SOCIAL SCRIPTS",
+    text: "Because I have autism, natural socializing can feel incredibly draining and difficult. But flag football has a wonderful structure that makes fitting in so much easier. The game itself operates on predefined social scripts. When someone makes a play, I can say 'nice catch!' or 'good job!' and it's completely natural and expected. We coordinate using clear, structured signals and routes. It takes away the social pressure and allows me to feel like a valued part of a team without the stress of open-ended small talk.",
+    choices: [
+      { text: "Predefined scripts are a great tool! Tell me about huddles again. 🗣️", next: "football_huddles" },
+      { text: "That makes so much sense. What about catching a pass? 🏈", next: "football_passes" },
+      { text: "Playing defense sounds great, tell me more about that! 🛡️", next: "football_defense" },
+      { text: "Let's go back to your main hobbies catalog! 🚴", next: "interests" }
+    ],
+    graphic: 'football'
   },
   travel: {
-    title: "🚀 4. ARES WARP DOCK",
-    text: "Ready to depart the Citizen Suite? Select a dome coordinate below to trigger your hyperloop warp, or we can keep chatting!",
-    facts: [
-      "🛰️ COORD BASE: PENTHOUSE_A-02",
-      "🚇 TRANSIT: Direct warp lines active",
-      "🌐 NETWEIGHT: 2.0 (Suite Residence)",
-      "🏙️ DESTINATIONS: Metropolis Hub, Portfolio, Biosphere, Quantum Net"
-    ],
+    title: "🚀 ARES WARP DOCK",
+    text: "Ready to depart the Citizen Suite? Select a dome coordinate below to trigger your hyperloop warp, or we can keep chatting and explore other topics! You can always restart the conversation from the beginning too.",
     choices: [
-      { text: "◀ Back to Hobbies Hub", next: "interests" },
-      { text: "🔄 Restart from Introduction", next: "greeting" }
+      { text: "🔄 Restart from the introduction!", next: "greeting" },
+      { text: "Tell me about your CS studies! 🎓", next: "studies" },
+      { text: "Explore your hobbies catalog! 🚴", next: "interests" },
+      { text: "Wait, a random thought popped up—let's warp to my portfolio! 📂", next: "warp_portfolio" }
     ],
     graphic: 'travel'
   }
 };
 
-const NODE_KEYS = ['greeting', 'studies', 'interests', 'travel'];
-
-const HOBBIES_DATA = {
-  tech: {
-    title: "💻 HOBBY: TECH & CODING",
-    text: "I got into technology because graphical user interfaces (GUIs) completely fascinated me! The idea of designing responsive, visual operating decks led me to coding. It's just so cool that I can build entirely new digital worlds from scratch. Now, I design interfaces for Ares City OS!",
-    facts: [
-      "🎨 PRIMARY PASSION: Graphical User Interfaces (GUIs)",
-      "💡 INSPIRATION: Fascination with visual interactive decks",
-      "⚙️ MOTIVATION: Sensation of creating functional software",
-      "🌐 EXPERIENCE: HUD panels and Martian OS desktops"
-    ],
-    graphic: 'gui'
-  },
-  scifi: {
-    title: "🎬 HOBBY: SCI-FI & FANTASY",
-    text: "I am highly passionate about deep sci-fi and fantasy worldbuilding. I love watching futuristic cinematic universes, magical realms, and legendary space operas that spark my imagination.",
-    facts: [
-      "⚔️ STAR WARS: Appreciate space battles & lightsaber lore",
-      "🪄 HARRY POTTER: Love magic systems & school worldbuilding",
-      "💍 LORD OF THE RINGS: Deep respect for Tolkien's mythos",
-      "⚡ BACK TO THE FUTURE: Fascinated by time-travel logic"
-    ],
-    graphic: 'scifi'
-  },
-  music: {
-    steps: [
-      {
-        title: "🎹 MUSIC: CLASSICAL ORGAN (STEP 1/3)",
-        text: "I am deeply passionate about music, spanning both classical compositions and modern pop. In the classical realm, the pipe organ is my absolute favorite instrument because of its grand mechanical power and architectural sound.",
-        facts: [
-          "🎵 MUSIC STYLE: Classical & Choral compositions",
-          "🎹 FAV INSTRUMENT: The Pipe Organ (grand acoustics)",
-          "🎼 MUSIC ROLE: Listening & structural arrangement",
-          "🎤 ACTIVE WORK: Singing in a choir & karaoke fun"
-        ],
-        graphic: 'music_organ'
-      },
-      {
-        title: "💿 MUSIC: POP ALBUMS (STEP 2/3)",
-        text: "On the pop side of my collection, I love listening to complete pop albums. Artists like Taylor Swift and Noah Kahan are my top favorites—their lyrics and musical storytelling are incredibly engaging.",
-        facts: [
-          "💿 POP ALBUMS: Complete track listening sessions",
-          "👸 TAYLOR SWIFT: Relatable narrative & lyricism",
-          "🌲 NOAH KAHAN: Acoustic folk-pop arrangements",
-          "🔊 PLAYBACK: Fully immersive album tracks"
-        ],
-        graphic: 'music_pop'
-      },
-      {
-        title: "🎤 MUSIC: CHOIR & KARAOKE (STEP 3/3)",
-        text: "Music isn't just a listening hobby for me—I also participate! I love singing in a choir, blending my voice in sync with others, and I always enjoy the fun and energy of performing karaoke.",
-        facts: [
-          "🗣️ CHORAL BLEND: Singing in harmony with groups",
-          "🎤 KARAOKE DOCK: Solo vocal performance fun",
-          "🥳 TEAMWORK: Feeling of singing together in sync",
-          "🎶 RESONANCE: Grand classical and pop vocalization"
-        ],
-        graphic: 'music_choir'
-      }
-    ]
-  },
-  biking: {
-    steps: [
-      {
-        title: "🚲 BIKING: FREEDOM & CYCLING (STEP 1/2)",
-        text: "Biking is one of my favorite outdoor activities. What I love most is the sheer freedom it gives me—I don't have to rely on public transportation schedules. It's incredibly relaxing to cruise along dome pathways.",
-        facts: [
-          "🚲 CYCLE TYPE: Scenic road bike riding",
-          "🔓 CORE VALUE: Not relying on public transportation",
-          "🌿 RECREATION: Highly relaxing mental reset",
-          "🚴 ROUTING: Active tracking of custom paths"
-        ],
-        graphic: 'biking_relax'
-      },
-      {
-        title: "💨 BIKING: HEADWIND CHALLENGE (STEP 2/2)",
-        text: "Biking is peaceful and relaxing—except when there is a strong headwind! Fighting against headwinds is a tough physical challenge that keeps my cardiovascular endurance sharp, even if it requires extra pedaling.",
-        facts: [
-          "💨 CHALLENGE: Headwind aerodynamic drag",
-          "⚠️ WIND WARNING: Opposing wind vectors triggered",
-          "🚴 EXERTION: Harder physical pedaling effort",
-          "💪 CARDIO: Slogging through wind to stay fit"
-        ],
-        graphic: 'biking_wind'
-      }
-    ]
-  },
-  football: {
-    title: "🏈 HOBBY: FLAG FOOTBALL",
-    text: "I first saw how fun flag football was from watching cool games on YouTube! What hooked me was the team coordination—discussing strategic routes in huddles, moving in perfect sync as a team, and the absolute thrill of scoring a touchdown. Check out our 5v5 playbook huddle play below!",
-    facts: [
-      "🏈 SPORT STYLE: Co-ed 5v5 Flag Football",
-      "🟢 GREEN TEAM: Offense (User's team, 3M / 2F)",
-      "🔵 BLUE TEAM: Defense (Opponent team, 3M / 2F)",
-      "🏃 STATIONS: WR1 target route running",
-      "🧠 STRATEGY: Coordinated huddle planning"
-    ],
-    graphic: 'football'
-  }
-};
+const NODE_KEYS = [
+  'greeting', 
+  'studies', 
+  'math', 
+  'interests', 
+  'tech', 
+  'scifi', 
+  'music_organ', 
+  'music_pop', 
+  'music_choir', 
+  'biking_relax', 
+  'biking_wind', 
+  'football', 
+  'football_huddles', 
+  'football_passes', 
+  'football_defense', 
+  'football_coordination', 
+  'travel'
+];
 
 export default function CitizenSuite() {
   const router = useRouter();
   const [transitState, setTransitState] = useState('slide-active');
   const [currentNode, setCurrentNode] = useState('greeting');
   const [isWalking, setIsWalking] = useState(false);
-  const [activeHobby, setActiveHobby] = useState('tech');
-  const [hobbyStep, setHobbyStep] = useState(1);
-
-  // Automatically reset step counter when transitioning nodes or sub-hobbies
-  useEffect(() => {
-    setHobbyStep(1);
-  }, [currentNode, activeHobby]);
 
   // Synchronize entry transition classes
   useEffect(() => {
@@ -237,33 +287,10 @@ export default function CitizenSuite() {
 
   const activeNode = DIALOG_NODES[currentNode] || DIALOG_NODES.greeting;
 
-  // Resolve topic metrics dynamically (supporting consolidated nodes and interactive steps)
-  const isHobbiesNode = currentNode === 'interests';
-  let activeTitle = "";
-  let activeText = "";
-  let activeFacts = [];
-  let activeGraphic = "";
-
-  if (!isHobbiesNode) {
-    activeTitle = activeNode.title;
-    activeText = activeNode.text;
-    activeFacts = activeNode.facts || [];
-    activeGraphic = activeNode.graphic;
-  } else {
-    const hobby = HOBBIES_DATA[activeHobby] || HOBBIES_DATA.tech;
-    if (hobby.steps) {
-      const stepData = hobby.steps[hobbyStep - 1] || hobby.steps[0];
-      activeTitle = stepData.title;
-      activeText = stepData.text;
-      activeFacts = stepData.facts || [];
-      activeGraphic = stepData.graphic;
-    } else {
-      activeTitle = hobby.title;
-      activeText = hobby.text;
-      activeFacts = hobby.facts || [];
-      activeGraphic = hobby.graphic;
-    }
-  }
+  // Resolve active topic narrative dynamically
+  const activeTitle = activeNode.topic || activeNode.title || "";
+  const activeText = activeNode.text || "";
+  const activeGraphic = activeNode.graphic || "";
 
   return (
     <div className="citizen-card-shell" style={{ flexDirection: 'column', overflow: 'visible' }}>
@@ -304,53 +331,28 @@ export default function CitizenSuite() {
               </span>
             </div>
 
-            {/* Persistent Visual HUD Segmented Tab Bar */}
+            {/* Non-Clickable HUD Active Topic Indicator */}
             <div style={{
               display: 'flex',
               background: 'rgba(0, 0, 0, 0.03)',
               borderRadius: '8px',
-              padding: '2px',
+              padding: '6px 12px',
               marginBottom: '14px',
-              gap: '2px',
-              overflowX: 'auto',
-              scrollbarWidth: 'none',
-              msOverflowStyle: 'none',
-              border: '1px solid rgba(0, 0, 0, 0.05)'
+              gap: '4px',
+              alignItems: 'center',
+              border: '1px solid rgba(0, 0, 0, 0.05)',
+              justifyContent: 'center'
             }}>
-              {NODE_KEYS.map((key) => {
-                const isActive = key === currentNode;
-                const labels = {
-                  greeting: "👋 1. Intro",
-                  studies: "🎓 2. Studies & Logic",
-                  interests: "🚴 3. Hobbies Hub",
-                  travel: "🚀 4. Ares Warp"
-                };
-                return (
-                  <button
-                    key={key}
-                    onClick={() => setCurrentNode(key)}
-                    style={{
-                      flex: 1,
-                      minWidth: '76px',
-                      padding: '6px 2px',
-                      fontSize: '0.62rem',
-                      fontFamily: 'var(--font-tech)',
-                      fontWeight: 700,
-                      textAlign: 'center',
-                      border: 'none',
-                      borderRadius: '6px',
-                      background: isActive ? 'rgba(var(--color-accent-rgb), 0.1)' : 'transparent',
-                      color: isActive ? 'var(--color-accent)' : 'rgba(0, 0, 0, 0.5)',
-                      boxShadow: isActive ? 'inset 0 0 4px rgba(var(--color-accent-rgb), 0.15)' : 'none',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      whiteSpace: 'nowrap'
-                    }}
-                  >
-                    {labels[key]}
-                  </button>
-                );
-              })}
+              <span style={{
+                fontSize: '0.66rem',
+                fontFamily: 'var(--font-tech)',
+                fontWeight: 800,
+                color: 'var(--color-accent)',
+                letterSpacing: '0.5px',
+                textShadow: '0 0 4px rgba(var(--color-accent-rgb), 0.15)'
+              }}>
+                [ 💬 ACTIVE TOPIC: {activeTitle.replace(/^[^\w\s]+/g, '').trim().toUpperCase()} ]
+              </span>
             </div>
 
             {/* Stepper Body: Dynamic Branching Dialogue & Custom Vector Graphics */}
@@ -359,93 +361,12 @@ export default function CitizenSuite() {
               style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 0 }}
             >
               
-              {/* Biography Topic Title */}
-              <h3 style={{ fontSize: '0.98rem', fontWeight: 800, color: 'var(--color-accent)', marginBottom: '8px', fontFamily: 'var(--font-tech)', letterSpacing: '0.5px' }}>
-                {activeTitle}
-              </h3>
-
-              {/* Sub-selector row for Hobbies Node */}
-              {isHobbiesNode && (
-                <div style={{
-                  display: 'flex',
-                  gap: '4px',
-                  flexWrap: 'wrap',
-                  marginBottom: '10px',
-                  background: 'rgba(0, 0, 0, 0.02)',
-                  padding: '4px',
-                  borderRadius: '8px',
-                  border: '1px solid rgba(0, 0, 0, 0.05)'
-                }}>
-                  {[
-                    { key: 'tech', label: "💻 Tech & GUIs" },
-                    { key: 'scifi', label: "🚀 Sci-Fi" },
-                    { key: 'music', label: "🎵 Music" },
-                    { key: 'biking', label: "🚲 Biking" },
-                    { key: 'football', label: "🏈 Football" }
-                  ].map((hobby) => {
-                    const isSelected = activeHobby === hobby.key;
-                    return (
-                      <button
-                        key={hobby.key}
-                        onClick={() => setActiveHobby(hobby.key)}
-                        style={{
-                          flex: '1 1 auto',
-                          padding: '5px 8px',
-                          fontSize: '0.62rem',
-                          fontFamily: 'var(--font-tech)',
-                          fontWeight: 700,
-                          borderRadius: '6px',
-                          border: 'none',
-                          background: isSelected ? 'var(--color-accent)' : 'transparent',
-                          color: isSelected ? '#fff' : 'rgba(0, 0, 0, 0.5)',
-                          boxShadow: isSelected ? '0 0 6px rgba(var(--color-accent-rgb), 0.2)' : 'none',
-                          cursor: 'pointer',
-                          transition: 'all 0.2s ease'
-                        }}
-                      >
-                        {hobby.label}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-
               {/* Factual Narrative Paragraph */}
-              <p style={{ fontSize: '0.82rem', lineHeight: '1.45', fontWeight: 500, color: 'rgba(0,0,0,0.78)', margin: '0 0 8px 0' }}>
+              <p style={{ fontSize: '0.85rem', lineHeight: '1.5', fontWeight: 500, color: 'rgba(0,0,0,0.82)', margin: '0 0 10px 0' }}>
                 {activeText.split('Ephraim Becker').map((part, i, arr) => (
                   i === arr.length - 1 ? part : <span key={i}>{part}<strong>Ephraim Becker</strong></span>
                 ))}
               </p>
-
-              {/* Factual Bulleted Fact Board */}
-              {activeFacts.length > 0 && (
-                <div style={{
-                  display: 'grid',
-                  gridTemplateColumns: '1fr',
-                  gap: '5px',
-                  marginTop: '4px',
-                  marginBottom: '10px',
-                  background: 'rgba(0, 0, 0, 0.02)',
-                  borderLeft: '3.5px solid var(--color-accent)',
-                  padding: '6px 12px',
-                  borderRadius: '0 8px 8px 0'
-                }}>
-                  {activeFacts.map((fact, idx) => (
-                    <div 
-                      key={idx} 
-                      style={{ 
-                        fontSize: '0.72rem', 
-                        fontFamily: 'var(--font-tech)', 
-                        color: 'rgba(0, 0, 0, 0.85)',
-                        fontWeight: 700,
-                        letterSpacing: '0.2px'
-                      }}
-                    >
-                      {fact}
-                    </div>
-                  ))}
-                </div>
-              )}
 
               {/* DYNAMIC BESPOKE SVG GRAPHICS */}
               
@@ -790,105 +711,101 @@ export default function CitizenSuite() {
 
                   {/* Active receiver route run (neon glowing slant route for WR1) */}
                   <path d="M 70,25 L 140,25 Q 170,25 180,45 T 280,50" fill="none" stroke="#00ff88" strokeWidth="2.2" strokeLinecap="round" strokeDasharray="6 4" style={{ animation: 'route-run 4s linear infinite' }} />
-                  <text x="95" y="19" fill="var(--neon-emerald)" fontSize="5" fontFamily="var(--font-tech)" fontWeight={700}>CO-ED 5v5 SLANT PLAY</text>
+                  <text x="95" y="19" fill="var(--neon-emerald)" fontSize="5" fontFamily="var(--font-tech)" fontWeight={700}>5V5 SLANT PLAY ROUTE</text>
 
-                  {/* ================= OFFENSE (GREEN TEAM) ================= */}
-                  {/* QB (Female ♀ - animated dropback) */}
+                  {/* ================= OFFENSE (EMERALD CYCLING) ================= */}
+                  {/* QB (animated dropback) */}
                   <g style={{ animation: 'qb-drop 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
-                    {/* Female Avatar */}
+                    {/* Neutral Avatar */}
                     <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M 1.2,-1.8 C 2.2,-2.2 3,-1 2.8,0.5 C 2.5,1.8 1.8,2.2 1.5,2.5" fill="none" stroke="#ffffff" strokeWidth="0.8" strokeLinecap="round" />
-                    <path d="M -3,3 C -3,1.5 -1.5,1.2 0,1.2 C 1.5,1.2 3,1.5 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(0,255,136,0.8)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>QB ♀</text>
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(0,255,136,0.8)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>QB</text>
                   </g>
 
-                  {/* Center (Male ♂ - animated block shift) */}
+                  {/* Center (animated block shift) */}
                   <g style={{ animation: 'center-block 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
-                    {/* Male Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
-                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">C ♂</text>
+                    {/* Neutral Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">C</text>
                   </g>
 
-                  {/* Running Back (Male ♂ - animated flat route) */}
+                  {/* Running Back (animated flat route) */}
                   <g style={{ animation: 'rb-run 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
-                    {/* Male Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
-                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">RB ♂</text>
+                    {/* Neutral Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">RB</text>
                   </g>
 
-                  {/* WR2 (Male ♂ - animated deep post route) */}
+                  {/* WR2 (animated deep post route) */}
                   <g style={{ animation: 'wr2-run 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
-                    {/* Male Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
-                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">WR2 ♂</text>
+                    {/* Neutral Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">WR2</text>
                   </g>
 
-                  {/* WR1 (Female ♀ - Slant Catch Receiver & Flags) */}
+                  {/* WR1 (Slant Catch Receiver & Flags) */}
                   <g style={{ animation: 'receiver-catch 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="6" stroke="#00ff88" strokeWidth="1.5" fill="rgba(0,255,136,0.2)" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
-                    {/* Female Avatar */}
+                    {/* Neutral Avatar */}
                     <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M 1.2,-1.8 C 2.2,-2.2 3,-1 2.8,0.5 C 2.5,1.8 1.8,2.2 1.5,2.5" fill="none" stroke="#ffffff" strokeWidth="0.8" strokeLinecap="round" />
-                    <path d="M -3,3 C -3,1.5 -1.5,1.2 0,1.2 C 1.5,1.2 3,1.5 3,3" fill="#ffffff" />
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
                     {/* Glowing Flag Belts */}
                     <path d="M -3.5,2.5 L -7.5,6.5 M 3.5,2.5 L 7.5,6.5" stroke="#ffb300" strokeWidth="1.5" />
-                    <text x="0" y="-8" fill="#fff" fontSize="5" fontWeight={700} fontFamily="var(--font-tech)" textAnchor="middle">WR1 ♀</text>
+                    <text x="0" y="-8" fill="#fff" fontSize="5" fontWeight={700} fontFamily="var(--font-tech)" textAnchor="middle">WR1</text>
                   </g>
 
 
-                  {/* ================= DEFENSE (BLUE TEAM) ================= */}
-                  {/* Blitzer/Rusher (Male ♂ - rushes QB) */}
+                  {/* ================= DEFENSE (CYAN TELEMETRY) ================= */}
+                  {/* Blitzer/Rusher (rushes QB) */}
                   <g style={{ animation: 'rusher-rush 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Male Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
-                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(0,240,255,0.8)" fontSize="4.5" textAnchor="middle">R ♂</text>
+                    {/* Neutral Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(0,240,255,0.8)" fontSize="4.5" textAnchor="middle">R</text>
                   </g>
 
-                  {/* Linebacker (Female ♀ - drops zone) */}
+                  {/* Linebacker (drops zone) */}
                   <g style={{ animation: 'lb-drop 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Female Avatar */}
+                    {/* Neutral Avatar */}
                     <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M 1.2,-1.8 C 2.2,-2.2 3,-1 2.8,0.5 C 2.5,1.8 1.8,2.2 1.5,2.5" fill="none" stroke="#ffffff" strokeWidth="0.8" strokeLinecap="round" />
-                    <path d="M -3,3 C -3,1.5 -1.5,1.2 0,1.2 C 1.5,1.2 3,1.5 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">LB ♀</text>
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">LB</text>
                   </g>
 
-                  {/* CB1 (Female ♀ - covers WR1) */}
+                  {/* CB1 (covers WR1) */}
                   <g style={{ animation: 'cb1-chase 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Female Avatar */}
+                    {/* Neutral Avatar */}
                     <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M 1.2,-1.8 C 2.2,-2.2 3,-1 2.8,0.5 C 2.5,1.8 1.8,2.2 1.5,2.5" fill="none" stroke="#ffffff" strokeWidth="0.8" strokeLinecap="round" />
-                    <path d="M -3,3 C -3,1.5 -1.5,1.2 0,1.2 C 1.5,1.2 3,1.5 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">CB1 ♀</text>
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">CB1</text>
                   </g>
 
-                  {/* CB2 (Male ♂ - covers WR2) */}
+                  {/* CB2 (covers WR2) */}
                   <g style={{ animation: 'cb2-chase 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Male Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
-                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">CB2 ♂</text>
+                    {/* Neutral Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">CB2</text>
                   </g>
 
-                  {/* Safety (Male ♂ - deep safety) */}
+                  {/* Safety (deep safety) */}
                   <g style={{ animation: 'safety-drop 4s linear infinite' }}>
                     <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Male Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.6" fill="#ffffff" />
-                    <path d="M -3.5,3 C -3.5,1.2 -1.8,1 0,1 C 1.8,1 3.5,1.2 3.5,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">S ♂</text>
+                    {/* Neutral Avatar */}
+                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
+                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
+                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">S</text>
                   </g>
 
 
@@ -949,145 +866,39 @@ export default function CitizenSuite() {
 
             {/* Stepper Footer: Dynamic Conversational Response Choices */}
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '18px', borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: '12px', width: '100%' }}>
-              
-              {!isHobbiesNode ? (
-                /* Standard dynamic choices for non-hobbies nodes */
-                <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                  {activeNode.choices.map((choice, i) => (
-                    <button 
-                      key={i}
-                      onClick={() => setCurrentNode(choice.next)}
-                      className="hud-btn animate-fade"
-                      style={{
-                        padding: '8px 18px',
-                        fontSize: '0.72rem',
-                        background: 'rgba(var(--color-accent-rgb), 0.12)',
-                        borderColor: 'var(--color-accent)',
-                        color: '#080b13',
-                        fontWeight: 700,
-                        borderRadius: '20px',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      [ {choice.text} ]
-                    </button>
-                  ))}
-                </div>
-              ) : (
-                /* Dynamic Step progression and exit controls for Hobbies Hub */
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '12px', width: '100%' }}>
-                  {(() => {
-                    const hobby = HOBBIES_DATA[activeHobby] || HOBBIES_DATA.tech;
-                    if (hobby.steps) {
-                      const totalSteps = hobby.steps.length;
-                      return (
-                        <div style={{ display: 'flex', gap: '8px', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                          {hobbyStep > 1 && (
-                            <button
-                              onClick={() => setHobbyStep(hobbyStep - 1)}
-                              className="hud-btn animate-fade"
-                              style={{
-                                padding: '8px 16px',
-                                fontSize: '0.72rem',
-                                background: 'rgba(0, 0, 0, 0.05)',
-                                borderColor: 'rgba(0, 0, 0, 0.15)',
-                                color: 'rgba(0,0,0,0.6)',
-                                fontWeight: 700,
-                                borderRadius: '20px',
-                                cursor: 'pointer'
-                              }}
-                            >
-                              ◀ Previous Step
-                            </button>
-                          )}
-                          
-                          <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', color: 'rgba(0, 0, 0, 0.5)', fontWeight: 700, margin: '0 8px' }}>
-                            STEP {hobbyStep} OF {totalSteps}
-                          </span>
-
-                          {hobbyStep < totalSteps ? (
-                            <button
-                              onClick={() => setHobbyStep(hobbyStep + 1)}
-                              className="hud-btn animate-fade"
-                              style={{
-                                padding: '8px 16px',
-                                fontSize: '0.72rem',
-                                background: 'var(--color-accent)',
-                                borderColor: 'var(--color-accent)',
-                                color: '#fff',
-                                fontWeight: 700,
-                                borderRadius: '20px',
-                                cursor: 'pointer',
-                                boxShadow: '0 0 8px rgba(var(--color-accent-rgb), 0.3)'
-                              }}
-                            >
-                              Next Step ➜
-                            </button>
-                          ) : (
-                            <button
-                              onClick={() => setCurrentNode('travel')}
-                              className="hud-btn animate-fade"
-                              style={{
-                                padding: '8px 16px',
-                                fontSize: '0.72rem',
-                                background: 'var(--color-accent)',
-                                borderColor: 'var(--color-accent)',
-                                color: '#fff',
-                                fontWeight: 700,
-                                borderRadius: '20px',
-                                cursor: 'pointer',
-                                boxShadow: '0 0 8px rgba(var(--color-accent-rgb), 0.3)'
-                              }}
-                            >
-                              Complete Topic ➜
-                            </button>
-                          )}
-                        </div>
-                      );
-                    } else {
-                      /* Exit options for single-step hobbies */
-                      return (
-                        <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                          <button
-                            onClick={() => setCurrentNode('studies')}
-                            className="hud-btn animate-fade"
-                            style={{
-                              padding: '8px 16px',
-                              fontSize: '0.72rem',
-                              background: 'rgba(0, 0, 0, 0.05)',
-                              borderColor: 'rgba(0, 0, 0, 0.15)',
-                              color: 'rgba(0, 0, 0, 0.65)',
-                              fontWeight: 700,
-                              borderRadius: '20px',
-                              cursor: 'pointer'
-                            }}
-                          >
-                            ◀ Go to Studies & Logic
-                          </button>
-                          <button
-                            onClick={() => setCurrentNode('travel')}
-                            className="hud-btn animate-fade"
-                            style={{
-                              padding: '8px 16px',
-                              fontSize: '0.72rem',
-                              background: 'var(--color-accent)',
-                              borderColor: 'var(--color-accent)',
-                              color: '#fff',
-                              fontWeight: 700,
-                              borderRadius: '20px',
-                              cursor: 'pointer',
-                              boxShadow: '0 0 8px rgba(var(--color-accent-rgb), 0.3)'
-                            }}
-                          >
-                            Go to Ares Warp Dock 🚀
-                          </button>
-                        </div>
-                      );
-                    }
-                  })()}
-                </div>
-              )}
-
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
+                {activeNode.choices.map((choice, i) => (
+                  <button 
+                    key={i}
+                    onClick={() => {
+                      if (choice.next === 'warp_portfolio') {
+                        handleWarpFromStep(null, '/portfolio', 3);
+                      } else if (choice.next === 'warp_metropolis') {
+                        handleWarpFromStep(null, '/metropolis-core', 2);
+                      } else if (choice.next === 'warp_atmosphere') {
+                        handleWarpFromStep(null, '/atmosphere-dome', 4);
+                      } else if (choice.next === 'warp_quantum') {
+                        handleWarpFromStep(null, '/quantum-net', 5);
+                      } else {
+                        setCurrentNode(choice.next);
+                      }
+                    }}
+                    className="hud-btn animate-fade"
+                    style={{
+                      padding: '8px 18px',
+                      fontSize: '0.72rem',
+                      background: 'rgba(var(--color-accent-rgb), 0.12)',
+                      borderColor: 'var(--color-accent)',
+                      color: '#080b13',
+                      fontWeight: 700,
+                      borderRadius: '20px',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    [ {choice.text} ]
+                  </button>
+                ))}
+              </div>
             </div>
 
           </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import CityGridMap from '../../components/CityGridMap';
 
 const PROJECTS = [
@@ -104,7 +105,7 @@ const PROJECTS = [
     id: 6,
     category: "Web development",
     title: "My mega website",
-    description: "First complete personal portal which featured a diary, life timeline, a fancy dynamic navigation wheel, and an early budgeting calculator.",
+    description: "First complete personal portfolio which featured a diary, life timeline, a fancy dynamic navigation wheel, and an early budgeting calculator.",
     technologies: ["PHP", "HTML", "CSS", "MySQL", "JavaScript", "GoDaddy"],
     details: "I kept improving my mega website and even connected it to a MySQL database, configured custom server cron jobs, and deployed it on GoDaddy hosting.",
     takeaways: "Learned a massive amount about database schemas, backend routing, server administration, and why modern web frameworks are vital.",
@@ -153,6 +154,13 @@ export default function PortfolioDome() {
   const [maxYear, setMaxYear] = useState(2026);
   const [activeProject, setActiveProject] = useState(null);
 
+  // Experimental Conversational View States
+  const [isConversationalMode, setIsConversationalMode] = useState(false);
+  const [conversationalResponse, setConversationalResponse] = useState(
+    "Hello there! I'm Ephraim Becker. Select any project in the prompts list below to activate my holographic dialogue core and ask me questions about it!"
+  );
+  const [selectedConversationalProject, setSelectedConversationalProject] = useState(null);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const walkDir = window.sessionStorage.getItem('walk-direction');
@@ -195,9 +203,6 @@ export default function PortfolioDome() {
       const matchDesc = project.description.toLowerCase().includes(q);
       const matchTech = project.technologies.some(tech => tech.toLowerCase().includes(q));
       const matchCategory = project.category.toLowerCase().includes(q);
-      if (!matchTitle && !matchDesc && !matchTech && matchCategory) {
-        return false;
-      }
       if (!matchTitle && !matchDesc && !matchTech && !matchCategory) {
         return false;
       }
@@ -383,9 +388,7 @@ export default function PortfolioDome() {
                       <span style={{ fontSize: '0.55rem', border: '1px solid rgba(255,255,255,0.15)', color: 'var(--text-secondary)', padding: '1px 6px', borderRadius: '4px', fontFamily: 'var(--font-tech)' }}>
                         {project.category.toUpperCase()}
                       </span>
-                      <span style={{ fontSize: '0.55rem', border: '1px solid var(--neon-emerald)', color: 'var(--neon-emerald)', padding: '1px 6px', borderRadius: '4px', fontFamily: 'var(--font-tech)' }}>
-                        {project.status.toUpperCase()}
-                      </span>
+                      {/* Finished Green Stamp removed */}
                     </div>
                     
                     <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: 'var(--text-primary)', textAlign: 'left', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px' }}>
@@ -467,9 +470,7 @@ export default function PortfolioDome() {
                 <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px', marginRight: '10px' }}>
                   // HOLOGRAM_SECTOR: {activeProject.category.toUpperCase()}
                 </span>
-                <span style={{ fontSize: '0.62rem', border: '1px solid var(--neon-emerald)', color: 'var(--neon-emerald)', padding: '1px 6px', borderRadius: '4px', fontFamily: 'var(--font-tech)', fontWeight: 700 }}>
-                  {activeProject.status.toUpperCase()}
-                </span>
+                {/* Finished Green Stamp badge removed */}
               </div>
               <button 
                 onClick={() => setActiveProject(null)}
@@ -554,7 +555,7 @@ export default function PortfolioDome() {
 
                 </div>
 
-                {/* Right Column: Holographic Conversational Dialogue Block */}
+                {/* Right Column: Holographic Details & Telemetry - Reverted to clean standard columns */}
                 <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'left' }}>
                   <div>
                     <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '4px', letterSpacing: '0.5px', fontWeight: 700 }}>
@@ -574,49 +575,23 @@ export default function PortfolioDome() {
                       </p>
                     </div>
 
-                    {/* Ephraim's Direct Dialogue Speech Bubble */}
-                    <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', marginBottom: '16px' }}>
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px', flexShrink: 0 }}>
-                        <img 
-                          src="/assets/images/profile.png" 
-                          alt="Ephraim Becker"
-                          style={{
-                            width: '46px',
-                            height: '46px',
-                            borderRadius: '50%',
-                            border: '2px solid var(--color-accent)',
-                            objectFit: 'cover',
-                            objectPosition: 'top',
-                            boxShadow: '0 0 10px rgba(var(--color-accent-rgb), 0.3)'
-                          }}
-                        />
-                        <span style={{ fontSize: '0.52rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', fontWeight: 700 }}>
-                          EPHRAIM
-                        </span>
+                    {/* High-Tech Details Panel (Standard professional view, not direct dialogue bubble) */}
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}>
+                      <div>
+                        <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: 'var(--color-accent)', marginBottom: '6px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '4px' }}>
+                          DEVELOPMENT DETAILS & CHALLENGES
+                        </h4>
+                        <p style={{ fontSize: '0.76rem', color: 'var(--text-primary)', lineHeight: '1.45', margin: 0 }}>
+                          {activeProject.details}
+                        </p>
                       </div>
 
-                      <div className="comic-callout-bubble" style={{ 
-                        flex: 1,
-                        background: 'rgba(255, 255, 255, 0.95)', 
-                        color: '#080b13', 
-                        borderRadius: '16px', 
-                        padding: '16px 20px', 
-                        boxShadow: '0 8px 24px rgba(0,0,0,0.3)',
-                        border: '2.5px solid var(--color-accent)',
-                        position: 'relative'
-                      }}>
-                        <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', color: 'var(--color-accent)', fontWeight: 800, margin: '0 0 6px 0', borderBottom: '1.5px solid rgba(0,0,0,0.08)', paddingBottom: '3px', letterSpacing: '0.5px' }}>
-                          DIRECT DIALOGUE: BUILD STORY
+                      <div>
+                        <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: 'var(--neon-emerald)', marginBottom: '6px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '4px' }}>
+                          CORE RETROSPECTIVE TAKEAWAYS
                         </h4>
-                        <p style={{ fontSize: '0.78rem', color: '#1a1f2c', lineHeight: '1.5', margin: '0 0 12px 0', textAlign: 'left' }}>
-                          "{activeProject.details}"
-                        </p>
-                        
-                        <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', color: 'var(--neon-emerald)', fontWeight: 800, margin: '10px 0 6px 0', borderBottom: '1.5px solid rgba(0,0,0,0.08)', paddingBottom: '3px', letterSpacing: '0.5px' }}>
-                          RETROSPECTIVE & CORE LEARNINGS
-                        </h4>
-                        <p style={{ fontSize: '0.76rem', color: '#2a2f3c', lineHeight: '1.45', margin: 0, fontStyle: 'italic', textAlign: 'left' }}>
-                          "{activeProject.takeaways}"
+                        <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: '1.45', margin: 0 }}>
+                          {activeProject.takeaways}
                         </p>
                       </div>
                     </div>
@@ -684,6 +659,199 @@ export default function PortfolioDome() {
         </div>
       )}
 
+      {/* IMMERSIVE EXPERIMENTAL CONVERSATIONAL FAB */}
+      <button 
+        className="portfolio-conversational-fab"
+        onClick={() => {
+          setIsConversationalMode(true);
+          setSelectedConversationalProject(null);
+          setConversationalResponse(
+            "Hello there! I'm Ephraim Becker. Select any project in the prompts list below to activate my holographic dialogue core and ask me questions about it!"
+          );
+        }}
+      >
+        <img 
+          src="/assets/images/profile.png" 
+          alt="Ephraim Becker" 
+          className="portfolio-conversational-avatar"
+        />
+        <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }}>💬</span>
+      </button>
+
+      {/* EXPERIMENTAL FULL-SCREEN CONVERSATIONAL OVERLAY */}
+      {isConversationalMode && (
+        <div className="hologram-chat-overlay">
+          
+          {/* Header Bar */}
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', maxWidth: '1100px', margin: '0 auto 20px auto', borderBottom: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', paddingBottom: '12px' }}>
+            <div>
+              <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px' }}>
+                // COGNITIVE_CORE: EXPERIMENTAL HOLO-ASSISTANT v2.5
+              </span>
+            </div>
+            
+            {/* Dual Back Portal Buttons */}
+            <div style={{ display: 'flex', gap: '10px' }}>
+              <button 
+                onClick={() => setIsConversationalMode(false)}
+                className="hud-btn"
+                style={{
+                  padding: '6px 14px',
+                  fontSize: '0.65rem',
+                  borderColor: 'rgba(255,255,255,0.2)',
+                  borderRadius: '8px',
+                  background: 'rgba(255,255,255,0.05)',
+                  cursor: 'pointer',
+                  color: '#fff',
+                  fontFamily: 'var(--font-tech)'
+                }}
+              >
+                [ 📂 BACK TO PORTFOLIO GRID ]
+              </button>
+
+              <Link href="/" passHref legacyBehavior>
+                <a 
+                  className="hud-btn"
+                  style={{
+                    padding: '6px 14px',
+                    fontSize: '0.65rem',
+                    borderColor: 'var(--color-accent)',
+                    borderRadius: '8px',
+                    background: 'rgba(var(--color-accent-rgb), 0.1)',
+                    cursor: 'pointer',
+                    color: '#fff',
+                    fontFamily: 'var(--font-tech)',
+                    textDecoration: 'none'
+                  }}
+                >
+                  [ 🏨 RETURN TO RESIDENCE ]
+                </a>
+              </Link>
+            </div>
+          </div>
+
+          {/* Core Chat Workspace */}
+          <div className="hologram-chat-container">
+            
+            {/* Visual Novel Layout Section */}
+            <div className="dialogue-novel-row" style={{ display: 'flex', gap: '28px', alignItems: 'center', maxWidth: '820px', width: '100%', justifyContent: 'center' }}>
+              
+              {/* Left Side: Giant breathing cutout of Ephraim Becker */}
+              <div className="novel-avatar-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+                <div style={{ width: '120px', height: '120px', borderRadius: '50%', border: '3px solid var(--color-accent)', overflow: 'hidden', boxShadow: '0 0 20px rgba(var(--color-accent-rgb), 0.4)' }}>
+                  <img 
+                    src="/assets/images/profile.png" 
+                    alt="Ephraim Becker" 
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                  />
+                </div>
+                <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px' }}>
+                  EPHRAIM BECKER
+                </span>
+                <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)' }}>
+                  PORTFOLIO COGNITIVE CORE
+                </span>
+              </div>
+
+              {/* Right Side: Comic dialogue speech bubble */}
+              <div className="comic-speech-bubble" style={{ 
+                flex: 1, 
+                background: 'rgba(255, 255, 255, 0.96)', 
+                color: '#080b13', 
+                borderRadius: '20px', 
+                padding: '24px 28px', 
+                boxShadow: '0 12px 40px rgba(0, 0, 0, 0.6), 0 0 25px rgba(var(--color-accent-rgb), 0.25)',
+                border: '3px solid var(--color-accent)',
+                position: 'relative',
+                minHeight: '140px',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
+              }}>
+                {selectedConversationalProject && (
+                  <span style={{ display: 'block', fontSize: '0.55rem', color: 'var(--color-accent) !important', fontFamily: 'var(--font-tech)', fontWeight: 800, borderBottom: '1.5px solid rgba(0,0,0,0.08)', paddingBottom: '4px', marginBottom: '8px', letterSpacing: '1px' }}>
+                    // ACTIVE_SUBJECT: {selectedConversationalProject.title.toUpperCase()}
+                  </span>
+                )}
+                <p style={{ fontSize: '0.88rem', color: '#10141e !important', lineHeight: '1.5', margin: 0, textAlign: 'left' }}>
+                  {conversationalResponse}
+                </p>
+              </div>
+
+            </div>
+
+            {/* Prompt Choices Portal */}
+            <div style={{ marginTop: '30px', width: '100%', maxWidth: '820px' }}>
+              <span style={{ display: 'block', fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1.5px', marginBottom: '12px', textTransform: 'uppercase', textAlign: 'center', fontWeight: 700 }}>
+                {selectedConversationalProject ? "FOLLOW-UP TELEMETRY QUERIES" : "SELECT A PROJECT TO INITIATE CONVERSATION"}
+              </span>
+
+              {selectedConversationalProject ? (
+                /* Sub-prompts: Ask details, ask takeaways, ask other */
+                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
+                  <button 
+                    onClick={() => setConversationalResponse(
+                      `Let me explain the development details for the ${selectedConversationalProject.title}! ${selectedConversationalProject.details}`
+                    )}
+                    className="conversational-choice-btn"
+                    style={{ background: 'rgba(var(--color-accent-rgb), 0.05)', borderColor: 'var(--color-accent)' }}
+                  >
+                    🚀 How did you build it? What challenges did you face?
+                  </button>
+
+                  <button 
+                    onClick={() => setConversationalResponse(
+                      `For the ${selectedConversationalProject.title}, the main learning experience was: ${selectedConversationalProject.takeaways}`
+                    )}
+                    className="conversational-choice-btn"
+                    style={{ background: 'rgba(0, 255, 136, 0.03)', borderColor: 'var(--neon-emerald)' }}
+                  >
+                    💡 What were your core takeaways and lessons learned?
+                  </button>
+
+                  <button 
+                    onClick={() => {
+                      setSelectedConversationalProject(null);
+                      setConversationalResponse(
+                        "No problem! What other engineering software system or configuration in my archives would you like to ask me about?"
+                      );
+                    }}
+                    className="conversational-choice-btn"
+                    style={{ background: 'rgba(255,255,255,0.03)' }}
+                  >
+                    ↩️ Ask about a different project...
+                  </button>
+                </div>
+              ) : (
+                /* General Prompt List of Projects */
+                <div className="conversational-portal-choices">
+                  {PROJECTS.map((project) => (
+                    <button
+                      key={project.id}
+                      onClick={() => {
+                        setSelectedConversationalProject(project);
+                        setConversationalResponse(
+                          `Ah, the ${project.title}! It's a fascinating system classification. ${project.description} What specific details would you like to know about it?`
+                        );
+                      }}
+                      className="conversational-choice-btn"
+                    >
+                      <span style={{ fontSize: '0.8rem' }}>📂</span>
+                      <div>
+                        <span style={{ display: 'block', fontSize: '0.68rem', fontWeight: 'bold' }}>{project.title}</span>
+                        <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>{project.category}</span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
+
+          </div>
+
+        </div>
+      )}
+
       <style jsx global>{`
         /* Immersive Holographic Modal Overlay Animations */
         @keyframes modal-fade-in {
@@ -716,6 +884,13 @@ export default function PortfolioDome() {
             width: 100% !important;
           }
           .range-slider-group {
+            width: 100% !important;
+          }
+          .dialogue-novel-row {
+            flex-direction: column !important;
+            gap: 15px !important;
+          }
+          .novel-avatar-container {
             width: 100% !important;
           }
         }

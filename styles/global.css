@@ -67,7 +67,19 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  user-select: none;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+/* Force immediate click dispatch on all interactive elements */
+button, a, [role="button"], [tabindex], input, select, textarea, .hud-btn, .social-btn-bubbly, .transit-btn-bubbly, .conversational-choice-btn, .portfolio-conversational-fab, .floating-residence-return, .category-pill, .datadeck-switcher-btn, .hologram-close-btn, .social-link-port {
+  touch-action: manipulation;
+}
+
+button:focus,
+a:focus,
+div:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 body {
@@ -197,12 +209,14 @@ body {
   overflow: hidden;
 }
 
-.bubbly-panel:hover {
-  border-color: rgba(var(--color-accent-rgb), 0.25);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
-              inset 0 1px 1px rgba(255, 255, 255, 0.08),
-              0 0 35px rgba(var(--color-accent-rgb), 0.12);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .bubbly-panel:hover {
+    border-color: rgba(var(--color-accent-rgb), 0.25);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+                inset 0 1px 1px rgba(255, 255, 255, 0.08),
+                0 0 35px rgba(var(--color-accent-rgb), 0.12);
+    transform: translateY(-2px);
+  }
 }
 
 /* Floating top navigation bar bubble */
@@ -300,11 +314,13 @@ body {
   transition: all var(--transition-fast);
 }
 
-.hud-badge:hover {
-  background: rgba(var(--color-accent-rgb), 0.08);
-  border-color: rgba(var(--color-accent-rgb), 0.4);
-  box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.2);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .hud-badge:hover {
+    background: rgba(var(--color-accent-rgb), 0.08);
+    border-color: rgba(var(--color-accent-rgb), 0.4);
+    box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.2);
+    transform: translateY(-1px);
+  }
 }
 
 /* Glowing links chips for Social Ports */
@@ -325,11 +341,13 @@ body {
   transition: all var(--transition-fast);
 }
 
-.social-link-port:hover {
-  background: rgba(var(--color-accent-rgb), 0.14);
-  border-color: var(--color-accent);
-  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.4);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .social-link-port:hover {
+    background: rgba(var(--color-accent-rgb), 0.14);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.4);
+    transform: translateY(-2px);
+  }
 }
 
 .social-link-port:active {
@@ -356,10 +374,12 @@ body {
   text-decoration: none;
 }
 
-.hud-btn:hover {
-  background: rgba(var(--color-accent-rgb), 0.16);
-  border-color: var(--color-accent);
-  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.35);
+@media (hover: hover) {
+  .hud-btn:hover {
+    background: rgba(var(--color-accent-rgb), 0.16);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.35);
+  }
 }
 
 /* SVG Telemetric signal line */
@@ -656,7 +676,7 @@ body {
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 
               0 0 25px rgba(var(--color-accent-rgb), 0.2);
   position: relative;
-  transition: all var(--transition-normal);
+  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
 }
 
 .comic-speech-bubble p, .comic-speech-bubble span, .comic-speech-bubble strong,
@@ -666,11 +686,13 @@ body {
 }
 
 /* Hover glow upgrades */
-.comic-speech-bubble:hover, .comic-callout-bubble:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 
-              0 0 35px rgba(var(--color-accent-rgb), 0.35);
-  border-color: var(--neon-cyan);
+@media (hover: hover) {
+  .comic-speech-bubble:hover, .comic-callout-bubble:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 
+                0 0 35px rgba(var(--color-accent-rgb), 0.35);
+    border-color: var(--neon-cyan);
+  }
 }
 
 /* Left pointing triangular tail */
@@ -699,8 +721,10 @@ body {
   border-right: 18px solid rgba(255, 255, 255, 0.96);
 }
 
-.comic-speech-bubble:hover::before, .comic-callout-bubble:hover::before {
-  border-right-color: var(--neon-cyan);
+@media (hover: hover) {
+  .comic-speech-bubble:hover::before, .comic-callout-bubble:hover::before {
+    border-right-color: var(--neon-cyan);
+  }
 }
 
 @media (max-width: 900px) {
@@ -807,10 +831,12 @@ body {
   align-items: center;
 }
 
-.floating-residence-return:hover {
-  background: rgba(var(--color-accent-rgb), 0.25);
-  box-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.35);
-  transform: translateY(-1px);
+@media (hover: hover) {
+  .floating-residence-return:hover {
+    background: rgba(var(--color-accent-rgb), 0.25);
+    box-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.35);
+    transform: translateY(-1px);
+  }
 }
 
 .category-pills-row {
@@ -835,11 +861,13 @@ body {
   letter-spacing: 0.5px;
 }
 
-.category-pill:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(var(--color-accent-rgb), 0.3);
-  color: var(--text-primary);
-  box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.15);
+@media (hover: hover) {
+  .category-pill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(var(--color-accent-rgb), 0.3);
+    color: var(--text-primary);
+    box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.15);
+  }
 }
 
 .category-pill.active {
@@ -928,10 +956,12 @@ body {
   align-items: center;
 }
 
-.portfolio-conversational-fab:hover {
-  transform: scale(1.1) translateY(-4px);
-  border-color: var(--neon-cyan);
-  box-shadow: 0 0 25px rgba(0, 240, 255, 0.6), 0 8px 16px rgba(0, 0, 0, 0.5);
+@media (hover: hover) {
+  .portfolio-conversational-fab:hover {
+    transform: scale(1.1) translateY(-4px);
+    border-color: var(--neon-cyan);
+    box-shadow: 0 0 25px rgba(0, 240, 255, 0.6), 0 8px 16px rgba(0, 0, 0, 0.5);
+  }
 }
 
 .portfolio-conversational-fab::after {
@@ -948,8 +978,10 @@ body {
   transition: color 0.3s ease;
 }
 
-.portfolio-conversational-fab:hover::after {
-  color: var(--neon-cyan);
+@media (hover: hover) {
+  .portfolio-conversational-fab:hover::after {
+    color: var(--neon-cyan);
+  }
 }
 
 .portfolio-conversational-avatar {
@@ -1027,11 +1059,13 @@ body {
   outline: none;
 }
 
-.conversational-choice-btn:hover {
-  background: rgba(var(--color-accent-rgb), 0.1);
-  border-color: var(--color-accent);
-  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.25);
-  transform: translateY(-2px);
+@media (hover: hover) {
+  .conversational-choice-btn:hover {
+    background: rgba(var(--color-accent-rgb), 0.1);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.25);
+    transform: translateY(-2px);
+  }
 }
 
 @keyframes hologram-fade-in {
@@ -1111,9 +1145,11 @@ body {
   box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.5);
 }
 
-.datadeck-switcher-btn:hover:not(.active) {
-  color: #fff;
-  background: rgba(255,255,255,0.05);
+@media (hover: hover) {
+  .datadeck-switcher-btn:hover:not(.active) {
+    color: #fff;
+    background: rgba(255,255,255,0.05);
+  }
 }
 
 /* Top Profile Sidebar Card */
@@ -1130,11 +1166,13 @@ body {
   transition: all 0.3s ease;
 }
 
-.datadeck-profile-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(var(--color-accent-rgb), 0.3);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 
-              0 0 15px rgba(var(--color-accent-rgb), 0.15);
+@media (hover: hover) {
+  .datadeck-profile-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(var(--color-accent-rgb), 0.3);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 
+                0 0 15px rgba(var(--color-accent-rgb), 0.15);
+  }
 }
 
 .datadeck-profile-img-container {
@@ -1160,8 +1198,10 @@ body {
   pointer-events: none;
 }
 
-.datadeck-profile-card:hover .datadeck-profile-img {
-  transform: scale(1.03) translateY(-1px);
+@media (hover: hover) {
+  .datadeck-profile-card:hover .datadeck-profile-img {
+    transform: scale(1.03) translateY(-1px);
+  }
 }
 
 .datadeck-profile-name {
@@ -1231,11 +1271,13 @@ body {
   color: var(--text-primary);
 }
 
-.datadeck-panel:hover {
-  transform: translateY(-2px);
-  border-color: rgba(var(--color-accent-rgb), 0.3);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 
-              0 0 15px rgba(var(--color-accent-rgb), 0.15);
+@media (hover: hover) {
+  .datadeck-panel:hover {
+    transform: translateY(-2px);
+    border-color: rgba(var(--color-accent-rgb), 0.3);
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 
+                0 0 15px rgba(var(--color-accent-rgb), 0.15);
+  }
 }
 
 .datadeck-panel p, .datadeck-panel span, .datadeck-panel strong, .datadeck-panel div, .datadeck-panel h3 {

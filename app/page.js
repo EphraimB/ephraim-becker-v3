@@ -1415,75 +1415,70 @@ export default function CitizenSuite() {
         }
       `}</style>
  
-      {/* IMMERSIVE EXPERIMENTAL CONVERSATIONAL FAB WITH DYNAMIC STATUS BAR */}
+      {/* Glow-mode status tag indicator */}
       <div 
-        className="portfolio-fab-wrapper"
+        className="portfolio-fab-status-badge"
+        style={{
+          position: 'fixed',
+          bottom: '24px',
+          right: '108px',
+          background: 'rgba(6, 9, 20, 0.88)',
+          border: `1.5px solid ${isDataDeckMode ? 'var(--neon-cyan)' : 'var(--neon-violet)'}`,
+          borderRadius: '20px',
+          padding: '6px 14px',
+          fontFamily: 'var(--font-tech)',
+          fontSize: '0.62rem',
+          fontWeight: 800,
+          color: '#fff',
+          letterSpacing: '1px',
+          boxShadow: `0 4px 15px rgba(0,0,0,0.5), 0 0 10px ${isDataDeckMode ? 'rgba(0,240,255,0.15)' : 'rgba(194,89,255,0.15)'}`,
+          display: 'flex',
+          alignItems: 'center',
+          gap: '8px',
+          backdropFilter: 'blur(10px)',
+          transition: 'all 0.3s ease',
+          pointerEvents: 'none',
+          zIndex: 999
+        }}
+      >
+        <span 
+          style={{
+            width: '6px',
+            height: '6px',
+            borderRadius: '50%',
+            background: isDataDeckMode ? 'var(--neon-cyan)' : 'var(--neon-violet)',
+            boxShadow: `0 0 8px ${isDataDeckMode ? 'var(--neon-cyan)' : 'var(--neon-violet)'}`,
+            display: 'inline-block',
+            animation: 'blink-led 1s infinite'
+          }}
+        />
+        {isDataDeckMode ? '📊 TERMINAL ACTIVE' : '💬 CHAT ACTIVE'}
+      </div>
+
+      {/* IMMERSIVE EXPERIMENTAL CONVERSATIONAL FAB */}
+      <button 
+        className={`portfolio-conversational-fab ${isDataDeckMode ? 'mode-conversation' : 'mode-datadeck'}`}
+        onClick={() => {
+          setIsDataDeckMode(prev => !prev);
+          setExpandedInterest(null);
+        }}
         style={{
           position: 'fixed',
           bottom: '24px',
           right: '24px',
-          display: 'flex',
-          alignItems: 'center',
-          gap: '12px',
+          borderColor: isDataDeckMode ? 'var(--neon-cyan)' : 'var(--color-accent)',
           zIndex: 999
         }}
       >
-        {/* Glow-mode status tag indicator */}
-        <div 
-          style={{
-            background: 'rgba(6, 9, 20, 0.88)',
-            border: `1.5px solid ${isDataDeckMode ? 'var(--neon-cyan)' : 'var(--neon-violet)'}`,
-            borderRadius: '20px',
-            padding: '6px 14px',
-            fontFamily: 'var(--font-tech)',
-            fontSize: '0.62rem',
-            fontWeight: 800,
-            color: '#fff',
-            letterSpacing: '1px',
-            boxShadow: `0 4px 15px rgba(0,0,0,0.5), 0 0 10px ${isDataDeckMode ? 'rgba(0,240,255,0.15)' : 'rgba(194,89,255,0.15)'}`,
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            backdropFilter: 'blur(10px)',
-            transition: 'all 0.3s ease',
-            pointerEvents: 'none'
-          }}
-        >
-          <span 
-            style={{
-              width: '6px',
-              height: '6px',
-              borderRadius: '50%',
-              background: isDataDeckMode ? 'var(--neon-cyan)' : 'var(--neon-violet)',
-              boxShadow: `0 0 8px ${isDataDeckMode ? 'var(--neon-cyan)' : 'var(--neon-violet)'}`,
-              display: 'inline-block',
-              animation: 'blink-led 1s infinite'
-            }}
-          />
-          {isDataDeckMode ? '📊 TERMINAL ACTIVE' : '💬 CHAT ACTIVE'}
-        </div>
- 
-        <button 
-          className={`portfolio-conversational-fab ${isDataDeckMode ? 'mode-conversation' : 'mode-datadeck'}`}
-          onClick={() => {
-            setIsDataDeckMode(prev => !prev);
-            setExpandedInterest(null);
-          }}
-          style={{
-            position: 'static',
-            borderColor: isDataDeckMode ? 'var(--neon-cyan)' : 'var(--color-accent)'
-          }}
-        >
-          <img 
-            src="/assets/images/profile.png" 
-            alt="Ephraim Becker" 
-            className="portfolio-conversational-avatar"
-          />
-          <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }}>
-            {isDataDeckMode ? '💬' : '📊'}
-          </span>
-        </button>
-      </div>
+        <img 
+          src="/assets/images/profile.png" 
+          alt="Ephraim Becker" 
+          className="portfolio-conversational-avatar"
+        />
+        <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }}>
+          {isDataDeckMode ? '💬' : '📊'}
+        </span>
+      </button>
     </div>
   );
 }

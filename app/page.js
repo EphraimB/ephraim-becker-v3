@@ -43,13 +43,22 @@ const DIALOG_NODES = {
     graphic: 'math'
   },
   interests: {
-    text: "Beyond technology, I'm highly passionate about Sci-Fi and Fantasy worlds, listening to and playing music, and biking around Cedarhurst on Earth (which I remotely model here in Ares City). It keeps my mind and body active!",
+    text: "Beyond technology, I'm highly passionate about Sci-Fi and Fantasy worlds, playing music, biking, and Flag Football! Flag football is incredibly fun—I love the coordination of working in sync, plotting strategic routes in huddles, and the absolute thrill of scoring a touchdown.",
     choices: [
+      { text: "How did you get into flag football?", next: "football" },
       { text: "Show me your coding interests!", next: "tech" },
-      { text: "What do you study?", next: "studies" },
-      { text: "Ready to travel Ares City?", next: "travel" }
+      { text: "What do you study?", next: "studies" }
     ],
     graphic: 'interests'
+  },
+  football: {
+    text: "I first saw how fun flag football was from watching cool games on YouTube! What hooked me was the team coordination—discussing strategic routes in huddles, moving in perfect sync as a team, and the absolute thrill of scoring a touchdown. Check out a huddle play simulation below!",
+    choices: [
+      { text: "That's an awesome play! Let's talk tech", next: "tech" },
+      { text: "Tell me about your studies!", next: "studies" },
+      { text: "What other interests do you have?", next: "interests" }
+    ],
+    graphic: 'football'
   },
   travel: {
     text: "Ready to depart the Citizen Suite? Select a dome coordinate below to trigger your hyperloop warp, or we can keep chatting!",
@@ -60,7 +69,7 @@ const DIALOG_NODES = {
   }
 };
 
-const NODE_KEYS = ['greeting', 'tech', 'studies', 'math', 'interests', 'travel'];
+const NODE_KEYS = ['greeting', 'tech', 'studies', 'math', 'interests', 'football', 'travel'];
 
 export default function CitizenSuite() {
   const router = useRouter();
@@ -330,9 +339,69 @@ export default function CitizenSuite() {
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginTop: '14px', justifyContent: 'center' }}>
                   <span className="hud-badge" style={{ fontSize: '0.74rem', padding: '5px 12px', background: 'rgba(var(--color-accent-rgb), 0.08)', color: '#080b13', border: '1.5px solid rgba(var(--color-accent-rgb), 0.35)', fontWeight: 700 }}>💻 Technology & Coding</span>
                   <span className="hud-badge" style={{ fontSize: '0.74rem', padding: '5px 12px', background: 'rgba(var(--color-accent-rgb), 0.08)', color: '#080b13', border: '1.5px solid rgba(var(--color-accent-rgb), 0.35)', fontWeight: 700 }}>🎬 Sci-Fi / Fantasy</span>
+                  <span className="hud-badge" style={{ fontSize: '0.74rem', padding: '5px 12px', background: 'rgba(var(--color-accent-rgb), 0.08)', color: '#080b13', border: '1.5px solid rgba(var(--color-accent-rgb), 0.35)', fontWeight: 700 }}>🏈 Flag Football</span>
                   <span className="hud-badge" style={{ fontSize: '0.74rem', padding: '5px 12px', background: 'rgba(var(--color-accent-rgb), 0.08)', color: '#080b13', border: '1.5px solid rgba(var(--color-accent-rgb), 0.35)', fontWeight: 700 }}>🎵 Music</span>
                   <span className="hud-badge" style={{ fontSize: '0.74rem', padding: '5px 12px', background: 'rgba(var(--color-accent-rgb), 0.08)', color: '#080b13', border: '1.5px solid rgba(var(--color-accent-rgb), 0.35)', fontWeight: 700 }}>🚴 Biking</span>
                 </div>
+              )}
+
+              {/* Graphic 6: Animated Flag Football Playbook play simulation */}
+              {activeNode.graphic === 'football' && (
+                <svg viewBox="0 0 320 100" width="100%" height="95px" style={{ marginTop: '14px', background: '#0e1710', borderRadius: '10px', border: '1.5px solid var(--neon-emerald)', boxShadow: 'inset 0 0 10px rgba(0,255,136,0.1)' }}>
+                  <defs>
+                    <linearGradient id="fieldGrass" x1="0" y1="0" x2="0" y2="1">
+                      <stop offset="0%" stopColor="#1b4d22" />
+                      <stop offset="100%" stopColor="#0f3014" />
+                    </linearGradient>
+                  </defs>
+
+                  {/* Field background */}
+                  <rect x="0" y="0" width="320" height="100" fill="url(#fieldGrass)" />
+
+                  {/* Yard grid lines */}
+                  <line x1="40" y1="0" x2="40" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                  <line x1="80" y1="0" x2="80" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                  <line x1="120" y1="0" x2="120" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                  <line x1="160" y1="0" x2="160" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                  <line x1="200" y1="0" x2="200" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                  <line x1="240" y1="0" x2="240" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                  <line x1="280" y1="0" x2="280" y2="100" stroke="rgba(255,255,255,0.4)" strokeWidth="2" strokeDasharray="3 3" />
+
+                  {/* Endzone area */}
+                  <rect x="280" y="0" width="40" height="100" fill="rgba(0, 255, 136, 0.08)" />
+                  <text x="300" y="50" fill="rgba(255, 255, 255, 0.2)" fontSize="6.5" fontFamily="var(--font-tech)" textAnchor="middle" transform="rotate(-90 300 50)" letterSpacing="1px">ENDZONE</text>
+
+                  {/* Huddle strategic routes planned (dashed static background) */}
+                  <path d="M 50,75 L 140,75 Q 180,75 190,40 T 275,30" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.2" strokeDasharray="3 3" />
+
+                  {/* Active receiver route run (neon glowing slant route) */}
+                  <path d="M 50,50 L 120,50 Q 150,50 160,20 T 260,15 L 290,15" fill="none" stroke="#00f0ff" strokeWidth="2.2" strokeLinecap="round" strokeDasharray="6 4" style={{ animation: 'route-run 4s linear infinite' }} />
+                  <text x="75" y="44" fill="var(--neon-cyan)" fontSize="5.5" fontFamily="var(--font-tech)" fontWeight={700}>SLANT ROUTE</text>
+
+                  {/* Quarterback point */}
+                  <circle cx="50" cy="50" r="5" fill="var(--color-accent)" style={{ filter: 'drop-shadow(0 0 3px var(--color-accent))' }} />
+                  <text x="50" y="52" fill="#fff" fontSize="6.5" fontWeight={700} fontFamily="var(--font-tech)" textAnchor="middle">QB</text>
+
+                  {/* Receiver running figure & flags */}
+                  <g style={{ animation: 'receiver-catch 4s linear infinite' }}>
+                    <circle cx="0" cy="0" r="4.5" fill="#00f0ff" style={{ filter: 'drop-shadow(0 0 4px #00f0ff)' }} />
+                    {/* Glowing Flag Belts */}
+                    <path d="M -3,2 L -7,6 M 3,2 L 7,6" stroke="#ffb300" strokeWidth="1.5" />
+                    <text x="0" y="-7" fill="#fff" fontSize="5.5" fontFamily="var(--font-tech)" textAnchor="middle">WR</text>
+                  </g>
+
+                  {/* Gliding football pass */}
+                  <g style={{ animation: 'ball-pass 4s ease-in-out infinite' }}>
+                    <ellipse cx="0" cy="0" rx="5.5" ry="3" fill="#8d4a25" stroke="#ffffff" strokeWidth="0.8" />
+                    <line x1="-3.5" y1="0" x2="3.5" y2="0" stroke="#ffffff" strokeWidth="0.8" />
+                    <line x1="-1.5" y1="-1.5" x2="-1.5" y2="1.5" stroke="#ffffff" strokeWidth="0.6" />
+                    <line x1="0" y1="-1.5" x2="0" y2="1.5" stroke="#ffffff" strokeWidth="0.6" />
+                    <line x1="1.5" y1="-1.5" x2="1.5" y2="1.5" stroke="#ffffff" strokeWidth="0.6" />
+                  </g>
+
+                  {/* Touchdown Text celebration flashing */}
+                  <text x="180" y="55" fill="var(--neon-emerald)" fontSize="11" fontFamily="var(--font-tech)" fontWeight="900" textAnchor="middle" style={{ animation: 'touchdown-text 4s infinite', filter: 'drop-shadow(0 0 4px var(--neon-emerald))' }}>TOUCHDOWN!</text>
+                </svg>
               )}
 
               {/* Graphic 6: Dome Sector Navigation links (travel node) */}
@@ -432,6 +501,68 @@ export default function CitizenSuite() {
         @keyframes blink-led {
           0%, 100% { opacity: 0.3; }
           50% { opacity: 1; }
+        }
+
+        /* Flag Football SVG Playbook Animations */
+        @keyframes route-run {
+          0% { stroke-dashoffset: 40; }
+          100% { stroke-dashoffset: 0; }
+        }
+
+        @keyframes ball-pass {
+          0%, 30% {
+            transform: translate(50px, 50px) scale(0.6);
+            opacity: 0;
+          }
+          32% {
+            opacity: 1;
+          }
+          52% {
+            transform: translate(170px, 15px) scale(1.1) rotate(45deg);
+            opacity: 1;
+          }
+          72% {
+            transform: translate(280px, 15px) scale(0.8) rotate(120deg);
+            opacity: 1;
+          }
+          78%, 100% {
+            transform: translate(280px, 15px) scale(0.8);
+            opacity: 0;
+          }
+        }
+
+        @keyframes receiver-catch {
+          0%, 30% {
+            transform: translate(50px, 50px);
+          }
+          45% {
+            transform: translate(120px, 50px);
+          }
+          60% {
+            transform: translate(160px, 20px);
+          }
+          72%, 100% {
+            transform: translate(280px, 15px);
+          }
+        }
+
+        @keyframes touchdown-text {
+          0%, 71% {
+            opacity: 0;
+            font-size: 0px;
+          }
+          72% {
+            opacity: 1;
+            font-size: 15px;
+          }
+          78%, 95% {
+            opacity: 1;
+            font-size: 11px;
+          }
+          100% {
+            opacity: 0;
+            font-size: 0px;
+          }
         }
       `}</style>
     </div>

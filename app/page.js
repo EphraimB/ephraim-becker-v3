@@ -322,7 +322,8 @@ export default function CitizenSuite() {
         <div className="roomscale-profile-spacer" style={{ width: '100%', height: '100%', pointerEvents: 'none' }}></div>
 
         {/* Right Column: Single High-Contrast Branching Stepper Speech Bubble */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', minHeight: 0, overflow: 'visible' }}>
+        {!isDataDeckMode ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', minHeight: 0, overflow: 'visible' }}>
           
           <div className="comic-speech-bubble" style={{ display: 'flex', flexDirection: 'column', minHeight: '305px', justifyContent: 'space-between' }}>
             
@@ -890,8 +891,177 @@ export default function CitizenSuite() {
             </div>
 
           </div>
-
         </div>
+        ) : (
+          <div className="dossier-card">
+            {/* Dossier Header */}
+            <div className="dossier-header">
+              <span className="dossier-title">EPHRAIM BECKER</span>
+              <span className="dossier-age">15 MARS YEARS (MY23)</span>
+            </div>
+
+            {/* Dossier Badges */}
+            <div className="dossier-badges">
+              <span className="dossier-badge">ACTIVE / SENIOR SYS ARCHITECT</span>
+              <span className="dossier-badge">CLASS-A CITIZEN</span>
+              <span className="dossier-badge">COORDINATE: PENTHOUSE_A-02</span>
+            </div>
+
+            {/* Dossier Biography Intro */}
+            <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: '0 0 16px 0', textAlign: 'left' }}>
+              Remote Cadet at Adelphi University on Earth, studying computer science, database structures, search index efficiencies, and college-level Calculus. Passionate about designing and building highly visual user interfaces, low-level TI graphing programs, and premium spatial simulation systems.
+            </p>
+
+            {/* 5 Expandable Hobbies */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              <span style={{ display: 'block', fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1px', marginBottom: '4px', textTransform: 'uppercase', textAlign: 'left', fontWeight: 700 }}>
+                CITIZEN BIO-INTEREST CATALOG
+              </span>
+
+              {/* Hobby 1: Tech */}
+              <div className={`interest-panel ${expandedInterest === 'tech' ? 'active' : ''}`}>
+                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'tech' ? null : 'tech')}>
+                  <span><span className="interest-icon">💻</span> TECHNOLOGY & SOFTWARE</span>
+                  <span className="interest-chevron">▼</span>
+                </div>
+                <div className="interest-body">
+                  Fascinated by GUI coordinate displays and responsive web systems. I enjoy coding advanced frontend interfaces, programming low-level menu engines like the Harry Potter wizard currency converter v7.3 on TI-84 Plus graphing kernels, and custom-building power-efficient hardware rigs (like assembling high-tech lego blocks).
+                </div>
+              </div>
+
+              {/* Hobby 2: Music */}
+              <div className={`interest-panel ${expandedInterest === 'music' ? 'active' : ''}`}>
+                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'music' ? null : 'music')}>
+                  <span><span className="interest-icon">🎹</span> MUSIC & PERFORMANCE</span>
+                  <span className="interest-chevron">▼</span>
+                </div>
+                <div className="interest-body">
+                  Deeply passionate about musical acoustics. In classical music, my absolute favorite instrument is the pipe organ because of its grand mechanical architecture and power. I also love the emotional storytelling of pop albums (Taylor Swift and Noah Kahan), singing in a choir, and performing high-energy solos at karaoke.
+                </div>
+              </div>
+
+              {/* Hobby 3: Sci-Fi */}
+              <div className={`interest-panel ${expandedInterest === 'scifi' ? 'active' : ''}`}>
+                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'scifi' ? null : 'scifi')}>
+                  <span><span className="interest-icon">🚀</span> SCI-FI & FANTASY</span>
+                  <span className="interest-chevron">▼</span>
+                </div>
+                <div className="interest-body">
+                  Inspired by detailed futuristic worldbuilding, legendary space operas, and magical lore. My top cinematic favorites are Star Wars, Harry Potter, Lord of the Rings, and Back to the Future. Recreated transporter beaming visual effects in my bedroom using custom Blender chroma key green screening and textured 3D meshes.
+                </div>
+              </div>
+
+              {/* Hobby 4: Biking */}
+              <div className={`interest-panel ${expandedInterest === 'biking' ? 'active' : ''}`}>
+                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'biking' ? null : 'biking')}>
+                  <span><span className="interest-icon">🚴</span> OUTDOOR CYCLING</span>
+                  <span className="interest-chevron">▼</span>
+                </div>
+                <div className="interest-body">
+                  Biking represents pure physical freedom, allowing me to travel anywhere in the dome pathways without worrying about public transit grids. I enjoy the aerobic challenge of pedaling against strong headwinds to build endurance, and the relaxing feeling of dome breezes during active recovery rides.
+                </div>
+              </div>
+
+              {/* Hobby 5: Flag Football */}
+              <div className={`interest-panel ${expandedInterest === 'football' ? 'active' : ''}`}>
+                <div className="interest-header" onClick={() => setExpandedInterest(expandedInterest === 'football' ? null : 'football')}>
+                  <span><span className="interest-icon">🏈</span> FLAG FOOTBALL</span>
+                  <span className="interest-chevron">▼</span>
+                </div>
+                <div className="interest-body">
+                  A high-speed strategic sport where I play both offense (clean route-running and receptions) and defense (anticipating plays and pulling flags). As someone with autism, flag football huddles and structured team scripts ("nice catch!", "good job!") provide a comfortable, clear social environment to blend in easily.
+                </div>
+              </div>
+            </div>
+
+            {/* Social Outlets */}
+            <div className="social-ports-section">
+              <a 
+                href="https://github.com/EphraimB" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hud-btn"
+                style={{
+                  flex: 1,
+                  padding: '10px 16px',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  borderRadius: '8px',
+                  borderColor: 'var(--neon-cyan)',
+                  background: 'rgba(0, 240, 255, 0.08)',
+                  color: '#fff',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 0 10px rgba(0, 240, 255, 0.15)'
+                }}
+              >
+                📂 GITHUB REPOSITORY
+              </a>
+              <a 
+                href="https://www.youtube.com/@ephraimbecker544" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="hud-btn"
+                style={{
+                  flex: 1,
+                  padding: '10px 16px',
+                  fontSize: '0.72rem',
+                  fontWeight: 700,
+                  borderRadius: '8px',
+                  borderColor: 'var(--neon-amber)',
+                  background: 'rgba(255, 179, 0, 0.08)',
+                  color: '#fff',
+                  textDecoration: 'none',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '8px',
+                  boxShadow: '0 0 10px rgba(255, 179, 0, 0.15)'
+                }}
+              >
+                🎬 YOUTUBE CHANNEL
+              </a>
+            </div>
+
+            {/* OS Sector Warp Transits */}
+            <div className="warp-transits-section">
+              <span style={{ gridColumn: '1 / -1', fontFamily: 'var(--font-tech)', fontSize: '0.55rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1px', textTransform: 'uppercase', textAlign: 'center', fontWeight: 700, marginBottom: '4px' }}>
+                🚀 OS SECTOR WARP TRANSITS
+              </span>
+              <button 
+                onClick={() => handleWarpFromStep(null, '/metropolis-core', 2)}
+                className="hud-btn"
+                style={{ padding: '8px 12px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--color-accent)' }}
+              >
+                🌆 METROPOLIS CORE
+              </button>
+              <button 
+                onClick={() => handleWarpFromStep(null, '/atmosphere-dome', 4)}
+                className="hud-btn"
+                style={{ padding: '8px 12px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--neon-emerald)' }}
+              >
+                🍀 BIOSPHERE DOME
+              </button>
+              <button 
+                onClick={() => handleWarpFromStep(null, '/quantum-net', 5)}
+                className="hud-btn"
+                style={{ padding: '8px 12px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--neon-amber)' }}
+              >
+                🛰️ QUANTUM NET
+              </button>
+              <button 
+                onClick={() => handleWarpFromStep(null, '/portfolio', 3)}
+                className="hud-btn"
+                style={{ padding: '8px 12px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--neon-cyan)' }}
+              >
+                📂 PORTFOLIO DOME
+              </button>
+            </div>
+          </div>
+        )}
 
       </div>
 
@@ -1054,6 +1224,27 @@ export default function CitizenSuite() {
           100% { transform: rotate(0deg) translateY(0); }
         }
       `}</style>
+
+      {/* IMMERSIVE EXPERIMENTAL CONVERSATIONAL FAB */}
+      <button 
+        className={`portfolio-conversational-fab ${isDataDeckMode ? 'mode-conversation' : 'mode-datadeck'}`}
+        onClick={() => {
+          setIsDataDeckMode(prev => !prev);
+          setExpandedInterest(null);
+        }}
+        style={{
+          borderColor: isDataDeckMode ? 'var(--neon-cyan)' : 'var(--color-accent)'
+        }}
+      >
+        <img 
+          src="/assets/images/profile.png" 
+          alt="Ephraim Becker" 
+          className="portfolio-conversational-avatar"
+        />
+        <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }}>
+          {isDataDeckMode ? '💬' : '📊'}
+        </span>
+      </button>
     </div>
   );
 }

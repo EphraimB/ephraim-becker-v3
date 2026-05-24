@@ -1,6 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
+import Link from 'next/link';
 import HudBar from '../components/HudBar';
 import '../styles/global.css';
 
@@ -47,16 +48,25 @@ export default function RootLayout({ children }) {
         {/* Underlays */}
         <div className="city-matrix-underlay" key={`underlay-${currentTheme}`}></div>
         <div className="hud-scanline"></div>
-
+ 
         {/* Global children render wrapper */}
         <div className="os-workspace" data-theme={currentTheme}>
           <HudBar sectorName={hudSectorName} />
           
           <div className="workspace-deck">
-            {/* Natural standing roomscale profile figure */}
-            <div className={`roomscale-natural-body page-${currentTheme}`}>
-              <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
-            </div>
+            {/* Natural standing roomscale profile figure - hidden on portfolio archives */}
+            {pathname !== '/portfolio' && (
+              <div className={`roomscale-natural-body page-${currentTheme}`}>
+                <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
+              </div>
+            )}
+
+            {/* Decoupled Floating Return Button */}
+            {pathname !== '/' && (
+              <Link href="/" passHref legacyBehavior>
+                <a className="floating-residence-return">[ 🏨 RETURN TO RESIDENCE ]</a>
+              </Link>
+            )}
 
             {children}
           </div>

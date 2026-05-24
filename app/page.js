@@ -6,47 +6,53 @@ import CityGridMap from '../components/CityGridMap';
 
 const DIALOG_NODES = {
   greeting: {
-    text: "Hi! I'm Ephraim Becker. I'm an undergraduate student at Adelphi University on Earth, linked remotely to my Citizen Suite in Ares City on Mars. What would you like to chat about?",
+    text: "Welcome to my Citizen Suite! I'm Ephraim Becker. From my home in Cedarhurst on Earth, I'm linked as a Remote Cadet to Adelphi University, studying computer science and keeping my logic sharp with Calculus. When I'm not coding or synchronizing planetary grid flows, I'm usually lost in Sci-Fi, playing music, or biking. What part of my journey would you like to explore?",
     choices: [
-      { text: "How did you get into technology?", next: "tech" },
-      { text: "Tell me about your studies!", next: "studies" }
+      { text: "How did you get into tech?", next: "tech" },
+      { text: "Tell me about your studies!", next: "studies" },
+      { text: "What do you do for fun?", next: "interests" },
+      { text: "Let's travel Ares City!", next: "travel" }
     ],
     graphic: 'space'
   },
   tech: {
-    text: "I actually got into technology because graphical user interfaces (GUIs) completely fascinated me! The idea of designing responsive, visual operating decks led me to coding—it's just so cool that I can build entirely new digital worlds from scratch.",
+    text: "It started when I first saw graphical user interfaces (GUIs)—they completely fascinated me! The idea of designing responsive, visual operating decks led me to coding. It's just so cool that I can build entirely new digital worlds from scratch. Now, I design interfaces for Ares City OS!",
     choices: [
-      { text: "That's awesome! What else do you study?", next: "studies" },
-      { text: "What are your other interests?", next: "interests" }
+      { text: "That's cool! What do you study?", next: "studies" },
+      { text: "Awesome! Tell me about your hobbies!", next: "interests" },
+      { text: "Let's explore Ares City sectors!", next: "travel" }
     ],
     graphic: 'gui'
   },
   studies: {
-    text: "Earthside, I study computer science, databases, and general education pathways. I also tackle Calculus to sync earthside engineering with Mars municipal grids.",
+    text: "Earthside, I study computer science, database structures, and general education pathways. I also tackle Calculus to sync earthside engineering with Mars municipal grids. It's a lot of logic, but highly rewarding!",
     choices: [
-      { text: "Calculus? Is that hard?", next: "math" },
-      { text: "Tell me about your GUI passion!", next: "tech" }
+      { text: "Calculus? Is that tough?", next: "math" },
+      { text: "How did you get into coding?", next: "tech" },
+      { text: "What do you do when not studying?", next: "interests" }
     ],
     graphic: 'studies'
   },
   math: {
-    text: "It keeps my logic circuits sharp! Calculus helps me model grid flows, but honestly, my real passion is building visual software interfaces.",
+    text: "It keeps my logic circuits sharp! Calculus helps me model municipal grid flows and planetary coordinates, but honestly, my real passion remains building visual software and responsive interfaces.",
     choices: [
       { text: "Tell me about your GUI passion!", next: "tech" },
-      { text: "What other interests do you have?", next: "interests" }
+      { text: "What are your other hobbies?", next: "interests" },
+      { text: "Let's warp to a dome!", next: "travel" }
     ],
     graphic: 'math'
   },
   interests: {
-    text: "Beyond coding, I'm into Sci-Fi/Fantasy, music, and biking around Cedarhurst on Earth (remotely modeled in Ares). Ready to explore the city?",
+    text: "Beyond technology, I'm highly passionate about Sci-Fi and Fantasy worlds, listening to and playing music, and biking around Cedarhurst on Earth (which I remotely model here in Ares City). It keeps my mind and body active!",
     choices: [
-      { text: "Yes! Let's explore Ares City!", next: "travel" },
-      { text: "Let's chat again!", next: "greeting" }
+      { text: "Show me your coding interests!", next: "tech" },
+      { text: "What do you study?", next: "studies" },
+      { text: "Ready to travel Ares City?", next: "travel" }
     ],
     graphic: 'interests'
   },
   travel: {
-    text: "Where would you like to travel next in Ares City? Select a dome coordinate below to trigger your hyperloop warp:",
+    text: "Ready to depart the Citizen Suite? Select a dome coordinate below to trigger your hyperloop warp, or we can keep chatting!",
     choices: [
       { text: "🔄 Start Conversation Over", next: "greeting" }
     ],

@@ -225,6 +225,11 @@ export default function CitizenSuite() {
   const [currentNode, setCurrentNode] = useState('greeting');
   const [isWalking, setIsWalking] = useState(false);
 
+  // OS Interface mode states
+  const [isDataDeckMode, setIsDataDeckMode] = useState(false);
+  const [expandedInterest, setExpandedInterest] = useState(null);
+
+
   // Synchronize entry transition classes
   useEffect(() => {
     if (typeof window !== 'undefined') {

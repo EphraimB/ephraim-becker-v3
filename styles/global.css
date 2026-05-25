@@ -1461,6 +1461,12 @@ body {
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.8) !important;
   }
 
+  /* Keep closed locator button fixed near the top header so it stays visible without getting in the way of content */
+  .mobile-locator-btn {
+    position: fixed !important;
+    top: 105px !important;
+  }
+
   /* Scale up map labels inside SVG to offset mobile browser down-scaling */
   .map-node-label {
     font-size: 28px !important;

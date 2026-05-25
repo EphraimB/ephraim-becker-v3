@@ -248,8 +248,8 @@ export default function CityGridMap({ isDrawer = false }) {
       <div 
         className="map-coordinate-overlay"
         style={{
-          padding: isDrawer ? '10px 16px' : '12px 20px',
-          fontSize: '0.62rem',
+          padding: isDrawer ? '8px 12px' : '12px 20px',
+          fontSize: isDrawer ? '0.56rem' : '0.62rem',
           fontFamily: 'monospace, var(--font-tech)',
           borderBottom: '1.5px solid rgba(255, 255, 255, 0.05)',
           background: 'rgba(0, 0, 0, 0.35)',
@@ -261,11 +261,24 @@ export default function CityGridMap({ isDrawer = false }) {
           flexShrink: 0,
           zIndex: 1,
           backdropFilter: 'blur(10px)',
-          WebkitBackdropFilter: 'blur(10px)'
+          WebkitBackdropFilter: 'blur(10px)',
+          gap: '10px'
         }}
       >
-        <span>ARES_HABITAT // REALTIME_NAV_CONSOLE</span>
-        {mapHoverNode && <span style={{ color: '#00f0ff' }}>[ TARGET: {mapHoverNode.toUpperCase()} ]</span>}
+        <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
+          {isDrawer ? 'NAV_CONSOLE' : 'ARES_HABITAT // REALTIME_NAV_CONSOLE'}
+        </span>
+        <span style={{ 
+          color: mapHoverNode ? '#00f0ff' : 'rgba(255, 255, 255, 0.25)', 
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+          maxWidth: isDrawer ? '220px' : 'none',
+          flexShrink: 0,
+          transition: 'all 0.15s ease'
+        }}>
+          [ TARGET: {mapHoverNode ? mapHoverNode.toUpperCase() : 'ARES_SYSTEM'} ]
+        </span>
       </div>
 
       {/* 3. Scrollable list of highly-tactile HUD cards */}

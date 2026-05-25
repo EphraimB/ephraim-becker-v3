@@ -7,7 +7,7 @@ const SECTORS = [
   { id: 'metropolis', name: 'Metropolis Core', path: '/', icon: '⚡', coords: 'SEC-01' },
   { id: 'biosphere', name: 'Biosphere Dome', path: '/atmosphere-dome', icon: '🌿', coords: 'SEC-02' },
   { id: 'quantum', name: 'Quantum Net', path: '/quantum-net', icon: '🛰️', coords: 'SEC-03' },
-  { id: 'suite', name: 'Citizen Suite', path: '/citizen-suite', icon: '🏨', coords: 'SEC-04' }
+  { id: 'suite', name: 'Citizen Suite', path: '/citizen-suite', icon: '🏠', coords: 'SEC-04' }
 ];
 
 export default function TransporterConsole() {

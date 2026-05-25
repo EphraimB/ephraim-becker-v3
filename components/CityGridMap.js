@@ -59,62 +59,22 @@ export default function CityGridMap({ isDrawer = false }) {
     {
       id: 'suite',
       label: 'ACTIVE NEXUS // CITIZEN SUITE',
-      title: 'COMMAND NEXUS',
+      title: 'CITIZEN SUITE',
       route: '/',
       color: '#ff5722',
       rgb: '255, 87, 34',
-      icon: '🏨',
+      icon: '🏠',
       desc: 'Central colony command penthouse'
     },
     {
       id: 'portfolio',
       label: 'SECTOR 01 // PORTFOLIO',
-      title: 'PROJECT ARCHIVES',
+      title: 'PORTFOLIO ARCHIVES',
       route: '/portfolio',
       color: '#c259ff',
       rgb: '194, 89, 255',
       icon: '📂',
       desc: 'Retrospective engineering files'
-    },
-    {
-      id: 'academics',
-      label: 'SECTOR 02 // ACADEMIC SYNC',
-      title: 'TELEMETRY CORE',
-      route: 'academics', // Interactive toggle
-      color: '#00f0ff',
-      rgb: '0, 240, 255',
-      icon: '📡',
-      desc: 'Adelphi University CSC logs & Calculus limits'
-    },
-    {
-      id: 'biosphere',
-      label: 'SECTOR 03 // BIOSPHERE DOME',
-      title: 'LIFE STABILIZERS',
-      route: '/atmosphere-dome',
-      color: '#00ff88',
-      rgb: '0, 255, 136',
-      icon: '🌿',
-      desc: 'Cyber-botanical oxygen exhaust controls'
-    },
-    {
-      id: 'quantum',
-      label: 'SECTOR 04 // QUANTUM NET',
-      title: 'DATABASE TERMINAL',
-      route: '/quantum-net',
-      color: '#ffb300',
-      rgb: '255, 179, 0',
-      icon: '🌌',
-      desc: 'Sub-space network relay & database index logs'
-    },
-    {
-      id: 'metropolis',
-      label: 'SECTOR 05 // METROPOLIS',
-      title: 'CENTRAL GRID',
-      route: '/metropolis-core',
-      color: '#00f0ff',
-      rgb: '0, 240, 255',
-      icon: '🌆',
-      desc: 'Colony core infrastructure stability'
     }
   ];
 

@@ -41,7 +41,7 @@
       "name": "Citizen Suite",
       "path": "pages/citizen-suite.html",
       "coordinates": { "x": "50%", "y": "15%" },
-      "icon": "🏨",
+      "icon": "🏠",
       "status": "NOMINAL",
       "description": "Ephraim Becker's private penthouse & holographic portfolio hub."
     }

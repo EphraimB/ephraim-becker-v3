@@ -42,6 +42,22 @@ const INTERESTS = [
     desc: "I am deeply passionate about flag football! What caught my attention was how fast-paced, highly strategic, and non-contact it is—relying on speed, route running, and playbook coordinates rather than physical hits. Because I have autism, natural socializing can feel draining, but flag football operates on predefined social scripts (like 'nice catch!' or 'good job!') and structured huddles, taking away social pressure and allowing me to be a highly valued part of a team without the stress of small talk.",
     icon: '🏈',
     type: 'flag_football'
+  },
+  {
+    id: 'traveling',
+    title: 'Traveling & Exploration',
+    tag: 'TRAVELING',
+    desc: "Traveling is one of my favorite passions because it allows me to explore more of the United States and other countries around the world! I love discovering new cities, learning about different cultures, and experiencing the unique geography of our planet beyond my home borders. It is an enriching journey that broadens my horizons.",
+    icon: '✈️',
+    type: 'traveling'
+  },
+  {
+    id: 'neurodiversity',
+    title: 'Neurodiversity & Self-Discovery',
+    tag: 'NEURODIVERSITY',
+    desc: "Neurodiversity is a deeply personal and meaningful interest to me. Studying and understanding neurodiversity helps me learn more about myself, embrace my unique cognitive wiring, and discover why I am sometimes misunderstood by others. It is an empowering journey of self-discovery, highlighting the beauty of different minds.",
+    icon: '🧠',
+    type: 'neurodiversity'
   }
 ];
 
@@ -456,7 +472,7 @@ export default function AresDashboard() {
               maxHeight: '92vh',
               background: 'rgba(10, 14, 30, 0.94)',
               border: '2px solid var(--color-accent)',
-              borderColor: activeInterest.id === 'technology' ? '#00f0ff' : activeInterest.id === 'scifi' ? '#c259ff' : activeInterest.id === 'music' ? '#ffb300' : activeInterest.id === 'biking' ? '#00ff88' : '#e65100',
+              borderColor: activeInterest.id === 'technology' ? '#00f0ff' : activeInterest.id === 'scifi' ? '#c259ff' : activeInterest.id === 'music' ? '#ffb300' : activeInterest.id === 'biking' ? '#00ff88' : activeInterest.id === 'traveling' ? '#ff007f' : activeInterest.id === 'neurodiversity' ? '#00ff88' : '#ff5722',
               borderRadius: '16px',
               boxShadow: '0 0 35px rgba(255, 255, 255, 0.1)',
               display: 'flex',
@@ -478,7 +494,7 @@ export default function AresDashboard() {
               <span style={{
                 fontFamily: 'monospace, var(--font-tech)',
                 fontSize: '0.65rem',
-                color: activeInterest.id === 'technology' ? '#00f0ff' : activeInterest.id === 'scifi' ? '#c259ff' : activeInterest.id === 'music' ? '#ffb300' : activeInterest.id === 'biking' ? '#00ff88' : '#ff5722',
+                color: activeInterest.id === 'technology' ? '#00f0ff' : activeInterest.id === 'scifi' ? '#c259ff' : activeInterest.id === 'music' ? '#ffb300' : activeInterest.id === 'biking' ? '#00ff88' : activeInterest.id === 'traveling' ? '#ff007f' : activeInterest.id === 'neurodiversity' ? '#00ff88' : '#ff5722',
                 fontWeight: 'bold',
                 letterSpacing: '1.5px'
               }}>
@@ -680,6 +696,103 @@ export default function AresDashboard() {
 
                       <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">TACTICAL PLAYBOOK: playbook_matrix_09</text>
                     </g>
+                  </svg>
+                )}
+
+                {/* Traveling global/US flight deck map graphic */}
+                {activeInterest.type === 'traveling' && (
+                  <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 0, 127, 0.22)', boxShadow: 'inset 0 0 10px rgba(255, 0, 127, 0.08)' }}>
+                    <defs>
+                      <radialGradient id="pinkGlow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stopColor="#ff007f" stopOpacity="0.3" />
+                        <stop offset="100%" stopColor="#ff007f" stopOpacity="0" />
+                      </radialGradient>
+                    </defs>
+
+                    {/* Latitudinal / longitudinal grids */}
+                    <circle cx="160" cy="180" r="140" fill="none" stroke="rgba(255, 255, 255, 0.03)" strokeWidth="0.8" strokeDasharray="3 3" />
+                    <circle cx="160" cy="180" r="90" fill="none" stroke="rgba(255, 255, 255, 0.02)" strokeWidth="0.8" />
+                    <line x1="5" y1="55" x2="315" y2="55" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                    <line x1="160" y1="5" x2="160" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+
+                    {/* Flight Routes (US Exploration + International transit) */}
+                    <path d="M 50,75 Q 100,20 150,55" fill="none" stroke="#ff007f" strokeWidth="1.5" strokeDasharray="3 3" style={{ filter: 'drop-shadow(0 0 2.5px #ff007f)' }} />
+                    <path d="M 150,55 Q 210,15 250,35" fill="none" stroke="#ff007f" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 0 2.5px #ff007f)' }} />
+                    <path d="M 250,35 Q 280,50 280,75" fill="none" stroke="#ffb300" strokeWidth="1" strokeDasharray="2 2" />
+
+                    {/* Flight Markers / Labeled nodes */}
+                    <g>
+                      {/* LAX Node */}
+                      <circle cx="50" cy="75" r="3.5" fill="#00f0ff" />
+                      <circle cx="50" cy="75" r="7" fill="none" stroke="#00f0ff" strokeWidth="0.5" />
+                      <text x="50" y="87" fill="rgba(255,255,255,0.6)" fontSize="5.2" fontFamily="monospace" textAnchor="middle">LAX</text>
+                      
+                      {/* NYC Node */}
+                      <circle cx="150" cy="55" r="3.5" fill="#ff007f" />
+                      <circle cx="150" cy="55" r="7" fill="none" stroke="#ff007f" strokeWidth="0.5" />
+                      <text x="150" y="67" fill="rgba(255,255,255,0.6)" fontSize="5.2" fontFamily="monospace" textAnchor="middle">NYC</text>
+
+                      {/* London LHR Node */}
+                      <circle cx="250" cy="35" r="3.5" fill="#00ff88" />
+                      <circle cx="250" cy="35" r="7" fill="none" stroke="#00ff88" strokeWidth="0.5" />
+                      <text x="250" y="27" fill="rgba(255,255,255,0.6)" fontSize="5.2" fontFamily="monospace" textAnchor="middle">LHR (LONDON)</text>
+
+                      {/* Tokyo NRT Node */}
+                      <circle cx="280" cy="75" r="3" fill="#ffb300" />
+                      <text x="280" y="87" fill="rgba(255,255,255,0.6)" fontSize="5.2" fontFamily="monospace" textAnchor="middle">NRT (TOKYO)</text>
+                    </g>
+
+                    {/* Airplane Course Glyph (moving LAX ➔ NYC) */}
+                    <g transform="translate(90, 48) rotate(15)">
+                      <polygon points="0,0 8,-3 0,-6 -2,-3" fill="#ffffff" />
+                    </g>
+                    
+                    <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">ROUTE_MAP: US_EXPLORATION_AND_GLOBAL_TRANSIT</text>
+                  </svg>
+                )}
+
+                {/* Neurodiversity infinity loop & synapses graphic */}
+                {activeInterest.type === 'neurodiversity' && (
+                  <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
+                    <defs>
+                      {/* Beautiful HSL rainbow linear gradient */}
+                      <linearGradient id="neuroRainbowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#00f0ff" />
+                        <stop offset="33%" stopColor="#c259ff" />
+                        <stop offset="66%" stopColor="#ffb300" />
+                        <stop offset="100%" stopColor="#00ff88" />
+                      </linearGradient>
+                    </defs>
+
+                    {/* Neural network synapses background */}
+                    <g opacity="0.3">
+                      <line x1="60" y1="25" x2="100" y2="50" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+                      <line x1="100" y1="50" x2="130" y2="30" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+                      <line x1="220" y1="50" x2="260" y2="75" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+                      <line x1="160" y1="50" x2="175" y2="20" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+                      
+                      <circle cx="60" cy="25" r="2.5" fill="#00f0ff" />
+                      <circle cx="130" cy="30" r="2" fill="#c259ff" />
+                      <circle cx="260" cy="75" r="2.5" fill="#00ff88" />
+                      <circle cx="175" cy="20" r="2" fill="#ffb300" />
+                    </g>
+
+                    {/* High-fidelity glowing infinity loop */}
+                    <path 
+                      d="M 160,50 C 130,20 100,20 100,50 C 100,80 130,80 160,50 C 190,20 220,20 220,50 C 220,80 190,80 160,50 Z" 
+                      fill="none" 
+                      stroke="url(#neuroRainbowGradient)" 
+                      strokeWidth="3.5" 
+                      strokeLinecap="round"
+                      style={{ filter: 'drop-shadow(0 0 6px rgba(0, 240, 255, 0.4))' }} 
+                    />
+
+                    {/* Synapse hubs */}
+                    <circle cx="100" cy="50" r="2.5" fill="#00f0ff" />
+                    <circle cx="220" cy="50" r="2.5" fill="#00ff88" />
+                    <circle cx="160" cy="50" r="2" fill="#c259ff" />
+
+                    <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">SYNAPSE_CORE: cognitive_neurodiversity_infinite_loop</text>
                   </svg>
                 )}
 

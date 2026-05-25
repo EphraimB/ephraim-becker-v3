@@ -2,1053 +2,862 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import CityGridMap from '../components/CityGridMap';
 
-const DIALOG_NODES = {
-  greeting: {
-    title: "👋 GENERAL INTRODUCTION",
-    text: "Welcome to my Citizen Suite! I'm Ephraim Becker. From my home in Cedarhurst on Earth, I'm linked as a Remote Cadet to Adelphi University, studying computer science and keeping my logic sharp with Calculus. I'm excited to share my world with you—whether you want to dive into my academic studies, explore my personal hobbies, or take a warp transit across Ares City!",
-    choices: [
-      { text: "Go to Studies & Logic 🎓", next: "studies" },
-      { text: "Explore Hobbies & Passions 🚴", next: "interests" },
-      { text: "Hey, completely unrelated, but let's warp to my portfolio! 📂", next: "warp_portfolio" }
-    ],
-    graphic: 'space'
+const INTERESTS = [
+  {
+    id: 'technology',
+    title: 'Technology & GUI',
+    tag: 'TECHNOLOGY',
+    desc: "I got into technology because graphical user interfaces (GUIs) completely fascinated me! The idea of designing responsive, visual operating decks led me directly into coding. It's an amazing feeling to build entirely new digital environments and interactive software from scratch. Now, I apply that same design passion to building custom frontend decks like the Ares City OS!",
+    icon: '💻',
+    type: 'tech'
   },
-  studies: {
-    title: "🎓 COMPUTER SCIENCE STUDIES",
-    text: "Earthside, I am a Computer Science major at Adelphi University, focusing on database structures, index search efficiency, and discrete logic pathways. To keep my logic sharp for building systems, I also tackle college-level Calculus. It's a great workout for my brain, even though my true design passion lies in crafting highly visual user interfaces and responsive web layouts.",
-    choices: [
-      { text: "How does Calculus keep your logic sharp? 📐", next: "math" },
-      { text: "Let's explore your hobbies outside of CS! 🚴", next: "interests" },
-      { text: "By the way, let's abruptly check out your Ares warp dock! 🚀", next: "travel" },
-      { text: "Let's go back to your general background and introduction! 🏠", next: "greeting" }
-    ],
-    graphic: 'studies'
+  {
+    id: 'scifi',
+    title: 'Sci-Fi & Fantasy',
+    tag: 'SCI-FI / FANTASY',
+    desc: "I am deeply passionate about sci-fi and fantasy cinematic universes. I love movies with cool futuristic worldbuilding, legendary space operas, and magical lore that spark my imagination. My top favorites are Star Wars, Harry Potter, Lord of the Rings, and Back to the Future—each one has such an engaging world and time-travel or magical logic!",
+    icon: '🎬',
+    type: 'scifi'
   },
-  math: {
-    title: "📐 CALCULUS & GRID LOGIC",
-    text: "Calculus coordinate math is incredible for training analytical thinking. It requires absolute precision, much like programming database queries or routing network packets. I treat it as a dedicated logic sharpener, helping me visualize complex slopes and equations that translate directly into grid mapping and software coordinate calculations.",
-    choices: [
-      { text: "How does this logic apply to tech and coding? 💻", next: "tech" },
-      { text: "Show me your hobbies catalog! 🚴", next: "interests" },
-      { text: "Wait, a random thought popped up—can we warp to your Portfolio Dome? 📂", next: "warp_portfolio" },
-      { text: "I'd love to hear about your CS studies and major again! 🎓", next: "studies" }
-    ],
-    graphic: 'studies'
+  {
+    id: 'music',
+    title: 'Classical & Pop Music',
+    tag: 'MUSIC',
+    desc: "I have a deep love for music, spanning both classical compositions and modern pop. In the classical realm, the pipe organ is my absolute favorite musical instrument because of its grand mechanical power, rich acoustics, and architectural sound. On the pop side, I love narrative pop albums by Taylor Swift and Noah Kahan for their emotional storytelling and acoustic folk-pop arrangements.",
+    icon: '🎹',
+    type: 'music'
   },
-  interests: {
-    title: "🚴 HOBBIES & PASSIONS",
-    text: "I have a wide range of hobbies that keep me balanced! I'm passionate about technology and coding, deep sci-fi and fantasy worldbuilding, both pop and classical music, long relaxing bike rides, and playing flag football. Let's go through them—where should we start?",
-    choices: [
-      { text: "Tech & GUI Coding 💻", next: "tech" },
-      { text: "Sci-Fi & Fantasy Movies 🎬", next: "scifi" },
-      { text: "Classical Organ & Pop Music 🎵", next: "music_organ" },
-      { text: "Smooth Biking & Headwinds 🚲", next: "biking_relax" },
-      { text: "Flag Football & Team Plays 🏈", next: "football" },
-      { text: "Wait, completely unrelated, but let's warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
-      { text: "Tell me more about your computer science studies and logic! 🎓", next: "studies" }
-    ],
-    graphic: ''
+  {
+    id: 'biking',
+    title: 'Cycling & Freedom',
+    tag: 'BIKING',
+    desc: "Biking is one of my favorite outdoor activities! What I love most is the sheer freedom it gives me—I don't have to rely on public transportation schedules and can travel whenever I want. Cruising along the dome pathways is incredibly relaxing and gives me a great mental reset, even when slogging against tough headwinds.",
+    icon: '🚲',
+    type: 'biking'
   },
-  tech: {
-    title: "💻 TECH & GUI DESIGN",
-    text: "I got into technology because graphical user interfaces (GUIs) completely fascinated me! The idea of designing responsive, visual operating decks led me directly into coding. It's an amazing feeling to build entirely new digital environments and interactive software from scratch. Now, I apply that same design passion to building custom frontend decks like the Ares City OS!",
-    choices: [
-      { text: "Are you also into sci-fi and fantasy? 🎬", next: "scifi" },
-      { text: "Let's check out your music hobbies next! 🎵", next: "music_organ" },
-      { text: "By the way, let's abruptly warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
-      { text: "Let's go back to your main hobbies and passions directory! 🚴", next: "interests" }
-    ],
-    graphic: 'gui'
-  },
-  scifi: {
-    title: "🎬 SCI-FI & FANTASY WORLD-BUILDING",
-    text: "I am deeply passionate about sci-fi and fantasy cinematic universes. I love movies with cool futuristic worldbuilding, legendary space operas, and magical lore that spark my imagination. My top favorites are Star Wars, Harry Potter, Lord of the Rings, and Back to the Future—each one has such an engaging world and time-travel or magical logic!",
-    choices: [
-      { text: "Speaking of space, let's see the warp dock! 🚀", next: "travel" },
-      { text: "What kind of music do you listen to? 🎵", next: "music_organ" },
-      { text: "Hey, completely unrelated, let's check your CS studies! 🎓", next: "studies" },
-      { text: "Let's head back to the main list of your hobbies! 🚴", next: "interests" }
-    ],
-    graphic: 'scifi'
-  },
-  music_organ: {
-    title: "🎹 CLASSICAL MUSIC & PIPE ORGAN",
-    text: "I have a deep love for music, spanning both classical compositions and modern pop. In the classical realm, the pipe organ is my absolute favorite musical instrument because of its grand mechanical power, rich acoustics, and architectural sound. The complex coordination of manuals, pedals, and stops is just awe-inspiring.",
-    choices: [
-      { text: "Taylor Swift and Noah Kahan? Tell me about your pop albums! 💿", next: "music_pop" },
-      { text: "Do you sing or perform yourself? 🎤", next: "music_choir" },
-      { text: "By the way, let's abruptly jump to your flag football plays! 🏈", next: "football" },
-      { text: "Can we go back to the main hobbies and passions catalog? 🚴", next: "interests" }
-    ],
-    graphic: 'music_organ'
-  },
-  music_pop: {
-    title: "💿 POP STORYTELLING & ALBUMS",
-    text: "On the pop side, I love listening to complete pop albums from start to finish. Artists like Taylor Swift and Noah Kahan are my top favorites—their narrative lyrics, emotional storytelling, and acoustic folk-pop arrangements are incredibly engaging and relatable. Listening to a whole album is a wonderful immersive experience.",
-    choices: [
-      { text: "Tell me about singing in a choir or doing karaoke! 🎤", next: "music_choir" },
-      { text: "Tell me more about the classical pipe organ! 🎹", next: "music_organ" },
-      { text: "Wait, a random thought popped up—let's warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
-      { text: "Let's go back to your main hobbies catalog! 🚴", next: "interests" }
-    ],
-    graphic: 'music_pop'
-  },
-  music_choir: {
-    title: "🎤 CHOIR SINGING & KARAOKE",
-    text: "Music isn't just a listening hobby for me—I also participate! I love singing in a choir, where I can blend my voice in perfect harmony with others. When I want to sing solo, I absolutely love the fun and energy of doing karaoke. It's a wonderful way to express my passion for vocals!",
-    choices: [
-      { text: "Do you enjoy biking outdoors as well? 🚲", next: "biking_relax" },
-      { text: "Let's talk about Taylor Swift & Noah Kahan again! 💿", next: "music_pop" },
-      { text: "Completely unrelated, but can we see your CS studies? 🎓", next: "studies" },
-      { text: "Can we return to your main hobbies catalog? 🚴", next: "interests" }
-    ],
-    graphic: 'music_choir'
-  },
-  biking_relax: {
-    title: "🚲 SMOOTH CYCLING & FREEDOM",
-    text: "Biking is one of my favorite outdoor activities! What I love most is the sheer freedom it gives me—I don't have to rely on public transportation schedules and can travel whenever I want. Cruising along the dome pathways is incredibly relaxing and gives me a great mental reset.",
-    choices: [
-      { text: "What happens when there's a strong headwind? 💨", next: "biking_wind" },
-      { text: "Do you play flag football too? 🏈", next: "football" },
-      { text: "Wait, let's abruptly warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
-      { text: "Let's go back to the main list of hobbies! 🚴", next: "interests" }
-    ],
-    graphic: 'biking_relax'
-  },
-  biking_wind: {
-    title: "💨 CYCLING HEADWIND CHALLENGE",
-    text: "Biking is peaceful and relaxing—except when there is a strong headwind! Fighting against headwinds is a tough physical challenge that requires extra pedaling and pure grit. But I embrace the aerobic slogging because it keeps my cardiovascular endurance sharp and builds muscle.",
-    choices: [
-      { text: "That sounds intense! Tell me about flag football. 🏈", next: "football" },
-      { text: "Go back to the relaxing biking paths! 🚲", next: "biking_relax" },
-      { text: "Hey, completely unrelated, but let's see the Ares Warp Dock! 🚀", next: "travel" },
-      { text: "Can we return to the main hobbies menu? 🚴", next: "interests" }
-    ],
-    graphic: 'biking_wind'
-  },
-  football: {
-    title: "🏈 FLAG FOOTBALL OVERVIEW",
-    text: "I got hooked on flag football after watching exciting game highlights on YouTube! What caught my attention was how fast-paced and strategic the sport is. Because it is non-contact, it's all about speed, positioning, and clever plays rather than physical hits. I love playing both on offense and defense—offense is amazing for clean route-running and catching passes, while defense is an absolute blast for reading plays and shutting down the other team! There are so many distinct aspects of the game that thrill me!",
-    choices: [
-      { text: "What excites you most about huddles and playbook planning? 🗣️", next: "football_huddles" },
-      { text: "What does it feel like to catch a good pass on offense? 🏈", next: "football_passes" },
-      { text: "Playing defense is cool too, what is that like? 🛡️", next: "football_defense" },
-      { text: "How do predefined scripts help you coordinate and fit in? 🤝", next: "football_coordination" },
-      { text: "Wait, completely unrelated, let's warp to your Portfolio Dome! 📂", next: "warp_portfolio" },
-      { text: "Let's go back to the main hobbies directory! 🚴", next: "interests" }
-    ],
-    graphic: 'football'
-  },
-  football_huddles: {
-    title: "🗣️ THE THRILL OF PLAYBOOK HUDDLES",
-    text: "For me, the huddle is one of the most exciting parts of the game. It is a quiet moment of absolute focus. Standing in a tight circle with my teammates, we review the blueprint of the play. There is a deep, shared understanding as we trace routes with our hands in the air. For someone like me who faces social hurdles, the huddle provides a structured, clear objective where everyone is completely aligned on the same page. It's incredibly satisfying!",
-    choices: [
-      { text: "What about playing on defense and making big stops? 🛡️", next: "football_defense" },
-      { text: "What does it feel like to catch a good pass on offense? 🏈", next: "football_passes" },
-      { text: "How do predefined social scripts help you fit in? 🤝", next: "football_coordination" },
-      { text: "Let's talk about the general sport of flag football! 🏈", next: "football" }
-    ],
-    graphic: 'football'
-  },
-  football_passes: {
-    title: "🏈 THE THRILL OF CATCHING A PASS",
-    text: "Catching a good pass is a pure adrenaline rush! You sprint along your pre-planned route, locking your eyes onto the football as it arcs through the sky. The world around you fades out, leaving only the physics of the ball's trajectory. You reach out, secure the ball with soft hands, tuck it in, and turn to run. That instant second where the ball tucks into your hands is a burst of accomplishment—you did your job perfectly, and the team moves forward!",
-    choices: [
-      { text: "What excites you most about playbook huddles? 🗣️", next: "football_huddles" },
-      { text: "What is it like playing on defense and stopping plays? 🛡️", next: "football_defense" },
-      { text: "How do predefined scripts help you socialize during the game? 🤝", next: "football_coordination" },
-      { text: "Tell me about the general flag football overview! 🏈", next: "football" }
-    ],
-    graphic: 'football'
-  },
-  football_defense: {
-    title: "🛡️ THE THRILL OF DEFENSIVE STOPS",
-    text: "Playing defense is just as cool and thrilling! There is an absolute rush in reading the quarterback's eyes, anticipating the route, and completely messing up the other team's carefully planned play. Whether it's rushing the QB to force a hurried throw, tipping a pass away, or pulling a flag just before the first down, my teammates and I go wild when we make a big stop. Celebrating that defensive block together is an amazing feeling of shared victory!",
-    choices: [
-      { text: "What is it like catching a good pass on offense? 🏈", next: "football_passes" },
-      { text: "What excites you most about playbook huddles? 🗣️", next: "football_huddles" },
-      { text: "How do predefined social scripts help you fit in? 🤝", next: "football_coordination" },
-      { text: "By the way, let's abruptly jump to your CS studies! 🎓", next: "studies" },
-      { text: "Let's talk about the general flag football overview! 🏈", next: "football" }
-    ],
-    graphic: 'football'
-  },
-  football_coordination: {
-    title: "🤝 TEAM BLENDING & SOCIAL SCRIPTS",
-    text: "Because I have autism, natural socializing can feel incredibly draining and difficult. But flag football has a wonderful structure that makes fitting in so much easier. The game itself operates on predefined social scripts. When someone makes a play, I can say 'nice catch!' or 'good job!' and it's completely natural and expected. We coordinate using clear, structured signals and routes. It takes away the social pressure and allows me to feel like a valued part of a team without the stress of open-ended small talk.",
-    choices: [
-      { text: "Predefined scripts are a great tool! Tell me about huddles again. 🗣️", next: "football_huddles" },
-      { text: "That makes so much sense. What about catching a pass? 🏈", next: "football_passes" },
-      { text: "Playing defense sounds great, tell me more about that! 🛡️", next: "football_defense" },
-      { text: "Let's go back to your main hobbies catalog! 🚴", next: "interests" }
-    ],
-    graphic: 'football'
-  },
-  travel: {
-    title: "🚀 ARES WARP DOCK",
-    text: "Ready to depart the Citizen Suite? Select a dome coordinate below to trigger your hyperloop warp, or we can keep chatting and explore other topics! You can always restart the conversation from the beginning too.",
-    choices: [
-      { text: "🔄 Restart from the introduction!", next: "greeting" },
-      { text: "Tell me about your CS studies! 🎓", next: "studies" },
-      { text: "Explore your hobbies catalog! 🚴", next: "interests" },
-      { text: "Wait, a random thought popped up—let's warp to my portfolio! 📂", next: "warp_portfolio" }
-    ],
-    graphic: 'travel'
+  {
+    id: 'flag_football',
+    title: 'Flag Football Playbook',
+    tag: 'FLAG FOOTBALL',
+    desc: "I am deeply passionate about flag football! What caught my attention was how fast-paced, highly strategic, and non-contact it is—relying on speed, route running, and playbook coordinates rather than physical hits. Because I have autism, natural socializing can feel draining, but flag football operates on predefined social scripts (like 'nice catch!' or 'good job!') and structured huddles, taking away social pressure and allowing me to be a highly valued part of a team without the stress of small talk.",
+    icon: '🏈',
+    type: 'flag_football'
   }
-};
-
-const NODE_KEYS = [
-  'greeting', 
-  'studies', 
-  'math', 
-  'interests', 
-  'tech', 
-  'scifi', 
-  'music_organ', 
-  'music_pop', 
-  'music_choir', 
-  'biking_relax', 
-  'biking_wind', 
-  'football', 
-  'football_huddles', 
-  'football_passes', 
-  'football_defense', 
-  'football_coordination', 
-  'travel'
 ];
 
-export default function CitizenSuite() {
+export default function AresDashboard() {
   const router = useRouter();
-  const [transitState, setTransitState] = useState('slide-active');
-  const [currentNode, setCurrentNode] = useState('greeting');
-  const [isWalking, setIsWalking] = useState(false);
+  const birthDate = new Date('1996-07-19');
+  
+  const [marsAge, setMarsAge] = useState('15.8 Sols');
+  const [activeInterest, setActiveInterest] = useState(null);
+  const [academicSyncActive, setAcademicSyncActive] = useState(false);
+  const [mapHoverNode, setMapHoverNode] = useState(null);
 
-  // Synchronize entry transition classes
+  // Dynamic Mars Age calculation based on current time
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const walkDir = window.sessionStorage.getItem('walk-direction');
-      if (walkDir === 'left') {
-        setTransitState('slide-right');
-      } else if (walkDir === 'right') {
-        setTransitState('slide-left');
-      }
-      window.sessionStorage.removeItem('walk-direction');
+    const calculateAge = () => {
+      const now = new Date();
+      const diffTime = Math.abs(now - birthDate);
+      const diffDays = diffTime / (1000 * 60 * 60 * 24);
       
-      const timer = setTimeout(() => {
-        setTransitState('slide-active');
-      }, 50);
-      return () => clearTimeout(timer);
-    }
+      // Mars orbit is 686.98 Earth Days
+      const my = (diffDays / 686.98).toFixed(1);
+      setMarsAge(`${my} Sols`);
+    };
+    calculateAge();
+    
+    // Interval check every minute
+    const interval = setInterval(calculateAge, 60000);
+    return () => clearInterval(interval);
   }, []);
 
-  // Keyboard navigation for dialogue nodes (Left/Right Arrows navigate chronologically)
-  useEffect(() => {
-    const handleKeyDown = (e) => {
-      if (document.activeElement.tagName === 'INPUT' || document.activeElement.tagName === 'TEXTAREA') return;
-
-      const currentIndex = NODE_KEYS.indexOf(currentNode);
-      if (e.key === 'ArrowRight' && currentIndex < NODE_KEYS.length - 1) {
-        setCurrentNode(NODE_KEYS[currentIndex + 1]);
-      } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
-        setCurrentNode(NODE_KEYS[currentIndex - 1]);
-      }
-    };
-
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [currentNode]);
-
-  // Warp transitions for Travel Node sector COORDINATES links
-  const handleWarpFromStep = (e, path, targetWeight) => {
-    if (e) e.preventDefault();
-    if (isWalking) return;
-    setIsWalking(true);
-
-    const workspace = document.querySelector('.os-workspace');
-    const content = document.querySelector('.walking-content-container');
-
-    if (workspace) workspace.classList.add('walking-transit-active');
-    
-    if (content) {
-      const isHeadingLeft = targetWeight > 2; // Suite is weight 2
-      if (typeof window !== 'undefined') {
-        window.sessionStorage.setItem('walk-direction', isHeadingLeft ? 'left' : 'right');
-      }
-      content.classList.add(isHeadingLeft ? 'slide-left' : 'slide-right');
-      content.classList.remove('slide-active');
-    }
-
-    setTimeout(() => {
-      router.push(path);
-    }, 220);
-  };
-
-  const activeNode = DIALOG_NODES[currentNode] || DIALOG_NODES.greeting;
-
-  // Resolve active topic narrative dynamically
-  const activeTitle = activeNode.topic || activeNode.title || "";
-  const activeText = activeNode.text || "";
-  const activeGraphic = activeNode.graphic || "";
-
   return (
-    <div className="citizen-card-shell" style={{ flexDirection: 'column', overflow: 'visible' }}>
-      {/* Walking Transit Sweeper Overlays */}
-      <div className="walking-motion-overlay" style={{ position: 'fixed' }}></div>
+    <div style={{
+      position: 'absolute',
+      inset: 0,
+      display: 'flex',
+      flexDirection: 'row',
+      gap: '24px',
+      padding: '24px',
+      boxSizing: 'border-box',
+      overflow: 'hidden',
+      height: '100%',
+      width: '100%'
+    }} className="dashboard-main-container">
+      
+      {/* Styles injector for custom micro-animations & responsive collapse */}
+      <style jsx global>{`
+        @keyframes spin-turntable {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes signal-pulse {
+          0% { r: 6px; opacity: 0.8; }
+          100% { r: 16px; opacity: 0; }
+        }
+        @keyframes scanline-pass {
+          0% { transform: translateY(-100%); }
+          100% { transform: translateY(100%); }
+        }
+        .animate-spin-custom {
+          animation: spin-turntable 8s linear infinite;
+        }
+        .pulse-ring {
+          animation: signal-pulse 2s cubic-bezier(0.25, 0, 0, 1) infinite;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 950px) {
+          .dashboard-main-container {
+            flex-direction: column !important;
+            overflow-y: auto !important;
+            height: auto !important;
+            position: relative !important;
+            inset: auto !important;
+            padding: 12px !important;
+            gap: 16px !important;
+          }
+          .dashboard-left-col {
+            width: 100% !important;
+            min-width: 100% !important;
+            height: auto !important;
+          }
+          .dashboard-right-col {
+            height: 480px !important;
+            min-height: 480px !important;
+          }
+        }
+      `}</style>
 
-      {/* Floating navigation map bubble (CityGridMap returns null globally per requirements) */}
-      <div className="floating-nav-bubble">
-        <CityGridMap />
-      </div>
-
-      {/* Spacious 2-Column Grid Centering Your Cutout & Speech Bubble */}
+      {/* LEFT COLUMN: The Premium Profile Terminal Card */}
       <div 
-        className={`walking-content-container homepage-grid ${transitState}`} 
-        style={{ 
-          overflow: 'visible',
-          gridTemplateColumns: '210px min(580px, 62vw)', /* Shrunk spacer to bring bubble exactly next to mouth */
-          justifyContent: 'center',
-          alignItems: 'center'
+        className="dashboard-left-col"
+        style={{
+          width: '380px',
+          minWidth: '380px',
+          background: 'rgba(10, 6, 6, 0.65)',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
+          borderRadius: '12px',
+          padding: '20px',
+          boxSizing: 'border-box',
+          display: 'flex',
+          flexDirection: 'column',
+          zIndex: 10,
+          position: 'relative',
+          overflow: 'hidden',
+          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.05)'
         }}
       >
-        
-        {/* Far-Left Column: Spatial gap overlaying the natural background cutout */}
-        <div className="roomscale-profile-spacer" style={{ width: '100%', height: '100%', pointerEvents: 'none' }}></div>
+        {/* Terminal Scanline glow overlay */}
+        <div style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(255, 255, 255, 0.02) 50%)',
+          backgroundSize: '100% 4px',
+          pointerEvents: 'none',
+          zIndex: 1
+        }}></div>
 
-        {/* Right Column: Single High-Contrast Branching Stepper Speech Bubble */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', minHeight: 0, overflow: 'visible' }}>
+        {/* Profile Avatar Frame - holographic transparent layout */}
+        <div style={{
+          width: '100%',
+          height: '160px',
+          position: 'relative',
+          borderRadius: '8px',
+          overflow: 'hidden',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%)',
+          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.08)',
+          marginBottom: '16px',
+          display: 'flex',
+          alignItems: 'flex-end',
+          justifyContent: 'center',
+          zIndex: 2,
+          flexShrink: 0
+        }}>
+          <img 
+            src="/assets/images/profile.png" 
+            alt="Ephraim Becker Profile" 
+            style={{
+              height: '95%',
+              width: 'auto',
+              objectFit: 'contain',
+              filter: 'drop-shadow(0 4px 10px rgba(0, 240, 255, 0.25))'
+            }}
+          />
+          {/* Subtle Corner Telemetry Accents */}
+          <div style={{ position: 'absolute', top: '8px', left: '8px', width: '6px', height: '6px', borderTop: '2px solid rgba(0,240,255,0.4)', borderLeft: '2px solid rgba(0,240,255,0.4)' }}></div>
+          <div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', borderTop: '2px solid rgba(0,240,255,0.4)', borderRight: '2px solid rgba(0,240,255,0.4)' }}></div>
+          <div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', borderBottom: '2px solid rgba(0,240,255,0.4)', borderLeft: '2px solid rgba(0,240,255,0.4)' }}></div>
+          <div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', borderBottom: '2px solid rgba(0,240,255,0.4)', borderRight: '2px solid rgba(0,240,255,0.4)' }}></div>
+        </div>
+
+        {/* Core Stats Readout - Earth Age Removed */}
+        <div style={{
+          fontFamily: 'monospace, var(--font-tech)',
+          fontSize: '0.8rem',
+          color: '#00f0ff',
+          letterSpacing: '0.5px',
+          lineHeight: '1.6',
+          borderBottom: '1px dashed rgba(255, 255, 255, 0.1)',
+          paddingBottom: '10px',
+          marginBottom: '12px',
+          textAlign: 'left',
+          textShadow: '0 0 6px rgba(0, 240, 255, 0.3)',
+          zIndex: 2,
+          flexShrink: 0
+        }}>
+          <div>CITIZEN: <span style={{ color: '#fff', fontWeight: 'bold' }}>Ephraim Becker</span></div>
+          <div>MARS AGE: <span style={{ color: '#fff', fontWeight: 'bold' }}>{marsAge}</span></div>
+        </div>
+
+        {/* Biography Block */}
+        <div style={{
+          textAlign: 'left',
+          marginBottom: '14px',
+          zIndex: 2,
+          flexShrink: 0
+        }}>
+          <span style={{
+            fontFamily: 'monospace, var(--font-tech)',
+            fontSize: '0.62rem',
+            color: 'rgba(255, 255, 255, 0.4)',
+            letterSpacing: '1.5px',
+            textTransform: 'uppercase',
+            display: 'block',
+            marginBottom: '4px'
+          }}>// CITIZEN BIOGRAPHY LOG</span>
+          <p style={{
+            fontSize: '0.76rem',
+            lineHeight: '1.45',
+            color: 'rgba(255, 255, 255, 0.85)',
+            margin: 0,
+            fontFamily: 'var(--font-sans)',
+            fontWeight: 400
+          }}>
+            Ephraim Becker is a Computer Science major studying remote-class systems engineering. Backed by mathematical rigor in Calculus, his true passion lies in building highly interactive graphical user interfaces and responsive web layouts.
+          </p>
+        </div>
+
+        {/* Clickable Interests Mini-Tags (One-Scan Dashboard View - Spacing fully optimized) */}
+        <div style={{
+          textAlign: 'left',
+          marginBottom: '16px',
+          zIndex: 2,
+          display: 'flex',
+          flexDirection: 'column',
+          flex: 1,
+          minHeight: 0
+        }}>
+          <span style={{
+            fontFamily: 'monospace, var(--font-tech)',
+            fontSize: '0.62rem',
+            color: 'rgba(255, 255, 255, 0.4)',
+            letterSpacing: '1.5px',
+            textTransform: 'uppercase',
+            display: 'block',
+            marginBottom: '6px'
+          }}>// CLASSIFIED INTEREST REGISTRY</span>
           
-          <div className="comic-speech-bubble" style={{ display: 'flex', flexDirection: 'column', minHeight: '305px', justifyContent: 'space-between' }}>
+          <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '6px',
+            overflowY: 'auto',
+            paddingRight: '4px'
+          }} className="left-card-column">
+            {INTERESTS.map((interest) => (
+              <button
+                key={interest.id}
+                onClick={() => setActiveInterest(interest)}
+                className="hud-badge"
+                style={{
+                  fontFamily: 'monospace, var(--font-tech)',
+                  fontSize: '0.68rem',
+                  padding: '8px 12px',
+                  borderRadius: '6px',
+                  background: 'rgba(255, 255, 255, 0.03)',
+                  border: '1px solid rgba(255, 255, 255, 0.08)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  cursor: 'pointer',
+                  width: '100%',
+                  textAlign: 'left',
+                  transition: 'all 0.2s ease',
+                  color: 'var(--text-primary)'
+                }}
+              >
+                <span>[{interest.tag}]</span>
+                <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>{interest.icon}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Complete 6-Link Social Registry Matrix */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(3, 1fr)',
+          gap: '6px',
+          marginTop: 'auto',
+          zIndex: 2,
+          flexShrink: 0
+        }}>
+          <a 
+            href="https://github.com/EphraimB" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="social-link-port"
+            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+          >
+            GitHub
+          </a>
+          <a 
+            href="https://www.linkedin.com/in/ephraim-becker/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="social-link-port"
+            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+          >
+            LinkedIn
+          </a>
+          <a 
+            href="https://twitter.com/emb180" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="social-link-port"
+            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+          >
+            X
+          </a>
+          <a 
+            href="https://www.youtube.com/channel/UCIHxAXYLxYlNaQiv0do0bUg" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="social-link-port"
+            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+          >
+            YouTube
+          </a>
+          <a 
+            href="https://www.instagram.com/ephraim.becker/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="social-link-port"
+            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+          >
+            Instagram
+          </a>
+          <a 
+            href="https://www.facebook.com/ephraim.becker/" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="social-link-port"
+            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+          >
+            Facebook
+          </a>
+        </div>
+      </div>
+
+      {/* RIGHT COLUMN: The 2D Interactive Vector Map */}
+      <div 
+        className="dashboard-right-col"
+        style={{
+          flex: 1,
+          background: 'rgba(6, 9, 20, 0.55)',
+          border: '1px solid rgba(255, 255, 255, 0.08)',
+          borderRadius: '12px',
+          position: 'relative',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0,0,0,0.6)'
+        }}
+      >
+        {/* Core coordinates header overlay */}
+        <div style={{
+          position: 'absolute',
+          top: '12px',
+          left: '16px',
+          zIndex: 5,
+          fontFamily: 'monospace, var(--font-tech)',
+          fontSize: '0.62rem',
+          color: 'rgba(255,255,255,0.4)',
+          letterSpacing: '1px',
+          pointerEvents: 'none',
+          textAlign: 'left'
+        }}>
+          ARES_SYSTEM // NAVIGATION_MAP // DOME_LINK_ONLINE
+          {mapHoverNode && <span style={{ color: '#00f0ff', marginLeft: '12px' }}>[ SELECTED: {mapHoverNode.toUpperCase()} ]</span>}
+        </div>
+
+        {/* 2D Auto-scaling Tactical Map Canvas (meet preserves full viewport) */}
+        <svg 
+          viewBox="0 0 800 500" 
+          width="100%" 
+          height="100%"
+          preserveAspectRatio="xMidYMid meet"
+          style={{
+            flex: 1,
+            display: 'block'
+          }}
+        >
+          <defs>
+            {/* Dusk Violet circular glow */}
+            <radialGradient id="violetGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#c259ff" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#c259ff" stopOpacity="0" />
+            </radialGradient>
+            {/* Cyan glowing dots */}
+            <radialGradient id="cyanGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#00f0ff" stopOpacity="0.4" />
+              <stop offset="100%" stopColor="#00f0ff" stopOpacity="0" />
+            </radialGradient>
+          </defs>
+
+          {/* Radar Sweep scanning graphic circles */}
+          <circle cx="400" cy="250" r="230" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="1" strokeDasharray="3 6" />
+          <circle cx="400" cy="250" r="170" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
+          <circle cx="400" cy="250" r="100" fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth="1" />
+          <circle cx="400" cy="250" r="40" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+
+          {/* Coordinate grid tactical crosshairs lines */}
+          <line x1="170" y1="250" x2="630" y2="250" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" strokeDasharray="5 5" />
+          <line x1="400" y1="80" x2="400" y2="420" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" strokeDasharray="5 5" />
+
+          {/* Tactical road segments / colony navigation networks */}
+          {/* Central linked nodes roads - moved safe inward coordinates */}
+          <line x1="400" y1="250" x2="260" y2="180" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="4 4" />
+          <line x1="400" y1="250" x2="540" y2="180" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="4 4" />
+          <line x1="400" y1="250" x2="400" y2="110" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="4 4" />
+          <line x1="260" y1="180" x2="290" y2="330" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+          <line x1="540" y1="180" x2="510" y2="330" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+          <line x1="290" y1="330" x2="510" y2="330" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+
+          {/* SECTOR 03: BIOSPHERE DOME (Top center hub) */}
+          <g 
+            onClick={() => router.push('/atmosphere-dome')}
+            onMouseEnter={() => setMapHoverNode('Sector 03: Biosphere Dome')}
+            onMouseLeave={() => setMapHoverNode(null)}
+            style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
+          >
+            <circle cx="400" cy="110" r="16" fill="rgba(0, 255, 136, 0.05)" stroke="rgba(0, 255, 136, 0.4)" strokeWidth="1.5" />
+            <circle cx="400" cy="110" r="6" fill="#00ff88" />
+            <text x="400" y="85" fill="rgba(255,255,255,0.6)" fontSize="9" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 03: BIOSPHERE</text>
+          </g>
+
+          {/* SECTOR 04: QUANTUM NET (Bottom left hub) */}
+          <g 
+            onClick={() => router.push('/quantum-net')}
+            onMouseEnter={() => setMapHoverNode('Sector 04: Quantum Net')}
+            onMouseLeave={() => setMapHoverNode(null)}
+            style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
+          >
+            <circle cx="290" cy="330" r="16" fill="rgba(255, 179, 0, 0.05)" stroke="rgba(255, 179, 0, 0.4)" strokeWidth="1.5" />
+            <circle cx="290" cy="330" r="6" fill="#ffb300" />
+            <text x="290" y="360" fill="rgba(255,255,255,0.6)" fontSize="9" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 04: QUANTUM NET</text>
+          </g>
+
+          {/* SECTOR 05: METROPOLIS CORE (Bottom right hub) */}
+          <g 
+            onClick={() => router.push('/metropolis-core')}
+            onMouseEnter={() => setMapHoverNode('Sector 05: Metropolis Core')}
+            onMouseLeave={() => setMapHoverNode(null)}
+            style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
+          >
+            <circle cx="510" cy="330" r="16" fill="rgba(0, 240, 255, 0.05)" stroke="rgba(0, 240, 255, 0.4)" strokeWidth="1.5" />
+            <circle cx="510" cy="330" r="6" fill="#00f0ff" />
+            <text x="510" y="360" fill="rgba(255,255,255,0.6)" fontSize="9" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 05: METROPOLIS</text>
+          </g>
+
+          {/* SECTOR 01: PORTFOLIO ARCHIVES (Left highlighted hub - Dusk Violet Glow - Centered text avoids clipping) */}
+          <g 
+            onClick={() => router.push('/portfolio')}
+            onMouseEnter={() => setMapHoverNode('Sector 01: Portfolio Archives')}
+            onMouseLeave={() => setMapHoverNode(null)}
+            style={{ cursor: 'pointer' }}
+          >
+            {/* Dusk Violet Pulsing glowing rings */}
+            <circle cx="260" cy="180" r="28" fill="url(#violetGlow)" pointerEvents="none" />
+            <circle cx="260" cy="180" r="14" fill="none" stroke="#c259ff" strokeWidth="1" className="pulse-ring" />
             
-            {/* Stepper Header (Telemetry indicators) */}
-            <div className="bubble-telemetry-header">
-              <span className="bubble-telemetry-coord">
-                TRANSMITTING COORD: PENTHOUSE_A-02
+            {/* Core Node shape */}
+            <circle cx="260" cy="180" r="18" fill="rgba(10, 6, 20, 0.8)" stroke="#c259ff" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 8px #c259ff)' }} />
+            <circle cx="260" cy="180" r="6" fill="#c259ff" />
+            
+            {/* Centered label above node */}
+            <text x="260" y="142" fill="#c259ff" fontSize="9.5" fontWeight="bold" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 01: PORTFOLIO</text>
+            <text x="260" y="152" fill="rgba(255,255,255,0.4)" fontSize="6.5" fontFamily="monospace, var(--font-tech)" textAnchor="middle">[CLICK TO TRANSLATE]</text>
+          </g>
+
+          {/* SECTOR 02: ACADEMIC MODULES (Right highlighted hub - Cybernetic Cyan Glow - Centered text completely solves clipping) */}
+          <g 
+            onClick={() => setAcademicSyncActive(!academicSyncActive)}
+            onMouseEnter={() => setMapHoverNode('Sector 02: Academic Modules')}
+            onMouseLeave={() => setMapHoverNode(null)}
+            style={{ cursor: 'pointer' }}
+          >
+            {/* Cyan circular glow */}
+            <circle cx="540" cy="180" r="28" fill="url(#cyanGlow)" pointerEvents="none" />
+            <circle cx="540" cy="180" r="14" fill="none" stroke="#00f0ff" strokeWidth="1" className="pulse-ring" />
+            
+            {/* Core Node shape */}
+            <circle cx="540" cy="180" r="18" fill="rgba(6, 12, 20, 0.8)" stroke="#00f0ff" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 8px #00f0ff)' }} />
+            <polygon points="540,174 545,183 535,183" fill="#00f0ff" />
+            
+            {/* Centered label above node */}
+            <text x="540" y="142" fill="#00f0ff" fontSize="9.5" fontWeight="bold" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 02: ACADEMICS</text>
+            <text x="540" y="152" fill="rgba(255,255,255,0.4)" fontSize="6.5" fontFamily="monospace, var(--font-tech)" textAnchor="middle">[CLICK TO SYNC TELEMETRY]</text>
+          </g>
+
+          {/* Central Ares colony coordinate crosshair */}
+          <circle cx="400" cy="250" r="8" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
+          <line x1="390" y1="250" x2="410" y2="250" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+          <line x1="400" y1="240" x2="400" y2="260" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+          <text x="400" y="275" fill="rgba(255,255,255,0.3)" fontSize="8" fontFamily="monospace, var(--font-tech)" textAnchor="middle">COLONY_CORE</text>
+
+        </svg>
+
+        {/* Dynamic Holographic Academic Modules telemetry panel */}
+        {academicSyncActive && (
+          <div 
+            style={{
+              position: 'absolute',
+              bottom: '16px',
+              left: '16px',
+              right: '16px',
+              maxHeight: '190px',
+              background: 'rgba(6, 10, 18, 0.92)',
+              border: '1.5px solid #00f0ff',
+              borderRadius: '8px',
+              boxShadow: '0 0 25px rgba(0, 240, 255, 0.25)',
+              padding: '14px',
+              boxSizing: 'border-box',
+              display: 'flex',
+              flexDirection: 'column',
+              textAlign: 'left',
+              animation: 'modal-scale-up 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
+              zIndex: 30
+            }}
+          >
+            {/* Telemetry Header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(0,240,255,0.2)', paddingBottom: '6px', marginBottom: '8px' }}>
+              <span style={{ fontFamily: 'monospace, var(--font-tech)', fontSize: '0.65rem', color: '#00f0ff', fontWeight: 'bold', letterSpacing: '1px' }}>
+                📡 SYSTEM_SYNC // ACADEMIC_TELEMETRY_LOG
               </span>
-              <span className="bubble-telemetry-status">
-                TELEMETRY ACTIVE
-              </span>
+              <button 
+                onClick={() => setAcademicSyncActive(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'rgba(255,255,255,0.5)',
+                  cursor: 'pointer',
+                  fontFamily: 'monospace',
+                  fontSize: '0.7rem'
+                }}
+              >
+                [✕]
+              </button>
             </div>
 
-            {/* Non-Clickable HUD Active Topic Indicator */}
-            <div className="bubble-topic-indicator">
-              <span className="bubble-topic-text">
-                [ 💬 ACTIVE TOPIC: {activeTitle.replace(/^[^\w\s]+/g, '').trim().toUpperCase()} ]
+            {/* Academic Content Columns */}
+            <div style={{ display: 'flex', gap: '16px', flex: 1, minHeight: 0, overflowY: 'auto' }} className="custom-scroll">
+              
+              {/* College Credentials */}
+              <div style={{ flex: 1 }}>
+                <div style={{ fontSize: '0.72rem', color: '#fff', fontWeight: 'bold', fontFamily: 'monospace', marginBottom: '4px' }}>Adelphi University CSC</div>
+                <div style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', marginBottom: '6px' }}>REMOTE CADET // DOUBLE CLASS STATUS</div>
+                <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.85)', margin: 0, lineHeight: '1.4' }}>
+                  Studying database query efficiencies, binary search tree logic, index optimization architectures, and mathematical logic pathways via Calculus.
+                </p>
+              </div>
+
+              {/* Calculus coordinates curve visualization (Vector decoration) */}
+              <div style={{ width: '150px', background: 'rgba(0,0,0,0.4)', borderRadius: '6px', border: '1px solid rgba(0,240,255,0.1)', padding: '6px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <span style={{ fontSize: '0.52rem', color: '#00f0ff', fontFamily: 'monospace', display: 'block', textAlign: 'center' }}>CALCULUS_SLOPE (dy/dx)</span>
+                <svg viewBox="0 0 100 45" width="100%" height="32px">
+                  <line x1="5" y1="38" x2="95" y2="38" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
+                  <line x1="20" y1="5" x2="20" y2="40" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
+                  <path d="M 20,38 Q 45,5 75,20 T 95,5" fill="none" stroke="#00f0ff" strokeWidth="1.2" />
+                  <circle cx="75" cy="20" r="2" fill="#ffb300" />
+                </svg>
+                <span style={{ fontSize: '0.48rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', textAlign: 'center' }}>INTEGRAL LIMIT: NOMINAL</span>
+              </div>
+
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* FULL-SCREEN IMMERSIVE INTEREST DETAILS MODAL OVERLAY */}
+      {activeInterest && (
+        <div 
+          onClick={() => setActiveInterest(null)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(4, 6, 12, 0.85)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            zIndex: 1000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            boxSizing: 'border-box'
+          }}
+        >
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              width: '100%',
+              maxWidth: '720px',
+              background: 'rgba(10, 14, 30, 0.94)',
+              border: '2px solid var(--color-accent)',
+              borderColor: activeInterest.id === 'technology' ? '#00f0ff' : activeInterest.id === 'scifi' ? '#c259ff' : activeInterest.id === 'music' ? '#ffb300' : activeInterest.id === 'biking' ? '#00ff88' : '#e65100',
+              borderRadius: '16px',
+              boxShadow: '0 0 35px rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden',
+              boxSizing: 'border-box',
+              textAlign: 'left'
+            }}
+          >
+            {/* Modal Header */}
+            <div style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              padding: '16px 24px',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+              background: 'rgba(0, 0, 0, 0.2)'
+            }}>
+              <span style={{
+                fontFamily: 'monospace, var(--font-tech)',
+                fontSize: '0.65rem',
+                color: activeInterest.id === 'technology' ? '#00f0ff' : activeInterest.id === 'scifi' ? '#c259ff' : activeInterest.id === 'music' ? '#ffb300' : activeInterest.id === 'biking' ? '#00ff88' : '#ff5722',
+                fontWeight: 'bold',
+                letterSpacing: '1.5px'
+              }}>
+                // ACTIVE_SECTOR_SYNC: {activeInterest.tag}
               </span>
+              <button 
+                onClick={() => setActiveInterest(null)}
+                className="hud-btn"
+                style={{
+                  padding: '4px 12px',
+                  fontSize: '0.65rem',
+                  borderColor: 'rgba(255,255,255,0.2)',
+                  borderRadius: '6px',
+                  background: 'rgba(255,255,255,0.05)',
+                  cursor: 'pointer',
+                  color: '#fff'
+                }}
+              >
+                [ ✕ CLOSE DECK ]
+              </button>
             </div>
 
-            {/* Stepper Body: Dynamic Branching Dialogue & Custom Vector Graphics */}
-            <div 
-              aria-live="polite" 
-              style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 0 }}
-            >
-              
-              {/* Factual Narrative Paragraph */}
-              <p style={{ fontSize: '0.85rem', lineHeight: '1.5', fontWeight: 500, color: 'rgba(0,0,0,0.82)', margin: '0 0 10px 0' }}>
-                {activeText.split('Ephraim Becker').map((part, i, arr) => (
-                  i === arr.length - 1 ? part : <span key={i}>{part}<strong>Ephraim Becker</strong></span>
-                ))}
-              </p>
-
-              {/* DYNAMIC BESPOKE SVG GRAPHICS */}
-              
-              {/* Graphic 1: Space Telemetry & Planets (Intro) */}
-              {activeGraphic === 'space' && (
-                <svg viewBox="0 0 320 100" width="100%" height="95px" style={{ marginTop: '14px', background: 'radial-gradient(circle at center, #0a0d17 0%, #04060c 100%)', borderRadius: '10px', border: '1px solid rgba(194, 89, 255, 0.18)', boxShadow: 'inset 0 0 10px rgba(0,240,255,0.1)' }}>
-                  <defs>
-                    <linearGradient id="earthOcean" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#1976d2" />
-                      <stop offset="100%" stopColor="#0d47a1" />
-                    </linearGradient>
-                    <linearGradient id="marsDunes" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#d84315" />
-                      <stop offset="100%" stopColor="#801313" />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Stars field */}
-                  <circle cx="20" cy="20" r="0.6" fill="#fff" opacity="0.8" />
-                  <circle cx="70" cy="15" r="0.8" fill="#fff" opacity="0.6" style={{ animation: 'blink-led 1.8s infinite' }} />
-                  <circle cx="110" cy="30" r="0.5" fill="#fff" opacity="0.9" />
-                  <circle cx="150" cy="15" r="0.8" fill="#ffb300" opacity="0.5" style={{ animation: 'blink-led 2s infinite' }} />
-                  <circle cx="190" cy="25" r="0.6" fill="#fff" opacity="0.7" />
-                  <circle cx="270" cy="20" r="0.8" fill="#fff" opacity="0.8" style={{ animation: 'blink-led 1.5s infinite' }} />
-                  <circle cx="290" cy="35" r="0.5" fill="#fff" opacity="0.9" />
-                  
-                  <circle cx="40" cy="80" r="0.6" fill="#fff" opacity="0.9" />
-                  <circle cx="85" cy="70" r="0.5" fill="#fff" opacity="0.6" />
-                  <circle cx="130" cy="85" r="0.8" fill="#fff" opacity="0.8" style={{ animation: 'blink-led 2.2s infinite' }} />
-                  <circle cx="210" cy="80" r="0.6" fill="#fff" opacity="0.8" />
-
-                  {/* Nebulae */}
-                  <ellipse cx="160" cy="50" rx="70" ry="25" fill="rgba(194, 89, 255, 0.04)" style={{ filter: 'blur(10px)' }} />
-                  <ellipse cx="80" cy="40" rx="55" ry="20" fill="rgba(0, 240, 255, 0.03)" style={{ filter: 'blur(8px)' }} />
-
-                  {/* Real Earth Globe */}
-                  <g>
-                    <circle cx="60" cy="50" r="23" fill="none" stroke="rgba(0, 240, 255, 0.22)" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 0 3px rgba(0,240,255,0.4))' }} />
-                    <circle cx="60" cy="50" r="21" fill="url(#earthOcean)" />
-                    <path d="M 45,36 Q 52,38 54,42 Q 58,40 56,46 Q 52,48 55,54 Q 57,59 55,62 Q 52,65 48,68 Q 44,60 46,55 Q 49,50 45,45 Z" fill="#2e7d32" opacity="0.85" />
-                    <path d="M 50,30 Q 56,29 55,33 Q 50,34 49,32 Z" fill="#e0f2f1" opacity="0.9" />
-                    <path d="M 72,40 Q 75,44 78,43 L 80,48 Q 78,54 75,56 Q 73,50 71,46 Z" fill="#2e7d32" opacity="0.8" />
-                    <path d="M 42,42 Q 52,35 68,44" fill="none" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" opacity="0.65" />
-                    <path d="M 46,56 Q 56,62 72,52" fill="none" stroke="#ffffff" strokeWidth="1.6" strokeLinecap="round" opacity="0.55" />
-                    <path d="M 60,29 A 21 21 0 0 1 60,71 A 21 21 0 0 0 60,29 Z" fill="rgba(0,0,0,0.4)" />
-                    <text x="60" y="53" fill="#ffffff" fontSize="6.5" fontFamily="var(--font-tech)" fontWeight={900} textAnchor="middle" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>EARTH</text>
-                  </g>
-
-                  {/* Real Mars Globe */}
-                  <g>
-                    <circle cx="260" cy="50" r="23" fill="none" stroke="rgba(255, 179, 0, 0.22)" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 0 3px rgba(255,179,0,0.4))' }} />
-                    <circle cx="260" cy="50" r="21" fill="url(#marsDunes)" />
-                    <path d="M 250,42 Q 255,46 262,44 Q 268,48 266,54 Q 258,58 254,54 Q 248,50 248,46 Z" fill="#4e1d13" opacity="0.65" />
-                    <path d="M 248,60 Q 258,62 266,59 Q 272,66 260,68 Z" fill="#4e1d13" opacity="0.55" />
-                    <ellipse cx="260" cy="30" rx="7" ry="2.2" fill="#ffffff" opacity="0.95" style={{ filter: 'drop-shadow(0 0 1px #fff)' }} />
-                    <ellipse cx="260" cy="70" rx="5" ry="1.5" fill="#ffffff" opacity="0.8" />
-                    <path d="M 260,29 A 21 21 0 0 1 260,71 A 21 21 0 0 0 260,29 Z" fill="rgba(0,0,0,0.45)" />
-                    <text x="260" y="53" fill="#ffffff" fontSize="6.5" fontFamily="var(--font-tech)" fontWeight={900} textAnchor="middle" style={{ textShadow: '0 1px 3px rgba(0,0,0,0.8)' }}>MARS</text>
-                  </g>
-
-                  <line x1="84" y1="50" x2="236" y2="50" stroke="#00f0ff" strokeWidth="1.5" strokeDasharray="5 5" style={{ animation: 'signal-beam 2s linear infinite', filter: 'drop-shadow(0 0 2px #00f0ff)' }} />
-                  <circle cx="160" cy="50" r="3.5" fill="#00ff88" style={{ animation: 'packet-glide 2s infinite linear', filter: 'drop-shadow(0 0 3px #00ff88)' }} />
-                </svg>
-              )}
-
-              {/* Graphic 2: Custom glowing Martian OS GUI Mockup (tech sub-hobby) */}
-              {activeGraphic === 'gui' && (
-                <svg viewBox="0 0 320 95" width="100%" height="95px" style={{ marginTop: '14px', background: '#080b13', borderRadius: '10px', border: '1px solid rgba(0, 240, 255, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,240,255,0.1)' }}>
-                  <rect x="0" y="0" width="320" height="15" fill="#141a29" />
-                  <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
-                  <circle cx="20" cy="7.5" r="3" fill="#ffb300" />
-                  <circle cx="30" cy="7.5" r="3" fill="#00ff88" />
-                  <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="var(--font-tech)" textAnchor="middle">ARES_OS // DESKTOP_VIEWER</text>
-
-                  {/* Left Desktop Folders */}
-                  <g transform="translate(10, 24)">
-                    <rect x="5" y="5" width="16" height="12" rx="2" fill="none" stroke="var(--color-accent)" strokeWidth="1" />
-                    <path d="M 5,5 L 11,5 L 13,8 L 21,8 L 21,17 L 5,17 Z" fill="none" stroke="var(--color-accent)" strokeWidth="1" />
-                    <text x="13" y="27" fill="rgba(255,255,255,0.6)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">SYSTEMS</text>
-
-                    <rect x="35" y="5" width="16" height="12" rx="2" fill="none" stroke="#2979ff" strokeWidth="1" />
-                    <path d="M 35,5 L 41,5 L 43,8 L 51,8 L 51,17 L 35,17 Z" fill="none" stroke="#2979ff" strokeWidth="1" />
-                    <text x="43" y="27" fill="rgba(255,255,255,0.6)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">APPS</text>
-                  </g>
-
-                  {/* Right Telemetry Dial Graphs */}
-                  <g transform="translate(110, 24)">
-                    <circle cx="40" cy="25" r="16" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
-                    <path d="M 40,9 A 16 16 0 0 1 56,25" fill="none" stroke="var(--color-accent)" strokeWidth="2.5" />
-                    <text x="40" y="28" fill="#fff" fontSize="5.5" fontFamily="var(--font-tech)" textAnchor="middle">85%</text>
-                    <text x="40" y="49" fill="rgba(255,255,255,0.5)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">GUI INTEREST</text>
-                    
-                    <circle cx="120" cy="25" r="16" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
-                    <path d="M 120,9 A 16 16 0 1 1 104,25" fill="none" stroke="#00f0ff" strokeWidth="2.5" />
-                    <text x="120" y="28" fill="#fff" fontSize="5.5" fontFamily="var(--font-tech)" textAnchor="middle">ONLINE</text>
-                    <text x="120" y="49" fill="rgba(255,255,255,0.5)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">WARP CORES</text>
-                  </g>
-                </svg>
-              )}
-
-              {/* Graphic 3: Calculus coordinate slopes grid (studies node) */}
-              {activeGraphic === 'studies' && (
-                <svg viewBox="0 0 300 75" width="100%" height="75px" style={{ marginTop: '14px', background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(194, 89, 255, 0.18)', boxShadow: 'inset 0 0 8px rgba(194, 89, 255, 0.08)' }}>
-                  <line x1="20" y1="38" x2="280" y2="38" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" />
-                  <line x1="60" y1="10" x2="60" y2="65" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" />
-                  
-                  <path d="M 60,55 Q 120,-15 190,45 T 280,25" fill="none" stroke="var(--color-accent)" strokeWidth="1.6" style={{ filter: 'drop-shadow(0 0 2px var(--color-accent))' }} />
-
-                  <text x="70" y="22" fill="rgba(255,255,255,0.5)" fontSize="6.5" fontFamily="monospace">dy/dx = lim Δx-&gt;0 (Δy/Δx)</text>
-                  <text x="180" y="60" fill="var(--color-accent)" fontSize="6.5" fontFamily="monospace">∫ f(x) dx</text>
-                </svg>
-              )}
-
-              {/* Graphic 4: Sci-Fi & Fantasy holographic quadrant carousel */}
-              {activeGraphic === 'scifi' && (
-                <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ marginTop: '14px', background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(0, 240, 255, 0.15)', boxShadow: 'inset 0 0 8px rgba(0,240,255,0.06)' }}>
-                  <line x1="80" y1="5" x2="80" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                  <line x1="160" y1="5" x2="160" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                  <line x1="240" y1="5" x2="240" y2="70" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-
-                  {/* Panel 1: STAR WARS */}
-                  <g>
-                    <line x1="30" y1="46" x2="36" y2="40" stroke="#888" strokeWidth="2.5" strokeLinecap="round" />
-                    <line x1="36" y1="40" x2="58" y2="18" stroke="#00f0ff" strokeWidth="2" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
-                    <text x="40" y="64" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>STAR WARS</text>
-                  </g>
-
-                  {/* Panel 2: HARRY POTTER */}
-                  <g>
-                    <line x1="105" y1="46" x2="120" y2="31" stroke="#8d4a25" strokeWidth="1.8" strokeLinecap="round" />
-                    <path d="M 120,31 L 123,21 L 120,31 L 130,31 L 120,31 L 117,41 L 120,31 L 110,31" fill="none" stroke="#ffe082" strokeWidth="1.2" style={{ filter: 'drop-shadow(0 0 2px #ffe082)' }} />
-                    <path d="M 125,23 L 132,16 L 128,16 L 135,9" fill="none" stroke="#ffe082" strokeWidth="1.2" />
-                    <text x="120" y="64" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>H. POTTER</text>
-                  </g>
-
-                  {/* Panel 3: LORD OF THE RINGS */}
-                  <g>
-                    <ellipse cx="200" cy="28" rx="11" ry="7" fill="none" stroke="#ffb300" strokeWidth="1.8" style={{ filter: 'drop-shadow(0 0 3px #ffb300)' }} />
-                    <ellipse cx="200" cy="28" rx="7" ry="4.5" fill="none" stroke="rgba(255,179,0,0.4)" strokeWidth="0.8" />
-                    <text x="200" y="64" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>L.O.T.R.</text>
-                  </g>
-
-                  {/* Panel 4: BACK TO THE FUTURE */}
-                  <g>
-                    <rect x="252" y="14" width="36" height="24" rx="2" fill="#080b13" stroke="rgba(255,255,255,0.1)" />
-                    <text x="270" y="25" fill="#ff5722" fontSize="9" fontFamily="monospace" fontWeight="900" textAnchor="middle" style={{ filter: 'drop-shadow(0 0 2px #ff5722)' }}>88</text>
-                    <text x="270" y="35" fill="#ff5722" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle">MPH</text>
-                    <text x="270" y="64" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>B.T.T.F.</text>
-                  </g>
-                </svg>
-              )}
-
-              {/* Graphic 5: Music - Classical Organ Pipes Acoustic Laser Beams */}
-              {activeGraphic === 'music_organ' && (
-                <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ marginTop: '14px', background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(194,89,255,0.2)', boxShadow: 'inset 0 0 8px rgba(194,89,255,0.06)' }}>
-                  <g fill="none" stroke="#78909c" strokeWidth="4" strokeLinecap="round">
-                    <line x1="80" y1="52" x2="80" y2="15" />
-                    <line x1="100" y1="52" x2="100" y2="25" />
-                    <line x1="120" y1="52" x2="120" y2="20" />
-                    <line x1="140" y1="52" x2="140" y2="10" />
-                    <line x1="160" y1="52" x2="160" y2="5" />
-                    <line x1="180" y1="52" x2="180" y2="10" />
-                    <line x1="200" y1="52" x2="200" y2="20" />
-                    <line x1="220" y1="52" x2="220" y2="25" />
-                    <line x1="240" y1="52" x2="240" y2="15" />
-                  </g>
-                  <g stroke="var(--color-accent)" strokeWidth="1.5" strokeLinecap="round" style={{ opacity: 0.8 }}>
-                    <line x1="80" y1="12" x2="80" y2="2" style={{ animation: 'blink-led 0.8s infinite alternate' }} />
-                    <line x1="120" y1="17" x2="120" y2="5" style={{ animation: 'blink-led 1s infinite alternate' }} />
-                    <line x1="160" y1="3" x2="160" y2="0" style={{ animation: 'blink-led 0.6s infinite alternate' }} />
-                    <line x1="200" y1="17" x2="200" y2="5" style={{ animation: 'blink-led 1.1s infinite alternate' }} />
-                    <line x1="240" y1="12" x2="240" y2="2" style={{ animation: 'blink-led 0.7s infinite alternate' }} />
-                  </g>
-                  <rect x="70" y="52" width="180" height="8" fill="#fff" rx="1" stroke="#ccc" strokeWidth="0.5" />
-                  <g fill="#000">
-                    <rect x="85" y="52" width="2" height="5" />
-                    <rect x="95" y="52" width="2" height="5" />
-                    <rect x="115" y="52" width="2" height="5" />
-                    <rect x="125" y="52" width="2" height="5" />
-                    <rect x="135" y="52" width="2" height="5" />
-                    <rect x="155" y="52" width="2" height="5" />
-                    <rect x="165" y="52" width="2" height="5" />
-                    <rect x="185" y="52" width="2" height="5" />
-                    <rect x="195" y="52" width="2" height="5" />
-                    <rect x="205" y="52" width="2" height="5" />
-                    <rect x="225" y="52" width="2" height="5" />
-                    <rect x="235" y="52" width="2" height="5" />
-                  </g>
-                  <text x="160" y="69" fill="rgba(255,255,255,0.4)" fontSize="5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>FAVORITE INSTRUMENT: THE PIPE ORGAN</text>
-                </svg>
-              )}
-
-              {/* Graphic 6: Music - Pop Albums spinning neon Vinyl Turnable */}
-              {activeGraphic === 'music_pop' && (
-                <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ marginTop: '14px', background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(0,240,255,0.2)', boxShadow: 'inset 0 0 8px rgba(0,240,255,0.06)' }}>
-                  <rect x="90" y="8" width="140" height="58" rx="6" fill="#141a29" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                  <g style={{ transformOrigin: '150px 37px', animation: 'spin-vinyl 3s linear infinite' }}>
-                    <circle cx="150" cy="37" r="24" fill="#0c0d12" stroke="#222" strokeWidth="1" />
-                    <circle cx="150" cy="37" r="20" fill="none" stroke="#242630" strokeWidth="0.8" />
-                    <circle cx="150" cy="37" r="16" fill="none" stroke="#242630" strokeWidth="0.8" />
-                    <circle cx="150" cy="37" r="12" fill="none" stroke="#242630" strokeWidth="0.8" />
-                    <circle cx="150" cy="37" r="7.5" fill="var(--color-accent)" />
-                    <circle cx="150" cy="37" r="1.5" fill="#000" />
-                  </g>
-                  <path d="M 215,20 L 195,20 L 170,32" fill="none" stroke="#cfd8dc" strokeWidth="2.2" strokeLinecap="round" />
-                  <circle cx="215" cy="20" r="4.5" fill="#455a64" />
-                  <rect x="166" y="30" width="8" height="4" rx="1" fill="#ffb300" transform="rotate(25 170 32)" />
-
-                  <g fill="var(--color-accent)" style={{ filter: 'drop-shadow(0 0 2px var(--color-accent))' }}>
-                    <path d="M 60,30 L 60,20 L 70,18 L 70,25 M 60,30 A 2.5 2 0 1 1 55,30 A 2.5 2 0 1 1 60,30" style={{ animation: 'blink-led 1.5s infinite alternate' }} />
-                    <path d="M 255,40 L 255,30 L 265,28 L 265,35 M 255,40 A 2.5 2 0 1 1 250,40 A 2.5 2 0 1 1 255,40" style={{ animation: 'blink-led 1.2s infinite alternate-reverse' }} />
-                  </g>
-                  <text x="160" y="70" fill="rgba(255,255,255,0.4)" fontSize="5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>PLAYING: TAYLOR SWIFT // NOAH KAHAN</text>
-                </svg>
-              )}
-
-              {/* Graphic 7: Music - Choir & Karaoke microphone frequency soundwaves */}
-              {activeGraphic === 'music_choir' && (
-                <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ marginTop: '14px', background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(0,255,136,0.18)', boxShadow: 'inset 0 0 8px rgba(0,255,136,0.06)' }}>
-                  <g transform="translate(45, 10)">
-                    <rect x="18" y="28" width="8" height="24" rx="2" fill="#78909c" />
-                    <rect x="21" y="52" width="2" height="6" fill="#455a64" />
-                    <circle cx="22" cy="18" r="11" fill="#b0bec5" stroke="#37474f" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 0 3px rgba(176,190,197,0.3))' }} />
-                    <line x1="11" y1="18" x2="33" y2="18" stroke="#37474f" strokeWidth="0.8" />
-                    <line x1="22" y1="7" x2="22" y2="29" stroke="#37474f" strokeWidth="0.8" />
-                  </g>
-                  <g style={{ transformOrigin: '180px 38px' }}>
-                    <path d="M 90,38 Q 120,8 150,38 T 210,38 T 270,38" fill="none" stroke="#00ff88" strokeWidth="2.2" style={{ animation: 'wave-bounce-1 1.2s ease-in-out infinite alternate', filter: 'drop-shadow(0 0 3px #00ff88)' }} />
-                    <path d="M 90,38 Q 120,68 150,38 T 210,38 T 270,38" fill="none" stroke="var(--color-accent)" strokeWidth="1.4" style={{ animation: 'wave-bounce-2 0.9s ease-in-out infinite alternate', filter: 'drop-shadow(0 0 2px var(--color-accent))', opacity: 0.6 }} strokeDasharray="3 3" />
-                  </g>
-                  <text x="180" y="19" fill="#00ff88" fontSize="6.5" fontWeight={800} fontFamily="var(--font-tech)">SINGING IN A CHOIR & KARAOKE</text>
-                  <text x="180" y="29" fill="rgba(255,255,255,0.6)" fontSize="5" fontFamily="var(--font-tech)" fontWeight={700}>HARMONIZING IN PERFECT CHORAL SYNC</text>
-                </svg>
-              )}
-
-              {/* Graphic 8: Biking - Smooth Sailing Relaxing path */}
-              {activeGraphic === 'biking_relax' && (
-                <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ marginTop: '14px', background: '#0a0d17', borderRadius: '10px', border: '1px solid rgba(0,255,136,0.15)', boxShadow: 'inset 0 0 8px rgba(0,255,136,0.06)' }}>
-                  <path d="M 0,60 Q 160,20 320,60" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-                  <line x1="0" y1="60" x2="320" y2="60" stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" />
-                  
-                  <g fill="rgba(255,255,255,0.08)">
-                    <ellipse cx="280" cy="20" rx="14" ry="4" style={{ animation: 'wind-vector 6s linear infinite' }} />
-                    <ellipse cx="140" cy="15" rx="10" ry="3" style={{ animation: 'wind-vector 8s linear infinite' }} />
-                  </g>
-
-                  <g transform="translate(130, 16)">
-                    <circle cx="10" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
-                    <circle cx="10" cy="36" r="6" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.6" strokeDasharray="2 2" style={{ animation: 'spin-vinyl 1.5s linear infinite' }} />
-                    
-                    <circle cx="34" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
-                    <circle cx="34" cy="36" r="6" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.6" strokeDasharray="2 2" style={{ animation: 'spin-vinyl 1.5s linear infinite' }} />
-
-                    <path d="M 10,36 L 20,36 L 26,24 L 14,24 Z" fill="none" stroke="#00ff88" strokeWidth="1.6" strokeLinecap="round" />
-                    <line x1="20" y1="36" x2="26" y2="24" stroke="#00ff88" strokeWidth="1.6" />
-                    <line x1="34" y1="36" x2="30" y2="20" stroke="#00ff88" strokeWidth="1.6" />
-                    <path d="M 30,20 L 26,18 L 32,18" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
-                    <line x1="13" y1="22" x2="17" y2="22" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
-
-                    <line x1="15" y1="21" x2="23" y2="12" stroke="#fff" strokeWidth="2.8" strokeLinecap="round" />
-                    <circle cx="25" cy="8" r="3.2" fill="#fff" />
-                    <line x1="23" y1="12" x2="29" y2="19" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
-                    <g style={{ transformOrigin: '20px 36px', animation: 'pedal-legs 0.75s linear infinite' }}>
-                      <line x1="16" y1="21" x2="20" y2="29" stroke="#00ff88" strokeWidth="1.8" strokeLinecap="round" />
-                      <line x1="20" y1="29" x2="20" y2="36" stroke="#00ff88" strokeWidth="1.8" strokeLinecap="round" />
-                    </g>
-                  </g>
-                  <text x="160" y="70" fill="rgba(255,255,255,0.4)" fontSize="5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>BIKING COORD: BIKE_WAY-A5 (100% RELAXING & FREE)</text>
-                </svg>
-              )}
-
-              {/* Graphic 9: Biking - The Headwind Challenge */}
-              {activeGraphic === 'biking_wind' && (
-                <svg viewBox="0 0 320 75" width="100%" height="75px" style={{ marginTop: '14px', background: '#120b0b', borderRadius: '10px', border: '1px solid rgba(255,87,34,0.22)', boxShadow: 'inset 0 0 8px rgba(255,87,34,0.06)' }}>
-                  <line x1="0" y1="60" x2="320" y2="60" stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" />
-
-                  <g stroke="rgba(255,87,34,0.3)" strokeWidth="1.2" strokeLinecap="round" fill="none">
-                    <line x1="300" y1="15" x2="250" y2="15" strokeDasharray="10 5" style={{ animation: 'wind-vector 2s linear infinite' }} />
-                    <line x1="240" y1="28" x2="180" y2="28" strokeDasharray="15 7" style={{ animation: 'wind-vector 1.5s linear infinite' }} />
-                    <line x1="280" y1="42" x2="220" y2="42" strokeDasharray="8 4" style={{ animation: 'wind-vector 2.2s linear infinite' }} />
-                    <line x1="160" y1="10" x2="110" y2="10" strokeDasharray="12 5" style={{ animation: 'wind-vector 1.8s linear infinite' }} />
-                    <line x1="120" y1="48" x2="60" y2="48" strokeDasharray="15 6" style={{ animation: 'wind-vector 1.3s linear infinite' }} />
-                  </g>
-
-                  <rect x="85" y="8" width="150" height="11" rx="3" fill="rgba(255,87,34,0.08)" stroke="rgba(255,87,34,0.3)" strokeWidth="0.8" />
-                  <text x="160" y="16" fill="#ff5722" fontSize="5" fontFamily="var(--font-tech)" fontWeight={700} textAnchor="middle" style={{ animation: 'blink-led 1s infinite' }}>⚠️ HEADWIND ACTIVE: -12KM/H WIND RESISTANCE</text>
-
-                  <g transform="translate(130, 16)">
-                    <circle cx="10" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
-                    <circle cx="10" cy="36" r="6" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.6" strokeDasharray="2 2" style={{ animation: 'spin-vinyl 4s linear infinite' }} />
-                    
-                    <circle cx="34" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
-                    <circle cx="34" cy="36" r="6" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.6" strokeDasharray="2 2" style={{ animation: 'spin-vinyl 4s linear infinite' }} />
-
-                    <path d="M 10,36 L 20,36 L 26,24 L 14,24 Z" fill="none" stroke="#ff5722" strokeWidth="1.6" strokeLinecap="round" />
-                    <line x1="20" y1="36" x2="26" y2="24" stroke="#ff5722" strokeWidth="1.6" />
-                    <line x1="34" y1="36" x2="30" y2="20" stroke="#ff5722" strokeWidth="1.6" />
-                    <path d="M 30,20 L 26,18 L 32,18" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" />
-                    <line x1="13" y1="22" x2="17" y2="22" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
-
-                    <line x1="13" y1="22" x2="24" y2="15" stroke="#fff" strokeWidth="2.8" strokeLinecap="round" />
-                    <circle cx="26" cy="11" r="3.2" fill="#fff" />
-                    <line x1="24" y1="15" x2="29" y2="19" stroke="#fff" strokeWidth="1.6" strokeLinecap="round" />
-                    <g style={{ transformOrigin: '20px 36px', animation: 'pedal-legs 2.5s linear infinite' }}>
-                      <line x1="15" y1="22" x2="19" y2="29" stroke="#ff5722" strokeWidth="1.8" strokeLinecap="round" />
-                      <line x1="19" y1="29" x2="19" y2="36" stroke="#ff5722" strokeWidth="1.8" strokeLinecap="round" />
-                    </g>
-                  </g>
-                  <text x="160" y="70" fill="rgba(255,255,255,0.4)" fontSize="5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>PEDALING AGAINST DRAG (CARDIO LEVEL ELEVATED)</text>
-                </svg>
-              )}
-
-              {/* Graphic 10: Animated Flag Football Playbook play simulation */}
-              {activeGraphic === 'football' && (
-                <svg viewBox="0 0 320 100" width="100%" height="95px" style={{ marginTop: '14px', background: '#0e1710', borderRadius: '10px', border: '1.5px solid var(--neon-emerald)', boxShadow: 'inset 0 0 10px rgba(0,255,136,0.1)' }}>
-                  <defs>
-                    <linearGradient id="fieldGrass" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#1b4d22" />
-                      <stop offset="100%" stopColor="#0f3014" />
-                    </linearGradient>
-                  </defs>
-
-                  {/* Field background */}
-                  <rect x="0" y="0" width="320" height="100" fill="url(#fieldGrass)" />
-
-                  {/* Yard grid lines */}
-                  <line x1="40" y1="0" x2="40" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                  <line x1="80" y1="0" x2="80" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                  <line x1="120" y1="0" x2="120" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                  <line x1="160" y1="0" x2="160" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                  <line x1="200" y1="0" x2="200" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                  <line x1="240" y1="0" x2="240" y2="100" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
-                  <line x1="280" y1="0" x2="280" y2="100" stroke="rgba(255,255,255,0.4)" strokeWidth="2" strokeDasharray="3 3" />
-
-                  {/* Endzone area */}
-                  <rect x="280" y="0" width="40" height="100" fill="rgba(0, 255, 136, 0.08)" />
-                  <text x="300" y="50" fill="rgba(255, 255, 255, 0.2)" fontSize="6.5" fontFamily="var(--font-tech)" textAnchor="middle" transform="rotate(-90 300 50)" letterSpacing="1px">ENDZONE</text>
-
-                  {/* Huddle strategic routes planned (dashed static background) */}
-                  <path d="M 70,25 L 140,25 Q 170,25 180,45 T 280,50" fill="none" stroke="rgba(255,255,255,0.18)" strokeWidth="1.2" strokeDasharray="3 3" />
-                  <path d="M 70,75 L 140,75 Q 180,75 190,40 T 275,30" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="3 3" />
-
-                  {/* Active receiver route run (neon glowing slant route for WR1) */}
-                  <path d="M 70,25 L 140,25 Q 170,25 180,45 T 280,50" fill="none" stroke="#00ff88" strokeWidth="2.2" strokeLinecap="round" strokeDasharray="6 4" style={{ animation: 'route-run 4s linear infinite' }} />
-                  <text x="95" y="19" fill="var(--neon-emerald)" fontSize="5" fontFamily="var(--font-tech)" fontWeight={700}>5V5 SLANT PLAY ROUTE</text>
-
-                  {/* ================= OFFENSE (EMERALD CYCLING) ================= */}
-                  {/* QB (animated dropback) */}
-                  <g style={{ animation: 'qb-drop 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(0,255,136,0.8)" fontSize="4.5" fontFamily="var(--font-tech)" textAnchor="middle" fontWeight={700}>QB</text>
-                  </g>
-
-                  {/* Center (animated block shift) */}
-                  <g style={{ animation: 'center-block 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">C</text>
-                  </g>
-
-                  {/* Running Back (animated flat route) */}
-                  <g style={{ animation: 'rb-run 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">RB</text>
-                  </g>
-
-                  {/* WR2 (animated deep post route) */}
-                  <g style={{ animation: 'wr2-run 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="5.5" stroke="#00ff88" strokeWidth="1.2" fill="rgba(0,255,136,0.2)" />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">WR2</text>
-                  </g>
-
-                  {/* WR1 (Slant Catch Receiver & Flags) */}
-                  <g style={{ animation: 'receiver-catch 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="6" stroke="#00ff88" strokeWidth="1.5" fill="rgba(0,255,136,0.2)" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    {/* Glowing Flag Belts */}
-                    <path d="M -3.5,2.5 L -7.5,6.5 M 3.5,2.5 L 7.5,6.5" stroke="#ffb300" strokeWidth="1.5" />
-                    <text x="0" y="-8" fill="#fff" fontSize="5" fontWeight={700} fontFamily="var(--font-tech)" textAnchor="middle">WR1</text>
-                  </g>
-
-
-                  {/* ================= DEFENSE (CYAN TELEMETRY) ================= */}
-                  {/* Blitzer/Rusher (rushes QB) */}
-                  <g style={{ animation: 'rusher-rush 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(0,240,255,0.8)" fontSize="4.5" textAnchor="middle">R</text>
-                  </g>
-
-                  {/* Linebacker (drops zone) */}
-                  <g style={{ animation: 'lb-drop 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">LB</text>
-                  </g>
-
-                  {/* CB1 (covers WR1) */}
-                  <g style={{ animation: 'cb1-chase 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">CB1</text>
-                  </g>
-
-                  {/* CB2 (covers WR2) */}
-                  <g style={{ animation: 'cb2-chase 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">CB2</text>
-                  </g>
-
-                  {/* Safety (deep safety) */}
-                  <g style={{ animation: 'safety-drop 4s linear infinite' }}>
-                    <circle cx="0" cy="0" r="5.5" stroke="#00f0ff" strokeWidth="1.2" fill="rgba(0,240,255,0.2)" />
-                    {/* Neutral Avatar */}
-                    <circle cx="0" cy="-1.5" r="1.5" fill="#ffffff" />
-                    <path d="M -3,3 C -3,1.2 -1.5,1 0,1 C 1.5,1 3,1.2 3,3" fill="#ffffff" />
-                    <text x="0" y="-7" fill="rgba(255,255,255,0.6)" fontSize="4.5" textAnchor="middle">S</text>
-                  </g>
-
-
-                  {/* ================= BALL & TEXT ================= */}
-                  {/* Gliding football pass */}
-                  <g style={{ animation: 'ball-pass 4s ease-in-out infinite' }}>
-                    <ellipse cx="0" cy="0" rx="5.5" ry="3" fill="#8d4a25" stroke="#ffffff" strokeWidth="0.8" />
-                    <line x1="-3.5" y1="0" x2="3.5" y2="0" stroke="#ffffff" strokeWidth="0.8" />
-                    <line x1="-1.5" y1="-1.5" x2="-1.5" y2="1.5" stroke="#ffffff" strokeWidth="0.6" />
-                    <line x1="0" y1="-1.5" x2="0" y2="1.5" stroke="#ffffff" strokeWidth="0.6" />
-                    <line x1="1.5" y1="-1.5" x2="1.5" y2="1.5" stroke="#ffffff" strokeWidth="0.6" />
-                  </g>
-
-                  {/* Touchdown Text celebration flashing */}
-                  <text x="180" y="55" fill="var(--neon-emerald)" fontSize="11" fontFamily="var(--font-tech)" fontWeight="900" textAnchor="middle" style={{ animation: 'touchdown-text 4s infinite', filter: 'drop-shadow(0 0 4px var(--neon-emerald))' }}>TOUCHDOWN!</text>
-                </svg>
-              )}
-
-              {/* Graphic 11: Dome Sector Navigation links (travel node) */}
-              {activeGraphic === 'travel' && (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '8px', marginTop: '10px' }}>
-                  <a 
-                    href="/metropolis-core" 
-                    onClick={(e) => handleWarpFromStep(e, '/metropolis-core', 2)}
-                    className="social-link-port" 
-                    style={{ padding: '8px 10px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--neon-cyan)', boxShadow: '0 0 8px rgba(0,240,255,0.1)', fontWeight: 700 }}
-                  >
-                    ⚡ METROPOLIS HUB
-                  </a>
-                  <a 
-                    href="/portfolio" 
-                    onClick={(e) => handleWarpFromStep(e, '/portfolio', 3)}
-                    className="social-link-port" 
-                    style={{ padding: '8px 10px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid #2979ff', boxShadow: '0 0 8px rgba(41,121,255,0.1)', fontWeight: 700 }}
-                  >
-                    📂 PORTFOLIO DOME
-                  </a>
-                  <a 
-                    href="/atmosphere-dome" 
-                    onClick={(e) => handleWarpFromStep(e, '/atmosphere-dome', 4)}
-                    className="social-link-port" 
-                    style={{ padding: '8px 10px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--neon-emerald)', boxShadow: '0 0 8px rgba(0,255,136,0.1)', fontWeight: 700 }}
-                  >
-                    🌿 BIOSPHERE PARK
-                  </a>
-                  <a 
-                    href="/quantum-net" 
-                    onClick={(e) => handleWarpFromStep(e, '/quantum-net', 5)}
-                    className="social-link-port" 
-                    style={{ padding: '8px 10px', fontSize: '0.65rem', justifyContent: 'center', background: '#080b13', color: '#fff', border: '1.5px solid var(--neon-amber)', boxShadow: '0 0 8px rgba(255,179,0,0.1)', fontWeight: 700 }}
-                  >
-                    🛰️ QUANTUM NET
-                  </a>
+            {/* Modal Scrollable Body */}
+            <div className="custom-scroll" style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                
+                {/* Description Narrative card */}
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid rgba(255, 255, 255, 0.05)',
+                  borderRadius: '10px',
+                  padding: '16px',
+                  boxSizing: 'border-box'
+                }}>
+                  <span style={{
+                    display: 'block',
+                    fontFamily: 'monospace, var(--font-tech)',
+                    fontSize: '0.55rem',
+                    color: 'rgba(255, 255, 255, 0.4)',
+                    letterSpacing: '1px',
+                    marginBottom: '6px'
+                  }}>// DATA DESCRIPTIVE LOG</span>
+                  <p style={{
+                    fontSize: '0.82rem',
+                    lineHeight: '1.6',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    margin: 0
+                  }}>
+                    {activeInterest.desc}
+                  </p>
                 </div>
-              )}
 
-            </div>
+                {/* Tactical SVG Graphic Canvas */}
+                <div>
+                  <span style={{
+                    display: 'block',
+                    fontFamily: 'monospace, var(--font-tech)',
+                    fontSize: '0.55rem',
+                    color: 'rgba(255, 255, 255, 0.4)',
+                    letterSpacing: '1px',
+                    marginBottom: '8px'
+                  }}>// VISUAL CORE GRAPHIC</span>
+                  
+                  {/* Technology vector graphic */}
+                  {activeInterest.type === 'tech' && (
+                    <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#080b13', borderRadius: '8px', border: '1px solid rgba(0, 240, 255, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,240,255,0.1)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#141a29" />
+                      <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
+                      <circle cx="20" cy="7.5" r="3" fill="#ffb300" />
+                      <circle cx="30" cy="7.5" r="3" fill="#00ff88" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // DESKTOP_VIEWER</text>
+                      <g transform="translate(10, 24)">
+                        <rect x="5" y="5" width="16" height="12" rx="2" fill="none" stroke="#00f0ff" strokeWidth="1" />
+                        <path d="M 5,5 L 11,5 L 13,8 L 21,8 L 21,17 L 5,17 Z" fill="none" stroke="#00f0ff" strokeWidth="1" />
+                        <text x="13" y="27" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">SYSTEMS</text>
+                        <rect x="35" y="5" width="16" height="12" rx="2" fill="none" stroke="#2979ff" strokeWidth="1" />
+                        <path d="M 35,5 L 41,5 L 43,8 L 51,8 L 51,17 L 35,17 Z" fill="none" stroke="#2979ff" strokeWidth="1" />
+                        <text x="43" y="27" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">APPS</text>
+                      </g>
+                      <g transform="translate(110, 24)">
+                        <circle cx="40" cy="25" r="16" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
+                        <path d="M 40,9 A 16 16 0 0 1 56,25" fill="none" stroke="#00f0ff" strokeWidth="2.5" />
+                        <text x="40" y="28" fill="#fff" fontSize="6.5" fontFamily="monospace" textAnchor="middle">85%</text>
+                        <text x="40" y="49" fill="rgba(255,255,255,0.5)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">GUI INDEX</text>
+                        <circle cx="120" cy="25" r="16" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="2" />
+                        <path d="M 120,9 A 16 16 0 1 1 104,25" fill="none" stroke="#00ff88" strokeWidth="2.5" />
+                        <text x="120" y="28" fill="#fff" fontSize="6.5" fontFamily="monospace" textAnchor="middle">ONLINE</text>
+                        <text x="120" y="49" fill="rgba(255,255,255,0.5)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">CORES</text>
+                      </g>
+                    </svg>
+                  )}
 
-            {/* Stepper Footer: Dynamic Conversational Response Choices */}
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '18px', borderTop: '1px solid rgba(0,0,0,0.06)', paddingTop: '12px', width: '100%' }}>
-              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', justifyContent: 'center' }}>
-                {activeNode.choices.map((choice, i) => (
-                  <button 
-                    key={i}
-                    onClick={() => {
-                      if (choice.next === 'warp_portfolio') {
-                        handleWarpFromStep(null, '/portfolio', 3);
-                      } else if (choice.next === 'warp_metropolis') {
-                        handleWarpFromStep(null, '/metropolis-core', 2);
-                      } else if (choice.next === 'warp_atmosphere') {
-                        handleWarpFromStep(null, '/atmosphere-dome', 4);
-                      } else if (choice.next === 'warp_quantum') {
-                        handleWarpFromStep(null, '/quantum-net', 5);
-                      } else {
-                        setCurrentNode(choice.next);
-                      }
-                    }}
-                    className="hud-btn animate-fade"
-                    style={{
-                      padding: '8px 18px',
-                      fontSize: '0.72rem',
-                      background: 'rgba(var(--color-accent-rgb), 0.12)',
-                      borderColor: 'var(--color-accent)',
-                      color: '#080b13',
-                      fontWeight: 700,
-                      borderRadius: '20px',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    [ {choice.text} ]
-                  </button>
-                ))}
+                  {/* Sci-Fi carousel graphic */}
+                  {activeInterest.type === 'scifi' && (
+                    <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(194, 89, 255, 0.18)', boxShadow: 'inset 0 0 8px rgba(194,89,255,0.08)' }}>
+                      <line x1="80" y1="5" x2="80" y2="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                      <line x1="160" y1="5" x2="160" y2="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                      <line x1="240" y1="5" x2="240" y2="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                      <g>
+                        <line x1="30" y1="50" x2="36" y2="44" stroke="#888" strokeWidth="2.5" strokeLinecap="round" />
+                        <line x1="36" y1="44" x2="58" y2="22" stroke="#00f0ff" strokeWidth="2" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
+                        <text x="40" y="72" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">STAR WARS</text>
+                      </g>
+                      <g transform="translate(10, 0)">
+                        <path d="M 110,48 L 122,23 L 118,48 L 128,48 M 115,22 L 125,12" fill="none" stroke="#ffe082" strokeWidth="1.2" style={{ filter: 'drop-shadow(0 0 2px #ffe082)' }} />
+                        <text x="110" y="72" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">H. POTTER</text>
+                      </g>
+                      <g>
+                        <ellipse cx="200" cy="35" rx="12" ry="7" fill="none" stroke="#ffb300" strokeWidth="1.8" style={{ filter: 'drop-shadow(0 0 3px #ffb300)' }} />
+                        <text x="200" y="72" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">L.O.T.R.</text>
+                      </g>
+                      <g>
+                        <rect x="252" y="18" width="36" height="24" rx="2" fill="#080b13" stroke="rgba(255,255,255,0.1)" />
+                        <text x="270" y="29" fill="#ff5722" fontSize="9" fontFamily="monospace" fontWeight="900" textAnchor="middle" style={{ filter: 'drop-shadow(0 0 2px #ff5722)' }}>88</text>
+                        <text x="270" y="39" fill="#ff5722" fontSize="4.5" fontFamily="monospace" textAnchor="middle">MPH</text>
+                        <text x="270" y="72" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">B.T.T.F.</text>
+                      </g>
+                    </svg>
+                  )}
+
+                  {/* Music Vinyl spin graphic */}
+                  {activeInterest.type === 'music' && (
+                    <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 179, 0, 0.2)', boxShadow: 'inset 0 0 8px rgba(0,0,0,0.4)' }}>
+                      <rect x="90" y="10" width="140" height="70" rx="6" fill="#141a29" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+                      <g className="animate-spin-custom" style={{ transformOrigin: '150px 45px' }}>
+                        <circle cx="150" cy="45" r="28" fill="#0c0d12" stroke="#222" strokeWidth="1" />
+                        <circle cx="150" cy="45" r="24" fill="none" stroke="#242630" strokeWidth="0.8" />
+                        <circle cx="150" cy="45" r="18" fill="none" stroke="#242630" strokeWidth="0.8" />
+                        <circle cx="150" cy="45" r="8" fill="#ffb300" />
+                        <circle cx="150" cy="45" r="1.5" fill="#000" />
+                      </g>
+                      <path d="M 215,28 L 195,28 L 172,40" fill="none" stroke="#cfd8dc" strokeWidth="2.2" strokeLinecap="round" />
+                      <circle cx="215" cy="28" r="4.5" fill="#455a64" />
+                      <text x="160" y="85" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">FAVORITES: TAYLOR SWIFT // PIPE ORGAN</text>
+                    </svg>
+                  )}
+
+                  {/* Biking track graphic */}
+                  {activeInterest.type === 'biking' && (
+                    <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.15)', boxShadow: 'inset 0 0 8px rgba(0,0,0,0.4)' }}>
+                      <path d="M 0,70 Q 160,30 320,70" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+                      <line x1="0" y1="70" x2="320" y2="70" stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" />
+                      <g transform="translate(130, 20)">
+                        <circle cx="10" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
+                        <circle cx="34" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
+                        <path d="M 10,36 L 20,36 L 26,24 L 14,24 Z" fill="none" stroke="#00ff88" strokeWidth="1.6" />
+                        <line x1="34" y1="36" x2="30" y2="20" stroke="#00ff88" strokeWidth="1.6" />
+                        <path d="M 30,20 L 26,18 L 32,18" fill="none" stroke="#fff" strokeWidth="1.5" />
+                        <circle cx="23" cy="12" r="3" fill="#fff" />
+                        <line x1="23" y1="12" x2="29" y2="19" stroke="#fff" strokeWidth="1.6" />
+                      </g>
+                      <text x="160" y="85" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">CYCLING ROUTE: BIKE_WAY-A5 // 100% RELAXING</text>
+                    </svg>
+                  )}
+
+                  {/* Flag Football tactical route chalkboard graphic */}
+                  {activeInterest.type === 'flag_football' && (
+                    <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 87, 34, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,0,0,0.4)' }}>
+                      {/* Grid background */}
+                      <line x1="40" y1="5" x2="40" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      <line x1="80" y1="5" x2="80" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      <line x1="120" y1="5" x2="120" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      <line x1="160" y1="5" x2="160" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      <line x1="200" y1="5" x2="200" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      <line x1="240" y1="5" x2="240" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      <line x1="280" y1="5" x2="280" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      
+                      <line x1="5" y1="27" x2="315" y2="27" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      <line x1="5" y1="55" x2="315" y2="55" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      <line x1="5" y1="82" x2="315" y2="82" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+
+                      {/* Playbook elements */}
+                      <text x="160" y="80" fill="#fff" fontSize="8" fontFamily="monospace" textAnchor="middle">Q</text>
+                      <circle cx="160" cy="77" r="7" fill="none" stroke="#fff" strokeWidth="1" />
+                      
+                      {/* Receivers (O) */}
+                      <circle cx="120" cy="77" r="4" fill="none" stroke="#00f0ff" strokeWidth="1.2" />
+                      <text x="120" y="80" fill="#00f0ff" fontSize="6" fontFamily="monospace" textAnchor="middle">X</text>
+
+                      <circle cx="200" cy="77" r="4" fill="none" stroke="#00f0ff" strokeWidth="1.2" />
+                      <text x="200" y="80" fill="#00f0ff" fontSize="6" fontFamily="monospace" textAnchor="middle">Z</text>
+
+                      {/* Routes (Arrows) */}
+                      {/* Left Out Route */}
+                      <path d="M 120,73 L 120,40 L 70,40" fill="none" stroke="#ff5722" strokeWidth="1.5" strokeDasharray="3 2" />
+                      <polygon points="70,37 63,40 70,43" fill="#ff5722" />
+                      <text x="95" y="34" fill="#ff5722" fontSize="5.5" fontFamily="monospace" textAnchor="middle">OUT ROUTE</text>
+
+                      {/* Right Post Route */}
+                      <path d="M 200,73 L 200,30 L 165,10" fill="none" stroke="#00ff88" strokeWidth="1.5" />
+                      <polygon points="167,7 160,10 168,14" fill="#00ff88" />
+                      <text x="210" y="24" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="left">POST ROUTE</text>
+
+                      {/* Defensive players (X) */}
+                      <text x="120" y="30" fill="#ea4335" fontSize="8" fontFamily="monospace" textAnchor="middle" fontWeight="bold">D</text>
+                      <text x="200" y="20" fill="#ea4335" fontSize="8" fontFamily="monospace" textAnchor="middle" fontWeight="bold">D</text>
+                      <text x="160" y="50" fill="#ea4335" fontSize="8" fontFamily="monospace" textAnchor="middle" fontWeight="bold">D</text>
+
+                      <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">TACTICAL PLAYBOOK: route_matrix_09</text>
+                    </svg>
+                  )}
+
+                </div>
+
               </div>
             </div>
 
           </div>
-
         </div>
+      )}
 
-      </div>
-
-      <style jsx global>{`
-        /* Stepper Animations */
-        @keyframes step-fade-in {
-          from { opacity: 0; transform: translateY(3px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes signal-beam {
-          to { stroke-dashoffset: -20; }
-        }
-
-        @keyframes packet-glide {
-          0% { cx: 84px; }
-          100% { cx: 236px; }
-        }
-
-        .animate-fade {
-          animation: step-fade-in 0.25s ease-out;
-        }
-
-        @keyframes blink-led {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
-        }
-
-        /* Flag Football SVG Playbook Animations */
-        @keyframes route-run {
-          0% { stroke-dashoffset: 40; }
-          100% { stroke-dashoffset: 0; }
-        }
-
-        @keyframes qb-drop {
-          0%, 30% { transform: translate(50px, 50px); }
-          45%, 100% { transform: translate(45px, 52px); }
-        }
-
-        @keyframes center-block {
-          0%, 30% { transform: translate(75px, 50px); }
-          45%, 100% { transform: translate(80px, 50px); }
-        }
-
-        @keyframes rb-run {
-          0%, 30% { transform: translate(45px, 60px); }
-          50% { transform: translate(90px, 75px); }
-          72%, 100% { transform: translate(140px, 75px); }
-        }
-
-        @keyframes wr2-run {
-          0%, 30% { transform: translate(70px, 75px); }
-          55% { transform: translate(160px, 75px); }
-          72%, 100% { transform: translate(240px, 45px); }
-        }
-
-        @keyframes receiver-catch {
-          0%, 30% { transform: translate(70px, 25px); }
-          45% { transform: translate(140px, 25px); }
-          60% { transform: translate(180px, 45px); }
-          72%, 100% { transform: translate(280px, 50px); }
-        }
-
-        @keyframes rusher-rush {
-          0%, 30% { transform: translate(90px, 42px); }
-          50% { transform: translate(65px, 48px); }
-          72%, 100% { transform: translate(48px, 52px); }
-        }
-
-        @keyframes lb-drop {
-          0%, 30% { transform: translate(100px, 55px); }
-          50% { transform: translate(125px, 58px); }
-          72%, 100% { transform: translate(145px, 60px); }
-        }
-
-        @keyframes cb1-chase {
-          0%, 30% { transform: translate(88px, 25px); }
-          45% { transform: translate(145px, 28px); }
-          60% { transform: translate(188px, 48px); }
-          72%, 100% { transform: translate(288px, 52px); }
-        }
-
-        @keyframes cb2-chase {
-          0%, 30% { transform: translate(88px, 75px); }
-          55% { transform: translate(168px, 77px); }
-          72%, 100% { transform: translate(246px, 48px); }
-        }
-
-        @keyframes safety-drop {
-          0%, 30% { transform: translate(130px, 50px); }
-          50% { transform: translate(165px, 35px); }
-          72%, 100% { transform: translate(270px, 46px); }
-        }
-
-        @keyframes ball-pass {
-          0%, 30% {
-            transform: translate(50px, 50px) scale(0.6);
-            opacity: 0;
-          }
-          32% {
-            opacity: 1;
-          }
-          52% {
-            transform: translate(165px, 25px) scale(1.1) rotate(45deg);
-            opacity: 1;
-          }
-          72% {
-            transform: translate(280px, 50px) scale(0.8) rotate(120deg);
-            opacity: 1;
-          }
-          78%, 100% {
-            transform: translate(280px, 50px) scale(0.8);
-            opacity: 0;
-          }
-        }
-
-        @keyframes touchdown-text {
-          0%, 71% {
-            opacity: 0;
-            font-size: 0px;
-          }
-          72% {
-            opacity: 1;
-            font-size: 15px;
-          }
-          78%, 95% {
-            opacity: 1;
-            font-size: 11px;
-          }
-          100% {
-            opacity: 0;
-            font-size: 0px;
-          }
-        }
-
-        @keyframes spin-vinyl {
-          100% { transform: rotate(360deg); }
-        }
-
-        @keyframes wind-vector {
-          0% { transform: translateX(100px); opacity: 0; }
-          15% { opacity: 0.8; }
-          85% { opacity: 0.8; }
-          100% { transform: translateX(-150px); opacity: 0; }
-        }
-
-        @keyframes wave-bounce-1 {
-          0% { transform: scaleY(0.6) translateY(15px); }
-          100% { transform: scaleY(1.3) translateY(-9px); }
-        }
-
-        @keyframes wave-bounce-2 {
-          0% { transform: scaleY(1.3) translateY(-9px); }
-          100% { transform: scaleY(0.6) translateY(15px); }
-        }
-
-        @keyframes pedal-legs {
-          0% { transform: rotate(0deg) translateY(0); }
-          50% { transform: rotate(10deg) translateY(1.2px); }
-          100% { transform: rotate(0deg) translateY(0); }
-        }
-      `}</style>
     </div>
   );
 }

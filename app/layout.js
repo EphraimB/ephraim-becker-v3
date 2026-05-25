@@ -55,7 +55,7 @@ export default function RootLayout({ children }) {
           
           <div className="workspace-deck">
             {/* Natural standing roomscale profile figure - hidden on portfolio archives */}
-            {pathname !== '/portfolio' && (
+            {pathname !== '/portfolio' && pathname !== '/' && (
               <div className={`roomscale-natural-body page-${currentTheme}`}>
                 <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
               </div>

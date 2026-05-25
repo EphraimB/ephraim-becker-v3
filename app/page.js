@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import CityGridMap from '../components/CityGridMap';
 
 const INTERESTS = [
   {
@@ -111,12 +110,14 @@ export default function AresDashboard() {
           transform: scale(0.96) !important;
         }
 
-        /* Desktop Dashboard Grid System */
+        /* Desktop Dashboard Centered Grid System */
         .dashboard-main-container {
           position: absolute;
           inset: 0;
           display: flex;
           flex-direction: row;
+          justify-content: center; /* Widescreen centering */
+          align-items: center;     /* Widescreen centering */
           gap: 24px;
           padding: 24px;
           box-sizing: border-box;
@@ -127,43 +128,44 @@ export default function AresDashboard() {
         }
 
         .dashboard-left-col {
-          width: 380px;
-          min-width: 380px;
+          width: 100%;
+          max-width: 800px; /* Expanded desktop size */
           background: rgba(10, 6, 6, 0.65);
           backdrop-filter: blur(20px);
           -webkit-backdrop-filter: blur(20px);
           border: 1px solid rgba(255, 255, 255, 0.08);
           border-top: 1px solid rgba(255, 255, 255, 0.15);
           border-radius: 12px;
-          padding: 20px;
+          padding: 24px;
           box-sizing: border-box;
           display: flex;
-          flex-direction: column;
+          flex-direction: row; /* Horizontal columns split on desktop */
+          gap: 28px;
           z-index: 10;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.05);
-          height: 100%;
+          box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.05);
+          max-height: 90%;
         }
 
-        .dashboard-right-col {
-          flex: 1;
-          width: 100%;
-          height: 100%;
-          min-height: 0;
-          background: rgba(6, 9, 20, 0.55);
-          border: 1px solid rgba(255, 255, 255, 0.08);
-          border-radius: 12px;
-          position: relative;
-          overflow: hidden;
+        .terminal-left-pane {
+          width: 280px;
+          min-width: 280px;
           display: flex;
           flex-direction: column;
-          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0,0,0,0.6);
+        }
+
+        .terminal-right-pane {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          min-width: 0; /* Prevents overflow */
         }
 
         .profile-avatar-frame {
           width: 100%;
-          height: 160px;
+          height: 170px;
           position: relative;
           border-radius: 8px;
           overflow: hidden;
@@ -181,7 +183,7 @@ export default function AresDashboard() {
         .dashboard-left-col-badge-btn {
           font-family: monospace, var(--font-tech);
           font-size: 0.68rem;
-          padding: 8px 12px;
+          padding: 10px 14px;
           border-radius: 6px;
           background: rgba(255, 255, 255, 0.03);
           border: 1px solid rgba(255, 255, 255, 0.08);
@@ -195,10 +197,12 @@ export default function AresDashboard() {
         }
 
         .dashboard-social-link {
-          padding: 6px 4px;
+          padding: 8px 4px;
           font-size: 0.62rem;
           justify-content: center;
           text-decoration: none;
+          display: flex;
+          align-items: center;
         }
 
         @media (max-width: 900px) {
@@ -206,6 +210,8 @@ export default function AresDashboard() {
             position: relative !important;
             inset: auto !important;
             flex-direction: column !important;
+            justify-content: flex-start !important;
+            align-items: stretch !important;
             gap: 16px !important;
             padding: 16px !important;
             overflow: visible !important;
@@ -223,12 +229,17 @@ export default function AresDashboard() {
           .dashboard-left-col {
             width: 100% !important;
             min-width: 0 !important;
+            max-width: 100% !important;
+            flex-direction: column !important;
+            gap: 16px !important;
+            padding: 16px !important;
             height: auto !important;
+            max-height: none !important;
           }
 
-          /* Hide static map column on mobile - handled by global map drawer overlay instead */
-          .dashboard-right-col {
-            display: none !important;
+          .terminal-left-pane {
+            width: 100% !important;
+            min-width: 0 !important;
           }
 
           .dashboard-left-col-badge-btn {
@@ -242,7 +253,7 @@ export default function AresDashboard() {
         }
       `}} />
 
-      {/* LEFT COLUMN: The Premium Profile Terminal Card */}
+      {/* THE CENTRAL PROFILE TERMINAL CARD */}
       <div className="dashboard-left-col">
         {/* Terminal Scanline glow overlay */}
         <div style={{
@@ -254,169 +265,166 @@ export default function AresDashboard() {
           zIndex: 1
         }}></div>
 
-        {/* Profile Avatar Frame - holographic transparent layout */}
-        <div className="profile-avatar-frame">
-          <img 
-            src="/assets/images/profile.png" 
-            alt="Ephraim Becker Profile" 
-            style={{
-              height: '95%',
-              width: 'auto',
-              objectFit: 'contain',
-              filter: 'drop-shadow(0 4px 10px rgba(0, 240, 255, 0.25))'
-            }}
-          />
-          {/* Subtle Corner Telemetry Accents */}
-          <div style={{ position: 'absolute', top: '8px', left: '8px', width: '6px', height: '6px', borderTop: '2px solid rgba(0,240,255,0.4)', borderLeft: '2px solid rgba(0,240,255,0.4)' }}></div>
-          <div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', borderTop: '2px solid rgba(0,240,255,0.4)', borderRight: '2px solid rgba(0,240,255,0.4)' }}></div>
-          <div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', borderBottom: '2px solid rgba(0,240,255,0.4)', borderLeft: '2px solid rgba(0,240,255,0.4)' }}></div>
-          <div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', borderBottom: '2px solid rgba(0,240,255,0.4)', borderRight: '2px solid rgba(0,240,255,0.4)' }}></div>
-        </div>
+        {/* LEFT PANE: Avatar, Stats, and Social Matrix */}
+        <div className="terminal-left-pane" style={{ zIndex: 2 }}>
+          {/* Profile Avatar Frame - holographic transparent layout */}
+          <div className="profile-avatar-frame">
+            <img 
+              src="/assets/images/profile.png" 
+              alt="Ephraim Becker Profile" 
+              style={{
+                height: '95%',
+                width: 'auto',
+                objectFit: 'contain',
+                filter: 'drop-shadow(0 4px 10px rgba(0, 240, 255, 0.25))'
+              }}
+            />
+            {/* Subtle Corner Telemetry Accents */}
+            <div style={{ position: 'absolute', top: '8px', left: '8px', width: '6px', height: '6px', borderTop: '2px solid rgba(0,240,255,0.4)', borderLeft: '2px solid rgba(0,240,255,0.4)' }}></div>
+            <div style={{ position: 'absolute', top: '8px', right: '8px', width: '6px', height: '6px', borderTop: '2px solid rgba(0,240,255,0.4)', borderRight: '2px solid rgba(0,240,255,0.4)' }}></div>
+            <div style={{ position: 'absolute', bottom: '8px', left: '8px', width: '6px', height: '6px', borderBottom: '2px solid rgba(0,240,255,0.4)', borderLeft: '2px solid rgba(0,240,255,0.4)' }}></div>
+            <div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', borderBottom: '2px solid rgba(0,240,255,0.4)', borderRight: '2px solid rgba(0,240,255,0.4)' }}></div>
+          </div>
 
-        {/* Core Stats Readout - Dynamic Hydration Gated */}
-        <div style={{
-          fontFamily: 'monospace, var(--font-tech)',
-          fontSize: '0.8rem',
-          color: '#00f0ff',
-          letterSpacing: '0.5px',
-          lineHeight: '1.6',
-          borderBottom: '1px dashed rgba(255, 255, 255, 0.1)',
-          paddingBottom: '10px',
-          marginBottom: '12px',
-          textAlign: 'left',
-          textShadow: '0 0 6px rgba(0, 240, 255, 0.3)',
-          zIndex: 2,
-          flexShrink: 0
-        }}>
-          <div>CITIZEN: <span style={{ color: '#fff', fontWeight: 'bold' }}>Ephraim Becker</span></div>
-          <div>MARS AGE: <span style={{ color: '#fff', fontWeight: 'bold' }}>{isMounted ? marsAge : '15.8 Sols'}</span></div>
-        </div>
-
-        {/* Biography Block */}
-        <div style={{
-          textAlign: 'left',
-          marginBottom: '14px',
-          zIndex: 2,
-          flexShrink: 0
-        }}>
-          <span style={{
+          {/* Core Stats Readout - Dynamic Hydration Gated */}
+          <div style={{
             fontFamily: 'monospace, var(--font-tech)',
-            fontSize: '0.62rem',
-            color: 'rgba(255, 255, 255, 0.4)',
-            letterSpacing: '1.5px',
-            textTransform: 'uppercase',
-            display: 'block',
-            marginBottom: '4px'
-          }}>// CITIZEN BIOGRAPHY LOG</span>
-          <p style={{
-            fontSize: '0.76rem',
-            lineHeight: '1.45',
-            color: 'rgba(255, 255, 255, 0.85)',
-            margin: 0,
-            fontFamily: 'var(--font-sans)',
-            fontWeight: 400
+            fontSize: '0.8rem',
+            color: '#00f0ff',
+            letterSpacing: '0.5px',
+            lineHeight: '1.6',
+            borderBottom: '1px dashed rgba(255, 255, 255, 0.1)',
+            paddingBottom: '10px',
+            marginBottom: '14px',
+            textAlign: 'left',
+            textShadow: '0 0 6px rgba(0, 240, 255, 0.3)',
+            flexShrink: 0
           }}>
-            Ephraim Becker is a Computer Science major studying remote-class systems engineering. Backed by mathematical rigor in Calculus, his true passion lies in building highly interactive graphical user interfaces and responsive web layouts.
-          </p>
-        </div>
+            <div>CITIZEN: <span style={{ color: '#fff', fontWeight: 'bold' }}>Ephraim Becker</span></div>
+            <div>MARS AGE: <span style={{ color: '#fff', fontWeight: 'bold' }}>{isMounted ? marsAge : '15.8 Sols'}</span></div>
+          </div>
 
-        {/* Clickable Interests Mini-Tags (One-Scan Dashboard View) */}
-        <div style={{
-          textAlign: 'left',
-          marginBottom: '16px',
-          zIndex: 2,
-          display: 'flex',
-          flexDirection: 'column',
-          flex: 1,
-          minHeight: 0
-        }}>
-          <span style={{
-            fontFamily: 'monospace, var(--font-tech)',
-            fontSize: '0.62rem',
-            color: 'rgba(255, 255, 255, 0.4)',
-            letterSpacing: '1.5px',
-            textTransform: 'uppercase',
-            display: 'block',
-            marginBottom: '6px'
-          }}>// CLASSIFIED INTEREST REGISTRY</span>
-          
-          <div className="left-card-column">
-            {INTERESTS.map((interest) => (
-              <button
-                key={interest.id}
-                onClick={() => setActiveInterest(interest)}
-                className="hud-badge dashboard-left-col-badge-btn"
-              >
-                <span>[{interest.tag}]</span>
-                <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>{interest.icon}</span>
-              </button>
-            ))}
+          {/* Complete 6-Link Social Registry Matrix */}
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(2, 1fr)',
+            gap: '6px',
+            marginTop: 'auto',
+            flexShrink: 0
+          }}>
+            <a 
+              href="https://github.com/EphraimB" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="social-link-port dashboard-social-link"
+            >
+              GitHub
+            </a>
+            <a 
+              href="https://www.linkedin.com/in/ephraim-becker/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="social-link-port dashboard-social-link"
+            >
+              LinkedIn
+            </a>
+            <a 
+              href="https://twitter.com/emb180" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="social-link-port dashboard-social-link"
+            >
+              X
+            </a>
+            <a 
+              href="https://www.youtube.com/channel/UCIHxAXYLxYlNaQiv0do0bUg" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="social-link-port dashboard-social-link"
+            >
+              YouTube
+            </a>
+            <a 
+              href="https://www.instagram.com/ephraim.becker/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="social-link-port dashboard-social-link"
+            >
+              Instagram
+            </a>
+            <a 
+              href="https://www.facebook.com/ephraim.becker/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="social-link-port dashboard-social-link"
+            >
+              Facebook
+            </a>
           </div>
         </div>
 
-        {/* Complete 6-Link Social Registry Matrix */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(3, 1fr)',
-          gap: '6px',
-          marginTop: 'auto',
-          zIndex: 2,
-          flexShrink: 0
-        }}>
-          <a 
-            href="https://github.com/EphraimB" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="social-link-port dashboard-social-link"
-          >
-            GitHub
-          </a>
-          <a 
-            href="https://www.linkedin.com/in/ephraim-becker/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="social-link-port dashboard-social-link"
-          >
-            LinkedIn
-          </a>
-          <a 
-            href="https://twitter.com/emb180" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="social-link-port dashboard-social-link"
-          >
-            X
-          </a>
-          <a 
-            href="https://www.youtube.com/channel/UCIHxAXYLxYlNaQiv0do0bUg" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="social-link-port dashboard-social-link"
-          >
-            YouTube
-          </a>
-          <a 
-            href="https://www.instagram.com/ephraim.becker/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="social-link-port dashboard-social-link"
-          >
-            Instagram
-          </a>
-          <a 
-            href="https://www.facebook.com/ephraim.becker/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="social-link-port dashboard-social-link"
-          >
-            Facebook
-          </a>
-        </div>
-      </div>
+        {/* RIGHT PANE: Biography Log and Classified Interests */}
+        <div className="terminal-right-pane" style={{ zIndex: 2 }}>
+          {/* Biography Block */}
+          <div style={{
+            textAlign: 'left',
+            marginBottom: '16px',
+            flexShrink: 0
+          }}>
+            <span style={{
+              fontFamily: 'monospace, var(--font-tech)',
+              fontSize: '0.62rem',
+              color: 'rgba(255, 255, 255, 0.4)',
+              letterSpacing: '1.5px',
+              textTransform: 'uppercase',
+              display: 'block',
+              marginBottom: '4px'
+            }}>// CITIZEN BIOGRAPHY LOG</span>
+            <p style={{
+              fontSize: '0.78rem',
+              lineHeight: '1.5',
+              color: 'rgba(255, 255, 255, 0.85)',
+              margin: 0,
+              fontFamily: 'var(--font-sans)',
+              fontWeight: 400
+            }}>
+              Ephraim Becker is a Computer Science major studying remote-class systems engineering. Backed by mathematical rigor in Calculus, his true passion lies in building highly interactive graphical user interfaces and responsive web layouts.
+            </p>
+          </div>
 
-      {/* RIGHT COLUMN: The 2D Interactive Vector Map (Statically visible on desktop homepage only) */}
-      <div className="dashboard-right-col">
-        <CityGridMap />
+          {/* Clickable Interests Mini-Tags (One-Scan Dashboard View) */}
+          <div style={{
+            textAlign: 'left',
+            display: 'flex',
+            flexDirection: 'column',
+            flex: 1,
+            minHeight: 0
+          }}>
+            <span style={{
+              fontFamily: 'monospace, var(--font-tech)',
+              fontSize: '0.62rem',
+              color: 'rgba(255, 255, 255, 0.4)',
+              letterSpacing: '1.5px',
+              textTransform: 'uppercase',
+              display: 'block',
+              marginBottom: '6px'
+            }}>// CLASSIFIED INTEREST REGISTRY</span>
+            
+            <div className="left-card-column" style={{ display: 'flex', flexDirection: 'column', gap: '8px', flex: 1, overflowY: 'auto' }}>
+              {INTERESTS.map((interest) => (
+                <button
+                  key={interest.id}
+                  onClick={() => setActiveInterest(interest)}
+                  className="hud-badge dashboard-left-col-badge-btn"
+                >
+                  <span>[{interest.tag}]</span>
+                  <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>{interest.icon}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
       </div>
 
       {/* FULL-SCREEN IMMERSIVE INTEREST DETAILS MODAL OVERLAY */}
@@ -643,7 +651,8 @@ export default function AresDashboard() {
                       <line x1="5" y1="82" x2="315" y2="82" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
 
                       {/* Playbook elements */}
-                      <text x="160" y="80" fill="#fff" fontSize="8" fontFamily="monospace" textAnchor="middle">Q</text>
+                      <g>
+                        <text x="160" y="80" fill="#fff" fontSize="8" fontFamily="monospace" textAnchor="middle">Q</text>
                       <circle cx="160" cy="77" r="7" fill="none" stroke="#fff" strokeWidth="1" />
                       
                       {/* Receivers (O) */}
@@ -669,9 +678,10 @@ export default function AresDashboard() {
                       <text x="200" y="20" fill="#ea4335" fontSize="8" fontFamily="monospace" textAnchor="middle" fontWeight="bold">D</text>
                       <text x="160" y="50" fill="#ea4335" fontSize="8" fontFamily="monospace" textAnchor="middle" fontWeight="bold">D</text>
 
-                      <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">TACTICAL PLAYBOOK: route_matrix_09</text>
-                    </svg>
-                  )}
+                      <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">TACTICAL PLAYBOOK: playbook_matrix_09</text>
+                    </g>
+                  </svg>
+                )}
 
                 </div>
 

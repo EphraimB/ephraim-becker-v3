@@ -533,7 +533,7 @@ export default function PortfolioDome() {
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginTop: '10px' }}>
                     <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'left' }}>
                       <span style={{ display: 'block', fontSize: '0.52rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)' }}>COMMENCED</span>
-                      <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#fff', fontFamily: 'var(--font-tech)' }}>{activeProject.started || "ANCIENT MY"}</span>
+                      <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#fff', fontFamily: 'var(--font-tech)' }}>{activeProject.started || "--"}</span>
                     </div>
                     <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'left' }}>
                       <span style={{ display: 'block', fontSize: '0.52rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)' }}>COMPLETED</span>

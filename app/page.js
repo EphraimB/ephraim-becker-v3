@@ -39,7 +39,7 @@ const INTERESTS = [
     id: 'flag_football',
     title: 'Flag Football Playbook',
     tag: 'FLAG FOOTBALL',
-    desc: "I am deeply passionate about flag football! What caught my attention was how fast-paced, highly strategic, and non-contact it is—relying on speed, route running, and playbook coordinates rather than physical hits. Because I have autism, natural socializing can feel draining, but flag football operates on predefined social scripts (like 'nice catch!' or 'good job!') and structured huddles, taking away social pressure and allowing me to be a highly valued part of a team without the stress of small talk.",
+    desc: "I am deeply passionate about flag football! I first got into it by watching YouTube videos and saw how fun the game is, especially with all the strategizing with teammates, its highly structured nature, and the fact that everyone on the field makes a difference. In other environments, I struggle to socialize with other people and it sometimes scares them away, but flag football has clear rules and social scripts that I understand, so I fit in very well. It also feels incredibly good to know that I can contribute and make a difference on the field.",
     icon: '🏈',
     type: 'flag_football'
   },

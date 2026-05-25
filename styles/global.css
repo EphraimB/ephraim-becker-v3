@@ -1444,19 +1444,19 @@ body {
 
 /* Mobile & Touch Viewport Upgrades (max-width: 900px) */
 @media (max-width: 900px) {
-  /* Restrict drawer to exactly half-screen and fit height to content */
+  /* Restrict drawer to exactly half-screen and take full viewport height */
   .global-map-drawer {
     width: 50vw !important;
     max-width: 50vw !important;
     min-width: 50vw !important;
-    height: auto !important; /* Height wraps the map content perfectly */
-    max-height: calc(100vh - 270px) !important; /* Prevent bottom-edge bleed-out on short viewports */
-    min-height: 0 !important;
-    top: 254px !important; /* Positioned directly below the locator button handle */
-    bottom: auto !important;
+    height: 100vh !important; /* Take full height on mobile */
+    max-height: 100vh !important;
+    min-height: 100vh !important;
+    top: 0 !important; /* Start at the very top of screen */
+    bottom: 0 !important;
     border-radius: 0 16px 16px 0 !important;
     border-right: 2px solid #00f0ff !important;
-    border-bottom: 2px solid #00f0ff !important;
+    border-bottom: none !important;
     background: #020306 !important;
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.8) !important;
   }

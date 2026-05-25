@@ -1,6 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Outfit:wght@300;400;500;600;700&display=swap');
+
 /* 🪐 Ares City OS — Next.js Global Stylesheet */
 
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Outfit:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   /* Fonts */
@@ -1754,23 +1758,55 @@ body {
               0 0 50px rgba(var(--color-accent-rgb), 0.08) !important;
 }
 
-/* 3D Perspective card tilt transition */
+/* --- Ultra-Premium GPU-Accelerated CSS Spatial Parallax System --- */
+
+/* 1. Deep Parallax Background */
+.background-canvas {
+  transform: translate3d(calc(var(--mouse-x) * 24px), calc(var(--mouse-y) * 24px), 0) scale(1.06) !important;
+  transition: filter 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  will-change: transform;
+}
+
+/* 2. Projected Telemetry (Printed on Penthouse Glass window - Midground) */
+.gaze-target {
+  transform: translate3d(calc(var(--mouse-x) * 12px), calc(var(--mouse-y) * 12px), 0) !important;
+  will-change: transform;
+}
+
+/* 3. Immersive Floating Glass Console (Foreground) */
 .spatial-3d-console {
   transform-style: preserve-3d;
-  transform: perspective(1200px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: perspective(1400px) 
+             translate3d(calc(var(--mouse-x) * -20px), calc(var(--mouse-y) * -20px), 40px) 
+             rotateX(calc(var(--mouse-y) * -8deg)) 
+             rotateY(calc(var(--mouse-x) * 8deg)) !important;
+  box-shadow: 
+    0 30px 70px rgba(0, 0, 0, 0.55),
+    calc(var(--mouse-x) * 20px) calc(var(--mouse-y) * 20px) 50px rgba(0, 0, 0, 0.35),
+    inset 0 1px 1px rgba(255, 255, 255, 0.1),
+    0 0 45px rgba(var(--color-accent-rgb), 0.05) !important;
+  transition: border-color var(--transition-normal), box-shadow 0.2s ease-out, transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+  will-change: transform, box-shadow;
 }
 
-/* Cinematic Viewport Background */
-.background-canvas {
-  filter: brightness(0.65) contrast(1.02) !important;
-  animation: spatial-parallax 50s ease-in-out infinite alternate !important;
+@media (hover: hover) {
+  .spatial-3d-console:hover {
+    transform: perspective(1400px) 
+               translate3d(calc(var(--mouse-x) * -24px), calc(var(--mouse-y) * -24px), 55px) 
+               rotateX(calc(var(--mouse-y) * -10deg)) 
+               rotateY(calc(var(--mouse-x) * 10deg)) !important;
+    box-shadow: 
+      0 40px 90px rgba(0, 0, 0, 0.65),
+      calc(var(--mouse-x) * 30px) calc(var(--mouse-y) * 30px) 70px rgba(0, 0, 0, 0.45),
+      inset 0 1px 1px rgba(255, 255, 255, 0.15),
+      0 0 60px rgba(var(--color-accent-rgb), 0.08) !important;
+  }
 }
 
-@keyframes spatial-parallax {
-  0% { transform: scale(1.01) translate(0px, 0px) rotate(0deg); }
-  50% { transform: scale(1.05) translate(-8px, -4px) rotate(0.15deg); }
-  100% { transform: scale(1.01) translate(4px, 2px) rotate(-0.08deg); }
+/* 4. Desktop Pinned Top HUD Bar */
+.system-hud-bar {
+  transform: translate3d(calc(var(--mouse-x) * -4px), calc(var(--mouse-y) * -4px), 0) !important;
+  will-change: transform;
 }
 
 /* Fine-lined window telemetry overlay */
@@ -1866,11 +1902,12 @@ body {
 
 /* Simplified touch rules for mobile devices */
 @media (max-width: 768px) {
-  .background-canvas {
-    animation: none !important;
-  }
-  .spatial-3d-console {
+  .background-canvas,
+  .gaze-target,
+  .spatial-3d-console,
+  .system-hud-bar {
     transform: none !important;
+    animation: none !important;
   }
   .gaze-target {
     opacity: 1 !important;

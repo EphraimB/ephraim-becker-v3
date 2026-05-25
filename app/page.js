@@ -21,9 +21,9 @@ const INTERESTS = [
   },
   {
     id: 'music',
-    title: 'Classical & Pop Music',
+    title: 'Music & Vocal Performance',
     tag: 'MUSIC',
-    desc: "I have a deep love for music, spanning both classical compositions and modern pop. In the classical realm, the pipe organ is my absolute favorite musical instrument because of its grand mechanical power, rich acoustics, and architectural sound. On the pop side, I love narrative pop albums by Taylor Swift and Noah Kahan for their emotional storytelling and acoustic folk-pop arrangements.",
+    desc: "I have a deep love for music, spanning classical compositions, modern pop, and vocal performance! In the classical realm, the pipe organ is my absolute favorite instrument because of its grand mechanical power, rich acoustics, and architectural sound. On the pop side, I love Taylor Swift and Noah Kahan for their narrative storytelling. Singing is also a massive part of my life—I absolutely love performing karaoke, singing along to my favorite tracks (which I've curated in my YouTube playlist), and singing in structured choirs. Blending my voice in a choir to create beautiful harmonies with others is incredibly fulfilling!",
     icon: '🎹',
     type: 'music'
   },
@@ -752,51 +752,97 @@ export default function AresDashboard() {
                 )}
 
                 {/* Neurodiversity infinity loop & synapses graphic */}
-                {activeInterest.type === 'neurodiversity' && (
-                  <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
-                    <defs>
-                      {/* Beautiful HSL rainbow linear gradient */}
-                      <linearGradient id="neuroRainbowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                        <stop offset="0%" stopColor="#00f0ff" />
-                        <stop offset="33%" stopColor="#c259ff" />
-                        <stop offset="66%" stopColor="#ffb300" />
-                        <stop offset="100%" stopColor="#00ff88" />
-                      </linearGradient>
-                    </defs>
+                  {activeInterest.type === 'neurodiversity' && (
+                    <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
+                      <defs>
+                        {/* Beautiful HSL rainbow linear gradient */}
+                        <linearGradient id="neuroRainbowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#00f0ff" />
+                          <stop offset="33%" stopColor="#c259ff" />
+                          <stop offset="66%" stopColor="#ffb300" />
+                          <stop offset="100%" stopColor="#00ff88" />
+                        </linearGradient>
+                      </defs>
 
-                    {/* Neural network synapses background */}
-                    <g opacity="0.3">
-                      <line x1="60" y1="25" x2="100" y2="50" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-                      <line x1="100" y1="50" x2="130" y2="30" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-                      <line x1="220" y1="50" x2="260" y2="75" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-                      <line x1="160" y1="50" x2="175" y2="20" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-                      
-                      <circle cx="60" cy="25" r="2.5" fill="#00f0ff" />
-                      <circle cx="130" cy="30" r="2" fill="#c259ff" />
-                      <circle cx="260" cy="75" r="2.5" fill="#00ff88" />
-                      <circle cx="175" cy="20" r="2" fill="#ffb300" />
-                    </g>
+                      {/* Neural network synapses background */}
+                      <g opacity="0.3">
+                        <line x1="60" y1="25" x2="100" y2="50" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+                        <line x1="100" y1="50" x2="130" y2="30" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+                        <line x1="220" y1="50" x2="260" y2="75" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+                        <line x1="160" y1="50" x2="175" y2="20" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
+                        
+                        <circle cx="60" cy="25" r="2.5" fill="#00f0ff" />
+                        <circle cx="130" cy="30" r="2" fill="#c259ff" />
+                        <circle cx="260" cy="75" r="2.5" fill="#00ff88" />
+                        <circle cx="175" cy="20" r="2" fill="#ffb300" />
+                      </g>
 
-                    {/* High-fidelity glowing infinity loop */}
-                    <path 
-                      d="M 160,50 C 130,20 100,20 100,50 C 100,80 130,80 160,50 C 190,20 220,20 220,50 C 220,80 190,80 160,50 Z" 
-                      fill="none" 
-                      stroke="url(#neuroRainbowGradient)" 
-                      strokeWidth="3.5" 
-                      strokeLinecap="round"
-                      style={{ filter: 'drop-shadow(0 0 6px rgba(0, 240, 255, 0.4))' }} 
-                    />
+                      {/* High-fidelity glowing infinity loop */}
+                      <path 
+                        d="M 160,50 C 130,20 100,20 100,50 C 100,80 130,80 160,50 C 190,20 220,20 220,50 C 220,80 190,80 160,50 Z" 
+                        fill="none" 
+                        stroke="url(#neuroRainbowGradient)" 
+                        strokeWidth="3.5" 
+                        strokeLinecap="round"
+                        style={{ filter: 'drop-shadow(0 0 6px rgba(0, 240, 255, 0.4))' }} 
+                      />
 
-                    {/* Synapse hubs */}
-                    <circle cx="100" cy="50" r="2.5" fill="#00f0ff" />
-                    <circle cx="220" cy="50" r="2.5" fill="#00ff88" />
-                    <circle cx="160" cy="50" r="2" fill="#c259ff" />
+                      {/* Synapse hubs */}
+                      <circle cx="100" cy="50" r="2.5" fill="#00f0ff" />
+                      <circle cx="220" cy="50" r="2.5" fill="#00ff88" />
+                      <circle cx="160" cy="50" r="2" fill="#c259ff" />
 
-                    <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">SYNAPSE_CORE: cognitive_neurodiversity_infinite_loop</text>
-                  </svg>
-                )}
+                      <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">SYNAPSE_CORE: cognitive_neurodiversity_infinite_loop</text>
+                    </svg>
+                  )}
 
                 </div>
+
+                {/* Embedded YouTube Transmission Deck */}
+                {activeInterest.id === 'music' && (
+                  <div style={{
+                    marginTop: '5px',
+                    background: 'rgba(255, 255, 255, 0.02)',
+                    border: '1px solid rgba(255, 255, 255, 0.05)',
+                    borderRadius: '10px',
+                    padding: '16px',
+                    boxSizing: 'border-box'
+                  }}>
+                    <span style={{
+                      display: 'block',
+                      fontFamily: 'monospace, var(--font-tech)',
+                      fontSize: '0.55rem',
+                      color: 'rgba(255, 255, 255, 0.4)',
+                      letterSpacing: '1px',
+                      marginBottom: '8px'
+                    }}>// TRANSMISSION DECK // PLAYLIST EMBED</span>
+                    <div style={{
+                      position: 'relative',
+                      width: '100%',
+                      paddingBottom: '56.25%', /* 16:9 aspect ratio */
+                      height: 0,
+                      borderRadius: '8px',
+                      overflow: 'hidden',
+                      border: '1.5px solid rgba(255, 179, 0, 0.3)',
+                      boxShadow: '0 0 15px rgba(255, 179, 0, 0.12)'
+                    }}>
+                      <iframe
+                        src="https://www.youtube.com/embed/videoseries?list=PL3IqUVH23uWxWTt4bWtFqcBu7BooiWXpf"
+                        title="Karaoke Favorites Playlist"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                        style={{
+                          position: 'absolute',
+                          top: 0,
+                          left: 0,
+                          width: '100%',
+                          height: '100%',
+                          border: 0
+                        }}
+                      ></iframe>
+                    </div>
+                  </div>
+                )}
 
               </div>
             </div>

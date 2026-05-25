@@ -238,6 +238,7 @@ export default function PortfolioDome() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="net-input"
+                  suppressHydrationWarning
                   style={{
                     width: '100%',
                     background: '#04060c',

@@ -487,9 +487,25 @@ body {
     height: auto;
   }
   .system-hud-bar {
-    flex-direction: column;
-    gap: 8px;
-    text-align: center;
+    flex-direction: row !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 8px 12px !important;
+    font-size: 0.72rem !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
+  }
+  .hud-citizen-info {
+    display: none !important; /* Hide credentials on mobile to eliminate clutter */
+  }
+  .hud-sector-indicator {
+    display: none !important; /* Hide active sector on mobile to prevent truncation clutter */
+  }
+  .hud-clock-info {
+    font-size: 0.7rem !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    text-align: center !important;
   }
   .map-nav-header {
     padding: 10px;

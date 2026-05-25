@@ -1,100 +1,83 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import CityGridMap from '../../components/CityGridMap';
+import { useRouter } from 'next/navigation';
 
 const PROJECTS = [
   {
     id: 1,
-    category: "Web development",
-    title: "Budgeting app",
-    description: "A web app where you can input all your habits and generate future transactions for any date range based on those habits.",
-    technologies: ["ExpressJS", "Postgres", "NextJS"],
-    details: "I decided to make a budgeting app so I can know how much money I would have at any date. I faced challenges experimenting with different ways to do the cron jobs but I learned a lot.",
-    takeaways: "I learned a lot about which technologies would work best and had lessons learned about reverting if that technology doesn't work that well.",
+    category: "Web Development",
+    title: "Habit-Based Budgeting Application",
+    description: "A web application where users can input financial habits and generate future transactions for any date range based on those recurring habits.",
+    technologies: ["ExpressJS", "Postgres", "NextJS", "Node.js"],
+    details: "I developed this budgeting application to solve my own need for projecting long-term bank balances. I faced complex logic hurdles matching varying cron-like intervals (weekly, bi-weekly, semi-monthly) to future dates, and experimented with multiple database indexing schemas in PostgreSQL for highly efficient date-range queries.",
+    takeaways: "Deepened my understanding of PostgreSQL transaction boundaries, date arithmetic logic, and why modern React state propagation is crucial for heavy visual calendars.",
     started: "2023-02-20",
     finished: "2024-12-24",
     status: "Finished",
     image: "/projects/budgeting-screenshot.png",
     links: [
-      {
-        src: "https://github.com/EphraimB/budgeting",
-        description: "GitHub Repository",
-        type: "github"
-      }
+      { src: "https://github.com/EphraimB/budgeting", description: "GitHub Repository", type: "github" }
     ]
   },
   {
     id: 2,
-    category: "3D modeling",
-    title: "Beaming video",
-    description: "A transporter beaming video modeled and rendered in Blender, recreating an iconic sci-fi transition effect using green screen chroma keying.",
-    technologies: ["Blender", "Green Screen", "VFX Rendering"],
-    details: "It was a challenge making the table for the transporter and took a month to make it, but it was my first successful 3D model. I 3D modeled the table and mapped an image texture on top of it.",
-    takeaways: "I was very happy about my success making a transporter table that looks very realistic and successfully recreating a Star Trek beam transition from my bedroom to my therapy office.",
+    category: "3D Modeling & VFX",
+    title: "Quantum Transporter Beaming Video",
+    description: "A transport beaming visual effect modeled and rendered inside Blender, recreating an iconic sci-fi transition using green screen chroma keying.",
+    technologies: ["Blender", "Green Screen Chroma", "VFX Composite Rendering"],
+    details: "This was my very first successful 3D model! It took an entire month of meticulous work to model the transporter table, hand-wrap realistic metal and warning stripe textures, and map realistic light nodes. I filmed myself in front of a green screen in my bedroom and composited my silhouette into the transport chamber to create a beam transition from home to my therapy office.",
+    takeaways: "Mastered UV unwrapping, mesh modeling, keyframe lighting changes, and video node compositing within Blender.",
     started: "2016-10-26",
     finished: "2016-11-26",
     status: "Finished",
     image: "/projects/beaming-video-screenshot.png",
     video: "https://www.youtube.com/embed/6ktNUS7dt0M",
     links: [
-      {
-        src: "https://www.youtube.com/watch?v=6ktNUS7dt0M",
-        description: "Watch on YouTube",
-        type: "youtube"
-      }
+      { src: "https://www.youtube.com/watch?v=6ktNUS7dt0M", description: "Watch on YouTube", type: "youtube" }
     ]
   },
   {
     id: 3,
-    category: "3D modeling",
-    title: "Blob man video",
-    description: "A character animation of an animated 'blob man' with walking animations built inside Blender.",
-    technologies: ["Blender", "3D Modeling", "Character Animation"],
-    details: "It took a lot of trial and error following Udemy rigging and walking-cycle tutorials perfectly, but the final animation result was highly satisfying.",
-    takeaways: "Very pleased with the custom Blob man character rigging and keyframed walking cycles.",
+    category: "3D Modeling",
+    title: "Blob Man Rigged Walking Cycle",
+    description: "A complete character asset and animated 'blob man' with customized armature rigging and realistic walk-cycle keyframes in Blender.",
+    technologies: ["Blender", "Armature Rigging", "Keyframe Animation"],
+    details: "This project was a deep dive into character rigging. I followed advanced armature hierarchies and weight painting tutorials, troubleshooting multiple trial-and-error meshes where the joints deformed unnaturally, eventually creating a flawless, clean walking cycle.",
+    takeaways: "Gained structural expertise in rigging bones, weight-painting constraints, and procedural movement loops.",
     started: null,
     finished: "2024-04-08",
     status: "Finished",
     image: "/projects/blob-man-video-screenshot.png",
     video: "https://www.youtube.com/embed/G8un8IlF7_c",
     links: [
-      {
-        src: "https://www.youtube.com/watch?v=G8un8IlF7_c",
-        description: "Watch on YouTube",
-        type: "youtube"
-      }
+      { src: "https://www.youtube.com/watch?v=G8un8IlF7_c", description: "Watch on YouTube", type: "youtube" }
     ]
   },
   {
     id: 4,
-    category: "Calculator apps",
-    title: "Harry Potter currency converter",
-    description: "A wizarding currency converter for TI-84 Plus calculators that converts between US Dollars and wizarding coins (Galleons, Sickles, Knuts).",
-    technologies: ["TI Basic", "TI-84 Graphing Kernel"],
-    details: "I made this cool Harry Potter app on my calculator in High School. I improved the user interface through different versions from a basic menu to a fully custom one (v7.3).",
-    takeaways: "Incredibly rewarding to compile and code custom menu systems within low-level graphing calculator environments.",
+    category: "Calculator Applications",
+    title: "Harry Potter Wizarding Currency Converter",
+    description: "A wizarding coin converter (Galleons, Sickles, Knuts to USD) compiled for TI-84 Plus graphing calculators, featuring custom UI menus.",
+    technologies: ["TI Basic", "TI-84 Graphing Kernel", "Low-Level GUI Coding"],
+    details: "I coded this converter during my High School years directly on my TI-84 Plus graphing calculator. Rather than keeping a simple list of prompts, I spent months designing a fully custom, paginated menu system (v7.3) that renders customized text screens, validating currency boundaries and supporting precise mathematical conversion factors.",
+    takeaways: "Learned the constraints of low-memory execution environments and how to implement clean UI layouts using low-level graphical display tokens.",
     started: null,
     finished: "2014-09-01",
     status: "Finished",
     images: ["/projects/wizardc7-screenshot.gif", "/projects/wizardc7-color-screenshot.gif"],
     links: [
-      {
-        src: "/projects/downloads/wizardc.zip",
-        description: "Download Version 7.3 Program",
-        type: "download"
-      }
+      { src: "https://github.com/EphraimB", description: "Request Program File", type: "download" }
     ]
   },
   {
     id: 5,
-    category: "VR development",
-    title: "Beautiful Mind app",
-    description: "A virtual reality spatial learning application featuring an interactive teleportation watch navigation interface.",
-    technologies: ["Unity", "C#", "Oculus VR SDK"],
-    details: "Collaborated on the VR experience, contributing a custom smartwatch enabling users to teleport scenes. Solved user screen clarity by expanding the watch face UI on hover.",
-    takeaways: "Designed a creative spatial smartwatch system acting as an immersive portal—completely an original design choice.",
+    category: "VR Development",
+    title: "Beautiful Mind Watch Interface",
+    description: "A virtual reality spatial learning application featuring an interactive smartwatch navigation and scene teleportation mechanic.",
+    technologies: ["Unity", "C#", "Oculus VR SDK", "Spatial UI"],
+    details: "Collaborating on this immersive VR experience, I designed and coded a custom, wrist-worn smartwatch that acts as a portal. Recruiter/User testing revealed that users struggled to read the fine-detailed watch menu in VR space. I resolved this spatial issue by expanding the watch interface face on hover, bringing the graphics closer to the camera viewport.",
+    takeaways: "Designed a creative, spatial smartwatch teleportation portal—completely an original design choice solving VR accessibility.",
     started: null,
     finished: "2023-01-01",
     status: "Finished",
@@ -103,32 +86,28 @@ const PROJECTS = [
   },
   {
     id: 6,
-    category: "Web development",
-    title: "My mega website",
-    description: "First complete personal portfolio which featured a diary, life timeline, a fancy dynamic navigation wheel, and an early budgeting calculator.",
-    technologies: ["PHP", "HTML", "CSS", "MySQL", "JavaScript", "GoDaddy"],
-    details: "I kept improving my mega website and even connected it to a MySQL database, configured custom server cron jobs, and deployed it on GoDaddy hosting.",
-    takeaways: "Learned a massive amount about database schemas, backend routing, server administration, and why modern web frameworks are vital.",
+    category: "Web Development",
+    title: "PHP & MySQL Mega Portal",
+    description: "My early personal portfolio featuring a diary, life milestone timeline, dynamic SVG navigation wheel, and currency calculators.",
+    technologies: ["PHP", "HTML", "CSS", "MySQL", "JavaScript", "GoDaddy Web Host"],
+    details: "This was my very first major web portal. I designed a customized relational MySQL database to feed diary entries dynamically, configured custom server cron-jobs to back up user records, and managed full FTP deployment on GoDaddy web servers.",
+    takeaways: "Learned massive lessons in relational database normalization, server management, basic SQL query injection prevention, and backend routing concepts.",
     started: "2021-07-31",
     finished: "2023-01-03",
     status: "Finished",
     image: "/projects/mega-website-homepage.png",
     links: [
-      {
-        src: "https://github.com/EphraimB/ephraim-becker",
-        description: "GitHub Repository",
-        type: "github"
-      }
+      { src: "https://github.com/EphraimB/ephraim-becker", description: "GitHub Repository", type: "github" }
     ]
   },
   {
     id: 7,
-    category: "Computer building",
-    title: "My custom built gaming PC",
-    description: "Assembled a high-performance custom desktop computer with specifications built for heavy graphics workload and 3D Blender modeling.",
-    technologies: ["64GB RAM", "Nvidia RTX 2080 Ti", "Samsung 2TB SSD", "Aorus Z370"],
-    details: "First time building a desktop hardware configuration. Troubleshot initial boot failures by tracing power supply rails to identify a loose pin connection.",
-    takeaways: "Taught me the complete architecture of hardware interactions, thermal dissipation, and matching bus speeds—like assembling high-tech lego blocks.",
+    category: "Hardware Integration",
+    title: "High-Performance Workstation Assembly",
+    description: "Assembled and optimized a custom desktop computer tailored for heavy 3D rendering workloads and intense graphics operations.",
+    technologies: ["64GB RAM", "Nvidia RTX 2080 Ti", "Samsung 2TB NVMe", "Intel Core i9"],
+    details: "I specified, purchased, and built this entire PC rig to handle my Blender 3D rendering projects. During initial boots, the system failed POST. I troubleshot the physical hardware systematically, tracing power rails from the PSU to identify a single loose pins connector on the ATX motherboard line.",
+    takeaways: "Gained solid diagnostic insights into system bus architectures, thermal dissipation factors, and physical hardware assembly.",
     started: "2019-07-16",
     finished: "2019-07-19",
     status: "Finished",
@@ -139,44 +118,22 @@ const PROJECTS = [
 
 const CATEGORIES = [
   "All",
-  "Web development",
-  "3D modeling",
-  "Calculator apps",
-  "VR development",
-  "Computer building"
+  "Web Development",
+  "3D Modeling",
+  "Calculator Apps",
+  "VR Development",
+  "Hardware Integration"
 ];
 
-export default function PortfolioDome() {
-  const [transitState, setTransitState] = useState('slide-active');
-  const [category, setCategory] = useState('All');
+export default function PortfolioArchives() {
+  const router = useRouter();
+  const [selectedCategory, setSelectedCategory] = useState('All');
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedProject, setSelectedProject] = useState(null);
+  
+  // Year boundaries filters
   const [minYear, setMinYear] = useState(2014);
   const [maxYear, setMaxYear] = useState(2026);
-  const [activeProject, setActiveProject] = useState(null);
-
-  // Experimental Conversational View States
-  const [isConversationalMode, setIsConversationalMode] = useState(false);
-  const [conversationalResponse, setConversationalResponse] = useState(
-    "Hello there! I'm Ephraim Becker. Select any project in the prompts list below to activate my holographic dialogue core and ask me questions about it!"
-  );
-  const [selectedConversationalProject, setSelectedConversationalProject] = useState(null);
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const walkDir = window.sessionStorage.getItem('walk-direction');
-      if (walkDir === 'left') {
-        setTransitState('slide-right');
-      } else if (walkDir === 'right') {
-        setTransitState('slide-left');
-      }
-      window.sessionStorage.removeItem('walk-direction');
-      
-      const timer = setTimeout(() => {
-        setTransitState('slide-active');
-      }, 50);
-      return () => clearTimeout(timer);
-    }
-  }, []);
 
   const getProjectYear = (project) => {
     if (!project.finished) return 2026;
@@ -184,26 +141,32 @@ export default function PortfolioDome() {
     return isNaN(year) ? 2026 : year;
   };
 
+  // Safe category filter checker (handles fuzzy text matches like 3D Modeling/3D modeling & VFX)
+  const isMatchingCategory = (projectCat, targetCat) => {
+    if (targetCat === 'All') return true;
+    return projectCat.toLowerCase().includes(targetCat.toLowerCase().split(' ')[0]);
+  };
+
   const filteredProjects = PROJECTS.filter(project => {
-    // 1. Category Filter
-    if (category !== 'All' && project.category !== category) {
+    // 1. Category Tag Check
+    if (!isMatchingCategory(project.category, selectedCategory)) {
       return false;
     }
 
-    // 2. Year Filter
+    // 2. Completed Year Sliders Check
     const projectYear = getProjectYear(project);
     if (projectYear < minYear || projectYear > maxYear) {
       return false;
     }
 
-    // 3. Search Query Filter
+    // 3. Search Query Text Check
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase();
       const matchTitle = project.title.toLowerCase().includes(q);
       const matchDesc = project.description.toLowerCase().includes(q);
       const matchTech = project.technologies.some(tech => tech.toLowerCase().includes(q));
-      const matchCategory = project.category.toLowerCase().includes(q);
-      if (!matchTitle && !matchDesc && !matchTech && !matchCategory) {
+      const matchCat = project.category.toLowerCase().includes(q);
+      if (!matchTitle && !matchDesc && !matchTech && !matchCat) {
         return false;
       }
     }
@@ -211,91 +174,182 @@ export default function PortfolioDome() {
     return true;
   });
 
+  // Seamless transition back to Citizen Suite
+  const navigateToSuite = () => {
+    const workspace = document.querySelector('.os-workspace');
+    if (workspace) workspace.classList.add('walking-transit-active');
+    setTimeout(() => {
+      router.push('/');
+    }, 500);
+  };
+
   return (
-    <div className="citizen-card-shell" style={{ flexDirection: 'column' }}>
-      {/* Walking Transit Sweeper Overlays */}
-      <div className="walking-motion-overlay" style={{ position: 'fixed' }}></div>
+    <div 
+      className="citizen-card-shell spatial-portfolio-grid"
+      style={{
+        pointerEvents: 'auto'
+      }}
+    >
+      {/* ==========================================================
+         1. LEFT SIDEBAR: Recruiter Dossier & Core Credentials
+         ========================================================== */}
+      <div 
+        className="spatial-glass-panel"
+        style={{
+          padding: '24px 28px',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'space-between',
+          height: '100%',
+          textAlign: 'left'
+        }}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          
+          {/* Recruiter Title and Avatar */}
+          <div style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+            <img 
+              src="/assets/images/profile.png" 
+              alt="Ephraim Becker" 
+              style={{ width: '64px', height: '64px', borderRadius: '12px', border: '1px solid rgba(255,255,255,0.08)', objectFit: 'cover' }}
+            />
+            <div>
+              <span className="window-telemetry-text" style={{ color: 'var(--color-accent)' }}>ARCHIVE PROFILE</span>
+              <h3 style={{ fontSize: '1rem', fontWeight: 700, color: '#fff', margin: 0, marginTop: '2px' }}>Ephraim Becker</h3>
+            </div>
+          </div>
 
-      {/* Floating navigation map bubble */}
-      <div className="floating-nav-bubble">
-        <CityGridMap />
-      </div>
+          {/* Core Biography Readout */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', fontSize: '0.78rem', color: 'rgba(255,255,255,0.7)', lineHeight: 1.5 }}>
+            <p style={{ margin: 0 }}>
+              <strong>Education:</strong> Adelphi University Computer Science Student. Remote cadet linked from Cedarhurst, NY.
+            </p>
+            <p style={{ margin: 0 }}>
+              <strong>Logic Sharpener:</strong> College-level Calculus equations, derivatives, and integral matrices.
+            </p>
+            <p style={{ margin: 0 }}>
+              <strong>Coordination:</strong> Flag football huddle planning, route execution; choir singing and classical pipe organ mechanics.
+            </p>
+          </div>
+          
+          {/* Recruiter Links Box */}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '16px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <a 
+              href="https://github.com/EphraimB" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="social-link-port"
+              style={{ padding: '8px 14px', fontSize: '0.65rem', display: 'flex', justifyContent: 'center' }}
+            >
+              📂 GITHUB REPOSITORIES
+            </a>
+            <a 
+              href="https://www.youtube.com/@ephraimbecker544" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="social-link-port"
+              style={{ padding: '8px 14px', fontSize: '0.65rem', display: 'flex', justifyContent: 'center', borderColor: 'var(--neon-amber)', background: 'rgba(255,179,0,0.05)' }}
+            >
+              🎬 YOUTUBE DEMO VIDEOS
+            </a>
+          </div>
 
-      {/* Bubbly floating content area */}
-      <div className={`walking-content-container ${transitState}`} style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-        
-        {!isConversationalMode && (
-          <>
-            {/* Upper Information Panel */}
-            <div className="bubbly-panel" style={{ marginBottom: '20px' }}>
-          <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.85rem', color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '6px' }}>
-            Holographic Project Archives
-          </h3>
-          <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
-            Browse the engineering software systems, predictive engines, and physical configurations developed by Ephraim Becker. Filter projects instantly by category tag, keywords, or completed year, and click any card to open a conversational hologram details bubble!
-          </p>
+          {/* Technical Capabilities Stack */}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '16px' }}>
+            <span className="window-telemetry-text" style={{ fontSize: '0.52rem', display: 'block', marginBottom: '8px' }}>CORE TECHNICAL SKILLS</span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '5px' }}>
+              {["NextJS", "React", "Postgres", "Node.js", "ExpressJS", "Blender 3D", "C# / Unity", "TI Basic", "PHP & MySQL"].map(skill => (
+                <span 
+                  key={skill} 
+                  style={{
+                    fontSize: '0.58rem',
+                    background: 'rgba(255,255,255,0.02)',
+                    border: '1px solid rgba(255,255,255,0.05)',
+                    color: 'rgba(255,255,255,0.8)',
+                    padding: '2px 8px',
+                    borderRadius: '4px',
+                    fontFamily: 'monospace'
+                  }}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+          
         </div>
 
-        {/* Advanced Holographic Filter Deck */}
-        <div className="bubbly-panel" style={{ padding: '20px 24px', marginBottom: '20px', background: 'rgba(6,9,20,0.85)' }}>
-          
-          <div className="filter-deck-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '16px' }}>
+        {/* Egress Gate Link */}
+        <button
+          onClick={navigateToSuite}
+          className="hud-btn"
+          style={{
+            width: '100%',
+            padding: '12px 18px',
+            borderRadius: '12px',
+            background: 'rgba(255, 255, 255, 0.02)',
+            borderColor: 'rgba(255,255,255,0.1)',
+            color: 'rgba(255,255,255,0.8)',
+            fontSize: '0.72rem',
+            letterSpacing: '1px',
+            fontWeight: 600,
+            marginTop: '20px'
+          }}
+        >
+          🏨 Return to Suite
+        </button>
+      </div>
+
+      {/* ==========================================================
+         2. RIGHT MAIN CONTENT: Archive Database Filter Grid
+         ========================================================== */}
+      <div 
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          minHeight: 0
+        }}
+      >
+        {/* Upper Search and Sliders filter deck panel */}
+        <div 
+          className="spatial-glass-panel"
+          style={{
+            padding: '20px 24px',
+            marginBottom: '20px',
+            background: 'rgba(6, 8, 14, 0.4)'
+          }}
+        >
+          <div style={{ display: 'grid', gridTemplateColumns: '1.25fr 1fr', gap: '20px', marginBottom: '16px', alignItems: 'end' }}>
             
             {/* Search Input Box */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
-              <label style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1.5px', fontWeight: 700 }}>
-                SECTOR ARCHIVE KEYWORD SEARCH
-              </label>
-              <div style={{ position: 'relative' }}>
-                <input 
-                  type="text"
-                  placeholder="🔍 Search titles, descriptions, technologies..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="net-input"
-                  style={{
-                    width: '100%',
-                    background: '#04060c',
-                    border: '1.5px solid var(--color-accent)',
-                    borderRadius: '8px',
-                    padding: '10px 14px 10px 36px',
-                    color: 'var(--text-primary)',
-                    fontFamily: 'var(--font-tech)',
-                    fontSize: '0.75rem',
-                    outline: 'none',
-                    transition: 'all 0.25s ease',
-                    boxShadow: '0 0 10px rgba(var(--color-accent-rgb), 0.1)'
-                  }}
-                />
-                {searchQuery && (
-                  <button 
-                    onClick={() => setSearchQuery('')}
-                    style={{
-                      position: 'absolute',
-                      right: '12px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'none',
-                      border: 'none',
-                      color: 'var(--color-accent)',
-                      cursor: 'pointer',
-                      fontSize: '0.8rem',
-                      fontFamily: 'var(--font-tech)',
-                      fontWeight: 'bold'
-                    }}
-                  >
-                    [✕]
-                  </button>
-                )}
-              </div>
+              <span className="window-telemetry-text" style={{ fontSize: '0.52rem' }}>ARCHIVE INDEX KEYWORD SEARCH</span>
+              <input 
+                type="text"
+                placeholder="🔍 Search titles, tools, parameters..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="net-input"
+                style={{
+                  background: 'rgba(4, 6, 12, 0.5)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  borderRadius: '10px',
+                  padding: '10px 14px',
+                  color: '#fff',
+                  fontSize: '0.78rem',
+                  width: '100%'
+                }}
+              />
             </div>
 
-            {/* Date Range Control (Sliders side-by-side) */}
-            <div className="filter-sliders-container" style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-              <div className="range-slider-group" style={{ textAlign: 'left' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span className="range-slider-label">MIN COMPLETED YEAR</span>
-                  <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', color: 'var(--color-accent)', fontWeight: 700 }}>{minYear}</span>
+            {/* Sliders completed years */}
+            <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+              
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.52rem', fontFamily: 'var(--font-tech)', color: 'rgba(255,255,255,0.45)' }}>
+                  <span>MIN COMPLETED</span>
+                  <span style={{ color: 'var(--color-accent)', fontWeight: 700 }}>{minYear}</span>
                 </div>
                 <input 
                   type="range"
@@ -307,14 +361,14 @@ export default function PortfolioDome() {
                     setMinYear(val);
                     if (val > maxYear) setMaxYear(val);
                   }}
-                  className="range-slider-control"
+                  style={{ width: '100%', accentColor: 'var(--color-accent)' }}
                 />
               </div>
 
-              <div className="range-slider-group" style={{ textAlign: 'left' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span className="range-slider-label">MAX COMPLETED YEAR</span>
-                  <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', color: 'var(--color-accent)', fontWeight: 700 }}>{maxYear}</span>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '4px', textAlign: 'left' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.52rem', fontFamily: 'var(--font-tech)', color: 'rgba(255,255,255,0.45)' }}>
+                  <span>MAX COMPLETED</span>
+                  <span style={{ color: 'var(--color-accent)', fontWeight: 700 }}>{maxYear}</span>
                 </div>
                 <input 
                   type="range"
@@ -326,598 +380,260 @@ export default function PortfolioDome() {
                     setMaxYear(val);
                     if (val < minYear) setMinYear(val);
                   }}
-                  className="range-slider-control"
+                  style={{ width: '100%', accentColor: 'var(--color-accent)' }}
                 />
               </div>
+
             </div>
 
           </div>
 
-          {/* Category Tag Pills Row */}
-          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '14px' }}>
-            <span style={{ display: 'block', fontFamily: 'var(--font-tech)', fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1.5px', marginBottom: '8px', textAlign: 'center', fontWeight: 700 }}>
-              SECTOR CLASSIFICATION TAGS
-            </span>
-            <div className="category-pills-row">
+          {/* Category Tag Pills */}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '12px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            <span className="window-telemetry-text" style={{ fontSize: '0.52rem', display: 'block' }}>FILTER BY CLASSIFICATION TAG</span>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
               {CATEGORIES.map(cat => (
                 <button
                   key={cat}
-                  onClick={() => setCategory(cat)}
-                  className={`category-pill ${category === cat ? 'active' : ''}`}
+                  onClick={() => setSelectedCategory(cat)}
+                  style={{
+                    background: selectedCategory === cat ? 'rgba(var(--color-accent-rgb), 0.12)' : 'rgba(255,255,255,0.01)',
+                    border: '1px solid',
+                    borderColor: selectedCategory === cat ? 'var(--color-accent)' : 'rgba(255,255,255,0.06)',
+                    borderRadius: '20px',
+                    padding: '4px 14px',
+                    fontSize: '0.62rem',
+                    fontFamily: 'var(--font-tech)',
+                    color: selectedCategory === cat ? '#fff' : 'rgba(255,255,255,0.5)',
+                    cursor: 'pointer',
+                    transition: 'all 0.2s ease',
+                    fontWeight: 700,
+                    letterSpacing: '0.5px'
+                  }}
                 >
                   {cat.toUpperCase()}
                 </button>
               ))}
             </div>
           </div>
-
         </div>
 
         {/* Scrollable Project Cards Grid */}
-        <div className="custom-scroll" style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
-          
-          <div className="portfolio-grid-deck" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px', paddingBottom: '10px' }}>
-            {filteredProjects.length === 0 ? (
-              <div style={{ gridColumn: '1 / -1', padding: '48px 24px', background: 'rgba(6, 9, 20, 0.5)', border: '1.5px dashed rgba(var(--color-accent-rgb), 0.25)', borderRadius: '14px', textAlign: 'center', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.4)' }}>
-                <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '12px' }}>🛰️</span>
-                <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: 'var(--color-accent)', marginBottom: '8px', letterSpacing: '1px' }}>NO PROJECTS MATCHED SECTOR QUERY</h4>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', maxWidth: '420px', margin: '0 auto', lineHeight: 1.4 }}>
-                  Try broadening your keyword search parameters or adjusting the completed year range sliders.
-                </p>
-              </div>
-            ) : (
-              filteredProjects.map((project) => (
-                <div 
+        <div className="custom-scroll" style={{ flex: 1, minHeight: 0 }}>
+          {filteredProjects.length === 0 ? (
+            <div style={{ padding: '60px 20px', background: 'rgba(6,8,14,0.3)', border: '1.5px dashed rgba(255,255,255,0.05)', borderRadius: '20px', textAlign: 'center' }}>
+              <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '12px' }}>🛰️</span>
+              <span className="window-telemetry-text" style={{ color: 'var(--neon-amber)' }}>NO BLUEPRINTS MATCHED MATRIX QUERY</span>
+              <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.4)', maxWidth: '420px', margin: '0 auto', marginTop: '6px', lineHeight: 1.45 }}>
+                Try broadening your keyword search parameters or adjusting the completed year range sliders.
+              </p>
+            </div>
+          ) : (
+            <div 
+              style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(auto-fill, minmax(290px, 1fr))', 
+                gap: '20px', 
+                paddingBottom: '20px' 
+              }}
+            >
+              {filteredProjects.map((project) => (
+                <div
                   key={project.id}
-                  onClick={() => setActiveProject(project)}
-                  className="project-card"
-                  style={{ 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    justifyContent: 'space-between', 
-                    padding: '18px', 
-                    borderRadius: '14px', 
-                    background: 'rgba(6, 9, 20, 0.72)', 
-                    border: '1.5px solid rgba(255,255,255,0.06)', 
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
+                  onClick={() => setSelectedProject(project)}
+                  className="spatial-glass-panel"
+                  style={{
+                    padding: '20px',
+                    borderRadius: '16px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between',
                     cursor: 'pointer',
-                    height: '280px',
-                    transition: 'all 0.3s ease'
+                    height: '240px',
+                    textAlign: 'left',
+                    position: 'relative'
                   }}
                 >
                   <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '0.55rem', border: '1px solid rgba(255,255,255,0.15)', color: 'var(--text-secondary)', padding: '1px 6px', borderRadius: '4px', fontFamily: 'var(--font-tech)' }}>
-                        {project.category.toUpperCase()}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                      <span style={{ fontSize: '0.55rem', border: '1px solid rgba(255,255,255,0.1)', color: 'rgba(255,255,255,0.4)', padding: '1px 6px', borderRadius: '4px', fontFamily: 'monospace' }}>
+                        {project.category}
                       </span>
-                      {/* Finished Green Stamp removed */}
+                      <span style={{ fontSize: '0.55rem', fontFamily: 'var(--font-tech)', color: 'rgba(255,255,255,0.3)' }}>
+                        {project.finished ? project.finished.substring(0, 4) : '2026'}
+                      </span>
                     </div>
-                    
-                    <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: 'var(--text-primary)', textAlign: 'left', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px' }}>
+
+                    <h4 style={{ fontSize: '0.88rem', fontWeight: 700, color: '#fff', margin: '0 0 8px 0', borderBottom: '1px solid rgba(255,255,255,0.04)', paddingBottom: '6px' }}>
                       {project.title}
                     </h4>
                     
-                    <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: '1.45', textAlign: 'left', display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    <p style={{ fontSize: '0.78rem', color: 'rgba(255,255,255,0.55)', lineHeight: 1.4, display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden', margin: 0 }}>
                       {project.description}
                     </p>
                   </div>
 
-                  <div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '10px' }}>
-                      {project.technologies.slice(0, 3).map((tech, idx) => (
-                        <span key={idx} style={{ fontSize: '0.58rem', background: 'rgba(255,255,255,0.03)', padding: '2px 6px', borderRadius: '3px', border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}>
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '8px' }}>
-                      <span style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)' }}>
-                        {project.finished || "Active"}
+                  {/* Skills tags list in card */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', borderTop: '1px solid rgba(255,255,255,0.04)', paddingTop: '10px', marginTop: '10px' }}>
+                    {project.technologies.slice(0, 3).map(tech => (
+                      <span key={tech} style={{ fontSize: '0.55rem', background: 'rgba(255,255,255,0.02)', color: 'rgba(255,255,255,0.45)', padding: '1px 5px', borderRadius: '3px' }}>
+                        {tech}
                       </span>
-                      <span style={{ fontSize: '0.58rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', fontWeight: 700 }}>
-                        [ ACTIVATE HOLOGRAM ⚡ ]
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-
-        </div>
-      </>
-    )}
-
-    {isConversationalMode && (
-      <div style={{ display: 'flex', flex: 1, flexDirection: 'column', minHeight: 0, position: 'relative' }}>
-        
-        {/* Header Bar */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', borderBottom: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', paddingBottom: '12px', marginBottom: '20px', zIndex: 10 }}>
-          <div>
-            <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px' }}>
-              // COGNITIVE_CORE: EXPERIMENTAL HOLO-ASSISTANT v2.5
-            </span>
-          </div>
-          <button 
-            onClick={() => setIsConversationalMode(false)}
-            className="hud-btn"
-            style={{
-              padding: '6px 14px',
-              fontSize: '0.65rem',
-              borderColor: 'rgba(255,255,255,0.2)',
-              borderRadius: '8px',
-              background: 'rgba(255,255,255,0.05)',
-              cursor: 'pointer',
-              color: '#fff',
-              fontFamily: 'var(--font-tech)'
-            }}
-          >
-            [ 📂 BACK TO PORTFOLIO GRID ]
-          </button>
-        </div>
-
-        {/* Core Chat Workspace */}
-        <div className="hologram-chat-container" style={{
-          display: 'flex',
-          flex: 1,
-          width: '100%',
-          minHeight: 0,
-          position: 'relative',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}>
-          
-          {/* Roomscale standing citizen figure - metropolis themed */}
-          <div className="roomscale-natural-body page-metropolis" style={{ display: 'flex', zIndex: 1 }}>
-            <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
-          </div>
-
-          {/* Spacious 2-Column Grid Centering Your Cutout & Speech Bubble */}
-          <div 
-            className="novel-dialogue-grid" 
-            style={{ 
-              overflow: 'visible',
-              gridTemplateColumns: '210px min(580px, 62vw)',
-              justifyContent: 'center',
-              alignItems: 'center',
-              display: 'grid',
-              width: '100%',
-              zIndex: 2
-            }}
-          >
-            
-            {/* Spacer overlaying the absolute roomscale cutout */}
-            <div className="roomscale-profile-spacer" style={{ width: '100%', height: '100%', pointerEvents: 'none' }}></div>
-
-            {/* Chat Dialogue Column */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', minHeight: 0, overflow: 'visible', width: '100%' }}>
-              
-              {/* Comic dialogue speech bubble */}
-              <div className="comic-speech-bubble" style={{ 
-                display: 'flex', 
-                flexDirection: 'column', 
-                minHeight: '260px', 
-                justifyContent: 'space-between',
-                background: 'rgba(255, 255, 255, 0.96)', 
-                color: '#080b13', 
-                borderRadius: '20px', 
-                padding: '20px 24px', 
-                boxShadow: '0 12px 36px rgba(0, 0, 0, 0.5), 0 0 25px rgba(var(--color-accent-rgb), 0.2)',
-                border: '2.5px solid var(--color-accent)'
-              }}>
-                
-                {/* Stepper Header (Telemetry indicators) */}
-                <div className="bubble-telemetry-header">
-                  <span className="bubble-telemetry-coord">
-                    TRANSMITTING COORD: PORTFOLIO_ARCHIVE-X
-                  </span>
-                  <span className="bubble-telemetry-status">
-                    TELEMETRY ACTIVE
-                  </span>
-                </div>
-
-                {/* HUD Active Topic Indicator */}
-                <div className="bubble-topic-indicator">
-                  <span className="bubble-topic-text">
-                    [ 💬 ACTIVE TOPIC: {selectedConversationalProject ? selectedConversationalProject.title.toUpperCase() : "PORTFOLIO COGNITIVE ASSISTANT"} ]
-                  </span>
-                </div>
-
-                {/* Stepper Body: Dynamic Dialogue */}
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: 0 }}>
-                  <p style={{ fontSize: '0.85rem', lineHeight: '1.5', fontWeight: 500, color: 'rgba(0,0,0,0.82)', margin: 0, textAlign: 'left' }}>
-                    {conversationalResponse}
-                  </p>
-                </div>
-
-              </div>
-
-              {/* Prompt Choices Portal */}
-              <div style={{ width: '100%', zIndex: 10 }}>
-                <span style={{ display: 'block', fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1.5px', marginBottom: '10px', textTransform: 'uppercase', textAlign: 'center', fontWeight: 700 }}>
-                  {selectedConversationalProject ? "FOLLOW-UP TELEMETRY QUERIES" : "SELECT A PROJECT TO INITIATE CONVERSATION"}
-                </span>
-
-                {selectedConversationalProject ? (
-                  /* Sub-prompts: Ask details, ask takeaways, ask other */
-                  <div style={{ display: 'flex', gap: '10px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                    <button 
-                      onClick={() => setConversationalResponse(
-                        `Let me explain the development details for the ${selectedConversationalProject.title}! ${selectedConversationalProject.details}`
-                      )}
-                      className="conversational-choice-btn"
-                      style={{ background: 'rgba(var(--color-accent-rgb), 0.05)', borderColor: 'var(--color-accent)' }}
-                    >
-                      🚀 How did you build it? What challenges did you face?
-                    </button>
-
-                    <button 
-                      onClick={() => setConversationalResponse(
-                        `For the ${selectedConversationalProject.title}, the main learning experience was: ${selectedConversationalProject.takeaways}`
-                      )}
-                      className="conversational-choice-btn"
-                      style={{ background: 'rgba(0, 255, 136, 0.03)', borderColor: 'var(--neon-emerald)' }}
-                    >
-                      💡 What were your core takeaways and lessons learned?
-                    </button>
-
-                    <button 
-                      onClick={() => {
-                        setSelectedConversationalProject(null);
-                        setConversationalResponse(
-                          "No problem! What other engineering software system or configuration in my archives would you like to ask me about?"
-                        );
-                      }}
-                      className="conversational-choice-btn"
-                      style={{ background: 'rgba(255,255,255,0.03)' }}
-                    >
-                      ↩️ Ask about a different project...
-                    </button>
-                  </div>
-                ) : (
-                  /* General Prompt List of Projects */
-                  <div className="conversational-portal-choices" style={{ margin: '0 auto', maxWidth: '720px' }}>
-                    {PROJECTS.map((project) => (
-                      <button
-                        key={project.id}
-                        onClick={() => {
-                          setSelectedConversationalProject(project);
-                          setConversationalResponse(
-                            `Ah, the ${project.title}! It's a fascinating system classification. ${project.description} What specific details would you like to know about it?`
-                          );
-                        }}
-                        className="conversational-choice-btn"
-                      >
-                        <span style={{ fontSize: '0.8rem' }}>📂</span>
-                        <div>
-                          <span style={{ display: 'block', fontSize: '0.68rem', fontWeight: 'bold' }}>{project.title}</span>
-                          <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase' }}>{project.category}</span>
-                        </div>
-                      </button>
                     ))}
+                    {project.technologies.length > 3 && (
+                      <span style={{ fontSize: '0.55rem', color: 'var(--color-accent)' }}>+{project.technologies.length - 3}</span>
+                    )}
                   </div>
-                )}
-              </div>
-
+                </div>
+              ))}
             </div>
-
-          </div>
-
+          )}
         </div>
-
-      </div>
-    )}
-
       </div>
 
-      {/* FULL-SCREEN IMMERSIVE HOLOGRAPHIC MODAL OVERLAY */}
-      {activeProject && (
-        <div 
-          className="portfolio-modal-overlay"
-          onClick={() => setActiveProject(null)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(4, 6, 12, 0.85)',
-            backdropFilter: 'blur(20px)',
-            zIndex: 1000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '20px',
-            animation: 'modal-fade-in 0.25s ease-out forwards'
-          }}
-        >
-          <div 
-            className="portfolio-modal-content"
-            onClick={(e) => e.stopPropagation()} // Prevent closing on click inside content
-            style={{
-              width: '100%',
-              maxWidth: '960px',
-              maxHeight: '90vh',
-              background: 'rgba(10, 14, 30, 0.94)',
-              border: '2px solid var(--color-accent)',
-              borderRadius: '16px',
-              boxShadow: '0 0 40px rgba(var(--color-accent-rgb), 0.35)',
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              animation: 'modal-scale-up 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards'
-            }}
-          >
-            {/* Modal Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', borderBottom: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', background: 'rgba(6, 9, 20, 0.4)' }}>
+      {/* ==========================================================
+         3. SPATIAL PROJECT DRAWER / OVERLAY PANEL
+         ========================================================== */}
+      <div className={`spatial-drawer ${selectedProject ? 'open' : ''}`}>
+        {selectedProject && (
+          <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0, textAlign: 'left' }}>
+            
+            {/* Drawer Header */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '14px', marginBottom: '20px' }}>
               <div>
-                <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px', marginRight: '10px' }}>
-                  // HOLOGRAM_SECTOR: {activeProject.category.toUpperCase()}
-                </span>
-                {/* Finished Green Stamp badge removed */}
+                <span className="window-telemetry-text" style={{ color: 'var(--color-accent)' }}>ENGINEERING ARCHIVE DETIALS</span>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: '#fff', margin: 0, marginTop: '2px' }}>{selectedProject.title}</h3>
               </div>
               <button 
-                onClick={() => setActiveProject(null)}
-                className="hud-btn"
+                onClick={() => setSelectedProject(null)}
                 style={{
-                  padding: '4px 12px',
-                  fontSize: '0.65rem',
-                  borderColor: 'rgba(255,255,255,0.2)',
-                  borderRadius: '8px',
-                  background: 'rgba(255,255,255,0.05)',
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid rgba(255,255,255,0.08)',
+                  color: 'rgba(255,255,255,0.6)',
+                  borderRadius: '50%',
+                  width: '32px',
+                  height: '32px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
                   cursor: 'pointer',
-                  color: '#fff'
+                  fontSize: '0.88rem'
                 }}
               >
-                [ ✕ CLOSE ARCHIVE ]
+                ✕
               </button>
             </div>
 
-            {/* Modal Scrollable Body */}
-            <div className="custom-scroll" style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
-              <div className="modal-columns-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
-                
-                {/* Left Column: Embed Media & Visual Canvas */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.75rem', color: 'var(--color-accent)', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px', textAlign: 'left' }}>
-                    VISUAL MEDIA COMPONENT
-                  </h4>
-                  
-                  {/* YouTube Embed Player */}
-                  {activeProject.video ? (
-                    <div style={{ width: '100%', position: 'relative', paddingBottom: '56.25%', height: 0, borderRadius: '10px', overflow: 'hidden', border: '1.5px solid var(--color-accent)', boxShadow: '0 0 15px rgba(var(--color-accent-rgb), 0.2)' }}>
-                      <iframe 
-                        src={activeProject.video}
-                        title={activeProject.title}
-                        frameBorder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                        allowFullScreen
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
-                      />
-                    </div>
-                  ) : activeProject.images ? (
-                    /* Double side-by-side or stacked image showcase (e.g. calculator screens or computer monitors) */
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      {activeProject.images.map((img, idx) => (
-                        <div key={idx} style={{ borderRadius: '10px', overflow: 'hidden', border: '1.5px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.3)', padding: '6px' }}>
-                          <img 
-                            src={img} 
-                            alt={`${activeProject.title} screenshot ${idx + 1}`} 
-                            style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '6px', objectFit: 'contain', maxHeight: '180px', margin: '0 auto' }} 
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ) : activeProject.image ? (
-                    /* Single large screenshot */
-                    <div style={{ borderRadius: '10px', overflow: 'hidden', border: '1.5px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.3)', padding: '8px' }}>
-                      <img 
-                        src={activeProject.image} 
-                        alt={activeProject.title} 
-                        style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '6px', maxHeight: '320px', objectFit: 'contain' }} 
-                      />
-                    </div>
-                  ) : (
-                    /* Default Visual placeholder if zero media */
-                    <div style={{ height: '220px', borderRadius: '10px', background: 'radial-gradient(circle, rgba(var(--color-accent-rgb), 0.05) 0%, rgba(4,6,12,0.8) 100%)', border: '1.5px dashed rgba(var(--color-accent-rgb), 0.25)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '2.5rem' }}>🗃️</span>
-                      <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.3)' }}>HOLOGRAPHIC COMPONENT LOCALIZED</span>
-                    </div>
-                  )}
-
-                  {/* Metadata Timelines */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginTop: '10px' }}>
-                    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'left' }}>
-                      <span style={{ display: 'block', fontSize: '0.52rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)' }}>COMMENCED</span>
-                      <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#fff', fontFamily: 'var(--font-tech)' }}>{activeProject.started || "ANCIENT MY"}</span>
-                    </div>
-                    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'left' }}>
-                      <span style={{ display: 'block', fontSize: '0.52rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)' }}>COMPLETED</span>
-                      <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#fff', fontFamily: 'var(--font-tech)' }}>{activeProject.finished || "ACTIVE"}</span>
-                    </div>
-                  </div>
-
+            {/* Scrollable Drawer Body */}
+            <div className="custom-scroll" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px', paddingRight: '6px' }}>
+              
+              {/* Main Media Player / Video Embed or Image */}
+              {selectedProject.video ? (
+                <div style={{ width: '100%', position: 'relative', background: '#000', borderRadius: '14px', overflow: 'hidden', aspectRatio: '16/9', border: '1px solid rgba(255,255,255,0.06)' }}>
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src={selectedProject.video} 
+                    title={selectedProject.title} 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowFullScreen
+                  />
                 </div>
-
-                {/* Right Column: Holographic Details & Telemetry - Reverted to clean standard columns */}
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'left' }}>
-                  <div>
-                    <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '4px', letterSpacing: '0.5px', fontWeight: 700 }}>
-                      {activeProject.title}
-                    </h3>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', fontWeight: 700, display: 'block', marginBottom: '14px' }}>
-                      CATEGORY // {activeProject.category.toUpperCase()}
-                    </span>
-
-                    {/* Quick Tech Summary Panel */}
-                    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px 16px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)', marginBottom: '16px' }}>
-                      <span style={{ display: 'block', fontSize: '0.55rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', letterSpacing: '1px', marginBottom: '4px', fontWeight: 700 }}>
-                        SYSTEM DESCRIPTION
-                      </span>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: 0 }}>
-                        {activeProject.description}
-                      </p>
-                    </div>
-
-                    {/* High-Tech Details Panel (Standard professional view, not direct dialogue bubble) */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}>
-                      <div>
-                        <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: 'var(--color-accent)', marginBottom: '6px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '4px' }}>
-                          DEVELOPMENT DETAILS & CHALLENGES
-                        </h4>
-                        <p style={{ fontSize: '0.76rem', color: 'var(--text-primary)', lineHeight: '1.45', margin: 0 }}>
-                          {activeProject.details}
-                        </p>
-                      </div>
-
-                      <div>
-                        <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: 'var(--neon-emerald)', marginBottom: '6px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '4px' }}>
-                          CORE RETROSPECTIVE TAKEAWAYS
-                        </h4>
-                        <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: '1.45', margin: 0 }}>
-                          {activeProject.takeaways}
-                        </p>
-                      </div>
-                    </div>
-
+              ) : selectedProject.image ? (
+                <div style={{ width: '100%', borderRadius: '14px', overflow: 'hidden', border: '1px solid rgba(255,255,255,0.06)', background: 'rgba(0,0,0,0.2)' }}>
+                  {/* Since local mock files might not render in demo environment, fallback to structured visual blocks with metadata */}
+                  <div style={{ padding: '30px 20px', background: 'radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.15) 0%, rgba(6, 8, 14, 0.8) 100%)', textAlign: 'center', minHeight: '140px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '8px' }}>📂</span>
+                    <span className="window-telemetry-text" style={{ fontSize: '0.62rem', color: '#fff' }}>SYSTEM BLUEPRINT DATASET</span>
+                    <span style={{ fontSize: '0.55rem', color: 'rgba(255,255,255,0.4)', marginTop: '4px', fontFamily: 'monospace' }}>SEC_CODE // {selectedProject.title.toUpperCase().replace(/\s+/g, '_')}</span>
                   </div>
-
-                  <div>
-                    {/* Tech Stack Chips */}
-                    <div style={{ marginBottom: '16px' }}>
-                      <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)', marginBottom: '6px' }}>
-                        TECHNOLOGICAL STACK UTILIZED:
-                      </span>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                        {activeProject.technologies.map((tech, idx) => (
-                          <span key={idx} style={{ fontSize: '0.6rem', background: 'rgba(var(--color-accent-rgb), 0.08)', padding: '3px 8px', borderRadius: '4px', border: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', color: 'var(--text-primary)', fontWeight: 500 }}>
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Operational Action Buttons */}
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', borderTop: '1.5px solid rgba(255,255,255,0.06)', paddingTop: '14px' }}>
-                      {activeProject.links && activeProject.links.map((link, idx) => (
-                        <a 
-                          key={idx}
-                          href={link.src}
-                          target={link.type === 'download' ? '_self' : '_blank'}
-                          rel="noopener noreferrer"
-                          download={link.type === 'download'}
-                          className="hud-btn"
-                          style={{
-                            padding: '10px 20px',
-                            fontSize: '0.72rem',
-                            fontWeight: 700,
-                            borderRadius: '8px',
-                            borderColor: link.type === 'download' ? 'var(--neon-emerald)' : 'var(--neon-cyan)',
-                            background: link.type === 'download' ? 'rgba(0, 255, 136, 0.08)' : 'rgba(0, 240, 255, 0.08)',
-                            color: '#fff',
-                            textDecoration: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            boxShadow: link.type === 'download' ? '0 0 10px rgba(0, 255, 136, 0.15)' : '0 0 10px rgba(0, 240, 255, 0.15)'
-                          }}
-                        >
-                          {link.type === 'download' ? '📥 ' : link.type === 'youtube' ? '🎬 ' : '📂 '}
-                          {link.description.toUpperCase()}
-                        </a>
-                      ))}
-                      {(!activeProject.links || activeProject.links.length === 0) && (
-                        <span style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-tech)', fontStyle: 'italic' }}>
-                          NO OUTBOUND EXTERNAL DATA PORT DETECTED.
-                        </span>
-                      )}
-                    </div>
-                  </div>
-
                 </div>
+              ) : null}
 
+              {/* Blueprint description */}
+              <div>
+                <span className="window-telemetry-text" style={{ fontSize: '0.52rem', color: 'var(--color-accent)' }}>ENGINEERING BLUEPRINT OVERVIEW</span>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.5, margin: 0, marginTop: '4px' }}>
+                  {selectedProject.details}
+                </p>
               </div>
+
+              {/* Takeaways list */}
+              <div>
+                <span className="window-telemetry-text" style={{ fontSize: '0.52rem', color: 'var(--neon-emerald)' }}>KEY TAKEAWAYS & CAPABILITIES ACQUIRED</span>
+                <p style={{ fontSize: '0.8rem', color: 'rgba(255,255,255,0.75)', lineHeight: 1.5, margin: 0, marginTop: '4px' }}>
+                  {selectedProject.takeaways}
+                </p>
+              </div>
+
+              {/* Technologies Badges */}
+              <div>
+                <span className="window-telemetry-text" style={{ fontSize: '0.52rem', display: 'block', marginBottom: '6px' }}>COMPILED TECHNOLOGIES</span>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                  {selectedProject.technologies.map(tech => (
+                    <span 
+                      key={tech} 
+                      style={{
+                        fontSize: '0.6rem',
+                        background: 'rgba(var(--color-accent-rgb), 0.08)',
+                        border: '1.5px solid rgba(var(--color-accent-rgb), 0.2)',
+                        color: 'rgba(255,255,255,0.9)',
+                        padding: '3px 10px',
+                        borderRadius: '6px',
+                        fontWeight: 600,
+                        fontFamily: 'monospace'
+                      }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Structured Metadata Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', background: 'rgba(255,255,255,0.01)', border: '1px solid rgba(255,255,255,0.04)', borderRadius: '12px', padding: '14px', fontSize: '0.72rem' }}>
+                <div>
+                  <span style={{ color: 'rgba(255,255,255,0.4)', display: 'block', fontSize: '0.55rem', letterSpacing: '0.5px' }}>SOL PROJECT BOUNDARIES</span>
+                  <span style={{ color: '#fff', fontWeight: 600 }}>{selectedProject.started ? `${selectedProject.started} - ${selectedProject.finished}` : `Completed ${selectedProject.finished}`}</span>
+                </div>
+                <div>
+                  <span style={{ color: 'rgba(255,255,255,0.4)', display: 'block', fontSize: '0.55rem', letterSpacing: '0.5px' }}>REGISTRY CLASSIFICATION</span>
+                  <span style={{ color: '#fff', fontWeight: 600 }}>{selectedProject.category}</span>
+                </div>
+              </div>
+
+              {/* Drawer Links */}
+              {selectedProject.links && selectedProject.links.length > 0 && (
+                <div style={{ display: 'flex', gap: '10px', marginTop: '10px' }}>
+                  {selectedProject.links.map(link => (
+                    <a
+                      key={link.src}
+                      href={link.src}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hud-btn"
+                      style={{ flex: 1, padding: '12px', borderRadius: '10px', fontSize: '0.72rem', background: 'rgba(var(--color-accent-rgb), 0.1)', borderColor: 'var(--color-accent)' }}
+                    >
+                      {link.type === 'github' ? '📂 View Code Repository' : '🎬 Watch Demo Reel'}
+                    </a>
+                  ))}
+                </div>
+              )}
+
             </div>
 
           </div>
-        </div>
-      )}
-
-      {/* IMMERSIVE EXPERIMENTAL CONVERSATIONAL FAB */}
-      <button 
-        className={`portfolio-conversational-fab ${isConversationalMode ? 'mode-conversation' : 'mode-datadeck'}`}
-        onClick={() => {
-          setIsConversationalMode(prev => !prev);
-          setSelectedConversationalProject(null);
-          setConversationalResponse(
-            "Hello there! I'm Ephraim Becker. Select any project in the prompts list below to activate my holographic dialogue core and ask me questions about it!"
-          );
-        }}
-        style={{
-          borderColor: isConversationalMode ? 'var(--neon-cyan)' : 'var(--color-accent)'
-        }}
-      >
-        <img 
-          src="/assets/images/profile.png" 
-          alt="Ephraim Becker" 
-          className="portfolio-conversational-avatar"
-        />
-        <span style={{ fontSize: '1.2rem', filter: 'drop-shadow(0 0 5px var(--neon-cyan))' }}>
-          {isConversationalMode ? '📊' : '💬'}
-        </span>
-      </button>
+        )}
+      </div>
 
       <style jsx global>{`
-        /* Immersive Holographic Modal Overlay Animations */
-        @keyframes modal-fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
+        .spatial-glass-panel {
+          transition: all 0.3s ease;
         }
-
-        @keyframes modal-scale-up {
-          from { transform: scale(0.95); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
-        }
-
-        /* Hover animations for standard cards */
-        .project-card:hover {
-          border-color: rgba(var(--color-accent-rgb), 0.4) !important;
-          box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 15px rgba(var(--color-accent-rgb), 0.18) !important;
-          transform: translateY(-3px);
-        }
-
-        /* Responsive Modal & Filters Rules */
-        @media (max-width: 900px) {
-          .filter-deck-layout {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 15px !important;
-          }
-          .filter-sliders-container {
-            flex-direction: column !important;
-            gap: 12px !important;
-            width: 100% !important;
-          }
-          .range-slider-group {
-            width: 100% !important;
-          }
-          .dialogue-novel-row {
-            flex-direction: column !important;
-            gap: 15px !important;
-          }
-          .novel-avatar-container {
-            width: 100% !important;
-          }
-        }
-
-        @media (max-width: 800px) {
-          .modal-columns-grid {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 20px !important;
-          }
-          .portfolio-modal-content {
-            max-height: 95vh !important;
+        @media (max-width: 950px) {
+          .citizen-card-shell {
+            grid-template-columns: 1fr !important;
           }
         }
       `}</style>

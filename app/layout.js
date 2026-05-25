@@ -14,6 +14,10 @@ export default function RootLayout({ children }) {
     const handleClick = (e) => {
       try {
         if (!e || !e.target) return;
+        // Skip blurring on touch/coarse devices to prevent click cancellation on iOS and Android
+        if (e.pointerType === 'touch') return;
+        if (typeof window !== 'undefined' && window.matchMedia('(pointer: coarse)').matches) return;
+        
         if (typeof e.target.closest !== 'function') return;
         
         const focusable = e.target.closest('button, a, [role="button"], [tabindex]');
@@ -176,20 +180,6 @@ export default function RootLayout({ children }) {
           <HudBar sectorName={hudSectorName} />
           
           <div className="workspace-deck">
-            {/* Natural standing roomscale profile figure - hidden on portfolio archives */}
-            {pathname !== '/portfolio' && (
-              <div className={`roomscale-natural-body page-${currentTheme}`} style={{ pointerEvents: 'none' }}>
-                <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" style={{ pointerEvents: 'none' }} />
-              </div>
-            )}
-
-            {/* Decoupled Floating Return Button */}
-            {pathname !== '/' && (
-              <Link href="/" className="floating-residence-return">
-                [ 🏨 RETURN TO RESIDENCE ]
-              </Link>
-            )}
-
             {children}
           </div>
         </div>

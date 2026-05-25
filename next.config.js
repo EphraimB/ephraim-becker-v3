@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  /* Allow static export if needed, or other standard settings */
+  allowedDevOrigins: ['192.168.1.168', '192.168.1.168:3000', '192.168.1.168:8000'],
 };
 
 module.exports = nextConfig;

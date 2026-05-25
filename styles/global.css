@@ -1,10 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Outfit:wght@300;400;500;600;700&display=swap');
-
 /* 🪐 Ares City OS — Next.js Global Stylesheet */
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Outfit:wght@300;400;500;600;700&display=swap');
 
 :root {
   /* Fonts */
@@ -71,19 +67,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  -webkit-tap-highlight-color: transparent !important;
-}
-
-/* Force immediate click dispatch on all interactive elements */
-button, a, [role="button"], [tabindex], input, select, textarea, .hud-btn, .social-btn-bubbly, .transit-btn-bubbly, .conversational-choice-btn, .portfolio-conversational-fab, .floating-residence-return, .category-pill, .datadeck-switcher-btn, .hologram-close-btn, .social-link-port {
-  touch-action: manipulation;
-}
-
-button:focus,
-a:focus,
-div:focus {
-  outline: none !important;
-  box-shadow: none !important;
+  user-select: none;
 }
 
 body {
@@ -213,14 +197,12 @@ body {
   overflow: hidden;
 }
 
-@media (hover: hover) {
-  .bubbly-panel:hover {
-    border-color: rgba(var(--color-accent-rgb), 0.25);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
-                inset 0 1px 1px rgba(255, 255, 255, 0.08),
-                0 0 35px rgba(var(--color-accent-rgb), 0.12);
-    transform: translateY(-2px);
-  }
+.bubbly-panel:hover {
+  border-color: rgba(var(--color-accent-rgb), 0.25);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 
+              inset 0 1px 1px rgba(255, 255, 255, 0.08),
+              0 0 35px rgba(var(--color-accent-rgb), 0.12);
+  transform: translateY(-2px);
 }
 
 /* Floating top navigation bar bubble */
@@ -318,13 +300,11 @@ body {
   transition: all var(--transition-fast);
 }
 
-@media (hover: hover) {
-  .hud-badge:hover {
-    background: rgba(var(--color-accent-rgb), 0.08);
-    border-color: rgba(var(--color-accent-rgb), 0.4);
-    box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.2);
-    transform: translateY(-1px);
-  }
+.hud-badge:hover {
+  background: rgba(var(--color-accent-rgb), 0.08);
+  border-color: rgba(var(--color-accent-rgb), 0.4);
+  box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.2);
+  transform: translateY(-1px);
 }
 
 /* Glowing links chips for Social Ports */
@@ -345,13 +325,11 @@ body {
   transition: all var(--transition-fast);
 }
 
-@media (hover: hover) {
-  .social-link-port:hover {
-    background: rgba(var(--color-accent-rgb), 0.14);
-    border-color: var(--color-accent);
-    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.4);
-    transform: translateY(-2px);
-  }
+.social-link-port:hover {
+  background: rgba(var(--color-accent-rgb), 0.14);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.4);
+  transform: translateY(-2px);
 }
 
 .social-link-port:active {
@@ -378,12 +356,10 @@ body {
   text-decoration: none;
 }
 
-@media (hover: hover) {
-  .hud-btn:hover {
-    background: rgba(var(--color-accent-rgb), 0.16);
-    border-color: var(--color-accent);
-    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.35);
-  }
+.hud-btn:hover {
+  background: rgba(var(--color-accent-rgb), 0.16);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.35);
 }
 
 /* SVG Telemetric signal line */
@@ -680,7 +656,7 @@ body {
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.5), 
               0 0 25px rgba(var(--color-accent-rgb), 0.2);
   position: relative;
-  transition: border-color var(--transition-normal), box-shadow var(--transition-normal);
+  transition: all var(--transition-normal);
 }
 
 .comic-speech-bubble p, .comic-speech-bubble span, .comic-speech-bubble strong,
@@ -690,13 +666,11 @@ body {
 }
 
 /* Hover glow upgrades */
-@media (hover: hover) {
-  .comic-speech-bubble:hover, .comic-callout-bubble:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 
-                0 0 35px rgba(var(--color-accent-rgb), 0.35);
-    border-color: var(--neon-cyan);
-  }
+.comic-speech-bubble:hover, .comic-callout-bubble:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6), 
+              0 0 35px rgba(var(--color-accent-rgb), 0.35);
+  border-color: var(--neon-cyan);
 }
 
 /* Left pointing triangular tail */
@@ -725,10 +699,8 @@ body {
   border-right: 18px solid rgba(255, 255, 255, 0.96);
 }
 
-@media (hover: hover) {
-  .comic-speech-bubble:hover::before, .comic-callout-bubble:hover::before {
-    border-right-color: var(--neon-cyan);
-  }
+.comic-speech-bubble:hover::before, .comic-callout-bubble:hover::before {
+  border-right-color: var(--neon-cyan);
 }
 
 @media (max-width: 900px) {
@@ -835,12 +807,10 @@ body {
   align-items: center;
 }
 
-@media (hover: hover) {
-  .floating-residence-return:hover {
-    background: rgba(var(--color-accent-rgb), 0.25);
-    box-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.35);
-    transform: translateY(-1px);
-  }
+.floating-residence-return:hover {
+  background: rgba(var(--color-accent-rgb), 0.25);
+  box-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.35);
+  transform: translateY(-1px);
 }
 
 .category-pills-row {
@@ -865,13 +835,11 @@ body {
   letter-spacing: 0.5px;
 }
 
-@media (hover: hover) {
-  .category-pill:hover {
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(var(--color-accent-rgb), 0.3);
-    color: var(--text-primary);
-    box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.15);
-  }
+.category-pill:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(var(--color-accent-rgb), 0.3);
+  color: var(--text-primary);
+  box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.15);
 }
 
 .category-pill.active {
@@ -960,12 +928,10 @@ body {
   align-items: center;
 }
 
-@media (hover: hover) {
-  .portfolio-conversational-fab:hover {
-    transform: scale(1.1) translateY(-4px);
-    border-color: var(--neon-cyan);
-    box-shadow: 0 0 25px rgba(0, 240, 255, 0.6), 0 8px 16px rgba(0, 0, 0, 0.5);
-  }
+.portfolio-conversational-fab:hover {
+  transform: scale(1.1) translateY(-4px);
+  border-color: var(--neon-cyan);
+  box-shadow: 0 0 25px rgba(0, 240, 255, 0.6), 0 8px 16px rgba(0, 0, 0, 0.5);
 }
 
 .portfolio-conversational-fab::after {
@@ -982,10 +948,8 @@ body {
   transition: color 0.3s ease;
 }
 
-@media (hover: hover) {
-  .portfolio-conversational-fab:hover::after {
-    color: var(--neon-cyan);
-  }
+.portfolio-conversational-fab:hover::after {
+  color: var(--neon-cyan);
 }
 
 .portfolio-conversational-avatar {
@@ -1063,13 +1027,11 @@ body {
   outline: none;
 }
 
-@media (hover: hover) {
-  .conversational-choice-btn:hover {
-    background: rgba(var(--color-accent-rgb), 0.1);
-    border-color: var(--color-accent);
-    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.25);
-    transform: translateY(-2px);
-  }
+.conversational-choice-btn:hover {
+  background: rgba(var(--color-accent-rgb), 0.1);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.25);
+  transform: translateY(-2px);
 }
 
 @keyframes hologram-fade-in {
@@ -1097,864 +1059,6 @@ body {
   }
   .hologram-chat-overlay {
     padding: 15px;
-  }
-}
-
-/* ================= PORTFOLIO-STYLE HIGH-TECH OS DASHBOARD LAYOUT ================= */
-
-/* Hide background roomscale cutout when Data Deck mode is active to give layout full width */
-.workspace-deck:has(.datadeck-active) .roomscale-natural-body {
-  display: none !important;
-}
-
-/* Premium Segment Switcher Control */
-.datadeck-switcher-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-bottom: 24px;
-}
-
-.datadeck-switcher-bar {
-  background: rgba(6, 9, 20, 0.82);
-  border: 2px solid var(--color-accent);
-  border-radius: 30px;
-  padding: 4px;
-  display: flex;
-  gap: 4px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.45), 
-              0 0 15px rgba(var(--color-accent-rgb), 0.2);
-  backdrop-filter: var(--glass-blur);
-}
-
-.datadeck-switcher-btn {
-  padding: 8px 24px;
-  font-family: var(--font-tech);
-  font-size: 0.72rem;
-  font-weight: 800;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-  background: transparent;
-  color: var(--text-secondary);
-}
-
-.datadeck-switcher-btn.active {
-  background: var(--color-accent);
-  color: #fff !important;
-  box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.5);
-}
-
-@media (hover: hover) {
-  .datadeck-switcher-btn:hover:not(.active) {
-    color: #fff;
-    background: rgba(255,255,255,0.05);
-  }
-}
-
-/* Top Profile Sidebar Card */
-.datadeck-profile-card {
-  background: rgba(6, 9, 20, 0.72);
-  border: 1.5px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 20px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  transition: all 0.3s ease;
-}
-
-@media (hover: hover) {
-  .datadeck-profile-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(var(--color-accent-rgb), 0.3);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 
-                0 0 15px rgba(var(--color-accent-rgb), 0.15);
-  }
-}
-
-.datadeck-profile-img-container {
-  width: 100%;
-  height: 280px;
-  background: radial-gradient(circle at center, rgba(var(--color-accent-rgb), 0.06) 0%, rgba(0,0,0,0.15) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  position: relative;
-  margin-bottom: 16px;
-}
-
-.datadeck-profile-img {
-  height: 95%;
-  width: auto;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.45));
-  transition: transform 0.35s ease;
-  pointer-events: none;
-}
-
-@media (hover: hover) {
-  .datadeck-profile-card:hover .datadeck-profile-img {
-    transform: scale(1.03) translateY(-1px);
-  }
-}
-
-.datadeck-profile-name {
-  font-family: var(--font-tech);
-  font-size: 1.25rem;
-  font-weight: 700;
-  color: var(--text-primary) !important;
-  letter-spacing: 0.5px;
-  margin: 0 0 4px 0;
-}
-
-.datadeck-profile-age {
-  font-family: var(--font-tech);
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--color-accent) !important;
-  margin-bottom: 16px;
-  letter-spacing: 0.5px;
-}
-
-.datadeck-badges-list {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 100%;
-}
-
-.datadeck-badge {
-  font-family: var(--font-tech);
-  font-size: 0.54rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  text-align: center;
-  line-height: 1.2;
-}
-
-.datadeck-badge.badge-architect {
-  background: rgba(194, 89, 255, 0.08);
-  border: 1px solid rgba(194, 89, 255, 0.25);
-  color: var(--neon-violet) !important;
-}
-
-.datadeck-badge.badge-citizen {
-  background: rgba(0, 240, 255, 0.08);
-  border: 1px solid rgba(0, 240, 255, 0.25);
-  color: var(--neon-cyan) !important;
-}
-
-.datadeck-badge.badge-coord {
-  background: rgba(255, 179, 0, 0.08);
-  border: 1px solid rgba(255, 179, 0, 0.25);
-  color: var(--neon-amber) !important;
-}
-
-/* Sleek Standard Dashboard Card Panels */
-.datadeck-panel {
-  background: rgba(6, 9, 20, 0.72);
-  border: 1.5px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 20px 24px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: visible;
-  color: var(--text-primary);
-}
-
-@media (hover: hover) {
-  .datadeck-panel:hover {
-    transform: translateY(-2px);
-    border-color: rgba(var(--color-accent-rgb), 0.3);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 
-                0 0 15px rgba(var(--color-accent-rgb), 0.15);
-  }
-}
-
-.datadeck-panel p, .datadeck-panel span, .datadeck-panel strong, .datadeck-panel div, .datadeck-panel h3 {
-  color: var(--text-primary) !important;
-}
-
-.datadeck-panel .text-secondary {
-  color: var(--text-secondary) !important;
-}
-
-/* 3-Column Hobbies & Interests Grid - Streamlined Horizontal Flex Scroll */
-.datadeck-hobbies-grid {
-  display: flex;
-  flex-direction: row;
-  overflow-x: auto;
-  overflow-y: hidden;
-  gap: 20px;
-  width: 100%;
-  padding: 12px 6px 16px 6px;
-  margin: -12px -6px 0 -6px;
-  scroll-behavior: smooth;
-  -webkit-overflow-scrolling: touch;
-}
-
-/* Custom themed scrollbar for horizontal hobbies list */
-.datadeck-hobbies-grid::-webkit-scrollbar {
-  height: 6px;
-}
-.datadeck-hobbies-grid::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 3px;
-}
-.datadeck-hobbies-grid::-webkit-scrollbar-thumb {
-  background: rgba(var(--color-accent-rgb), 0.25);
-  border-radius: 3px;
-  transition: background 0.3s ease;
-}
-.datadeck-hobbies-grid::-webkit-scrollbar-thumb:hover {
-  background: rgba(var(--color-accent-rgb), 0.45);
-}
-
-/* Hobby Card (Matches Portfolio project-card style) */
-.datadeck-hobby-card {
-  background: rgba(6, 9, 20, 0.72);
-  border: 1.5px solid rgba(255, 255, 255, 0.06);
-  border-radius: 14px;
-  padding: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 290px;
-  flex: 0 0 310px;
-  max-width: 310px;
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  cursor: default;
-}
-
-/* Custom glowing borders & shadows on hover representing each topic */
-.datadeck-hobby-card.tech:hover {
-  border-color: var(--neon-cyan);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(0, 240, 255, 0.25);
-  transform: translateY(-3px);
-}
-.datadeck-hobby-card.music:hover {
-  border-color: var(--neon-violet);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(194, 89, 255, 0.25);
-  transform: translateY(-3px);
-}
-.datadeck-hobby-card.scifi:hover {
-  border-color: var(--neon-amber);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(255, 179, 0, 0.25);
-  transform: translateY(-3px);
-}
-.datadeck-hobby-card.biking:hover {
-  border-color: var(--neon-emerald);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(0, 255, 136, 0.25);
-  transform: translateY(-3px);
-}
-.datadeck-hobby-card.football:hover {
-  border-color: var(--neon-violet);
-  box-shadow: 0 12px 36px rgba(0,0,0,0.45), 0 0 15px rgba(194, 89, 255, 0.25);
-  transform: translateY(-3px);
-}
-
-.datadeck-hobby-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.datadeck-hobby-card-cat {
-  font-family: var(--font-tech);
-  font-size: 0.55rem;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: var(--text-secondary) !important;
-  padding: 1px 6px;
-  border-radius: 4px;
-}
-
-.datadeck-hobby-card-title {
-  font-family: var(--font-tech);
-  font-size: 0.88rem;
-  color: var(--text-primary) !important;
-  text-align: left;
-  margin-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  padding-bottom: 6px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-.datadeck-hobby-card-desc {
-  font-size: 0.78rem;
-  color: var(--text-secondary) !important;
-  line-height: 1.45;
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-/* Custom classes for vibrant bubbly buttons */
-.social-btn-bubbly, .transit-btn-bubbly {
-  color: var(--text-primary) !important;
-  font-family: var(--font-tech);
-  font-weight: 700;
-  text-transform: uppercase;
-  border-radius: 20px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-  text-decoration: none;
-  border-width: 1.5px !important;
-}
-
-.social-btn-bubbly.github {
-  border: 1.5px solid rgba(0, 240, 255, 0.3) !important;
-  background: rgba(0, 240, 255, 0.05) !important;
-}
-.social-btn-bubbly.github:hover {
-  background: var(--neon-cyan) !important;
-  color: #080b13 !important;
-  border-color: var(--neon-cyan) !important;
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.4);
-  transform: translateY(-2px);
-}
-
-.social-btn-bubbly.youtube {
-  border: 1.5px solid rgba(255, 179, 0, 0.3) !important;
-  background: rgba(255, 179, 0, 0.05) !important;
-}
-.social-btn-bubbly.youtube:hover {
-  background: var(--neon-amber) !important;
-  color: #080b13 !important;
-  border-color: var(--neon-amber) !important;
-  box-shadow: 0 0 15px rgba(255, 179, 0, 0.4);
-  transform: translateY(-2px);
-}
-
-.transit-btn-bubbly {
-  background: rgba(255, 255, 255, 0.02) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.1) !important;
-}
-
-.transit-btn-bubbly.metropolis:hover {
-  background: var(--neon-violet) !important;
-  color: #ffffff !important;
-  border-color: var(--neon-violet) !important;
-  box-shadow: 0 0 12px rgba(194, 89, 255, 0.4);
-  transform: translateY(-2px);
-}
-
-.transit-btn-bubbly.biosphere:hover {
-  background: var(--neon-emerald) !important;
-  color: #080b13 !important;
-  border-color: var(--neon-emerald) !important;
-  box-shadow: 0 0 12px rgba(0, 255, 136, 0.4);
-  transform: translateY(-2px);
-}
-
-.transit-btn-bubbly.quantum:hover {
-  background: var(--neon-amber) !important;
-  color: #080b13 !important;
-  border-color: var(--neon-amber) !important;
-  box-shadow: 0 0 12px rgba(255, 179, 0, 0.4);
-  transform: translateY(-2px);
-}
-
-.transit-btn-bubbly.portfolio:hover {
-  background: var(--neon-cyan) !important;
-  color: #080b13 !important;
-  border-color: var(--neon-cyan) !important;
-  box-shadow: 0 0 12px rgba(0, 240, 255, 0.4);
-  transform: translateY(-2px);
-}
-
-@media (max-width: 900px) {
-  .datadeck-profile-card {
-    width: 100% !important;
-  }
-}
-
-/* ================= FLOATING HOLOGRAPHIC PROJECTOR OVERLAY ================= */
-
-.hologram-modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: radial-gradient(circle at center, rgba(4, 6, 12, 0.82) 0%, rgba(2, 3, 6, 0.94) 100%);
-  backdrop-filter: blur(8px);
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  animation: hologram-fade-in 0.3s ease-out forwards;
-}
-
-.hologram-modal-card {
-  width: 100%;
-  max-width: 600px;
-  background: rgba(6, 10, 22, 0.96);
-  border-radius: 28px;
-  padding: 30px;
-  color: var(--text-primary);
-  backdrop-filter: blur(20px);
-  position: relative;
-  overflow: hidden;
-  box-shadow: 0 0 45px rgba(var(--color-accent-rgb), 0.25),
-              inset 0 0 20px rgba(var(--color-accent-rgb), 0.1);
-  border: 2.5px solid var(--color-accent);
-  transform-origin: center bottom;
-  animation: hologram-boot 0.55s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-}
-
-/* High-tech grid and scanning scanline overlays */
-.hologram-modal-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(255, 255, 255, 0.05) 50%),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.01) 1px, transparent 1px),
-    linear-gradient(rgba(255, 255, 255, 0.01) 1px, transparent 1px);
-  background-size: 100% 4px, 30px 30px, 30px 30px;
-  opacity: 0.6;
-  z-index: 1;
-  pointer-events: none;
-}
-
-.hologram-scanline-beam {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 60px;
-  background: linear-gradient(180deg, rgba(var(--color-accent-rgb), 0.08), transparent);
-  border-bottom: 1.5px solid rgba(var(--color-accent-rgb), 0.3);
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0.8;
-  animation: hologram-scanline 3.2s linear infinite;
-}
-
-/* Cathode-ray flicker projection boot animation */
-@keyframes hologram-boot {
-  0% {
-    opacity: 0;
-    transform: scaleY(0.01) scaleX(0.05) translateY(100px);
-    filter: hue-rotate(90deg) brightness(4) blur(10px);
-  }
-  30% {
-    opacity: 0.65;
-    transform: scaleY(1.08) scaleX(0.92) translateY(5px);
-    filter: hue-rotate(45deg) brightness(2) blur(3px);
-  }
-  45% {
-    opacity: 0.45;
-    transform: scaleY(0.85) scaleX(1.08) translateY(-5px);
-    filter: blur(5px);
-  }
-  60% {
-    opacity: 0.85;
-    transform: scale(1.02);
-    filter: none;
-  }
-  75% {
-    opacity: 0.7;
-    transform: scale(0.98);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-    filter: none;
-  }
-}
-
-@keyframes hologram-scanline {
-  0% {
-    transform: translateY(-60px);
-  }
-  100% {
-    transform: translateY(500px);
-  }
-}
-
-@keyframes hologram-fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.hologram-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1.5px dashed rgba(var(--color-accent-rgb), 0.3);
-  padding-bottom: 10px;
-  margin-bottom: 20px;
-  position: relative;
-  z-index: 3;
-}
-
-.hologram-telemetry-title {
-  font-family: var(--font-tech);
-  font-size: 0.62rem;
-  color: var(--color-accent);
-  font-weight: 700;
-  letter-spacing: 1.2px;
-}
-
-.hologram-telemetry-status {
-  font-family: var(--font-tech);
-  font-size: 0.55rem;
-  color: var(--neon-emerald);
-  animation: blink-led 1s infinite alternate;
-}
-
-.hologram-topic {
-  font-family: var(--font-tech);
-  font-size: 1.15rem;
-  font-weight: 900;
-  color: #fff;
-  letter-spacing: 0.5px;
-  margin-bottom: 14px;
-  text-transform: uppercase;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  position: relative;
-  z-index: 3;
-}
-
-.hologram-desc {
-  font-size: 0.8rem;
-  line-height: 1.55;
-  color: var(--text-secondary);
-  text-align: left;
-  margin-bottom: 22px;
-  position: relative;
-  z-index: 3;
-}
-
-.hologram-graphic-box {
-  margin-bottom: 22px;
-  position: relative;
-  z-index: 3;
-  width: 100%;
-}
-
-.hologram-footer {
-  display: flex;
-  justify-content: center;
-  border-top: 1.5px dashed rgba(var(--color-accent-rgb), 0.2);
-  padding-top: 18px;
-  position: relative;
-  z-index: 3;
-}
-
-.hologram-close-btn {
-  background: rgba(234, 67, 53, 0.08);
-  border: 2px solid #ea4335;
-  color: #ea4335 !important;
-  font-family: var(--font-tech);
-  font-size: 0.72rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  padding: 10px 22px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
-  text-transform: uppercase;
-}
-
-.hologram-close-btn:hover {
-  background: #ea4335;
-  color: #fff !important;
-  box-shadow: 0 0 15px rgba(234, 67, 53, 0.45);
-  transform: translateY(-2px);
-}
-
-@media (max-width: 900px) {
-  .datadeck-profile-card {
-    width: 100% !important;
-  }
-}
-
-/* Enable dynamic scrolling for the Data Deck dashboard */
-.citizen-card-shell:has(.datadeck-active) {
-  overflow-y: auto !important;
-  display: block !important;
-  padding-right: 8px;
-  max-height: calc(100vh - 120px); /* Leave room for HUD bar */
-}
-
-.citizen-card-shell:has(.datadeck-active)::-webkit-scrollbar {
-  width: 6px;
-}
-.citizen-card-shell:has(.datadeck-active)::-webkit-scrollbar-track {
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 3px;
-}
-.citizen-card-shell:has(.datadeck-active)::-webkit-scrollbar-thumb {
-  background: rgba(var(--color-accent-rgb), 0.25);
-  border-radius: 3px;
-  transition: background 0.3s ease;
-}
-.citizen-card-shell:has(.datadeck-active)::-webkit-scrollbar-thumb:hover {
-  background: rgba(var(--color-accent-rgb), 0.45);
-}
-
-/* Responsive styles for side-by-side layout in data deck */
-@media (max-width: 950px) {
-  .datadeck-dashboard-layout {
-    grid-template-columns: 1fr !important;
-  }
-}
-
-/* ==========================================================================
-   🪐 Ares City OS — Dual-Mode Spatial Computing Redesign Overrides
-   ========================================================================== */
-
-/* Typography & Layout Polish */
-body {
-  font-family: var(--font-sans); /* Ensure Outfit is primary */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Premium Glassmorphic Panels */
-.spatial-glass-panel {
-  background: rgba(8, 10, 18, 0.25) !important;
-  border: 1.5px solid rgba(255, 255, 255, 0.06) !important;
-  border-radius: 24px !important;
-  backdrop-filter: blur(28px) saturate(110%) !important;
-  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4),
-              inset 0 1px 0px rgba(255, 255, 255, 0.08),
-              0 0 40px rgba(var(--color-accent-rgb), 0.04) !important;
-  transition: border-color var(--transition-normal), box-shadow var(--transition-normal), transform var(--transition-normal) !important;
-}
-
-.spatial-glass-panel:hover {
-  border-color: rgba(var(--color-accent-rgb), 0.25) !important;
-  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5),
-              inset 0 1px 0px rgba(255, 255, 255, 0.12),
-              0 0 50px rgba(var(--color-accent-rgb), 0.08) !important;
-}
-
-/* --- Ultra-Premium GPU-Accelerated CSS Spatial Parallax System --- */
-
-/* 1. Deep Parallax Background */
-.background-canvas {
-  transform: translate3d(calc(var(--mouse-x) * 24px), calc(var(--mouse-y) * 24px), 0) scale(1.06) !important;
-  transition: filter 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-  will-change: transform;
-}
-
-/* 2. Projected Telemetry (Printed on Penthouse Glass window - Midground) */
-.gaze-target {
-  transform: translate3d(calc(var(--mouse-x) * 12px), calc(var(--mouse-y) * 12px), 0) !important;
-  will-change: transform;
-}
-
-/* 3. Immersive Floating Glass Console (Foreground) */
-.spatial-3d-console {
-  transform-style: preserve-3d;
-  transform: perspective(1400px) 
-             translate3d(calc(var(--mouse-x) * -20px), calc(var(--mouse-y) * -20px), 40px) 
-             rotateX(calc(var(--mouse-y) * -8deg)) 
-             rotateY(calc(var(--mouse-x) * 8deg)) !important;
-  box-shadow: 
-    0 30px 70px rgba(0, 0, 0, 0.55),
-    calc(var(--mouse-x) * 20px) calc(var(--mouse-y) * 20px) 50px rgba(0, 0, 0, 0.35),
-    inset 0 1px 1px rgba(255, 255, 255, 0.1),
-    0 0 45px rgba(var(--color-accent-rgb), 0.05) !important;
-  transition: border-color var(--transition-normal), box-shadow 0.2s ease-out, transform 0.2s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
-  will-change: transform, box-shadow;
-}
-
-@media (hover: hover) {
-  .spatial-3d-console:hover {
-    transform: perspective(1400px) 
-               translate3d(calc(var(--mouse-x) * -24px), calc(var(--mouse-y) * -24px), 55px) 
-               rotateX(calc(var(--mouse-y) * -10deg)) 
-               rotateY(calc(var(--mouse-x) * 10deg)) !important;
-    box-shadow: 
-      0 40px 90px rgba(0, 0, 0, 0.65),
-      calc(var(--mouse-x) * 30px) calc(var(--mouse-y) * 30px) 70px rgba(0, 0, 0, 0.45),
-      inset 0 1px 1px rgba(255, 255, 255, 0.15),
-      0 0 60px rgba(var(--color-accent-rgb), 0.08) !important;
-  }
-}
-
-/* 4. Desktop Pinned Top HUD Bar */
-.system-hud-bar {
-  transform: translate3d(calc(var(--mouse-x) * -4px), calc(var(--mouse-y) * -4px), 0) !important;
-  will-change: transform;
-}
-
-/* Fine-lined window telemetry overlay */
-.window-telemetry-text {
-  font-family: var(--font-tech);
-  font-size: 0.65rem;
-  letter-spacing: 2px;
-  color: rgba(255, 255, 255, 0.45);
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.15);
-  text-transform: uppercase;
-}
-
-.window-telemetry-value {
-  font-family: var(--font-tech);
-  font-size: 0.82rem;
-  font-weight: 500;
-  color: var(--color-accent);
-  text-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.4);
-}
-
-/* Radar visualizer */
-.radar-grid {
-  stroke: rgba(255, 255, 255, 0.06);
-  stroke-width: 0.8;
-}
-
-.radar-sweep {
-  transform-origin: 50px 50px;
-  animation: radar-spin 5s linear infinite;
-  fill: url(#radarGradient);
-}
-
-@keyframes radar-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Proximity Gaze Interactions (contextual UI) */
-.gaze-target {
-  opacity: 0.45;
-  transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
-}
-
-.gaze-target:hover,
-.gaze-target:focus-within {
-  opacity: 1;
-}
-
-/* Portfolio Drawer */
-.spatial-drawer {
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: min(640px, 90vw);
-  z-index: 1000;
-  background: rgba(6, 8, 14, 0.88);
-  border-left: 1.5px solid rgba(255, 255, 255, 0.08);
-  box-shadow: -25px 0 70px rgba(0, 0, 0, 0.85), inset 1px 0 0 rgba(255,255,255,0.05);
-  backdrop-filter: blur(35px) saturate(110%);
-  padding: 40px;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(100%);
-  transition: transform var(--transition-slow);
-}
-
-.spatial-drawer.open {
-  transform: translateX(0);
-}
-
-/* Mood controls */
-.mood-pin {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(255,255,255,0.4);
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-  transition: transform 0.25s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.25s ease;
-}
-
-.mood-pin:hover {
-  transform: scale(1.3);
-  border-color: rgba(255,255,255,0.9);
-}
-
-.mood-pin.active {
-  border-color: #fff !important;
-  box-shadow: 0 0 12px currentColor, inset 0 0 2px rgba(0,0,0,0.8);
-  transform: scale(1.25);
-}
-
-/* Simplified touch rules for mobile devices */
-@media (max-width: 768px) {
-  .background-canvas,
-  .gaze-target,
-  .spatial-3d-console,
-  .system-hud-bar {
-    transform: none !important;
-    animation: none !important;
-  }
-  .gaze-target {
-    opacity: 1 !important;
-  }
-}
-
-/* Responsive Grid layouts for spatial pages */
-.spatial-homepage-grid {
-  display: grid !important;
-  grid-template-columns: minmax(300px, 1fr) minmax(320px, 1.25fr) !important;
-  gap: 40px !important;
-  padding: 10px !important;
-  align-items: stretch !important;
-  justify-content: center !important;
-  width: 100% !important;
-  max-width: 1350px !important;
-  margin: 0 auto !important;
-}
-
-.spatial-portfolio-grid {
-  display: grid !important;
-  grid-template-columns: 320px minmax(0, 1fr) !important;
-  gap: 30px !important;
-  align-items: stretch !important;
-  width: 100% !important;
-  max-width: 1350px !important;
-  margin: 0 auto !important;
-}
-
-@media (max-width: 950px) {
-  .spatial-homepage-grid {
-    grid-template-columns: 1fr !important;
-    gap: 24px !important;
-  }
-  .spatial-portfolio-grid {
-    grid-template-columns: 1fr !important;
-    gap: 24px !important;
-  }
-  /* Fix vertical overflow in mobile card shell */
-  .citizen-card-shell {
-    height: auto !important;
-    overflow-y: visible !important;
-  }
-  .os-workspace {
-    height: auto !important;
-    min-height: 100vh !important;
-    overflow-y: auto !important;
   }
 }
 

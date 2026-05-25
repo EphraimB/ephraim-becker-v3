@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
+import CityGridMap from '../components/CityGridMap';
 
 const INTERESTS = [
   {
@@ -47,15 +47,11 @@ const INTERESTS = [
 ];
 
 export default function AresDashboard() {
-  const router = useRouter();
   const birthDate = new Date('1996-07-19');
   
   const [marsAge, setMarsAge] = useState('15.8 Sols');
   const [activeInterest, setActiveInterest] = useState(null);
-  const [academicSyncActive, setAcademicSyncActive] = useState(false);
-  const [mapHoverNode, setMapHoverNode] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
-  const [mapDrawerOpen, setMapDrawerOpen] = useState(false);
 
   // Set mounted state to prevent hydration mismatches
   useEffect(() => {
@@ -85,35 +81,14 @@ export default function AresDashboard() {
   return (
     <div className="dashboard-main-container">
       
-      {/* Pure CSS Responsive & Mobile Slide-Out Drawer Engine */}
+      {/* Pure CSS Layout Engine */}
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes spin-turntable {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
-        @keyframes signal-pulse {
-          0% { r: 6px; opacity: 0.8; }
-          100% { r: 24px; opacity: 0; }
-        }
-        @keyframes you-are-here-pulse {
-          0% { stroke-opacity: 0.9; stroke-width: 1px; r: 10px; }
-          100% { stroke-opacity: 0; stroke-width: 5px; r: 32px; }
-        }
         .animate-spin-custom {
           animation: spin-turntable 8s linear infinite;
-        }
-        .pulse-ring {
-          animation: signal-pulse 2s cubic-bezier(0.25, 0, 0, 1) infinite;
-        }
-        .you-are-here-ring {
-          animation: you-are-here-pulse 2.2s cubic-bezier(0.1, 0.8, 0.1, 1) infinite;
-        }
-        .touch-group {
-          transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .touch-group:active {
-          transform: scale(0.94);
-          transform-origin: 50% 50%;
         }
         .hud-badge {
           transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -136,115 +111,7 @@ export default function AresDashboard() {
           transform: scale(0.96) !important;
         }
 
-        /* Mobile Ares Locator Button - Fixed and peeking from the left edge */
-        .mobile-locator-btn {
-          display: none;
-          background: rgba(10, 14, 30, 0.95);
-          border: 1.5px solid rgba(0, 240, 255, 0.35);
-          border-left: none;
-          border-radius: 0 8px 8px 0;
-          padding: 8px 12px;
-          text-align: left;
-          cursor: pointer;
-          position: fixed;
-          left: 0;
-          top: 140px; /* Positioned nicely on the left viewport edge */
-          z-index: 1000;
-          transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
-          box-shadow: 4px 0 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(0, 240, 255, 0.1);
-          outline: none;
-          font-family: monospace, var(--font-tech);
-          align-items: center;
-          gap: 8px;
-          color: #fff;
-          backdrop-filter: blur(10px);
-          -webkit-backdrop-filter: blur(10px);
-        }
-
-        .mobile-locator-btn:active {
-          background: rgba(0, 240, 255, 0.2) !important;
-          border-color: rgba(0, 240, 255, 0.6) !important;
-          transform: scale(0.96);
-          transform-origin: left center;
-        }
-
-        .locator-pulse-light {
-          width: 6px;
-          height: 6px;
-          background: #00ff88;
-          border-radius: 50%;
-          box-shadow: 0 0 8px #00ff88;
-          animation: locator-ping 1.5s infinite;
-          flex-shrink: 0;
-        }
-
-        @keyframes locator-ping {
-          0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
-          70% { transform: scale(2); opacity: 0; box-shadow: 0 0 0 6px rgba(0, 255, 136, 0); }
-          100% { transform: scale(1); opacity: 0; }
-        }
-
-        .locator-location-name {
-          font-size: 0.68rem;
-          font-weight: bold;
-          color: #ff9100;
-          text-shadow: 0 0 6px rgba(255, 145, 0, 0.4);
-          letter-spacing: 0.5px;
-          margin-bottom: 0;
-          display: inline-block;
-        }
-
-        .locator-hint-arrow {
-          font-size: 0.65rem;
-          color: #00f0ff;
-          font-weight: bold;
-          margin-left: 2px;
-        }
-
-        .profile-avatar-frame {
-          width: 100%;
-          height: 160px;
-          position: relative;
-          border-radius: 8px;
-          overflow: hidden;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          background: radial-gradient(circle at center, rgba(0, 240, 255, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.08);
-          display: flex;
-          align-items: flex-end;
-          justify-content: center;
-          z-index: 2;
-          flex-shrink: 0;
-          margin-bottom: 16px;
-        }
-
-        /* Drawer Backdrop Overlay (Mobile only) */
-        .drawer-backdrop {
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100vw;
-          height: 100vh;
-          background: rgba(0, 0, 0, 0.6);
-          backdrop-filter: blur(5px);
-          -webkit-backdrop-filter: blur(5px);
-          z-index: 1999;
-          opacity: 0;
-          pointer-events: none;
-          transition: opacity 0.32s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .drawer-backdrop.active {
-          opacity: 1;
-          pointer-events: all;
-        }
-
-        /* Mobile close header within the Drawer */
-        .mobile-drawer-close-bar {
-          display: none;
-        }
-
-        /* Responsive Dashboard Grid System */
+        /* Desktop Dashboard Grid System */
         .dashboard-main-container {
           position: absolute;
           inset: 0;
@@ -294,6 +161,23 @@ export default function AresDashboard() {
           box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0,0,0,0.6);
         }
 
+        .profile-avatar-frame {
+          width: 100%;
+          height: 160px;
+          position: relative;
+          border-radius: 8px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: radial-gradient(circle at center, rgba(0, 240, 255, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.08);
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          z-index: 2;
+          flex-shrink: 0;
+          margin-bottom: 16px;
+        }
+
         .dashboard-left-col-badge-btn {
           font-family: monospace, var(--font-tech);
           font-size: 0.68rem;
@@ -317,75 +201,6 @@ export default function AresDashboard() {
           text-decoration: none;
         }
 
-        /* SVG Map Node styling classes */
-        .map-node-label {
-          font-size: 11.5px !important;
-          font-weight: bold;
-          font-family: monospace, var(--font-tech);
-          text-anchor: middle;
-          fill: rgba(255, 255, 255, 0.9);
-          transition: font-size 0.2s ease, fill 0.2s ease;
-        }
-
-        .map-node-sublabel {
-          font-size: 8.5px !important;
-          font-family: monospace, var(--font-tech);
-          text-anchor: middle;
-          fill: rgba(255, 255, 255, 0.4);
-          transition: font-size 0.2s ease;
-        }
-
-        .map-node-sublabel-here {
-          font-size: 9.5px !important;
-          font-weight: bold;
-          font-family: monospace, var(--font-tech);
-          text-anchor: middle;
-          fill: #00ff88;
-          transition: font-size 0.2s ease;
-        }
-
-        .map-node-title-here {
-          font-size: 12.5px !important;
-          font-weight: bold;
-          font-family: monospace, var(--font-tech);
-          text-anchor: middle;
-          fill: #ff9100;
-          transition: font-size 0.2s ease;
-        }
-
-        .map-node-dot {
-          r: 6px !important;
-          transition: r 0.2s ease;
-        }
-
-        .map-node-ring {
-          r: 16px !important;
-          transition: r 0.2s ease;
-        }
-
-        .map-node-pulse-ring {
-          r: 14px !important;
-          transition: r 0.2s ease;
-        }
-
-        .map-node-here-ring {
-          r: 10px !important;
-          transition: r 0.2s ease;
-        }
-
-        .map-coordinate-overlay {
-          position: absolute;
-          top: 12px;
-          left: 16px;
-          z-index: 5;
-          font-family: monospace, var(--font-tech);
-          font-size: 0.62rem;
-          color: rgba(255,255,255,0.4);
-          letter-spacing: 1px;
-          pointer-events: none;
-          text-align: left;
-        }
-
         @media (max-width: 900px) {
           .dashboard-main-container {
             position: relative !important;
@@ -396,10 +211,6 @@ export default function AresDashboard() {
             overflow: visible !important;
             height: auto !important;
             min-height: 100% !important;
-          }
-
-          .mobile-locator-btn {
-            display: flex !important; /* Shows peeking tab on mobile */
           }
 
           .profile-avatar-frame {
@@ -415,41 +226,9 @@ export default function AresDashboard() {
             height: auto !important;
           }
 
-          /* Slide-out Drawer Override for Right Map Column (LEFT EDGE ALIGNMENT) */
+          /* Hide static map column on mobile - handled by global map drawer overlay instead */
           .dashboard-right-col {
-            position: fixed !important;
-            top: 0 !important;
-            left: 0 !important; /* Aligned to left edge */
-            right: auto !important;
-            width: 85vw !important;
-            max-width: 440px !important;
-            height: 100vh !important;
-            min-height: 100vh !important;
-            z-index: 2000 !important;
-            border-radius: 0 16px 16px 0 !important; /* Curved on the right edge */
-            border-right: 2px solid #00f0ff !important; /* Cyber border on the right edge */
-            border-left: none !important;
-            border-top: none !important;
-            border-bottom: none !important;
-            background: rgba(6, 9, 20, 0.98) !important;
-            backdrop-filter: blur(25px) !important;
-            -webkit-backdrop-filter: blur(25px) !important;
-            box-shadow: 15px 0 35px rgba(0, 0, 0, 0.8) !important; /* Shadow points right */
-            transform: translateX(-100%) !important; /* Hides off the left screen edge */
-            transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1) !important;
-            flex: none !important;
-          }
-
-          .dashboard-right-col.drawer-active {
-            transform: translateX(0) !important;
-          }
-
-          .mobile-drawer-close-bar {
-            display: block !important;
-            padding: 12px 16px !important;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-            background: rgba(0, 0, 0, 0.2) !important;
-            flex-shrink: 0 !important;
+            display: none !important;
           }
 
           .dashboard-left-col-badge-btn {
@@ -460,68 +239,8 @@ export default function AresDashboard() {
             padding: 12px 4px !important;
             font-size: 0.72rem !important;
           }
-
-          .map-coordinate-overlay {
-            font-size: 0.55rem !important;
-            max-width: 90%;
-            top: 60px !important; /* Shuffled down below mobile close bar */
-          }
-
-          /* Increase text sizes on map dynamically for mobile readability */
-          .map-node-label {
-            font-size: 17.5px !important;
-          }
-
-          .map-node-sublabel {
-            font-size: 12.5px !important;
-          }
-
-          .map-node-sublabel-here {
-            font-size: 13.5px !important;
-          }
-
-          .map-node-title-here {
-            font-size: 18.5px !important;
-          }
-
-          /* Scale up dots and rings for touch precision */
-          .map-node-dot {
-            r: 9px !important;
-          }
-
-          .map-node-ring {
-            r: 21px !important;
-          }
-
-          .map-node-pulse-ring {
-            r: 18px !important;
-          }
-
-          .map-node-here-ring {
-            r: 14px !important;
-          }
         }
       `}} />
-
-      {/* Drawer Backdrop Overlay (Mobile only) */}
-      <div 
-        className={`drawer-backdrop ${mapDrawerOpen ? 'active' : ''}`}
-        onClick={() => setMapDrawerOpen(false)}
-      ></div>
-
-      {/* Floating Left Peeking Locator Tab (Mobile only, handles viewport fixed positioning) */}
-      <button 
-        onClick={() => setMapDrawerOpen(true)}
-        className="mobile-locator-btn"
-        style={{
-          opacity: mapDrawerOpen ? 0 : 1,
-          pointerEvents: mapDrawerOpen ? 'none' : 'auto'
-        }}
-      >
-        <span className="locator-pulse-light"></span>
-        <span className="locator-location-name">📍 CITIZEN SUITE</span>
-        <span className="locator-hint-arrow">➔</span>
-      </button>
 
       {/* LEFT COLUMN: The Premium Profile Terminal Card */}
       <div className="dashboard-left-col">
@@ -695,289 +414,9 @@ export default function AresDashboard() {
         </div>
       </div>
 
-      {/* RIGHT COLUMN: The 2D Interactive Vector Map / Mobile slide-out drawer (LEFT EDGE ALIGNED) */}
-      <div className={`dashboard-right-col ${mapDrawerOpen ? 'drawer-active' : ''}`}>
-        
-        {/* Mobile drawer header close panel */}
-        <div className="mobile-drawer-close-bar">
-          <button 
-            onClick={() => setMapDrawerOpen(false)}
-            className="hud-btn custom-close-btn"
-            style={{
-              width: '100%',
-              padding: '10px',
-              fontSize: '0.72rem',
-              borderColor: 'rgba(0, 240, 255, 0.3)',
-              background: 'rgba(0, 240, 255, 0.05)',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              color: '#00f0ff'
-            }}
-          >
-            [ ✕ CLOSE TACTICAL MAP ]
-          </button>
-        </div>
-
-        {/* Core coordinates overlay */}
-        <div className="map-coordinate-overlay">
-          ARES_SYSTEM // NAVIGATION_MAP // DOME_LINK_ONLINE
-          {mapHoverNode && <span style={{ color: '#00f0ff', marginLeft: '12px' }}>[ SELECTED: {mapHoverNode.toUpperCase()} ]</span>}
-        </div>
-
-        {/* 2D Auto-scaling Tactical Map Canvas (meet preserves full viewport) */}
-        <svg 
-          viewBox="0 0 800 500" 
-          width="100%" 
-          height="100%"
-          preserveAspectRatio="xMidYMid meet"
-          style={{
-            flex: 1,
-            display: 'block'
-          }}
-        >
-          <defs>
-            {/* Dusk Violet circular glow */}
-            <radialGradient id="violetGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#c259ff" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#c259ff" stopOpacity="0" />
-            </radialGradient>
-            {/* Cyan glowing dots */}
-            <radialGradient id="cyanGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#00f0ff" stopOpacity="0.4" />
-              <stop offset="100%" stopColor="#00f0ff" stopOpacity="0" />
-            </radialGradient>
-            {/* Amber glowing dot for "You Are Here" */}
-            <radialGradient id="amberGlow" cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor="#ff5722" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#ff5722" stopOpacity="0" />
-            </radialGradient>
-          </defs>
-
-          {/* Radar Sweep scanning graphic circles */}
-          <circle cx="400" cy="250" r="230" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="1" strokeDasharray="3 6" />
-          <circle cx="400" cy="250" r="170" fill="none" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" />
-          <circle cx="400" cy="250" r="100" fill="none" stroke="rgba(255,255,255,0.02)" strokeWidth="1" />
-          <circle cx="400" cy="250" r="40" fill="none" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-
-          {/* Coordinate grid tactical crosshairs lines */}
-          <line x1="170" y1="250" x2="630" y2="250" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" strokeDasharray="5 5" />
-          <line x1="400" y1="80" x2="400" y2="420" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" strokeDasharray="5 5" />
-
-          {/* Colony road networks linking domes directly to the central Citizen Suite */}
-          <line x1="400" y1="180" x2="400" y2="80" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-          <line x1="400" y1="180" x2="220" y2="180" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-          <line x1="400" y1="180" x2="580" y2="180" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-          <line x1="400" y1="180" x2="270" y2="340" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-          <line x1="400" y1="180" x2="530" y2="340" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
-          
-          {/* Outer Ring Road connecting other domes */}
-          <line x1="400" y1="80" x2="220" y2="180" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
-          <line x1="400" y1="80" x2="580" y2="180" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
-          <line x1="220" y1="180" x2="270" y2="340" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
-          <line x1="580" y1="180" x2="530" y2="340" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
-          <line x1="270" y1="340" x2="530" y2="340" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
-
-          {/* ================= SECTOR NODES & TOUCH TARGETS (r="44" for effortless finger activation) ================= */}
-
-          {/* SECTOR 03: BIOSPHERE DOME (Top center hub) */}
-          <g 
-            onClick={() => router.push('/atmosphere-dome')}
-            onMouseEnter={() => setMapHoverNode('Sector 03: Biosphere Dome')}
-            onMouseLeave={() => setMapHoverNode(null)}
-            className="touch-group"
-            style={{ cursor: 'pointer' }}
-          >
-            {/* Massive invisible tap target (88px diameter) */}
-            <circle cx="400" cy="80" r="44" fill="transparent" pointerEvents="all" />
-            
-            <circle cx="400" cy="80" className="map-node-ring" fill="rgba(0, 255, 136, 0.05)" stroke="rgba(0, 255, 136, 0.4)" strokeWidth="1.5" />
-            <circle cx="400" cy="80" className="map-node-dot" fill="#00ff88" />
-            <text x="400" y="46" className="map-node-label" stroke="rgba(0,0,0,0.85)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 03: BIOSPHERE</text>
-          </g>
-
-          {/* SECTOR 04: QUANTUM NET (Bottom left hub) */}
-          <g 
-            onClick={() => router.push('/quantum-net')}
-            onMouseEnter={() => setMapHoverNode('Sector 04: Quantum Net')}
-            onMouseLeave={() => setMapHoverNode(null)}
-            className="touch-group"
-            style={{ cursor: 'pointer' }}
-          >
-            {/* Massive invisible tap target (88px diameter) */}
-            <circle cx="270" cy="340" r="44" fill="transparent" pointerEvents="all" />
-            
-            <circle cx="270" cy="340" className="map-node-ring" fill="rgba(255, 179, 0, 0.05)" stroke="rgba(255, 179, 0, 0.4)" strokeWidth="1.5" />
-            <circle cx="270" cy="340" className="map-node-dot" fill="#ffb300" />
-            <text x="270" y="380" className="map-node-label" stroke="rgba(0,0,0,0.85)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 04: QUANTUM NET</text>
-          </g>
-
-          {/* SECTOR 05: METROPOLIS CORE (Bottom right hub) */}
-          <g 
-            onClick={() => router.push('/metropolis-core')}
-            onMouseEnter={() => setMapHoverNode('Sector 05: Metropolis Core')}
-            onMouseLeave={() => setMapHoverNode(null)}
-            className="touch-group"
-            style={{ cursor: 'pointer' }}
-          >
-            {/* Massive invisible tap target (88px diameter) */}
-            <circle cx="530" cy="340" r="44" fill="transparent" pointerEvents="all" />
-            
-            <circle cx="530" cy="340" className="map-node-ring" fill="rgba(0, 240, 255, 0.05)" stroke="rgba(0, 240, 255, 0.4)" strokeWidth="1.5" />
-            <circle cx="530" cy="340" className="map-node-dot" fill="#00f0ff" />
-            <text x="530" y="380" className="map-node-label" stroke="rgba(0,0,0,0.85)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 05: METROPOLIS</text>
-          </g>
-
-          {/* SECTOR 01: PORTFOLIO ARCHIVES (Left highlighted hub - Dusk Violet Glow) */}
-          <g 
-            onClick={() => router.push('/portfolio')}
-            onMouseEnter={() => setMapHoverNode('Sector 01: Portfolio Archives')}
-            onMouseLeave={() => setMapHoverNode(null)}
-            className="touch-group"
-            style={{ cursor: 'pointer' }}
-          >
-            {/* Massive invisible tap target (88px diameter) */}
-            <circle cx="220" cy="180" r="44" fill="transparent" pointerEvents="all" />
-            
-            {/* Dusk Violet Pulsing glowing rings */}
-            <circle cx="220" cy="180" r="28" fill="url(#violetGlow)" pointerEvents="none" />
-            <circle cx="220" cy="180" className="map-node-pulse-ring pulse-ring" fill="none" stroke="#c259ff" strokeWidth="1" />
-            
-            {/* Core Node shape */}
-            <circle cx="220" cy="180" r="18" fill="rgba(10, 6, 20, 0.8)" stroke="#c259ff" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 8px #c259ff)' }} />
-            <circle cx="220" cy="180" className="map-node-dot" fill="#c259ff" />
-            
-            {/* Centered label above node */}
-            <text x="220" y="138" className="map-node-label" stroke="rgba(0,0,0,0.9)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 01: PORTFOLIO</text>
-            <text x="220" y="152" className="map-node-sublabel" stroke="rgba(0,0,0,0.9)" strokeWidth="2.5" paintOrder="stroke">📂 TRANSLATE</text>
-          </g>
-
-          {/* SECTOR 02: ACADEMIC MODULES (Right highlighted hub - Cybernetic Cyan Glow) */}
-          <g 
-            onClick={() => setAcademicSyncActive(!academicSyncActive)}
-            onMouseEnter={() => setMapHoverNode('Sector 02: Academic Modules')}
-            onMouseLeave={() => setMapHoverNode(null)}
-            className="touch-group"
-            style={{ cursor: 'pointer' }}
-          >
-            {/* Massive invisible tap target (88px diameter) */}
-            <circle cx="580" cy="180" r="44" fill="transparent" pointerEvents="all" />
-            
-            {/* Cyan circular glow */}
-            <circle cx="580" cy="180" r="28" fill="url(#cyanGlow)" pointerEvents="none" />
-            <circle cx="580" cy="180" className="map-node-pulse-ring pulse-ring" fill="none" stroke="#00f0ff" strokeWidth="1" />
-            
-            {/* Core Node shape */}
-            <circle cx="580" cy="180" r="18" fill="rgba(6, 12, 20, 0.8)" stroke="#00f0ff" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 8px #00f0ff)' }} />
-            <polygon points="580,174 585,183 575,183" fill="#00f0ff" />
-            
-            {/* Centered label above node */}
-            <text x="580" y="138" className="map-node-label" stroke="rgba(0,0,0,0.9)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 02: ACADEMICS</text>
-            <text x="580" y="152" className="map-node-sublabel" stroke="rgba(0,0,0,0.9)" strokeWidth="2.5" paintOrder="stroke">📡 TELEMETRY</text>
-          </g>
-
-          {/* ACTIVE NEXUS: CITIZEN SUITE DOME (Central hub where user currently is) */}
-          <g 
-            onClick={() => setMapHoverNode('Citizen Suite Penthouse')}
-            onMouseEnter={() => setMapHoverNode('Citizen Suite Penthouse')}
-            onMouseLeave={() => setMapHoverNode(null)}
-            className="touch-group"
-            style={{ cursor: 'pointer' }}
-          >
-            {/* Massive invisible tap target (88px diameter) */}
-            <circle cx="400" cy="180" r="44" fill="transparent" pointerEvents="all" />
-
-            {/* Amber glowing radar rings */}
-            <circle cx="400" cy="180" r="24" fill="url(#amberGlow)" pointerEvents="none" />
-            <circle cx="400" cy="180" className="map-node-here-ring you-are-here-ring" fill="none" stroke="#ff5722" strokeWidth="1" />
-
-            {/* Core Nexus shape */}
-            <circle cx="400" cy="180" r="14" fill="rgba(20, 10, 6, 0.85)" stroke="#ff5722" strokeWidth="2.5" style={{ filter: 'drop-shadow(0 0 10px #ff5722)' }} />
-            <text x="400" y="184" fontSize="8" textAnchor="middle">🏨</text>
-
-            {/* Glowing HUD active location flags */}
-            <text x="400" y="210" className="map-node-title-here" stroke="rgba(0,0,0,0.9)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">CITIZEN SUITE</text>
-            <text x="400" y="224" className="map-node-sublabel-here" stroke="rgba(0,0,0,0.9)" strokeWidth="3" paintOrder="stroke" strokeLinecap="round">[📍 YOU ARE HERE]</text>
-          </g>
-
-          {/* Central Ares colony core coordinate crosshairs (Offset to bottom) */}
-          <circle cx="400" cy="280" r="8" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
-          <line x1="390" y1="280" x2="410" y2="280" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-          <line x1="400" y1="270" x2="400" y2="290" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-          <text x="400" y="305" fill="rgba(255,255,255,0.3)" fontSize="8" fontFamily="monospace, var(--font-tech)" textAnchor="middle">COLONY_CORE</text>
-
-        </svg>
-
-        {/* Dynamic Holographic Academic Modules telemetry panel */}
-        {academicSyncActive && (
-          <div 
-            style={{
-              position: 'absolute',
-              bottom: '16px',
-              left: '16px',
-              right: '16px',
-              maxHeight: '190px',
-              background: 'rgba(6, 10, 18, 0.92)',
-              border: '1.5px solid #00f0ff',
-              borderRadius: '8px',
-              boxShadow: '0 0 25px rgba(0, 240, 255, 0.25)',
-              padding: '14px',
-              boxSizing: 'border-box',
-              display: 'flex',
-              flexDirection: 'column',
-              textAlign: 'left',
-              animation: 'modal-scale-up 0.25s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
-              zIndex: 30
-            }}
-          >
-            {/* Telemetry Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(0,240,255,0.2)', paddingBottom: '6px', marginBottom: '8px' }}>
-              <span style={{ fontFamily: 'monospace, var(--font-tech)', fontSize: '0.65rem', color: '#00f0ff', fontWeight: 'bold', letterSpacing: '1px' }}>
-                📡 SYSTEM_SYNC // ACADEMIC_TELEMETRY_LOG
-              </span>
-              <button 
-                onClick={() => setAcademicSyncActive(false)}
-                className="custom-close-btn"
-                style={{
-                  background: 'none',
-                  border: 'none',
-                  color: 'rgba(255,255,255,0.5)',
-                  cursor: 'pointer',
-                  fontFamily: 'monospace',
-                  fontSize: '0.95rem',
-                  padding: '8px'
-                }}
-              >
-                [✕]
-              </button>
-            </div>
-
-            {/* Academic Content Columns */}
-            <div style={{ display: 'flex', gap: '16px', flex: 1, minHeight: 0, overflowY: 'auto' }} className="custom-scroll">
-              
-              {/* College Credentials */}
-              <div style={{ flex: 1 }}>
-                <div style={{ fontSize: '0.72rem', color: '#fff', fontWeight: 'bold', fontFamily: 'monospace', marginBottom: '4px' }}>Adelphi University CSC</div>
-                <div style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', marginBottom: '6px' }}>REMOTE CADET // DOUBLE CLASS STATUS</div>
-                <p style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.85)', margin: 0, lineHeight: '1.4' }}>
-                  Studying database query efficiencies, binary search tree logic, index optimization architectures, and mathematical logic pathways via Calculus.
-                </p>
-              </div>
-
-              {/* Calculus coordinates curve visualization (Vector decoration) */}
-              <div style={{ width: '150px', background: 'rgba(0,0,0,0.4)', borderRadius: '6px', border: '1px solid rgba(0,240,255,0.1)', padding: '6px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <span style={{ fontSize: '0.52rem', color: '#00f0ff', fontFamily: 'monospace', display: 'block', textAlign: 'center' }}>CALCULUS_SLOPE (dy/dx)</span>
-                <svg viewBox="0 0 100 45" width="100%" height="32px">
-                  <line x1="5" y1="38" x2="95" y2="38" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
-                  <line x1="20" y1="5" x2="20" y2="40" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
-                  <path d="M 20,38 Q 45,5 75,20 T 95,5" fill="none" stroke="#00f0ff" strokeWidth="1.2" />
-                  <circle cx="75" cy="20" r="2" fill="#ffb300" />
-                </svg>
-                <span style={{ fontSize: '0.48rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', textAlign: 'center' }}>INTEGRAL LIMIT: NOMINAL</span>
-              </div>
-
-            </div>
-          </div>
-        )}
+      {/* RIGHT COLUMN: The 2D Interactive Vector Map (Statically visible on desktop homepage only) */}
+      <div className="dashboard-right-col">
+        <CityGridMap />
       </div>
 
       {/* FULL-SCREEN IMMERSIVE INTEREST DETAILS MODAL OVERLAY */}

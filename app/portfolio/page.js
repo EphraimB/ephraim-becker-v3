@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import CityGridMap from '../../components/CityGridMap';
 
 const PROJECTS = [
   {
@@ -215,11 +214,6 @@ export default function PortfolioDome() {
     <div className="citizen-card-shell" style={{ flexDirection: 'column' }}>
       {/* Walking Transit Sweeper Overlays */}
       <div className="walking-motion-overlay" style={{ position: 'fixed' }}></div>
-
-      {/* Floating navigation map bubble */}
-      <div className="floating-nav-bubble">
-        <CityGridMap />
-      </div>
 
       {/* Bubbly floating content area */}
       <div className={`walking-content-container ${transitState}`} style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>

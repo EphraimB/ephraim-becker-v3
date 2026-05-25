@@ -54,9 +54,18 @@ export default function AresDashboard() {
   const [activeInterest, setActiveInterest] = useState(null);
   const [academicSyncActive, setAcademicSyncActive] = useState(false);
   const [mapHoverNode, setMapHoverNode] = useState(null);
+  const [isMounted, setIsMounted] = useState(false);
+  const [mapDrawerOpen, setMapDrawerOpen] = useState(false);
 
-  // Dynamic Mars Age calculation based on current time
+  // Set mounted state to prevent hydration mismatches
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // Dynamic Mars Age calculation based on current time - client side only
+  useEffect(() => {
+    if (!isMounted) return;
+
     const calculateAge = () => {
       const now = new Date();
       const diffTime = Math.abs(now - birthDate);
@@ -71,35 +80,24 @@ export default function AresDashboard() {
     // Interval check every minute
     const interval = setInterval(calculateAge, 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, [isMounted]);
 
   return (
-    <div style={{
-      position: 'absolute',
-      inset: 0,
-      display: 'flex',
-      flexDirection: 'row',
-      gap: '24px',
-      padding: '24px',
-      boxSizing: 'border-box',
-      overflow: 'hidden',
-      height: '100%',
-      width: '100%'
-    }} className="dashboard-main-container">
+    <div className="dashboard-main-container">
       
-      {/* Styles injector for custom micro-animations & responsive collapse */}
-      <style jsx global>{`
+      {/* Pure CSS Responsive & Mobile Slide-Out Drawer Engine */}
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes spin-turntable {
           from { transform: rotate(0deg); }
           to { transform: rotate(360deg); }
         }
         @keyframes signal-pulse {
           0% { r: 6px; opacity: 0.8; }
-          100% { r: 16px; opacity: 0; }
+          100% { r: 24px; opacity: 0; }
         }
-        @keyframes scanline-pass {
-          0% { transform: translateY(-100%); }
-          100% { transform: translateY(100%); }
+        @keyframes you-are-here-pulse {
+          0% { stroke-opacity: 0.9; stroke-width: 1px; r: 10px; }
+          100% { stroke-opacity: 0; stroke-width: 5px; r: 32px; }
         }
         .animate-spin-custom {
           animation: spin-turntable 8s linear infinite;
@@ -107,52 +105,426 @@ export default function AresDashboard() {
         .pulse-ring {
           animation: signal-pulse 2s cubic-bezier(0.25, 0, 0, 1) infinite;
         }
-        
-        /* Responsive adjustments */
-        @media (max-width: 950px) {
+        .you-are-here-ring {
+          animation: you-are-here-pulse 2.2s cubic-bezier(0.1, 0.8, 0.1, 1) infinite;
+        }
+        .touch-group {
+          transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .touch-group:active {
+          transform: scale(0.94);
+          transform-origin: 50% 50%;
+        }
+        .hud-badge {
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .hud-badge:active {
+          background: rgba(0, 240, 255, 0.2) !important;
+          border-color: rgba(0, 240, 255, 0.5) !important;
+          transform: scale(0.96) !important;
+        }
+        .social-link-port {
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .social-link-port:active {
+          background: rgba(0, 240, 255, 0.25) !important;
+          border-color: rgba(0, 240, 255, 0.6) !important;
+          transform: scale(0.94) !important;
+        }
+        .custom-close-btn:active {
+          background: rgba(255, 255, 255, 0.15) !important;
+          transform: scale(0.96) !important;
+        }
+
+        /* Mobile Ares Locator Button - Fixed and peeking from the left edge */
+        .mobile-locator-btn {
+          display: none;
+          background: rgba(10, 14, 30, 0.95);
+          border: 1.5px solid rgba(0, 240, 255, 0.35);
+          border-left: none;
+          border-radius: 0 8px 8px 0;
+          padding: 8px 12px;
+          text-align: left;
+          cursor: pointer;
+          position: fixed;
+          left: 0;
+          top: 140px; /* Positioned nicely on the left viewport edge */
+          z-index: 1000;
+          transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 4px 0 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(0, 240, 255, 0.1);
+          outline: none;
+          font-family: monospace, var(--font-tech);
+          align-items: center;
+          gap: 8px;
+          color: #fff;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+        }
+
+        .mobile-locator-btn:active {
+          background: rgba(0, 240, 255, 0.2) !important;
+          border-color: rgba(0, 240, 255, 0.6) !important;
+          transform: scale(0.96);
+          transform-origin: left center;
+        }
+
+        .locator-pulse-light {
+          width: 6px;
+          height: 6px;
+          background: #00ff88;
+          border-radius: 50%;
+          box-shadow: 0 0 8px #00ff88;
+          animation: locator-ping 1.5s infinite;
+          flex-shrink: 0;
+        }
+
+        @keyframes locator-ping {
+          0% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
+          70% { transform: scale(2); opacity: 0; box-shadow: 0 0 0 6px rgba(0, 255, 136, 0); }
+          100% { transform: scale(1); opacity: 0; }
+        }
+
+        .locator-location-name {
+          font-size: 0.68rem;
+          font-weight: bold;
+          color: #ff9100;
+          text-shadow: 0 0 6px rgba(255, 145, 0, 0.4);
+          letter-spacing: 0.5px;
+          margin-bottom: 0;
+          display: inline-block;
+        }
+
+        .locator-hint-arrow {
+          font-size: 0.65rem;
+          color: #00f0ff;
+          font-weight: bold;
+          margin-left: 2px;
+        }
+
+        .profile-avatar-frame {
+          width: 100%;
+          height: 160px;
+          position: relative;
+          border-radius: 8px;
+          overflow: hidden;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          background: radial-gradient(circle at center, rgba(0, 240, 255, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%);
+          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.08);
+          display: flex;
+          align-items: flex-end;
+          justify-content: center;
+          z-index: 2;
+          flex-shrink: 0;
+          margin-bottom: 16px;
+        }
+
+        /* Drawer Backdrop Overlay (Mobile only) */
+        .drawer-backdrop {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.6);
+          backdrop-filter: blur(5px);
+          -webkit-backdrop-filter: blur(5px);
+          z-index: 1999;
+          opacity: 0;
+          pointer-events: none;
+          transition: opacity 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .drawer-backdrop.active {
+          opacity: 1;
+          pointer-events: all;
+        }
+
+        /* Mobile close header within the Drawer */
+        .mobile-drawer-close-bar {
+          display: none;
+        }
+
+        /* Responsive Dashboard Grid System */
+        .dashboard-main-container {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          flex-direction: row;
+          gap: 24px;
+          padding: 24px;
+          box-sizing: border-box;
+          overflow: hidden;
+          height: 100%;
+          width: 100%;
+          min-height: 0;
+        }
+
+        .dashboard-left-col {
+          width: 380px;
+          min-width: 380px;
+          background: rgba(10, 6, 6, 0.65);
+          backdrop-filter: blur(20px);
+          -webkit-backdrop-filter: blur(20px);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-top: 1px solid rgba(255, 255, 255, 0.15);
+          border-radius: 12px;
+          padding: 20px;
+          box-sizing: border-box;
+          display: flex;
+          flex-direction: column;
+          z-index: 10;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.05);
+          height: 100%;
+        }
+
+        .dashboard-right-col {
+          flex: 1;
+          width: 100%;
+          height: 100%;
+          min-height: 0;
+          background: rgba(6, 9, 20, 0.55);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 12px;
+          position: relative;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+          box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0,0,0,0.6);
+        }
+
+        .dashboard-left-col-badge-btn {
+          font-family: monospace, var(--font-tech);
+          font-size: 0.68rem;
+          padding: 8px 12px;
+          border-radius: 6px;
+          background: rgba(255, 255, 255, 0.03);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          cursor: pointer;
+          width: 100%;
+          text-align: left;
+          color: var(--text-primary);
+        }
+
+        .dashboard-social-link {
+          padding: 6px 4px;
+          font-size: 0.62rem;
+          justify-content: center;
+          text-decoration: none;
+        }
+
+        /* SVG Map Node styling classes */
+        .map-node-label {
+          font-size: 11.5px !important;
+          font-weight: bold;
+          font-family: monospace, var(--font-tech);
+          text-anchor: middle;
+          fill: rgba(255, 255, 255, 0.9);
+          transition: font-size 0.2s ease, fill 0.2s ease;
+        }
+
+        .map-node-sublabel {
+          font-size: 8.5px !important;
+          font-family: monospace, var(--font-tech);
+          text-anchor: middle;
+          fill: rgba(255, 255, 255, 0.4);
+          transition: font-size 0.2s ease;
+        }
+
+        .map-node-sublabel-here {
+          font-size: 9.5px !important;
+          font-weight: bold;
+          font-family: monospace, var(--font-tech);
+          text-anchor: middle;
+          fill: #00ff88;
+          transition: font-size 0.2s ease;
+        }
+
+        .map-node-title-here {
+          font-size: 12.5px !important;
+          font-weight: bold;
+          font-family: monospace, var(--font-tech);
+          text-anchor: middle;
+          fill: #ff9100;
+          transition: font-size 0.2s ease;
+        }
+
+        .map-node-dot {
+          r: 6px !important;
+          transition: r 0.2s ease;
+        }
+
+        .map-node-ring {
+          r: 16px !important;
+          transition: r 0.2s ease;
+        }
+
+        .map-node-pulse-ring {
+          r: 14px !important;
+          transition: r 0.2s ease;
+        }
+
+        .map-node-here-ring {
+          r: 10px !important;
+          transition: r 0.2s ease;
+        }
+
+        .map-coordinate-overlay {
+          position: absolute;
+          top: 12px;
+          left: 16px;
+          z-index: 5;
+          font-family: monospace, var(--font-tech);
+          font-size: 0.62rem;
+          color: rgba(255,255,255,0.4);
+          letter-spacing: 1px;
+          pointer-events: none;
+          text-align: left;
+        }
+
+        @media (max-width: 900px) {
           .dashboard-main-container {
-            flex-direction: column !important;
-            overflow-y: auto !important;
-            height: auto !important;
             position: relative !important;
             inset: auto !important;
-            padding: 12px !important;
+            flex-direction: column !important;
             gap: 16px !important;
+            padding: 16px !important;
+            overflow: visible !important;
+            height: auto !important;
+            min-height: 100% !important;
           }
+
+          .mobile-locator-btn {
+            display: flex !important; /* Shows peeking tab on mobile */
+          }
+
+          .profile-avatar-frame {
+            width: 100% !important;
+            min-width: 0 !important;
+            height: 160px !important;
+            margin-bottom: 16px !important;
+          }
+
           .dashboard-left-col {
             width: 100% !important;
-            min-width: 100% !important;
+            min-width: 0 !important;
             height: auto !important;
           }
+
+          /* Slide-out Drawer Override for Right Map Column (LEFT EDGE ALIGNMENT) */
           .dashboard-right-col {
-            height: 480px !important;
-            min-height: 480px !important;
+            position: fixed !important;
+            top: 0 !important;
+            left: 0 !important; /* Aligned to left edge */
+            right: auto !important;
+            width: 85vw !important;
+            max-width: 440px !important;
+            height: 100vh !important;
+            min-height: 100vh !important;
+            z-index: 2000 !important;
+            border-radius: 0 16px 16px 0 !important; /* Curved on the right edge */
+            border-right: 2px solid #00f0ff !important; /* Cyber border on the right edge */
+            border-left: none !important;
+            border-top: none !important;
+            border-bottom: none !important;
+            background: rgba(6, 9, 20, 0.98) !important;
+            backdrop-filter: blur(25px) !important;
+            -webkit-backdrop-filter: blur(25px) !important;
+            box-shadow: 15px 0 35px rgba(0, 0, 0, 0.8) !important; /* Shadow points right */
+            transform: translateX(-100%) !important; /* Hides off the left screen edge */
+            transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            flex: none !important;
+          }
+
+          .dashboard-right-col.drawer-active {
+            transform: translateX(0) !important;
+          }
+
+          .mobile-drawer-close-bar {
+            display: block !important;
+            padding: 12px 16px !important;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+            background: rgba(0, 0, 0, 0.2) !important;
+            flex-shrink: 0 !important;
+          }
+
+          .dashboard-left-col-badge-btn {
+            padding: 12px 16px !important;
+          }
+
+          .dashboard-social-link {
+            padding: 12px 4px !important;
+            font-size: 0.72rem !important;
+          }
+
+          .map-coordinate-overlay {
+            font-size: 0.55rem !important;
+            max-width: 90%;
+            top: 60px !important; /* Shuffled down below mobile close bar */
+          }
+
+          /* Increase text sizes on map dynamically for mobile readability */
+          .map-node-label {
+            font-size: 17.5px !important;
+          }
+
+          .map-node-sublabel {
+            font-size: 12.5px !important;
+          }
+
+          .map-node-sublabel-here {
+            font-size: 13.5px !important;
+          }
+
+          .map-node-title-here {
+            font-size: 18.5px !important;
+          }
+
+          /* Scale up dots and rings for touch precision */
+          .map-node-dot {
+            r: 9px !important;
+          }
+
+          .map-node-ring {
+            r: 21px !important;
+          }
+
+          .map-node-pulse-ring {
+            r: 18px !important;
+          }
+
+          .map-node-here-ring {
+            r: 14px !important;
           }
         }
-      `}</style>
+      `}} />
 
-      {/* LEFT COLUMN: The Premium Profile Terminal Card */}
+      {/* Drawer Backdrop Overlay (Mobile only) */}
       <div 
-        className="dashboard-left-col"
+        className={`drawer-backdrop ${mapDrawerOpen ? 'active' : ''}`}
+        onClick={() => setMapDrawerOpen(false)}
+      ></div>
+
+      {/* Floating Left Peeking Locator Tab (Mobile only, handles viewport fixed positioning) */}
+      <button 
+        onClick={() => setMapDrawerOpen(true)}
+        className="mobile-locator-btn"
         style={{
-          width: '380px',
-          minWidth: '380px',
-          background: 'rgba(10, 6, 6, 0.65)',
-          backdropFilter: 'blur(20px)',
-          WebkitBackdropFilter: 'blur(20px)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          borderTop: '1px solid rgba(255, 255, 255, 0.15)',
-          borderRadius: '12px',
-          padding: '20px',
-          boxSizing: 'border-box',
-          display: 'flex',
-          flexDirection: 'column',
-          zIndex: 10,
-          position: 'relative',
-          overflow: 'hidden',
-          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.5), inset 0 1px 2px rgba(255, 255, 255, 0.05)'
+          opacity: mapDrawerOpen ? 0 : 1,
+          pointerEvents: mapDrawerOpen ? 'none' : 'auto'
         }}
       >
+        <span className="locator-pulse-light"></span>
+        <span className="locator-location-name">📍 CITIZEN SUITE</span>
+        <span className="locator-hint-arrow">➔</span>
+      </button>
+
+      {/* LEFT COLUMN: The Premium Profile Terminal Card */}
+      <div className="dashboard-left-col">
         {/* Terminal Scanline glow overlay */}
         <div style={{
           position: 'absolute',
@@ -164,22 +536,7 @@ export default function AresDashboard() {
         }}></div>
 
         {/* Profile Avatar Frame - holographic transparent layout */}
-        <div style={{
-          width: '100%',
-          height: '160px',
-          position: 'relative',
-          borderRadius: '8px',
-          overflow: 'hidden',
-          border: '1px solid rgba(255, 255, 255, 0.1)',
-          background: 'radial-gradient(circle at center, rgba(0, 240, 255, 0.15) 0%, rgba(0, 0, 0, 0.4) 100%)',
-          boxShadow: '0 8px 24px rgba(0, 0, 0, 0.4), inset 0 0 15px rgba(0, 240, 255, 0.08)',
-          marginBottom: '16px',
-          display: 'flex',
-          alignItems: 'flex-end',
-          justifyContent: 'center',
-          zIndex: 2,
-          flexShrink: 0
-        }}>
+        <div className="profile-avatar-frame">
           <img 
             src="/assets/images/profile.png" 
             alt="Ephraim Becker Profile" 
@@ -197,7 +554,7 @@ export default function AresDashboard() {
           <div style={{ position: 'absolute', bottom: '8px', right: '8px', width: '6px', height: '6px', borderBottom: '2px solid rgba(0,240,255,0.4)', borderRight: '2px solid rgba(0,240,255,0.4)' }}></div>
         </div>
 
-        {/* Core Stats Readout - Earth Age Removed */}
+        {/* Core Stats Readout - Dynamic Hydration Gated */}
         <div style={{
           fontFamily: 'monospace, var(--font-tech)',
           fontSize: '0.8rem',
@@ -213,7 +570,7 @@ export default function AresDashboard() {
           flexShrink: 0
         }}>
           <div>CITIZEN: <span style={{ color: '#fff', fontWeight: 'bold' }}>Ephraim Becker</span></div>
-          <div>MARS AGE: <span style={{ color: '#fff', fontWeight: 'bold' }}>{marsAge}</span></div>
+          <div>MARS AGE: <span style={{ color: '#fff', fontWeight: 'bold' }}>{isMounted ? marsAge : '15.8 Sols'}</span></div>
         </div>
 
         {/* Biography Block */}
@@ -244,7 +601,7 @@ export default function AresDashboard() {
           </p>
         </div>
 
-        {/* Clickable Interests Mini-Tags (One-Scan Dashboard View - Spacing fully optimized) */}
+        {/* Clickable Interests Mini-Tags (One-Scan Dashboard View) */}
         <div style={{
           textAlign: 'left',
           marginBottom: '16px',
@@ -264,34 +621,12 @@ export default function AresDashboard() {
             marginBottom: '6px'
           }}>// CLASSIFIED INTEREST REGISTRY</span>
           
-          <div style={{
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '6px',
-            overflowY: 'auto',
-            paddingRight: '4px'
-          }} className="left-card-column">
+          <div className="left-card-column">
             {INTERESTS.map((interest) => (
               <button
                 key={interest.id}
                 onClick={() => setActiveInterest(interest)}
-                className="hud-badge"
-                style={{
-                  fontFamily: 'monospace, var(--font-tech)',
-                  fontSize: '0.68rem',
-                  padding: '8px 12px',
-                  borderRadius: '6px',
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  border: '1px solid rgba(255, 255, 255, 0.08)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between',
-                  cursor: 'pointer',
-                  width: '100%',
-                  textAlign: 'left',
-                  transition: 'all 0.2s ease',
-                  color: 'var(--text-primary)'
-                }}
+                className="hud-badge dashboard-left-col-badge-btn"
               >
                 <span>[{interest.tag}]</span>
                 <span style={{ fontSize: '0.85rem', opacity: 0.7 }}>{interest.icon}</span>
@@ -313,8 +648,7 @@ export default function AresDashboard() {
             href="https://github.com/EphraimB" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="social-link-port"
-            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+            className="social-link-port dashboard-social-link"
           >
             GitHub
           </a>
@@ -322,8 +656,7 @@ export default function AresDashboard() {
             href="https://www.linkedin.com/in/ephraim-becker/" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="social-link-port"
-            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+            className="social-link-port dashboard-social-link"
           >
             LinkedIn
           </a>
@@ -331,8 +664,7 @@ export default function AresDashboard() {
             href="https://twitter.com/emb180" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="social-link-port"
-            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+            className="social-link-port dashboard-social-link"
           >
             X
           </a>
@@ -340,8 +672,7 @@ export default function AresDashboard() {
             href="https://www.youtube.com/channel/UCIHxAXYLxYlNaQiv0do0bUg" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="social-link-port"
-            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+            className="social-link-port dashboard-social-link"
           >
             YouTube
           </a>
@@ -349,8 +680,7 @@ export default function AresDashboard() {
             href="https://www.instagram.com/ephraim.becker/" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="social-link-port"
-            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+            className="social-link-port dashboard-social-link"
           >
             Instagram
           </a>
@@ -358,42 +688,38 @@ export default function AresDashboard() {
             href="https://www.facebook.com/ephraim.becker/" 
             target="_blank" 
             rel="noopener noreferrer" 
-            className="social-link-port"
-            style={{ padding: '6px 4px', fontSize: '0.62rem', justifyContent: 'center', textDecoration: 'none' }}
+            className="social-link-port dashboard-social-link"
           >
             Facebook
           </a>
         </div>
       </div>
 
-      {/* RIGHT COLUMN: The 2D Interactive Vector Map */}
-      <div 
-        className="dashboard-right-col"
-        style={{
-          flex: 1,
-          background: 'rgba(6, 9, 20, 0.55)',
-          border: '1px solid rgba(255, 255, 255, 0.08)',
-          borderRadius: '12px',
-          position: 'relative',
-          overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
-          boxShadow: '0 12px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0,0,0,0.6)'
-        }}
-      >
-        {/* Core coordinates header overlay */}
-        <div style={{
-          position: 'absolute',
-          top: '12px',
-          left: '16px',
-          zIndex: 5,
-          fontFamily: 'monospace, var(--font-tech)',
-          fontSize: '0.62rem',
-          color: 'rgba(255,255,255,0.4)',
-          letterSpacing: '1px',
-          pointerEvents: 'none',
-          textAlign: 'left'
-        }}>
+      {/* RIGHT COLUMN: The 2D Interactive Vector Map / Mobile slide-out drawer (LEFT EDGE ALIGNED) */}
+      <div className={`dashboard-right-col ${mapDrawerOpen ? 'drawer-active' : ''}`}>
+        
+        {/* Mobile drawer header close panel */}
+        <div className="mobile-drawer-close-bar">
+          <button 
+            onClick={() => setMapDrawerOpen(false)}
+            className="hud-btn custom-close-btn"
+            style={{
+              width: '100%',
+              padding: '10px',
+              fontSize: '0.72rem',
+              borderColor: 'rgba(0, 240, 255, 0.3)',
+              background: 'rgba(0, 240, 255, 0.05)',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              color: '#00f0ff'
+            }}
+          >
+            [ ✕ CLOSE TACTICAL MAP ]
+          </button>
+        </div>
+
+        {/* Core coordinates overlay */}
+        <div className="map-coordinate-overlay">
           ARES_SYSTEM // NAVIGATION_MAP // DOME_LINK_ONLINE
           {mapHoverNode && <span style={{ color: '#00f0ff', marginLeft: '12px' }}>[ SELECTED: {mapHoverNode.toUpperCase()} ]</span>}
         </div>
@@ -420,6 +746,11 @@ export default function AresDashboard() {
               <stop offset="0%" stopColor="#00f0ff" stopOpacity="0.4" />
               <stop offset="100%" stopColor="#00f0ff" stopOpacity="0" />
             </radialGradient>
+            {/* Amber glowing dot for "You Are Here" */}
+            <radialGradient id="amberGlow" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stopColor="#ff5722" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#ff5722" stopOpacity="0" />
+            </radialGradient>
           </defs>
 
           {/* Radar Sweep scanning graphic circles */}
@@ -432,25 +763,36 @@ export default function AresDashboard() {
           <line x1="170" y1="250" x2="630" y2="250" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" strokeDasharray="5 5" />
           <line x1="400" y1="80" x2="400" y2="420" stroke="rgba(255,255,255,0.04)" strokeWidth="0.8" strokeDasharray="5 5" />
 
-          {/* Tactical road segments / colony navigation networks */}
-          {/* Central linked nodes roads - moved safe inward coordinates */}
-          <line x1="400" y1="250" x2="260" y2="180" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="4 4" />
-          <line x1="400" y1="250" x2="540" y2="180" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="4 4" />
-          <line x1="400" y1="250" x2="400" y2="110" stroke="rgba(255,255,255,0.12)" strokeWidth="1" strokeDasharray="4 4" />
-          <line x1="260" y1="180" x2="290" y2="330" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
-          <line x1="540" y1="180" x2="510" y2="330" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
-          <line x1="290" y1="330" x2="510" y2="330" stroke="rgba(255,255,255,0.08)" strokeWidth="0.8" />
+          {/* Colony road networks linking domes directly to the central Citizen Suite */}
+          <line x1="400" y1="180" x2="400" y2="80" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <line x1="400" y1="180" x2="220" y2="180" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <line x1="400" y1="180" x2="580" y2="180" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <line x1="400" y1="180" x2="270" y2="340" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          <line x1="400" y1="180" x2="530" y2="340" stroke="rgba(255,255,255,0.15)" strokeWidth="1.2" strokeDasharray="4 4" />
+          
+          {/* Outer Ring Road connecting other domes */}
+          <line x1="400" y1="80" x2="220" y2="180" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+          <line x1="400" y1="80" x2="580" y2="180" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+          <line x1="220" y1="180" x2="270" y2="340" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+          <line x1="580" y1="180" x2="530" y2="340" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+          <line x1="270" y1="340" x2="530" y2="340" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+
+          {/* ================= SECTOR NODES & TOUCH TARGETS (r="44" for effortless finger activation) ================= */}
 
           {/* SECTOR 03: BIOSPHERE DOME (Top center hub) */}
           <g 
             onClick={() => router.push('/atmosphere-dome')}
             onMouseEnter={() => setMapHoverNode('Sector 03: Biosphere Dome')}
             onMouseLeave={() => setMapHoverNode(null)}
-            style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
+            className="touch-group"
+            style={{ cursor: 'pointer' }}
           >
-            <circle cx="400" cy="110" r="16" fill="rgba(0, 255, 136, 0.05)" stroke="rgba(0, 255, 136, 0.4)" strokeWidth="1.5" />
-            <circle cx="400" cy="110" r="6" fill="#00ff88" />
-            <text x="400" y="85" fill="rgba(255,255,255,0.6)" fontSize="9" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 03: BIOSPHERE</text>
+            {/* Massive invisible tap target (88px diameter) */}
+            <circle cx="400" cy="80" r="44" fill="transparent" pointerEvents="all" />
+            
+            <circle cx="400" cy="80" className="map-node-ring" fill="rgba(0, 255, 136, 0.05)" stroke="rgba(0, 255, 136, 0.4)" strokeWidth="1.5" />
+            <circle cx="400" cy="80" className="map-node-dot" fill="#00ff88" />
+            <text x="400" y="46" className="map-node-label" stroke="rgba(0,0,0,0.85)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 03: BIOSPHERE</text>
           </g>
 
           {/* SECTOR 04: QUANTUM NET (Bottom left hub) */}
@@ -458,11 +800,15 @@ export default function AresDashboard() {
             onClick={() => router.push('/quantum-net')}
             onMouseEnter={() => setMapHoverNode('Sector 04: Quantum Net')}
             onMouseLeave={() => setMapHoverNode(null)}
-            style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
+            className="touch-group"
+            style={{ cursor: 'pointer' }}
           >
-            <circle cx="290" cy="330" r="16" fill="rgba(255, 179, 0, 0.05)" stroke="rgba(255, 179, 0, 0.4)" strokeWidth="1.5" />
-            <circle cx="290" cy="330" r="6" fill="#ffb300" />
-            <text x="290" y="360" fill="rgba(255,255,255,0.6)" fontSize="9" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 04: QUANTUM NET</text>
+            {/* Massive invisible tap target (88px diameter) */}
+            <circle cx="270" cy="340" r="44" fill="transparent" pointerEvents="all" />
+            
+            <circle cx="270" cy="340" className="map-node-ring" fill="rgba(255, 179, 0, 0.05)" stroke="rgba(255, 179, 0, 0.4)" strokeWidth="1.5" />
+            <circle cx="270" cy="340" className="map-node-dot" fill="#ffb300" />
+            <text x="270" y="380" className="map-node-label" stroke="rgba(0,0,0,0.85)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 04: QUANTUM NET</text>
           </g>
 
           {/* SECTOR 05: METROPOLIS CORE (Bottom right hub) */}
@@ -470,58 +816,94 @@ export default function AresDashboard() {
             onClick={() => router.push('/metropolis-core')}
             onMouseEnter={() => setMapHoverNode('Sector 05: Metropolis Core')}
             onMouseLeave={() => setMapHoverNode(null)}
-            style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
+            className="touch-group"
+            style={{ cursor: 'pointer' }}
           >
-            <circle cx="510" cy="330" r="16" fill="rgba(0, 240, 255, 0.05)" stroke="rgba(0, 240, 255, 0.4)" strokeWidth="1.5" />
-            <circle cx="510" cy="330" r="6" fill="#00f0ff" />
-            <text x="510" y="360" fill="rgba(255,255,255,0.6)" fontSize="9" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 05: METROPOLIS</text>
+            {/* Massive invisible tap target (88px diameter) */}
+            <circle cx="530" cy="340" r="44" fill="transparent" pointerEvents="all" />
+            
+            <circle cx="530" cy="340" className="map-node-ring" fill="rgba(0, 240, 255, 0.05)" stroke="rgba(0, 240, 255, 0.4)" strokeWidth="1.5" />
+            <circle cx="530" cy="340" className="map-node-dot" fill="#00f0ff" />
+            <text x="530" y="380" className="map-node-label" stroke="rgba(0,0,0,0.85)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 05: METROPOLIS</text>
           </g>
 
-          {/* SECTOR 01: PORTFOLIO ARCHIVES (Left highlighted hub - Dusk Violet Glow - Centered text avoids clipping) */}
+          {/* SECTOR 01: PORTFOLIO ARCHIVES (Left highlighted hub - Dusk Violet Glow) */}
           <g 
             onClick={() => router.push('/portfolio')}
             onMouseEnter={() => setMapHoverNode('Sector 01: Portfolio Archives')}
             onMouseLeave={() => setMapHoverNode(null)}
+            className="touch-group"
             style={{ cursor: 'pointer' }}
           >
+            {/* Massive invisible tap target (88px diameter) */}
+            <circle cx="220" cy="180" r="44" fill="transparent" pointerEvents="all" />
+            
             {/* Dusk Violet Pulsing glowing rings */}
-            <circle cx="260" cy="180" r="28" fill="url(#violetGlow)" pointerEvents="none" />
-            <circle cx="260" cy="180" r="14" fill="none" stroke="#c259ff" strokeWidth="1" className="pulse-ring" />
+            <circle cx="220" cy="180" r="28" fill="url(#violetGlow)" pointerEvents="none" />
+            <circle cx="220" cy="180" className="map-node-pulse-ring pulse-ring" fill="none" stroke="#c259ff" strokeWidth="1" />
             
             {/* Core Node shape */}
-            <circle cx="260" cy="180" r="18" fill="rgba(10, 6, 20, 0.8)" stroke="#c259ff" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 8px #c259ff)' }} />
-            <circle cx="260" cy="180" r="6" fill="#c259ff" />
+            <circle cx="220" cy="180" r="18" fill="rgba(10, 6, 20, 0.8)" stroke="#c259ff" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 8px #c259ff)' }} />
+            <circle cx="220" cy="180" className="map-node-dot" fill="#c259ff" />
             
             {/* Centered label above node */}
-            <text x="260" y="142" fill="#c259ff" fontSize="9.5" fontWeight="bold" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 01: PORTFOLIO</text>
-            <text x="260" y="152" fill="rgba(255,255,255,0.4)" fontSize="6.5" fontFamily="monospace, var(--font-tech)" textAnchor="middle">[CLICK TO TRANSLATE]</text>
+            <text x="220" y="138" className="map-node-label" stroke="rgba(0,0,0,0.9)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 01: PORTFOLIO</text>
+            <text x="220" y="152" className="map-node-sublabel" stroke="rgba(0,0,0,0.9)" strokeWidth="2.5" paintOrder="stroke">📂 TRANSLATE</text>
           </g>
 
-          {/* SECTOR 02: ACADEMIC MODULES (Right highlighted hub - Cybernetic Cyan Glow - Centered text completely solves clipping) */}
+          {/* SECTOR 02: ACADEMIC MODULES (Right highlighted hub - Cybernetic Cyan Glow) */}
           <g 
             onClick={() => setAcademicSyncActive(!academicSyncActive)}
             onMouseEnter={() => setMapHoverNode('Sector 02: Academic Modules')}
             onMouseLeave={() => setMapHoverNode(null)}
+            className="touch-group"
             style={{ cursor: 'pointer' }}
           >
+            {/* Massive invisible tap target (88px diameter) */}
+            <circle cx="580" cy="180" r="44" fill="transparent" pointerEvents="all" />
+            
             {/* Cyan circular glow */}
-            <circle cx="540" cy="180" r="28" fill="url(#cyanGlow)" pointerEvents="none" />
-            <circle cx="540" cy="180" r="14" fill="none" stroke="#00f0ff" strokeWidth="1" className="pulse-ring" />
+            <circle cx="580" cy="180" r="28" fill="url(#cyanGlow)" pointerEvents="none" />
+            <circle cx="580" cy="180" className="map-node-pulse-ring pulse-ring" fill="none" stroke="#00f0ff" strokeWidth="1" />
             
             {/* Core Node shape */}
-            <circle cx="540" cy="180" r="18" fill="rgba(6, 12, 20, 0.8)" stroke="#00f0ff" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 8px #00f0ff)' }} />
-            <polygon points="540,174 545,183 535,183" fill="#00f0ff" />
+            <circle cx="580" cy="180" r="18" fill="rgba(6, 12, 20, 0.8)" stroke="#00f0ff" strokeWidth="2" style={{ filter: 'drop-shadow(0 0 8px #00f0ff)' }} />
+            <polygon points="580,174 585,183 575,183" fill="#00f0ff" />
             
             {/* Centered label above node */}
-            <text x="540" y="142" fill="#00f0ff" fontSize="9.5" fontWeight="bold" fontFamily="monospace, var(--font-tech)" textAnchor="middle">SECTOR 02: ACADEMICS</text>
-            <text x="540" y="152" fill="rgba(255,255,255,0.4)" fontSize="6.5" fontFamily="monospace, var(--font-tech)" textAnchor="middle">[CLICK TO SYNC TELEMETRY]</text>
+            <text x="580" y="138" className="map-node-label" stroke="rgba(0,0,0,0.9)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">SECTOR 02: ACADEMICS</text>
+            <text x="580" y="152" className="map-node-sublabel" stroke="rgba(0,0,0,0.9)" strokeWidth="2.5" paintOrder="stroke">📡 TELEMETRY</text>
           </g>
 
-          {/* Central Ares colony coordinate crosshair */}
-          <circle cx="400" cy="250" r="8" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
-          <line x1="390" y1="250" x2="410" y2="250" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-          <line x1="400" y1="240" x2="400" y2="260" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
-          <text x="400" y="275" fill="rgba(255,255,255,0.3)" fontSize="8" fontFamily="monospace, var(--font-tech)" textAnchor="middle">COLONY_CORE</text>
+          {/* ACTIVE NEXUS: CITIZEN SUITE DOME (Central hub where user currently is) */}
+          <g 
+            onClick={() => setMapHoverNode('Citizen Suite Penthouse')}
+            onMouseEnter={() => setMapHoverNode('Citizen Suite Penthouse')}
+            onMouseLeave={() => setMapHoverNode(null)}
+            className="touch-group"
+            style={{ cursor: 'pointer' }}
+          >
+            {/* Massive invisible tap target (88px diameter) */}
+            <circle cx="400" cy="180" r="44" fill="transparent" pointerEvents="all" />
+
+            {/* Amber glowing radar rings */}
+            <circle cx="400" cy="180" r="24" fill="url(#amberGlow)" pointerEvents="none" />
+            <circle cx="400" cy="180" className="map-node-here-ring you-are-here-ring" fill="none" stroke="#ff5722" strokeWidth="1" />
+
+            {/* Core Nexus shape */}
+            <circle cx="400" cy="180" r="14" fill="rgba(20, 10, 6, 0.85)" stroke="#ff5722" strokeWidth="2.5" style={{ filter: 'drop-shadow(0 0 10px #ff5722)' }} />
+            <text x="400" y="184" fontSize="8" textAnchor="middle">🏨</text>
+
+            {/* Glowing HUD active location flags */}
+            <text x="400" y="210" className="map-node-title-here" stroke="rgba(0,0,0,0.9)" strokeWidth="3.5" paintOrder="stroke" strokeLinecap="round">CITIZEN SUITE</text>
+            <text x="400" y="224" className="map-node-sublabel-here" stroke="rgba(0,0,0,0.9)" strokeWidth="3" paintOrder="stroke" strokeLinecap="round">[📍 YOU ARE HERE]</text>
+          </g>
+
+          {/* Central Ares colony core coordinate crosshairs (Offset to bottom) */}
+          <circle cx="400" cy="280" r="8" fill="none" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" />
+          <line x1="390" y1="280" x2="410" y2="280" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+          <line x1="400" y1="270" x2="400" y2="290" stroke="rgba(255,255,255,0.3)" strokeWidth="1.5" />
+          <text x="400" y="305" fill="rgba(255,255,255,0.3)" fontSize="8" fontFamily="monospace, var(--font-tech)" textAnchor="middle">COLONY_CORE</text>
 
         </svg>
 
@@ -554,13 +936,15 @@ export default function AresDashboard() {
               </span>
               <button 
                 onClick={() => setAcademicSyncActive(false)}
+                className="custom-close-btn"
                 style={{
                   background: 'none',
                   border: 'none',
                   color: 'rgba(255,255,255,0.5)',
                   cursor: 'pointer',
                   fontFamily: 'monospace',
-                  fontSize: '0.7rem'
+                  fontSize: '0.95rem',
+                  padding: '8px'
                 }}
               >
                 [✕]
@@ -613,7 +997,7 @@ export default function AresDashboard() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            padding: '20px',
+            padding: '10px',
             boxSizing: 'border-box'
           }}
         >
@@ -622,6 +1006,7 @@ export default function AresDashboard() {
             style={{
               width: '100%',
               maxWidth: '720px',
+              maxHeight: '92vh',
               background: 'rgba(10, 14, 30, 0.94)',
               border: '2px solid var(--color-accent)',
               borderColor: activeInterest.id === 'technology' ? '#00f0ff' : activeInterest.id === 'scifi' ? '#c259ff' : activeInterest.id === 'music' ? '#ffb300' : activeInterest.id === 'biking' ? '#00ff88' : '#e65100',
@@ -654,10 +1039,10 @@ export default function AresDashboard() {
               </span>
               <button 
                 onClick={() => setActiveInterest(null)}
-                className="hud-btn"
+                className="hud-btn custom-close-btn"
                 style={{
-                  padding: '4px 12px',
-                  fontSize: '0.65rem',
+                  padding: '8px 18px',
+                  fontSize: '0.72rem',
                   borderColor: 'rgba(255,255,255,0.2)',
                   borderRadius: '6px',
                   background: 'rgba(255,255,255,0.05)',

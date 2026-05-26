@@ -7,6 +7,7 @@ import { useRouter, usePathname } from 'next/navigation';
 const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
   '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
+  '/neurodiversity': { x: 150, y: -100, name: 'NEURODIVERSITY DECK' },
   'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }, // Academics sector toggled
   '/atmosphere-dome': { x: -150, y: 150, name: 'BIOSPHERE DOME' },
   '/quantum-net': { x: -150, y: -150, name: 'QUANTUM NET' },
@@ -75,6 +76,16 @@ export default function CityGridMap({ isDrawer = false }) {
       rgb: '194, 89, 255',
       icon: '📂',
       desc: 'Retrospective engineering files'
+    },
+    {
+      id: 'neurodiversity',
+      label: 'SECTOR 02 // ADVOCACY',
+      title: 'NEURODIVERSITY DECK',
+      route: '/neurodiversity',
+      color: '#00ff88',
+      rgb: '0, 255, 136',
+      icon: '🧠',
+      desc: 'Ares colony neuro-advocacy portal'
     }
   ];
 

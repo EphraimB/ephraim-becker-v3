@@ -34,7 +34,13 @@ export default function ClientLayoutWrapper({ children }) {
     currentTheme = 'metropolis';
     hudSectorName = 'Portfolio Archives';
     currentLocationName = 'PORTFOLIO';
+  } else if (pathname === '/neurodiversity') {
+    bgImage = '/assets/images/backgrounds/atmosphere-dome.png';
+    currentTheme = 'biosphere';
+    hudSectorName = 'Neurodiversity Deck';
+    currentLocationName = 'ADVOCACY HUB';
   }
+
 
   // Close the drawer automatically when pathname changes (teleportation succeeds)
   useEffect(() => {

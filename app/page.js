@@ -607,28 +607,6 @@ export default function AresDashboard() {
                            {activeInterest.slides[activeSlide].content}
                          </span>
                          
-                         {/* Overview Slide buttons */}
-                         {activeSlide === 0 && activeInterest.slides[activeSlide].ctaButtons && (
-                           <div className="interest-cta-grid">
-                             {activeInterest.slides[activeSlide].ctaButtons.map((btn, btnIdx) => (
-                               <button
-                                 key={btnIdx}
-                                 onClick={() => setActiveSlide(btn.targetSlide)}
-                                 className="interest-cta-btn"
-                                 style={{
-                                   borderColor: activeInterest.themeColor,
-                                   color: '#fff',
-                                   background: activeInterest.themeBg,
-                                   border: '1.5px solid var(--theme-color)',
-                                   '--theme-color': activeInterest.themeColor
-                                 }}
-                               >
-                                 {btn.label}
-                               </button>
-                             ))}
-                           </div>
-                         )}
-
                          {/* Sub-slides back button */}
                          {activeSlide > 0 && (
                            <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>

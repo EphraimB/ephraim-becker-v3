@@ -11,7 +11,7 @@
     "slides": [
       {
         "label": "OVERVIEW",
-        "content": "I got into technology because graphical user interfaces (GUIs) completely fascinated me! The idea of designing responsive, visual operating decks led me directly into coding. It's an amazing feeling to build entirely new digital environments and interactive software from scratch. Now, I apply that same design passion to building custom frontend decks like the Ares City OS!",
+        "content": "Technology is my ultimate sandbox! I am deeply fascinated by the design of graphical user interfaces (GUIs) that bring code to life visually, and I am equally passionate about looking forward to futuristic gadgets and the latest consumer tech. Explore each detailed section below:",
         "svgType": "tech_overview",
         "ctaButtons": [
           {
@@ -26,12 +26,12 @@
       },
       {
         "label": "01 // GUI",
-        "content": "My fascination with Graphical User Interfaces began in childhood, wondering how visual elements could make complex hardware accessible. I design interfaces that balance immersive aesthetics with crisp functionality, treating every screen layout as a visual coordinate map. Building responsive consoles with vanilla CSS and next-generation JS is my primary playground.",
+        "content": "I got into technology because graphical user interfaces (GUIs) completely fascinated me! The idea of designing responsive, visual operating decks led me directly into coding. It's an amazing feeling to build entirely new digital environments and interactive software from scratch. Now, I apply that same design passion to building custom frontend decks like the Ares City OS!",
         "svgType": "tech_gui"
       },
       {
         "label": "02 // GADGETS",
-        "content": "I am highly passionate about futuristic gadgets, wearable displays, spatial wrist emitters, and pioneer hardware. Exploring physical interface mechanics and early mobile communicator designs inspires me to build more immersive, hardware-themed web console simulations in my coding workflow.",
+        "content": "Beyond software interfaces, I am deeply passionate about futuristic hardware and pioneering gadgets! I always look forward to exploring the latest and greatest consumer tech, next-generation mobile devices, holographic displays, and experimental wearables. Keeping pace with cutting-edge tech innovations inspires me to think about what is possible tomorrow and fuels my drive to incorporate forward-looking concepts directly into my computer science work.",
         "svgType": "tech_gadgets"
       }
     ]
@@ -48,7 +48,7 @@
     "slides": [
       {
         "label": "OVERVIEW",
-        "content": "I am deeply passionate about sci-fi and fantasy cinematic universes. I love movies with cool futuristic worldbuilding, legendary space operas, and magical lore that spark my imagination. My top favorites are Star Wars, Harry Potter, Lord of the Rings, and Back to the Future—each one has such an engaging world and time-travel or magical logic!",
+        "content": "I am deeply inspired by the boundless imagination of science fiction and fantasy cinematic universes! For me, sci-fi is a gateway to imagining the next big thing—where high-tech gadgets and advanced user interfaces on screen directly fuel my passion for coding real-world systems. Meanwhile, fantasy worlds capture my heart with their magic, rich storytelling, and legendary journeys. A masterpiece like Back to the Future perfectly bridges both worlds, combining time-traveling science fiction gadgetry with the whimsical magic of timeline shifts and destiny! Explore each detailed realm below:",
         "svgType": "scifi_overview",
         "ctaButtons": [
           {
@@ -63,7 +63,7 @@
       },
       {
         "label": "01 // SCI-FI",
-        "content": "Science Fiction expands my engineering outlook! Concepts like dynamic holographic displays in Star Wars, the LCARS terminal interface in Star Trek, or Doc Brown's Flux Capacitor time-circuits in Back to the Future serve as direct visual and functional inspirations for my frontend coding layouts, showing how design can feel alive.",
+        "content": "Sci-Fi is where my tech and design interest runs wild! I love watching legendary space operas and futuristic movies to imagine the next generation of user interfaces and hardware. From the iconic, highly structured LCARS terminal screens in Star Trek, to the floating blue holograms, lightsabers, and stormtrooper lasers in Star Wars, and even the sleek, talking J.A.R.V.I.S. holographic system in Iron Man, these cinematic creations inspire me. Similarly, Back to the Future's customized time-traveling DeLorean, Doc Brown's legendary Flux Capacitor, and the wild mechanics of temporal displacement fuel my love for futuristic hardware!",
         "svgType": "scifi_detailed"
       },
       {
@@ -85,7 +85,7 @@
     "slides": [
       {
         "label": "OVERVIEW",
-        "content": "I have a deep love for music, spanning classical compositions, modern pop, and vocal performance! In the classical realm, the pipe organ is my absolute favorite instrument because of its grand mechanical power, rich acoustics, and architectural sound. On the pop side, I love Taylor Swift and Noah Kahan for their narrative storytelling. Singing is also a massive part of my life—I absolutely love performing karaoke, singing along to my favorite tracks (which I've curated in my YouTube playlist), and singing in structured choirs. Blending my voice in a choir to create beautiful harmonies with others is incredibly fulfilling!",
+        "content": "Music is the emotional pulse of my life! My musical journey truly began with my transition to Reform Judaism, where the powerful tradition of singing prayers aloud first captured my heart. This spiritual path introduced me to the majestic, professional sound of the pipe organ, and ignited my love for rich pop storytelling like Taylor Swift and Noah Kahan. Beyond listening, music is interactive—fueling my passion for performing karaoke and singing in choirs. Explore each dimension below:",
         "svgType": "music_overview",
         "ctaButtons": [
           {
@@ -100,12 +100,12 @@
       },
       {
         "label": "01 // ORGANS & ARTISTS",
-        "content": "My musical path is anchored in a deep love for acoustic pipe organs and great pop artists! Classical organs captivate me with their grand mechanical complexity and massive, hall-filling sound. In contemporary pop, I am inspired by Taylor Swift's incredible narrative lyricism and Noah Kahan's folk-pop style (highly recommending 'Someone Like You' on his 'I Was / I Am' album). These artists connect deep emotion to musical structure.",
+        "content": "My transition to Reform Judaism opened my eyes to music's power. Unlike the quiet prayers of Orthodox traditions, Reform temples sing everything, introducing me to the grand pipe organ for the very first time with its exceptionally professional sound, mechanical complexity, and rich, hall-filling acoustics! Later, I fell in love with Taylor Swift for her dramatic, emotionally raw pop storytelling. Looking for more relatable music, I asked ChatGPT for recommendations and fell in love with Noah Kahan, particularly the song \"Someone Like You\" on his \"I Was / I Am\" album, which speaks deeply to my own journey.",
         "svgType": "music_artists"
       },
       {
         "label": "02 // VOCAL & CHOIR",
-        "content": "Singing is one of my greatest passions and connects me directly to other people! Beginning with local karaoke gatherings recommended by a temple friend, I unlocked a profound joy in vocal performance, which later led me to choral singing. Joining a structured choir class at Adelphi University refined my vocal control, allowing me to build deep confidence in vocal harmony and share in the unified team energy of creating beautiful music.",
+        "content": "I decided to take my love for music further and make it active! After a temple friend invited me to a local karaoke group, I discovered the sheer joy of vocal performance, singing along to my favorite pop and folk tracks. This passion led me directly into choir singing, where blending voices in harmony creates a powerful communal bond. I even challenged myself by taking a chorale class at Adelphi University to refine my vocal technique, learn structured sight-reading, and perform classical choral literature!",
         "svgType": "music_vocals",
         "embed": "youtube_playlist"
       }
@@ -123,7 +123,7 @@
     "slides": [
       {
         "label": "OVERVIEW",
-        "content": "Biking is one of my favorite outdoor activities! What I love most is the sheer freedom it gives me—I don't have to rely on public transportation schedules and can travel whenever I want. Cruising along the dome pathways is incredibly relaxing and gives me a great mental reset, even when slogging against tough headwinds.",
+        "content": "Biking represents the ultimate power of self-reliance and daily challenge in my life! While it's not simply my favorite leisure activity, it is far more fun and engaging than sitting in public transit or having someone drive me. Biking puts me in full, independent control of my journey. What started as a quest on Google Maps for a faster commute to Adelphi University transformed into a daily, all-weather test of endurance and distance. Explore each dimension of my cycling journey below:",
         "svgType": "biking_overview",
         "ctaButtons": [
           {
@@ -138,12 +138,12 @@
       },
       {
         "label": "01 // TIME & ROUTING",
-        "content": "Biking unlocked my complete independence and time-efficiency! While exploring transit schedules on Google Maps to Adelphi University, I discovered that taking a train would take over 75 minutes. By mapping a direct cycling route instead, I cut my commute down to a swift 45 minutes, saving a full 30 minutes each way and liberating me from train delays, while catching fast tailwinds along the road.",
+        "content": "The core of biking for me is absolute independence and time-efficiency! It began when I was mapping out public transportation routes to Adelphi University on Google Maps. I was astonished to see that cycling there would save me a full half hour over public transit, completing the trip in just 45 minutes! Biking liberates me from rigid transit schedules and relying on others to drive me. Being in full control of my speed and navigation is incredibly empowering—especially when catching a fast, exhilarating tailwind!",
         "svgType": "biking_routing"
       },
       {
         "label": "02 // ENDURANCE",
-        "content": "A close friend inspired me to push past self-imposed limits and commit to cycling every single weekday—leading to slogging through pouring rain and heavy headwinds. Highlights include testing myself by successfully biking over 2 hours one way to Manhattan round trip a few times with no problem, expanding my boundaries to longer distances.",
+        "content": "At first, I didn't think I could manage to bike to campus every single weekday. But a friend inspired me to push past my self-imposed limits and commit to it every day—no matter what. Since then, I've embraced the challenge, riding consistently even in the pouring rain and slogging against powerful headwind currents. Over time, this daily discipline expanded my limits, inspiring me to tackle much longer distances. I even tested myself by biking over 2 hours one way to see if I could get to Manhattan, and I did it a few times with no problem round trip, proving that any weather or mileage barrier can be conquered!",
         "svgType": "biking_endurance"
       }
     ]
@@ -160,7 +160,7 @@
     "slides": [
       {
         "label": "OVERVIEW",
-        "content": "I am deeply passionate about flag football! I first got into it by watching YouTube videos and saw how fun the game is, especially with all the strategizing with teammates, its highly structured nature, and the fact that everyone on the field makes a difference. In other environments, I struggle to socialize with other people and it sometimes scares them away, but flag football has clear rules and social scripts that I understand, so I fit in very well. It also feels incredibly good to know that I can contribute and make a difference on the field.",
+        "content": "Flag football represents a thrilling intersection of team strategy, structured play, and social inclusion! I first got into the sport by watching YouTube videos showing how much fun people have playing it. Every single position and action makes a difference on the field. Because the game has highly structured rules and clear social scripts, it provides an environment where I can easily follow, understand, and connect with others. Explore the strategic and playmaker dimensions of my flag football journey below:",
         "svgType": "football_overview",
         "ctaButtons": [
           {
@@ -175,12 +175,12 @@
       },
       {
         "label": "01 // PLAYMAKER & THRILLS",
-        "content": "Flag football is filled with massive playmaking thrills! There's a massive rush in making a leaping catch, intercepting a pass on defense, or helping a teammate score a touchdown by running routes or blocking. These gameplay events bring a deep sense of contribution, where every player's effort is vital. Furthermore, the sport's highly structured rules and defined play scripts provide clear social guidelines, helping me feel comfortable and connected.",
+        "content": "There is a unique thrill in executing plays and making an impact! I feel a huge rush making a nice catch and having my teammates get excited and celebrate with me. On defense, intercepting a pass brings an incredible thrill. It is a highly structured sport where everyone makes a difference, and we can directly help teammates out—whether by running route scripts or blocking for them on the field. Flag football provides clear rules and social scripts that allow me to communicate and fit in very well without social struggles.",
         "svgType": "football_playmaker"
       },
       {
         "label": "02 // HUDDLES & TEAM STRATEGY",
-        "content": "The heart of football is the team huddle. Strategizing together as a team in the huddle, planning out routes, and coordinating blocks makes me feel completely included and supported. In the huddle, we are all in it together, working in absolute sync to execute a playbook where every teammate makes a difference and supports one another.",
+        "content": "The ultimate power of flag football lies in team unity! Strategizing in huddles and being \"all in it together as a team\" makes me feel deeply included and valued. We operate in sync, discussing tactics, calling play scripts, and working as one cohesive unit to execute. Everyone has a specific role, yet we succeed only when we support one another, turning the playbook into a powerful platform for active collaboration and shared success.",
         "svgType": "football_huddles"
       }
     ]
@@ -197,7 +197,7 @@
     "slides": [
       {
         "label": "OVERVIEW",
-        "content": "I love traveling because I want to explore new places that I have never explored before, discovering what their geography and culture are like rather than being stuck in the busy NYC area all the time. While I can't afford to travel right now, I hope to relocate to a less busy, more peaceful place when I graduate and get a job in my computer science field.",
+        "content": "Exploring the unknown and seeking cultural discovery defines my travel aspirations! I love traveling because I want to explore new places that I have never seen before, discovering what their geography and culture are like. I want to break free from being stuck in the busy New York City area all the time. While I can't afford to travel right now, the dream of discovery fuels my forward momentum. Discover my travel aspirations and future relocation plans below:",
         "svgType": "traveling_overview",
         "ctaButtons": [
           {
@@ -212,12 +212,12 @@
       },
       {
         "label": "01 // GEOGRAPHY & CULTURE",
-        "content": "I am fascinated by new geographies, physical landscapes, and diverse cultural histories that expand my worldview! Although I currently cannot afford to travel, holding onto the dream of exploring new places provides a powerful sense of direction and motivation. Mapping out future travel journeys keeps my focus on the world beyond NYC.",
+        "content": "For me, traveling is about expanding horizons! I want to explore entirely new environments, understanding their unique local geography, physical landscapes, and rich cultural stories. Being stuck in the NYC area all the time feels limiting, and I yearn to discover new cities and scenery first-hand. Even though I cannot afford to travel right now due to financial constraints, my passion for mapping out new geographical locations and imagining their culture remains a powerful inspiration.",
         "svgType": "traveling_geography"
       },
       {
         "label": "02 // RELOCATION PLANS",
-        "content": "Traveling is directly connected to my future relocation plans! I dislike how busy, noisy, and congested New York City is. My goal is to relocate to a less busy, more peaceful place once I graduate from college and secure a job in my engineering field, trading the stressful urban environment for a serene place to call home.",
+        "content": "My long-term goal is to establish a home in a more peaceful environment! I don't like NYC so much because of how incredibly busy, crowded, and fast-paced it is. Once I graduate from college and secure a job in my computer science field, I hope to relocate permanently to a less busy, more serene place where I can enjoy spatial independence and a calmer way of life.",
         "svgType": "traveling_relocation"
       }
     ]

@@ -70,6 +70,7 @@ export default function AresDashboard() {
 
   const [techSlide, setTechSlide] = useState(0);
   const [scifiSlide, setScifiSlide] = useState(0);
+  const [musicSlide, setMusicSlide] = useState(0);
 
   // Set mounted state to prevent hydration mismatches
   useEffect(() => {
@@ -80,6 +81,7 @@ export default function AresDashboard() {
   useEffect(() => {
     setTechSlide(0);
     setScifiSlide(0);
+    setMusicSlide(0);
   }, [activeInterest]);
 
   // Dynamic Mars Age calculation based on current time - client side only
@@ -548,6 +550,7 @@ export default function AresDashboard() {
                      }}>
                        // DATA DESCRIPTIVE LOG {activeInterest.id === 'technology' && (techSlide === 0 ? '[ SYSTEM OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${techSlide}/02 ]`)}
                        {activeInterest.id === 'scifi' && (scifiSlide === 0 ? '[ CINEMATIC OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${scifiSlide}/02 ]`)}
+                       {activeInterest.id === 'music' && (musicSlide === 0 ? '[ ACOUSTIC OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${musicSlide}/02 ]`)}
                      </span>
 
                      {/* Paging Indicators specifically for Technology */}
@@ -648,6 +651,57 @@ export default function AresDashboard() {
                            }}
                          >
                            [ 02 // FANTASY ]
+                         </button>
+                       </div>
+                     )}
+
+                     {/* Paging Indicators specifically for Music */}
+                     {activeInterest.id === 'music' && (
+                       <div style={{ display: 'flex', gap: '6px' }}>
+                         <button 
+                           onClick={() => setMusicSlide(0)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: musicSlide === 0 ? '#ffb300' : 'rgba(255,255,255,0.15)',
+                             background: musicSlide === 0 ? 'rgba(255,179,0,0.08)' : 'transparent',
+                             color: musicSlide === 0 ? '#ffb300' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ OVERVIEW ]
+                         </button>
+                         <button 
+                           onClick={() => setMusicSlide(1)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: musicSlide === 1 ? '#ffb300' : 'rgba(255,255,255,0.15)',
+                             background: musicSlide === 1 ? 'rgba(255,179,0,0.08)' : 'transparent',
+                             color: musicSlide === 1 ? '#ffb300' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 01 // ORGANS & ARTISTS ]
+                         </button>
+                         <button 
+                           onClick={() => setMusicSlide(2)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: musicSlide === 2 ? '#ffb300' : 'rgba(255,255,255,0.15)',
+                             background: musicSlide === 2 ? 'rgba(255,179,0,0.08)' : 'transparent',
+                             color: musicSlide === 2 ? '#ffb300' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 02 // VOCAL & CHOIR ]
                          </button>
                        </div>
                      )}
@@ -826,6 +880,96 @@ export default function AresDashboard() {
                            <div style={{ marginTop: '10px' }}>
                              <button
                                onClick={() => setScifiSlide(0)}
+                               style={{
+                                 background: 'transparent',
+                                 border: 'none',
+                                 color: 'rgba(255,255,255,0.4)',
+                                 fontSize: '0.65rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 cursor: 'pointer',
+                                 padding: 0
+                               }}
+                             >
+                               [ ↩ BACK TO OVERVIEW ]
+                             </button>
+                           </div>
+                         </div>
+                       )
+                     ) : activeInterest.id === 'music' ? (
+                       musicSlide === 0 ? (
+                         <div>
+                           <span style={{ display: 'block', marginBottom: '8px' }}>
+                             Music is the emotional pulse of my life! My musical journey truly began with my transition to Reform Judaism, where the powerful tradition of singing prayers aloud first captured my heart. This spiritual path introduced me to the majestic, professional sound of the pipe organ, and ignited my love for rich pop storytelling like Taylor Swift and Noah Kahan. Beyond listening, music is interactive—fueling my passion for performing karaoke and singing in choirs. Explore each dimension below:
+                           </span>
+                           <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                             <button
+                               onClick={() => setMusicSlide(1)}
+                               className="hud-btn"
+                               style={{
+                                 flex: 1,
+                                 padding: '6px 10px',
+                                 fontSize: '0.7rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 borderColor: '#ffb300',
+                                 background: 'rgba(255, 179, 0, 0.05)',
+                                 color: '#ffb300',
+                                 borderRadius: '4px',
+                                 cursor: 'pointer',
+                                 textAlign: 'center'
+                               }}
+                             >
+                               [ EXPLORE ORGANS & ARTISTS ➔ ]
+                             </button>
+                             <button
+                               onClick={() => setMusicSlide(2)}
+                               className="hud-btn"
+                               style={{
+                                 flex: 1,
+                                 padding: '6px 10px',
+                                 fontSize: '0.7rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 borderColor: '#00ff88',
+                                 background: 'rgba(0, 255, 136, 0.05)',
+                                 color: '#00ff88',
+                                 borderRadius: '4px',
+                                 cursor: 'pointer',
+                                 textAlign: 'center'
+                               }}
+                             >
+                               [ EXPLORE VOCALS & CHOIR ➔ ]
+                             </button>
+                           </div>
+                         </div>
+                       ) : musicSlide === 1 ? (
+                         <div>
+                           <span>
+                             My transition to Reform Judaism opened my eyes to music's power. Unlike the quiet prayers of Orthodox traditions, Reform temples sing everything, introducing me to the grand pipe organ for the very first time with its exceptionally professional sound, mechanical complexity, and rich, hall-filling acoustics! Later, I fell in love with Taylor Swift for her dramatic, emotionally raw pop storytelling. Looking for more relatable music, I asked ChatGPT for recommendations and fell in love with Noah Kahan, particularly the song "Someone Like You" on his "I Was / I Am" album, which speaks deeply to my own journey.
+                           </span>
+                           <div style={{ marginTop: '10px' }}>
+                             <button
+                               onClick={() => setMusicSlide(0)}
+                               style={{
+                                 background: 'transparent',
+                                 border: 'none',
+                                 color: 'rgba(255,255,255,0.4)',
+                                 fontSize: '0.65rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 cursor: 'pointer',
+                                 padding: 0
+                               }}
+                             >
+                               [ ↩ BACK TO OVERVIEW ]
+                             </button>
+                           </div>
+                         </div>
+                       ) : (
+                         <div>
+                           <span>
+                             I decided to take my love for music further and make it active! After a temple friend invited me to a local karaoke group, I discovered the sheer joy of vocal performance, singing along to my favorite pop and folk tracks. This passion led me directly into choir singing, where blending voices in harmony creates a powerful communal bond. I even challenged myself by taking a chorale class at Adelphi University to refine my vocal technique, learn structured sight-reading, and perform classical choral literature!
+                           </span>
+                           <div style={{ marginTop: '10px' }}>
+                             <button
+                               onClick={() => setMusicSlide(0)}
                                style={{
                                  background: 'transparent',
                                  border: 'none',
@@ -1094,7 +1238,50 @@ export default function AresDashboard() {
                   )}
 
                   {/* Music Vinyl spin graphic */}
-                  {activeInterest.type === 'music' && (
+                  {activeInterest.type === 'music' && musicSlide === 0 && (
+                    <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 179, 0, 0.2)', boxShadow: 'inset 0 0 8px rgba(0,0,0,0.4)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#1b1508" />
+                      <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
+                      <circle cx="20" cy="7.5" r="3" fill="#ffb300" />
+                      <circle cx="30" cy="7.5" r="3" fill="#00ff88" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // ACOUSTIC_INTEGRATION_CORE</text>
+
+                      <g opacity="0.1">
+                        <line x1="0" y1="40" x2="320" y2="40" stroke="#ffb300" strokeWidth="0.5" />
+                        <line x1="160" y1="15" x2="160" y2="90" stroke="#ffb300" strokeWidth="0.5" />
+                      </g>
+
+                      {/* Left side: Organ Pipes / Piano Keys */}
+                      <g transform="translate(15, 20)">
+                        <rect x="5" y="5" width="4" height="25" fill="#ffb300" opacity="0.8" />
+                        <rect x="11" y="0" width="4" height="30" fill="#ffe082" />
+                        <rect x="17" y="8" width="4" height="22" fill="#ffb300" opacity="0.8" />
+                        <rect x="23" y="3" width="4" height="27" fill="#ffe082" />
+                        <rect x="29" y="12" width="4" height="18" fill="#ffb300" opacity="0.8" />
+                        <text x="17" y="52" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">PIPE ORGAN CORES</text>
+                      </g>
+
+                      {/* Center Link: Synapse */}
+                      <g transform="translate(110, 45)">
+                        <path d="M 10,0 Q 50,10 90,0" fill="none" stroke="rgba(255, 179, 0, 0.3)" strokeWidth="1" strokeDasharray="2 2" />
+                        <text x="50" y="4" fill="#00ff88" fontSize="5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">SYNAPSE</text>
+                      </g>
+
+                      {/* Right side: Vocal Wave / Microphone */}
+                      <g transform="translate(225, 20)">
+                        <circle cx="20" cy="15" r="5" fill="none" stroke="#00ff88" strokeWidth="1.2" />
+                        <line x1="20" y1="20" x2="20" y2="30" stroke="#00ff88" strokeWidth="1.5" />
+                        <line x1="15" y1="30" x2="25" y2="30" stroke="#00ff88" strokeWidth="1.2" />
+                        <path d="M 5,20 Q 20,40 35,20" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+                        <text x="20" y="52" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">VOCAL CHANNELS</text>
+                      </g>
+
+                      <text x="10" y="84" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">SYSTEM: acoustical_sync_v1.2</text>
+                      <text x="310" y="84" fill="#ffb300" fontSize="5.5" fontFamily="monospace" textAnchor="end">INTEGRATION: ACTIVE</text>
+                    </svg>
+                  )}
+
+                  {activeInterest.type === 'music' && musicSlide === 1 && (
                     <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 179, 0, 0.2)', boxShadow: 'inset 0 0 8px rgba(0,0,0,0.4)' }}>
                       <rect x="90" y="10" width="140" height="70" rx="6" fill="#141a29" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
                       <g className="animate-spin-custom" style={{ transformOrigin: '150px 45px' }}>
@@ -1106,7 +1293,23 @@ export default function AresDashboard() {
                       </g>
                       <path d="M 215,28 L 195,28 L 172,40" fill="none" stroke="#cfd8dc" strokeWidth="2.2" strokeLinecap="round" />
                       <circle cx="215" cy="28" r="4.5" fill="#455a64" />
-                      <text x="160" y="85" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">FAVORITES: TAYLOR SWIFT // PIPE ORGAN</text>
+                      <text x="160" y="85" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">FAVORITES: TAYLOR SWIFT // NOAH KAHAN // PIPE ORGAN</text>
+                    </svg>
+                  )}
+
+                  {activeInterest.type === 'music' && musicSlide === 2 && (
+                    <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.15)', boxShadow: 'inset 0 0 8px rgba(0,0,0,0.4)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#081c13" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // VOCAL_SPECTRUM_HUD</text>
+
+                      {/* Waveform graphic */}
+                      <g transform="translate(10, 20)">
+                        <path d="M 10,25 Q 30,5 50,25 T 90,25 T 130,25 T 170,25 T 210,25 T 250,25 T 290,25" fill="none" stroke="#00ff88" strokeWidth="1.5" style={{ filter: 'drop-shadow(0 0 4px rgba(0,255,136,0.6))' }} />
+                        <path d="M 10,25 Q 30,15 50,25 T 90,25 T 130,25 T 170,25 T 210,25 T 250,25 T 290,25" fill="none" stroke="#00f0ff" strokeWidth="0.8" opacity="0.6" />
+                        <line x1="10" y1="25" x2="290" y2="25" stroke="rgba(255,255,255,0.1)" strokeWidth="0.8" strokeDasharray="3 3" />
+                      </g>
+
+                      <text x="160" y="80" fill="rgba(255,255,255,0.5)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">VIBRATO DETECTOR // KARAOKE SCRIPT CORES: 44.1kHz</text>
                     </svg>
                   )}
 
@@ -1277,7 +1480,7 @@ export default function AresDashboard() {
                 </div>
 
                 {/* Embedded YouTube Transmission Deck */}
-                {activeInterest.id === 'music' && (
+                {activeInterest.id === 'music' && musicSlide === 2 && (
                   <div style={{
                     marginTop: '5px',
                     background: 'rgba(255, 255, 255, 0.02)',

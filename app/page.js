@@ -68,10 +68,17 @@ export default function AresDashboard() {
   const [activeInterest, setActiveInterest] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
 
+  const [techSlide, setTechSlide] = useState(0);
+
   // Set mounted state to prevent hydration mismatches
   useEffect(() => {
     setIsMounted(true);
   }, []);
+
+  // Reset slide index when active interest changes
+  useEffect(() => {
+    setTechSlide(0);
+  }, [activeInterest]);
 
   // Dynamic Mars Age calculation based on current time - client side only
   useEffect(() => {
@@ -522,30 +529,179 @@ export default function AresDashboard() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 
                 {/* Description Narrative card */}
-                <div style={{
-                  background: 'rgba(255, 255, 255, 0.02)',
-                  border: '1px solid rgba(255, 255, 255, 0.05)',
-                  borderRadius: '10px',
-                  padding: '16px',
-                  boxSizing: 'border-box'
-                }}>
-                  <span style={{
-                    display: 'block',
-                    fontFamily: 'monospace, var(--font-tech)',
-                    fontSize: '0.55rem',
-                    color: 'rgba(255, 255, 255, 0.4)',
-                    letterSpacing: '1px',
-                    marginBottom: '6px'
-                  }}>// DATA DESCRIPTIVE LOG</span>
-                  <p style={{
-                    fontSize: '0.82rem',
-                    lineHeight: '1.6',
-                    color: 'rgba(255, 255, 255, 0.9)',
-                    margin: 0
-                  }}>
-                    {activeInterest.desc}
-                  </p>
-                </div>
+                 <div style={{
+                   background: 'rgba(255, 255, 255, 0.02)',
+                   border: '1px solid rgba(255, 255, 255, 0.05)',
+                   borderRadius: '10px',
+                   padding: '16px',
+                   boxSizing: 'border-box'
+                 }}>
+                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                     <span style={{
+                       display: 'block',
+                       fontFamily: 'monospace, var(--font-tech)',
+                       fontSize: '0.55rem',
+                       color: 'rgba(255, 255, 255, 0.4)',
+                       letterSpacing: '1px'
+                     }}>
+                       // DATA DESCRIPTIVE LOG {activeInterest.id === 'technology' && (techSlide === 0 ? '[ SYSTEM OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${techSlide}/02 ]`)}
+                     </span>
+
+                     {/* Paging Indicators specifically for Technology */}
+                     {activeInterest.id === 'technology' && (
+                       <div style={{ display: 'flex', gap: '6px' }}>
+                         <button 
+                           onClick={() => setTechSlide(0)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: techSlide === 0 ? '#00f0ff' : 'rgba(255,255,255,0.15)',
+                             background: techSlide === 0 ? 'rgba(0,240,255,0.08)' : 'transparent',
+                             color: techSlide === 0 ? '#00f0ff' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ OVERVIEW ]
+                         </button>
+                         <button 
+                           onClick={() => setTechSlide(1)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: techSlide === 1 ? '#00f0ff' : 'rgba(255,255,255,0.15)',
+                             background: techSlide === 1 ? 'rgba(0,240,255,0.08)' : 'transparent',
+                             color: techSlide === 1 ? '#00f0ff' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 01 // GUI ]
+                         </button>
+                         <button 
+                           onClick={() => setTechSlide(2)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: techSlide === 2 ? '#00f0ff' : 'rgba(255,255,255,0.15)',
+                             background: techSlide === 2 ? 'rgba(0,240,255,0.08)' : 'transparent',
+                             color: techSlide === 2 ? '#00f0ff' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 02 // GADGETS ]
+                         </button>
+                       </div>
+                     )}
+                   </div>
+
+                   <div style={{
+                     fontSize: '0.82rem',
+                     lineHeight: '1.6',
+                     color: 'rgba(255, 255, 255, 0.9)',
+                     margin: 0,
+                     minHeight: '80px',
+                     transition: 'all 0.25s ease'
+                   }}>
+                     {activeInterest.id === 'technology' ? (
+                       techSlide === 0 ? (
+                         <div>
+                           <span style={{ display: 'block', marginBottom: '8px' }}>
+                             Technology is my ultimate sandbox! I am deeply fascinated by the design of graphical user interfaces (GUIs) that bring code to life visually, and I am equally passionate about looking forward to futuristic gadgets and the latest consumer tech. Explore each detailed section below:
+                           </span>
+                           <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                             <button
+                               onClick={() => setTechSlide(1)}
+                               className="hud-btn"
+                               style={{
+                                 flex: 1,
+                                 padding: '6px 10px',
+                                 fontSize: '0.7rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 borderColor: '#00f0ff',
+                                 background: 'rgba(0, 240, 255, 0.05)',
+                                 color: '#00f0ff',
+                                 borderRadius: '4px',
+                                 cursor: 'pointer',
+                                 textAlign: 'center'
+                               }}
+                             >
+                               [ EXPLORE GUI SYSTEMS ➔ ]
+                             </button>
+                             <button
+                               onClick={() => setTechSlide(2)}
+                               className="hud-btn"
+                               style={{
+                                 flex: 1,
+                                 padding: '6px 10px',
+                                 fontSize: '0.7rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 borderColor: '#00ff88',
+                                 background: 'rgba(0, 255, 136, 0.05)',
+                                 color: '#00ff88',
+                                 borderRadius: '4px',
+                                 cursor: 'pointer',
+                                 textAlign: 'center'
+                               }}
+                             >
+                               [ EXPLORE FUTURISTIC GADGETS ➔ ]
+                             </button>
+                           </div>
+                         </div>
+                       ) : techSlide === 1 ? (
+                         <div>
+                           <span>
+                             I got into technology because graphical user interfaces (GUIs) completely fascinated me! The idea of designing responsive, visual operating decks led me directly into coding. It's an amazing feeling to build entirely new digital environments and interactive software from scratch. Now, I apply that same design passion to building custom frontend decks like the Ares City OS!
+                           </span>
+                           <div style={{ marginTop: '10px' }}>
+                             <button
+                               onClick={() => setTechSlide(0)}
+                               style={{
+                                 background: 'transparent',
+                                 border: 'none',
+                                 color: 'rgba(255,255,255,0.4)',
+                                 fontSize: '0.65rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 cursor: 'pointer',
+                                 padding: 0
+                               }}
+                             >
+                               [ ↩ BACK TO OVERVIEW ]
+                             </button>
+                           </div>
+                         </div>
+                       ) : (
+                         <div>
+                           <span>
+                             Beyond software interfaces, I am deeply passionate about futuristic hardware and pioneering gadgets! I always look forward to exploring the latest and greatest consumer tech, next-generation mobile devices, holographic displays, and experimental wearables. Keeping pace with cutting-edge tech innovations inspires me to think about what is possible tomorrow and fuels my drive to incorporate forward-looking concepts directly into my engineering work.
+                           </span>
+                           <div style={{ marginTop: '10px' }}>
+                             <button
+                               onClick={() => setTechSlide(0)}
+                               style={{
+                                 background: 'transparent',
+                                 border: 'none',
+                                 color: 'rgba(255,255,255,0.4)',
+                                 fontSize: '0.65rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 cursor: 'pointer',
+                                 padding: 0
+                               }}
+                             >
+                               [ ↩ BACK TO OVERVIEW ]
+                             </button>
+                           </div>
+                         </div>
+                       )
+                     ) : (
+                       <span>{activeInterest.desc}</span>
+                     )}
+                   </div>
+                 </div>
 
                 {/* Tactical SVG Graphic Canvas */}
                 <div>
@@ -559,7 +715,56 @@ export default function AresDashboard() {
                   }}>// VISUAL CORE GRAPHIC</span>
                   
                   {/* Technology vector graphic */}
-                  {activeInterest.type === 'tech' && (
+                  {activeInterest.type === 'tech' && techSlide === 0 && (
+                    <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#080b13', borderRadius: '8px', border: '1px solid rgba(0, 240, 255, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,240,255,0.1)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#141a29" />
+                      <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
+                      <circle cx="20" cy="7.5" r="3" fill="#ffb300" />
+                      <circle cx="30" cy="7.5" r="3" fill="#00ff88" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // TECH_INTEGRATION_CORE</text>
+                      
+                      <g opacity="0.1">
+                        <line x1="0" y1="40" x2="320" y2="40" stroke="#00f0ff" strokeWidth="0.5" />
+                        <line x1="0" y1="70" x2="320" y2="70" stroke="#00f0ff" strokeWidth="0.5" />
+                        <line x1="160" y1="15" x2="160" y2="110" stroke="#00f0ff" strokeWidth="0.5" />
+                      </g>
+
+                      {/* Left Side: GUI Terminal Node */}
+                      <g transform="translate(15, 20)">
+                        <rect x="5" y="10" width="80" height="50" rx="3" fill="none" stroke="#00f0ff" strokeWidth="1.2" style={{ filter: 'drop-shadow(0 0 2px rgba(0,240,255,0.3))' }} />
+                        <rect x="10" y="15" width="70" height="30" rx="1.5" fill="#060910" stroke="rgba(0,240,255,0.2)" strokeWidth="0.8" />
+                        <line x1="15" y1="20" x2="45" y2="20" stroke="#00f0ff" strokeWidth="1" />
+                        <line x1="15" y1="26" x2="35" y2="26" stroke="#00ff88" strokeWidth="0.8" />
+                        <line x1="15" y1="32" x2="55" y2="32" stroke="rgba(255,255,255,0.3)" strokeWidth="0.8" />
+                        <circle cx="65" cy="25" r="5" fill="none" stroke="#2979ff" strokeWidth="1" />
+                        <text x="45" y="55" fill="rgba(255,255,255,0.6)" fontSize="6" fontFamily="monospace" textAnchor="middle">GUI SYSTEMS</text>
+                      </g>
+
+                      {/* Center: SYNC LINK */}
+                      <g transform="translate(110, 55)">
+                        <line x1="0" y1="0" x2="100" y2="0" stroke="rgba(255,255,255,0.15)" strokeWidth="1" strokeDasharray="3 2" />
+                        <path d="M 40,-8 L 50,0 L 40,8" fill="none" stroke="#00ff88" strokeWidth="1" />
+                        <path d="M 60,-8 L 50,0 L 60,8" fill="none" stroke="#00f0ff" strokeWidth="1" />
+                        <rect x="33" y="-6" width="34" height="12" rx="2" fill="#141a29" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" />
+                        <text x="50" y="2.5" fill="#00f0ff" fontSize="5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">SYNAPSE</text>
+                      </g>
+
+                      {/* Right Side: Gadget Holographic Emitter Node */}
+                      <g transform="translate(225, 20)">
+                        <ellipse cx="40" cy="35" rx="25" ry="10" fill="none" stroke="#00ff88" strokeWidth="1.2" style={{ filter: 'drop-shadow(0 0 2px rgba(0,255,136,0.3))' }} />
+                        <ellipse cx="40" cy="35" rx="10" ry="4" fill="none" stroke="#00f0ff" strokeWidth="1" />
+                        <path d="M 30,35 Q 40,10 50,35" fill="none" stroke="#c259ff" strokeWidth="1" strokeDasharray="2 1" />
+                        <circle cx="40" cy="15" r="3" fill="#fff" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
+                        <line x1="40" y1="35" x2="40" y2="15" stroke="rgba(0,255,136,0.4)" strokeWidth="0.8" />
+                        <text x="40" y="55" fill="rgba(255,255,255,0.6)" fontSize="6" fontFamily="monospace" textAnchor="middle">GADGET CORES</text>
+                      </g>
+
+                      <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">HYBRID_PORT: interactive_deck_v3</text>
+                      <text x="310" y="102" fill="#00f0ff" fontSize="5.5" fontFamily="monospace" textAnchor="end">INTEGRATION: ACTIVE</text>
+                    </svg>
+                  )}
+
+                  {activeInterest.type === 'tech' && techSlide === 1 && (
                     <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#080b13', borderRadius: '8px', border: '1px solid rgba(0, 240, 255, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,240,255,0.1)' }}>
                       <rect x="0" y="0" width="320" height="15" fill="#141a29" />
                       <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
@@ -584,6 +789,46 @@ export default function AresDashboard() {
                         <text x="120" y="28" fill="#fff" fontSize="6.5" fontFamily="monospace" textAnchor="middle">ONLINE</text>
                         <text x="120" y="49" fill="rgba(255,255,255,0.5)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">CORES</text>
                       </g>
+                    </svg>
+                  )}
+
+                  {activeInterest.type === 'tech' && techSlide === 2 && (
+                    <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#080b13', borderRadius: '8px', border: '1px solid rgba(0, 240, 255, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,240,255,0.1)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#141a29" />
+                      <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
+                      <circle cx="20" cy="7.5" r="3" fill="#ffb300" />
+                      <circle cx="30" cy="7.5" r="3" fill="#00ff88" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // FUTURISTIC_GADGET_SCHEMATIC</text>
+                      <g opacity="0.15">
+                        <line x1="0" y1="40" x2="320" y2="40" stroke="#00f0ff" strokeWidth="0.5" />
+                        <line x1="0" y1="70" x2="320" y2="70" stroke="#00f0ff" strokeWidth="0.5" />
+                        <line x1="80" y1="15" x2="80" y2="110" stroke="#00f0ff" strokeWidth="0.5" />
+                        <line x1="240" y1="15" x2="240" y2="110" stroke="#00f0ff" strokeWidth="0.5" />
+                      </g>
+                      <g transform="translate(160, 60)" style={{ filter: 'drop-shadow(0 0 4px #00f0ff)' }}>
+                        <path d="M -50,15 L -20,5 Q 0,0 20,5 L 50,15" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="4" strokeLinecap="round" />
+                        <path d="M -50,-15 L -20,-5 Q 0,0 20,-5 L 50,-15" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="4" strokeLinecap="round" />
+                        <ellipse cx="0" cy="0" rx="18" ry="6" fill="#141a29" stroke="#00f0ff" strokeWidth="2" />
+                        <ellipse cx="0" cy="0" rx="8" ry="3" fill="none" stroke="#00ff88" strokeWidth="1.5" />
+                        <circle cx="0" cy="0" r="1.5" fill="#fff" />
+                        <path d="M -12,0 L -30,-35 L 30,-35 L 12,0 Z" fill="url(#gadgetHoloGlow)" opacity="0.25" />
+                        <g transform="translate(0, -32)" opacity="0.9">
+                          <circle cx="0" cy="0" r="12" fill="none" stroke="#00ff88" strokeWidth="1" strokeDasharray="3 1" />
+                          <text x="0" y="3" fill="#00ff88" fontSize="7.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">MY38</text>
+                          <circle cx="-25" cy="-5" r="5" fill="none" stroke="#00f0ff" strokeWidth="0.8" />
+                          <path d="M -25,-8 L -25,-5 L -23,-5" fill="none" stroke="#00f0ff" strokeWidth="0.8" />
+                          <rect x="18" y="-10" width="10" height="8" rx="1.5" fill="none" stroke="#c259ff" strokeWidth="0.8" />
+                          <line x1="21" y1="-6" x2="25" y2="-6" stroke="#c259ff" strokeWidth="0.8" />
+                        </g>
+                      </g>
+                      <defs>
+                        <linearGradient id="gadgetHoloGlow" x1="0%" y1="100%" x2="0%" y2="0%">
+                          <stop offset="0%" stopColor="#00f0ff" stopOpacity="0.4" />
+                          <stop offset="100%" stopColor="#00ff88" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                      <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">CORE: quantum_emitter_v4.2</text>
+                      <text x="310" y="102" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="end">STATUS: LATEST // ACTIVE</text>
                     </svg>
                   )}
 

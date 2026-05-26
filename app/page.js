@@ -421,7 +421,7 @@ export default function AresDashboard() {
               fontFamily: 'var(--font-sans)',
               fontWeight: 400
             }}>
-              Ephraim Becker is a Computer Science major studying remote-class computer science. Backed by mathematical rigor in Calculus, his true passion lies in building highly interactive graphical user interfaces and responsive web layouts.
+              Ephraim Becker is studying Computer Science at Adelphi University. Backed by mathematical rigor in Calculus, his true passion lies in building highly interactive graphical user interfaces, responsive web layouts, and futuristic spatial interfaces.
             </p>
           </div>
 

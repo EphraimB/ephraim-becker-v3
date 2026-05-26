@@ -304,6 +304,32 @@ export default function NeurodiversityAdvocacy() {
           text-align: left;
         }
 
+        /* History layout float-wrapping styles */
+        .history-text {
+          position: relative;
+          padding-right: 170px;
+          min-height: 185px;
+          display: block;
+        }
+        .history-svg-box {
+          position: absolute;
+          right: 0;
+          top: 0;
+          width: 150px;
+          height: 185px;
+          background: #070a12;
+          border: 1.5px solid rgba(255, 255, 255, 0.08);
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        /* Advocacy grid */
+        .advocacy-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 20px;
+        }
+
         @media (max-width: 900px) {
           .neuro-page-shell {
             height: auto !important;
@@ -328,6 +354,23 @@ export default function NeurodiversityAdvocacy() {
             flex: none !important;
             overflow-y: visible !important;
             min-height: auto !important;
+          }
+          .advocacy-grid {
+            grid-template-columns: 1fr !important;
+          }
+          .history-text {
+            position: static !important;
+            padding-right: 0 !important;
+            min-height: 0 !important;
+            display: block !important;
+          }
+          .history-svg-box {
+            position: static !important;
+            float: right !important;
+            margin-left: 12px !important;
+            margin-bottom: 8px !important;
+            width: 140px !important;
+            height: 110px !important;
           }
         }
       `}} />
@@ -525,25 +568,9 @@ export default function NeurodiversityAdvocacy() {
                   <div className="timeline-box" style={{ background: 'rgba(255, 255, 255, 0.01)', border: '1.5px solid rgba(255, 255, 255, 0.04)' }}>
                     
                     {activeChapter === 0 && (
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 150px', gap: '20px' }}>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                            <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(234, 67, 53, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#ea4335', fontWeight: 'bold' }}>
-                              CHAPTER I // 1930s - 1940s
-                            </span>
-                          </div>
-                          <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
-                            The Dark Wards of Confinement & Action T4 Eugenics
-                          </h4>
-                          <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            During the initial decades of autism history, autistic children are strictly locked away in bleak state asylum wards, written off by child psychiatry as genetically broken, &quot;unreachable,&quot; or schizophrenic.
-                          </p>
-                          <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            In the absolute darkest corridor of this era, the Nazi regime’s **Action T4** eugenic program systematically targets disabled, mentally ill, and neurodivergent children for sterilization and involuntary euthanasia. In psychiatric clinics like Spiegelgrund in Vienna, child diagnostics are weaponized as death sentences, classifying autistic lives as &quot;unworthy of life&quot; and subjecting children to terminal medical abuse.
-                          </p>
-                        </div>
+                      <div className="history-text">
                         {/* SVG 1: Confinement Prison Cage */}
-                        <div style={{ background: '#070a12', border: '1.5px solid rgba(234, 67, 53, 0.25)', borderRadius: '8px', height: '185px', position: 'relative', overflow: 'hidden' }}>
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(234, 67, 53, 0.25)' }}>
                           <svg viewBox="0 0 100 80" width="100%" height="100%">
                             {/* Red pulsing warning box */}
                             <rect x="0" y="0" width="100" height="80" style={{ animation: 'pulse-red-alert 3s infinite' }} />
@@ -562,29 +589,28 @@ export default function NeurodiversityAdvocacy() {
                             <text x="50" y="73" fill="#ea4335" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">CONFINED</text>
                           </svg>
                         </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(234, 67, 53, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#ea4335', fontWeight: 'bold' }}>
+                            CHAPTER I // 1930s - 1940s
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          The Dark Wards of Confinement & Action T4 Eugenics
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          During the initial decades of autism history, autistic children are strictly locked away in bleak state asylum wards, written off by child psychiatry as genetically broken, &quot;unreachable,&quot; or schizophrenic.
+                        </p>
+                        <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          In the absolute darkest corridor of this era, the Nazi regime’s **Action T4** eugenic program systematically targets disabled, mentally ill, and neurodivergent children for sterilization and involuntary euthanasia. In psychiatric clinics like Spiegelgrund in Vienna, child diagnostics are weaponized as death sentences, classifying autistic lives as &quot;unworthy of life&quot; and subjecting children to terminal medical abuse.
+                        </p>
                       </div>
                     )}
 
                     {activeChapter === 1 && (
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 150px', gap: '20px' }}>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                            <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 240, 255, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00f0ff', fontWeight: 'bold' }}>
-                              CHAPTER II // 1950s - 1960s
-                            </span>
-                          </div>
-                          <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
-                            The Refrigerator Mother Shame & Institutional Separation
-                          </h4>
-                          <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            In the mid-20th century, psychoanalytic dogmas dominate autism discourse. Child psychologist Bruno Bettelheim popularizes the discredited **&quot;refrigerator mother&quot; theory**, blaming autism entirely on emotionally cold, intellectual mothers.
-                          </p>
-                          <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            Bettelheim explicitly compares loving mothers to Nazi concentration camp guards, asserting that children withdrew into autistic states to escape maternal hostility. Clinicians urge parents to submit to crushing shame, and children are separated from their parents (&quot;parentectomies&quot;) to be isolated in stark institutional wards to be cured through intensive psychoanalysis, causing immense trauma.
-                          </p>
-                        </div>
+                      <div className="history-text">
                         {/* SVG 2: Shivering isolated node */}
-                        <div style={{ background: '#070a12', border: '1.5px solid rgba(0, 240, 255, 0.2)', borderRadius: '8px', height: '185px', position: 'relative', overflow: 'hidden' }}>
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(0, 240, 255, 0.2)' }}>
                           <svg viewBox="0 0 100 80" width="100%" height="100%">
                             {/* Targeting ring */}
                             <circle cx="50" cy="35" r="16" fill="none" stroke="rgba(0, 240, 255, 0.15)" strokeWidth="0.8" strokeDasharray="3 3" />
@@ -597,29 +623,28 @@ export default function NeurodiversityAdvocacy() {
                             <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">ISOLATION</text>
                           </svg>
                         </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 240, 255, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00f0ff', fontWeight: 'bold' }}>
+                            CHAPTER II // 1950s - 1960s
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          The Refrigerator Mother Shame & Institutional Separation
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          In the mid-20th century, psychoanalytic dogmas dominate autism discourse. Child psychologist Bruno Bettelheim popularizes the discredited **&quot;refrigerator mother&quot; theory**, blaming autism entirely on emotionally cold, intellectual mothers.
+                        </p>
+                        <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          Bettelheim explicitly compares loving mothers to Nazi concentration camp guards, asserting that children withdrew into autistic states to escape maternal hostility. Clinicians urge parents to submit to crushing shame, and children are separated from their parents (&quot;parentectomies&quot;) to be isolated in stark institutional wards to be cured through intensive psychoanalysis, causing immense trauma.
+                        </p>
                       </div>
                     )}
 
                     {activeChapter === 2 && (
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 150px', gap: '20px' }}>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                            <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(255, 117, 34, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#ff7522', fontWeight: 'bold' }}>
-                              CHAPTER III // 1960s - 1970s
-                            </span>
-                          </div>
-                          <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
-                            The Era of Violent Behavioral Correction & Electric Shocks
-                          </h4>
-                          <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            In an effort to keep children out of lifelong institutions, Ole Lovaas at UCLA applies behaviorism to autism, initiating behavior modification programs. The core goal is to force autistic children to appear &quot;indistinguishable from their peers.&quot;
-                          </p>
-                          <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            To suppress natural stimming and force compliance, therapists utilize physical slaps, yelling, withholding food, and **painful electric shocks** as behaviorist &quot;aversives.&quot; Lovaas explicitly states that autistic children are not fully human, asserting behaviorists must build a person where none exists. This creates a legacy of deep trauma and forced masking.
-                          </p>
-                        </div>
+                      <div className="history-text">
                         {/* SVG 3: Electrical discharge shock grid */}
-                        <div style={{ background: '#070a12', border: '1.5px solid rgba(255, 117, 34, 0.25)', borderRadius: '8px', height: '185px', position: 'relative', overflow: 'hidden' }}>
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(255, 117, 34, 0.25)' }}>
                           <svg viewBox="0 0 100 80" width="100%" height="100%">
                             {/* Grid matrix */}
                             <g opacity="0.1" stroke="#ff5722" strokeWidth="0.5">
@@ -636,29 +661,28 @@ export default function NeurodiversityAdvocacy() {
                             <text x="50" y="74" fill="#ff7522" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">AVERSIVE_DISCHARGE</text>
                           </svg>
                         </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(255, 117, 34, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#ff7522', fontWeight: 'bold' }}>
+                            CHAPTER III // 1960s - 1970s
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          The Era of Violent Behavioral Correction & Electric Shocks
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          In an effort to keep children out of lifelong institutions, Ole Lovaas at UCLA applies behaviorism to autism, initiating behavior modification programs. The core goal is to force autistic children to appear &quot;indistinguishable from their peers.&quot;
+                        </p>
+                        <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          To suppress natural stimming and force compliance, therapists utilize physical slaps, yelling, withholding food, and **painful electric shocks** as behaviorist &quot;aversives.&quot; Lovaas explicitly states that autistic children are not fully human, asserting behaviorists must build a person where none exists. This creates a legacy of deep trauma and forced masking.
+                        </p>
                       </div>
                     )}
 
                     {activeChapter === 3 && (
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 150px', gap: '20px' }}>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                            <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 255, 136, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00ff88', fontWeight: 'bold' }}>
-                              CHAPTER IV // LATE 1980s - 1990s
-                            </span>
-                          </div>
-                          <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
-                            The Dawn of Autistic Self-Advocacy & The Social Model
-                          </h4>
-                          <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            The emergence of early internet message boards provides a historical channel for autistic individuals to connect globally without medical gatekeeping. Organizing self-advocacy groups like ANI, they assert that they do not need to be &quot;cured.&quot;
-                          </p>
-                          <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            Australian sociologist **Judy Singer** coins the term **&quot;Neurodiversity&quot;** in her 1998 thesis, reframing neurological differences as a natural biological reality. The social model of disability rises, showing that disability is caused by a restrictive, unaccommodating society rather than an intrinsic personal defect.
-                          </p>
-                        </div>
+                      <div className="history-text">
                         {/* SVG 4: Glowing green expanding network */}
-                        <div style={{ background: '#070a12', border: '1.5px solid rgba(0, 255, 136, 0.25)', borderRadius: '8px', height: '185px', position: 'relative', overflow: 'hidden' }}>
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(0, 255, 136, 0.25)' }}>
                           <svg viewBox="0 0 100 80" width="100%" height="100%">
                             <circle cx="50" cy="40" r="3.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
                             <circle cx="20" cy="20" r="2.5" fill="#00f0ff" />
@@ -676,29 +700,28 @@ export default function NeurodiversityAdvocacy() {
                             <text x="50" y="73" fill="#00ff88" fontSize="4.5" fontFamily="monospace" textAnchor="middle">ADVOCACY_NET</text>
                           </svg>
                         </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 255, 136, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00ff88', fontWeight: 'bold' }}>
+                            CHAPTER IV // LATE 1980s - 1990s
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          The Dawn of Autistic Self-Advocacy & The Social Model
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          The emergence of early internet message boards provides a historical channel for autistic individuals to connect globally without medical gatekeeping. Organizing self-advocacy groups like ANI, they assert that they do not need to be &quot;cured.&quot;
+                        </p>
+                        <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          Australian sociologist **Judy Singer** coins the term **&quot;Neurodiversity&quot;** in her 1998 thesis, reframing neurological differences as a natural biological reality. The social model of disability rises, showing that disability is caused by a restrictive, unaccommodating society rather than an intrinsic personal defect.
+                        </p>
                       </div>
                     )}
 
                     {activeChapter === 4 && (
-                      <div style={{ display: 'grid', gridTemplateColumns: '1fr 150px', gap: '20px' }}>
-                        <div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
-                            <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 255, 136, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00ff88', fontWeight: 'bold' }}>
-                              CHAPTER V // 2012 - PRESENT
-                            </span>
-                          </div>
-                          <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
-                            The Double Empathy Shift & Mutual Understanding
-                          </h4>
-                          <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            Autistic researcher **Dr. Damian Milton** formulates the **Double Empathy Problem** (2012), completely dismantling classic deficit-based pathological diagnostic theories about autistic social deficits.
-                          </p>
-                          <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
-                            The theory scientifically proves that communication breakdowns between autistic and allistic (non-autistic) individuals are bidirectional and mutual. Breakdowns stem from a mismatch in experiential background, cognitive wiring, and communication styles, rather than an autistic &quot;social deficit&quot; residing inside the autistic brain.
-                          </p>
-                        </div>
+                      <div className="history-text">
                         {/* SVG 5: Dual synced waves */}
-                        <div style={{ background: '#070a12', border: '1.5px solid rgba(0, 255, 136, 0.25)', borderRadius: '8px', height: '185px', position: 'relative', overflow: 'hidden' }}>
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(0, 255, 136, 0.25)' }}>
                           <svg viewBox="0 0 100 80" width="100%" height="100%">
                             {/* Wave 1 Autistic (Green) */}
                             <path d="M 0,30 Q 15,10 30,30 T 60,30 T 90,30" fill="none" stroke="#00ff88" strokeWidth="1.5" strokeDasharray="40" strokeDashoffset="0" style={{ animation: 'phase-wave-emerald 1.5s infinite linear' }} />
@@ -712,6 +735,21 @@ export default function NeurodiversityAdvocacy() {
                             <text x="50" y="73" fill="#00ff88" fontSize="4.5" fontFamily="monospace" textAnchor="middle">MUTUAL_SYNC</text>
                           </svg>
                         </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 255, 136, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00ff88', fontWeight: 'bold' }}>
+                            CHAPTER V // 2012 - PRESENT
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          The Double Empathy Shift & Mutual Understanding
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          Autistic researcher **Dr. Damian Milton** formulates the **Double Empathy Problem** (2012), completely dismantling classic deficit-based pathological diagnostic theories about autistic social deficits.
+                        </p>
+                        <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          The theory scientifically proves that communication breakdowns between autistic and allistic (non-autistic) individuals are bidirectional and mutual. Breakdowns stem from a mismatch in experiential background, cognitive wiring, and communication styles, rather than an autistic &quot;social deficit&quot; residing inside the autistic brain.
+                        </p>
                       </div>
                     )}
 
@@ -783,7 +821,7 @@ export default function NeurodiversityAdvocacy() {
 
               {/* SECTION D: ADVOCACY & UPLINK PROTOCOLS VIEW */}
               {currentConsoleSector === 'advocacy' && (
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                <div className="advocacy-grid">
                   
                   {/* Complete Sharing Call to Action */}
                   <div className="bubbly-panel" style={{ flexShrink: 0 }}>

@@ -3,11 +3,12 @@
 import { useState, useEffect } from 'react';
 
 import INTERESTS from '../data/interests.json';
+import PERSONAL from '../data/personal.json';
 import InterestVisuals from '../components/InterestVisuals';
 
 
 export default function AresDashboard() {
-  const birthDate = new Date('1996-07-19');
+  const birthDate = new Date(PERSONAL.birthDate);
   
   const [marsAge, setMarsAge] = useState('15.8 Sols');
   const [activeInterest, setActiveInterest] = useState(null);
@@ -238,8 +239,8 @@ export default function AresDashboard() {
           {/* Profile Avatar Frame - holographic transparent layout */}
           <div className="profile-avatar-frame">
             <img 
-              src="/assets/images/profile.png" 
-              alt="Ephraim Becker Profile" 
+              src={PERSONAL.avatar} 
+              alt={`${PERSONAL.name} Profile`} 
               style={{
                 height: '95%',
                 width: 'auto',
@@ -268,7 +269,7 @@ export default function AresDashboard() {
             textShadow: '0 0 6px rgba(0, 240, 255, 0.3)',
             flexShrink: 0
           }}>
-            <div>CITIZEN: <span style={{ color: '#fff', fontWeight: 'bold' }}>Ephraim Becker</span></div>
+            <div>CITIZEN: <span style={{ color: '#fff', fontWeight: 'bold' }}>{PERSONAL.name}</span></div>
             <div>MARS AGE: <span style={{ color: '#fff', fontWeight: 'bold' }}>{isMounted ? marsAge : '15.8 Sols'}</span></div>
           </div>
 
@@ -280,54 +281,17 @@ export default function AresDashboard() {
             marginTop: 'auto',
             flexShrink: 0
           }}>
-            <a 
-              href="https://github.com/EphraimB" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="social-link-port dashboard-social-link"
-            >
-              GitHub
-            </a>
-            <a 
-              href="https://www.linkedin.com/in/ephraim-becker/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="social-link-port dashboard-social-link"
-            >
-              LinkedIn
-            </a>
-            <a 
-              href="https://twitter.com/emb180" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="social-link-port dashboard-social-link"
-            >
-              X
-            </a>
-            <a 
-              href="https://www.youtube.com/channel/UCIHxAXYLxYlNaQiv0do0bUg" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="social-link-port dashboard-social-link"
-            >
-              YouTube
-            </a>
-            <a 
-              href="https://www.instagram.com/ephraim.becker/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="social-link-port dashboard-social-link"
-            >
-              Instagram
-            </a>
-            <a 
-              href="https://www.facebook.com/ephraim.becker/" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="social-link-port dashboard-social-link"
-            >
-              Facebook
-            </a>
+            {PERSONAL.socials.map((social) => (
+              <a 
+                key={social.name}
+                href={social.url} 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="social-link-port dashboard-social-link"
+              >
+                {social.name}
+              </a>
+            ))}
           </div>
         </div>
 
@@ -356,7 +320,7 @@ export default function AresDashboard() {
               fontFamily: 'var(--font-sans)',
               fontWeight: 400
             }}>
-              Ephraim Becker is studying Computer Science at Adelphi University. Backed by mathematical rigor in Calculus, his true passion lies in building highly interactive graphical user interfaces, responsive web layouts, and futuristic spatial interfaces.
+              {PERSONAL.bio}
             </p>
           </div>
 

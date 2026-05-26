@@ -1,0 +1,32 @@
+{
+  "name": "Ephraim Becker",
+  "birthDate": "1996-07-19",
+  "avatar": "/assets/images/profile.png",
+  "bio": "Ephraim Becker is studying Computer Science at Adelphi University. Backed by mathematical rigor in Calculus, his true passion lies in building highly interactive graphical user interfaces, responsive web layouts, and futuristic spatial interfaces.",
+  "socials": [
+    {
+      "name": "GitHub",
+      "url": "https://github.com/EphraimB"
+    },
+    {
+      "name": "LinkedIn",
+      "url": "https://www.linkedin.com/in/ephraim-becker/"
+    },
+    {
+      "name": "X",
+      "url": "https://twitter.com/emb180"
+    },
+    {
+      "name": "YouTube",
+      "url": "https://www.youtube.com/channel/UCIHxAXYLxYlNaQiv0do0bUg"
+    },
+    {
+      "name": "Instagram",
+      "url": "https://www.instagram.com/ephraim.becker/"
+    },
+    {
+      "name": "Facebook",
+      "url": "https://www.facebook.com/ephraim.becker/"
+    }
+  ]
+}

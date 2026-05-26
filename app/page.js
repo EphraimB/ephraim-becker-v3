@@ -55,7 +55,7 @@ const INTERESTS = [
     id: 'neurodiversity',
     title: 'Neurodiversity & Self-Discovery',
     tag: 'NEURODIVERSITY',
-    desc: "Neurodiversity is a deeply personal and meaningful interest to me. Studying and understanding neurodiversity helps me learn more about myself, embrace my unique cognitive wiring, and discover why I am sometimes misunderstood by others. It is an empowering journey of self-discovery, highlighting the beauty of different minds.",
+    desc: "Embracing self-discovery and neurodiversity has helped me understand my cognitive wiring and childhood feelings of being misunderstood. I have learned that autistic and allistic brains simply communicate differently, highlighted by double empathy. I am discovering concepts like autistic burnout and learning differences, and that autism is a natural cognitive variation rather than a disability.",
     icon: '🧠',
     type: 'neurodiversity'
   }
@@ -74,6 +74,7 @@ export default function AresDashboard() {
   const [bikingSlide, setBikingSlide] = useState(0);
   const [footballSlide, setFootballSlide] = useState(0);
   const [travelingSlide, setTravelingSlide] = useState(0);
+  const [neurodiversitySlide, setNeurodiversitySlide] = useState(0);
 
   // Set mounted state to prevent hydration mismatches
   useEffect(() => {
@@ -88,6 +89,7 @@ export default function AresDashboard() {
     setBikingSlide(0);
     setFootballSlide(0);
     setTravelingSlide(0);
+    setNeurodiversitySlide(0);
   }, [activeInterest]);
 
   // Dynamic Mars Age calculation based on current time - client side only
@@ -560,6 +562,7 @@ export default function AresDashboard() {
                        {activeInterest.id === 'biking' && (bikingSlide === 0 ? '[ MOBILITY OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${bikingSlide}/02 ]`)}
                        {activeInterest.id === 'flag_football' && (footballSlide === 0 ? '[ TACTICAL OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${footballSlide}/02 ]`)}
                        {activeInterest.id === 'traveling' && (travelingSlide === 0 ? '[ TRAVELING OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${travelingSlide}/02 ]`)}
+                       {activeInterest.id === 'neurodiversity' && (neurodiversitySlide === 0 ? '[ COGNITIVE OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${neurodiversitySlide}/02 ]`)}
                      </span>
 
                      {/* Paging Indicators specifically for Technology */}
@@ -864,6 +867,57 @@ export default function AresDashboard() {
                            }}
                          >
                            [ 02 // RELOCATION PLANS ]
+                         </button>
+                       </div>
+                     )}
+
+                     {/* Paging Indicators specifically for Neurodiversity */}
+                     {activeInterest.id === 'neurodiversity' && (
+                       <div style={{ display: 'flex', gap: '6px' }}>
+                         <button 
+                           onClick={() => setNeurodiversitySlide(0)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: neurodiversitySlide === 0 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                             background: neurodiversitySlide === 0 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                             color: neurodiversitySlide === 0 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ OVERVIEW ]
+                         </button>
+                         <button 
+                           onClick={() => setNeurodiversitySlide(1)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: neurodiversitySlide === 1 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                             background: neurodiversitySlide === 1 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                             color: neurodiversitySlide === 1 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 01 // DOUBLE EMPATHY ]
+                         </button>
+                         <button 
+                           onClick={() => setNeurodiversitySlide(2)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: neurodiversitySlide === 2 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                             background: neurodiversitySlide === 2 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                             color: neurodiversitySlide === 2 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 02 // NEUROTYPE VALUES ]
                          </button>
                        </div>
                      )}
@@ -1418,7 +1472,99 @@ export default function AresDashboard() {
                           </div>
                         )
                       ) : (
-                     <span>{activeInterest.desc}</span>
+                      activeInterest.id === 'neurodiversity' ? (
+                        neurodiversitySlide === 0 ? (
+                          <div>
+                            <span style={{ display: 'block', marginBottom: '8px' }}>
+                              Embracing self-discovery and neurodiversity has transformed my understanding of my cognitive wiring! Throughout my childhood, I always wondered why I felt so different from my peers in class, frequently feeling misunderstood and perceived as a problem. As neurodiverse voices have grown, I have discovered deep similarities and learned that brains work in beautifully diverse ways. Explore the concepts of double empathy and cognitive neurotype values below:
+                            </span>
+                            <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                              <button
+                                onClick={() => setNeurodiversitySlide(1)}
+                                className="hud-btn"
+                                style={{
+                                  flex: 1,
+                                  padding: '6px 10px',
+                                  fontSize: '0.7rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  borderColor: '#00ff88',
+                                  background: 'rgba(0, 255, 136, 0.05)',
+                                  color: '#00ff88',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  textAlign: 'center'
+                                }}
+                              >
+                                [ EXPLORE DOUBLE EMPATHY ➔ ]
+                              </button>
+                              <button
+                                onClick={() => setNeurodiversitySlide(2)}
+                                className="hud-btn"
+                                style={{
+                                  flex: 1,
+                                  padding: '6px 10px',
+                                  fontSize: '0.7rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  borderColor: '#00ff88',
+                                  background: 'rgba(0, 255, 136, 0.05)',
+                                  color: '#00ff88',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  textAlign: 'center'
+                                }}
+                              >
+                                [ EXPLORE NEUROTYPE VALUES ➔ ]
+                              </button>
+                            </div>
+                          </div>
+                        ) : neurodiversitySlide === 1 ? (
+                          <div>
+                            <span>
+                              One of the most eye-opening concepts I've learned is double empathy! Autistic and allistic (non-autistic) brains simply work and communicate differently. Socialization is highly contextual: allistic people communicate and socialize more easily among themselves, and autistic individuals do the exact same among other autistic peers. This shows that differences in socializing are a matter of distinct communication styles rather than a baseline social deficit or empathy failure.
+                            </span>
+                            <div style={{ marginTop: '10px' }}>
+                              <button
+                                onClick={() => setNeurodiversitySlide(0)}
+                                style={{
+                                  background: 'transparent',
+                                  border: 'none',
+                                  color: 'rgba(255,255,255,0.4)',
+                                  fontSize: '0.65rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  cursor: 'pointer',
+                                  padding: 0
+                                }}
+                              >
+                                [ ↩ BACK TO OVERVIEW ]
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div>
+                            <span>
+                              My journey of self-discovery continues to unlock fascinating insights! I am constantly learning about concepts like autistic burnout—where intense masking and sensory overload lead to temporary exhaustion—and unique learning differences. Crucially, I have embraced the understanding that autism is a natural cognitive variation (neurotype) rather than a disability or medical pathology, contrary to what old-school perspectives traditionally asserted.
+                            </span>
+                            <div style={{ marginTop: '10px' }}>
+                              <button
+                                onClick={() => setNeurodiversitySlide(0)}
+                                style={{
+                                  background: 'transparent',
+                                  border: 'none',
+                                  color: 'rgba(255,255,255,0.4)',
+                                  fontSize: '0.65rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  cursor: 'pointer',
+                                  padding: 0
+                                }}
+                              >
+                                [ ↩ BACK TO OVERVIEW ]
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      ) : (
+                        <span>{activeInterest.desc}</span>
+                      )
                    )}
                     </div>
                   </div>
@@ -2156,50 +2302,127 @@ export default function AresDashboard() {
                   </svg>
                 )}
 
-                {/* Neurodiversity infinity loop & synapses graphic */}
-                  {activeInterest.type === 'neurodiversity' && (
-                    <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
-                      <defs>
-                        {/* Beautiful HSL rainbow linear gradient */}
-                        <linearGradient id="neuroRainbowGradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#00f0ff" />
-                          <stop offset="33%" stopColor="#c259ff" />
-                          <stop offset="66%" stopColor="#ffb300" />
-                          <stop offset="100%" stopColor="#00ff88" />
-                        </linearGradient>
-                      </defs>
+                {/* Neurodiversity synaptic overview - Slide 0 */}
+                {activeInterest.type === 'neurodiversity' && neurodiversitySlide === 0 && (
+                  <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
+                    <rect x="0" y="0" width="320" height="15" fill="#001a08" />
+                    <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // COGNITIVE_MAPPING_CORE</text>
 
-                      {/* Neural network synapses background */}
-                      <g opacity="0.3">
-                        <line x1="60" y1="25" x2="100" y2="50" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-                        <line x1="100" y1="50" x2="130" y2="30" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-                        <line x1="220" y1="50" x2="260" y2="75" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-                        <line x1="160" y1="50" x2="175" y2="20" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5" />
-                        
-                        <circle cx="60" cy="25" r="2.5" fill="#00f0ff" />
-                        <circle cx="130" cy="30" r="2" fill="#c259ff" />
-                        <circle cx="260" cy="75" r="2.5" fill="#00ff88" />
-                        <circle cx="175" cy="20" r="2" fill="#ffb300" />
-                      </g>
+                    {/* Network paths */}
+                    <g opacity="0.3">
+                      <line x1="40" y1="40" x2="80" y2="25" stroke="#00ff88" strokeWidth="0.8" />
+                      <line x1="80" y1="25" x2="120" y2="55" stroke="#00f0ff" strokeWidth="0.8" />
+                      <line x1="120" y1="55" x2="160" y2="35" stroke="#00ff88" strokeWidth="0.8" />
+                      <line x1="160" y1="35" x2="200" y2="65" stroke="#00f0ff" strokeWidth="0.8" />
+                      <line x1="200" y1="65" x2="240" y2="45" stroke="#00ff88" strokeWidth="0.8" />
+                      <line x1="240" y1="45" x2="280" y2="75" stroke="#00f0ff" strokeWidth="0.8" />
+                    </g>
 
-                      {/* High-fidelity glowing infinity loop */}
+                    {/* Glowing Synaptic Hubs */}
+                    <g>
+                      <circle cx="40" cy="40" r="3" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 2px #00ff88)' }} />
+                      <circle cx="80" cy="25" r="4.5" fill="#00f0ff" style={{ filter: 'drop-shadow(0 0 2px #00f0ff)' }} />
+                      <circle cx="120" cy="55" r="3" fill="#00ff88" />
+                      <circle cx="160" cy="35" r="4" fill="#00f0ff" />
+                      <circle cx="200" cy="65" r="3" fill="#00ff88" />
+                      <circle cx="240" cy="45" r="4.5" fill="#00f0ff" style={{ filter: 'drop-shadow(0 0 2px #00f0ff)' }} />
+                      <circle cx="280" cy="75" r="3" fill="#00ff88" />
+                    </g>
+
+                    {/* Low opacity circular scan sweep */}
+                    <circle cx="160" cy="50" r="32" fill="none" stroke="rgba(0, 255, 136, 0.15)" strokeWidth="1" strokeDasharray="3 3" />
+                    <circle cx="160" cy="50" r="22" fill="none" stroke="rgba(0, 240, 255, 0.2)" strokeWidth="1" />
+                    
+                    <text x="160" y="54" fill="#fff" fontSize="6.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold" opacity="0.9" style={{ filter: 'drop-shadow(0 0 2px rgba(255,255,255,0.5))' }}>NEURAL NET: COHERENT</text>
+
+                    <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">SYSTEM: synapse_mapping_v3.2</text>
+                    <text x="310" y="102" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="end">UNDERSTANDING: INITIATED</text>
+                  </svg>
+                )}
+
+                {/* Double Empathy socialization waves - Slide 1 */}
+                {activeInterest.type === 'neurodiversity' && neurodiversitySlide === 1 && (
+                  <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
+                    <rect x="0" y="0" width="320" height="15" fill="#001a08" />
+                    <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // DOUBLE_EMPATHY_RESONANCE</text>
+
+                    {/* Autistic Social Resonance Wave (Top - Emerald Green/Cyan) */}
+                    <path d="M 20,40 Q 55,15 90,40 T 160,40 T 230,40 T 300,40" fill="none" stroke="#00ff88" strokeWidth="2.2" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
+                    <text x="30" y="32" fill="#00ff88" fontSize="5.5" fontFamily="monospace" fontWeight="bold">AUTISTIC RESONANCE</text>
+
+                    {/* Allistic Social Resonance Wave (Bottom - Dusk Orange/Pink) */}
+                    <path d="M 20,70 Q 55,95 90,70 T 160,70 T 230,70 T 300,70" fill="none" stroke="#ff007f" strokeWidth="2" strokeDasharray="3 2" style={{ filter: 'drop-shadow(0 0 2.5px #ff007f)' }} />
+                    <text x="30" y="80" fill="#ff007f" fontSize="5.5" fontFamily="monospace" fontWeight="bold">ALLISTIC RESONANCE</text>
+
+                    {/* Center Synapse Bridge */}
+                    <line x1="160" y1="40" x2="160" y2="70" stroke="rgba(255,255,255,0.3)" strokeWidth="1" strokeDasharray="2 2" />
+                    <circle cx="160" cy="55" r="4" fill="#00f0ff" style={{ filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
+                    <text x="168" y="57" fill="#00f0ff" fontSize="5" fontFamily="monospace">SYNC: STABLE</text>
+
+                    <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">MODEL: dual_empathy_resonance_v1.0</text>
+                    <text x="310" y="102" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="end">SOCIAL SYNC: RESOLVED</text>
+                  </svg>
+                )}
+
+                {/* Neurodiversity infinity loop & burnout meter - Slide 2 */}
+                {activeInterest.type === 'neurodiversity' && neurodiversitySlide === 2 && (
+                  <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
+                    <defs>
+                      <linearGradient id="neuroRainbowGradientFinal" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stopColor="#00f0ff" />
+                        <stop offset="33%" stopColor="#00ff88" />
+                        <stop offset="66%" stopColor="#ffe082" />
+                        <stop offset="100%" stopColor="#00ff88" />
+                      </linearGradient>
+                    </defs>
+
+                    <rect x="0" y="0" width="320" height="15" fill="#001a08" />
+                    <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // NEUROTYPE_VARIATION_GRID</text>
+
+                    {/* Left: Glowing infinity loop */}
+                    <g transform="translate(5, 5)">
                       <path 
-                        d="M 160,50 C 130,20 100,20 100,50 C 100,80 130,80 160,50 C 190,20 220,20 220,50 C 220,80 190,80 160,50 Z" 
+                        d="M 75,45 C 55,20 35,20 35,45 C 35,70 55,70 75,45 C 95,20 115,20 115,45 C 115,70 95,70 75,45 Z" 
                         fill="none" 
-                        stroke="url(#neuroRainbowGradient)" 
-                        strokeWidth="3.5" 
+                        stroke="url(#neuroRainbowGradientFinal)" 
+                        strokeWidth="3" 
                         strokeLinecap="round"
-                        style={{ filter: 'drop-shadow(0 0 6px rgba(0, 240, 255, 0.4))' }} 
+                        style={{ filter: 'drop-shadow(0 0 4px rgba(0, 255, 136, 0.5))' }} 
                       />
+                      <circle cx="35" cy="45" r="2" fill="#00f0ff" />
+                      <circle cx="115" cy="45" r="2" fill="#00ff88" />
+                      <text x="75" y="80" fill="rgba(255,255,255,0.5)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">INFINITY VECTOR</text>
+                    </g>
 
-                      {/* Synapse hubs */}
-                      <circle cx="100" cy="50" r="2.5" fill="#00f0ff" />
-                      <circle cx="220" cy="50" r="2.5" fill="#00ff88" />
-                      <circle cx="160" cy="50" r="2" fill="#c259ff" />
+                    {/* Center: segmented burnout recovery level bar chart */}
+                    <g transform="translate(135, 25)">
+                      <text x="0" y="10" fill="rgba(255,255,255,0.7)" fontSize="5.5" fontFamily="monospace">BURNOUT_RECOVERY</text>
+                      
+                      {/* Meter bar backgrounds */}
+                      <rect x="0" y="15" width="55" height="6" rx="1.5" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.1)" strokeWidth="0.5" />
+                      {/* Active green segments */}
+                      <rect x="1" y="16" width="10" height="4" fill="#00ff88" />
+                      <rect x="12" y="16" width="10" height="4" fill="#00ff88" />
+                      <rect x="23" y="16" width="10" height="4" fill="#00ff88" />
+                      <rect x="34" y="16" width="10" height="4" fill="#00ff88" opacity="0.4" />
+                      <rect x="45" y="16" width="8" height="4" fill="#00ff88" opacity="0.1" />
+                      
+                      <text x="0" y="32" fill="#00ff88" fontSize="5.5" fontFamily="monospace" fontWeight="bold">ENERGY STATUS: 78%</text>
+                    </g>
 
-                      <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">SYNAPSE_CORE: cognitive_neurodiversity_infinite_loop</text>
-                    </svg>
-                  )}
+                    {/* Right: Telemetry Panel */}
+                    <g transform="translate(205, 22)">
+                      <rect x="0" y="0" width="105" height="52" rx="4" fill="rgba(0, 0, 0, 0.6)" stroke="rgba(0, 255, 136, 0.2)" strokeWidth="1" />
+                      <text x="8" y="12" fill="#00ff88" fontSize="6.5" fontFamily="monospace" fontWeight="bold">TYPE: AUTISTIC</text>
+                      <text x="8" y="22" fill="#fff" fontSize="5.5" fontFamily="monospace">COGNITIVE: OK</text>
+                      <text x="8" y="32" fill="rgba(255,255,255,0.7)" fontSize="5" fontFamily="monospace">DISABILITY: FALSE</text>
+                      <text x="8" y="42" fill="#00f0ff" fontSize="5" fontFamily="monospace" fontWeight="bold">ALLISTIC SYNC: OFF</text>
+                    </g>
+
+                    <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">STATUS: INDEPENDENT_MIND</text>
+                    <text x="310" y="102" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="end">PATHOLOGY_RATING: 0%</text>
+                  </svg>
+                )}
 
                 </div>
 

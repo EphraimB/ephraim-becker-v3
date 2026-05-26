@@ -133,6 +133,43 @@ export default function NeurodiversityAdvocacy() {
           100% { opacity: 0.3; }
         }
 
+        @keyframes discharge-burnout {
+          0% { stroke: #00ff88; fill: rgba(0, 255, 136, 0.15); }
+          25% { stroke: #ffb300; fill: rgba(255, 179, 0, 0.1); }
+          50% { stroke: #ea4335; fill: rgba(234, 67, 53, 0.04); }
+          75% { stroke: #666; fill: rgba(100, 100, 100, 0.01); opacity: 0.2; }
+          100% { stroke: #00ff88; fill: rgba(0, 255, 136, 0.15); }
+        }
+        @keyframes battery-drain {
+          0% { width: 30px; fill: #00ff88; }
+          40% { width: 30px; fill: #00ff88; }
+          75% { width: 8px; fill: #ea4335; }
+          90% { width: 2px; fill: #ea4335; opacity: 0.3; }
+          100% { width: 30px; fill: #00ff88; }
+        }
+        @keyframes true-self-shake {
+          0%, 100% { transform: scale(1); opacity: 0.9; }
+          50% { transform: scale(0.92) translate(-1px, 1px); opacity: 0.4; }
+        }
+        @keyframes laser-sweep {
+          0%, 100% { stroke-dashoffset: 0; opacity: 0.8; }
+          50% { stroke-dashoffset: -30; opacity: 1; filter: drop-shadow(0 0 4px #00ff88); }
+        }
+        @keyframes momentum-slide {
+          0% { cx: 20; }
+          30% { cx: 20; }
+          70% { cx: 80; }
+          100% { cx: 80; }
+        }
+        @keyframes overload-crash {
+          0% { fill: rgba(0, 255, 136, 0.1); stroke: #00ff88; }
+          40% { fill: rgba(255, 179, 0, 0.2); stroke: #ffb300; }
+          48% { fill: rgba(234, 67, 53, 0.4); stroke: #ea4335; }
+          52% { fill: rgba(0, 0, 0, 0.9); stroke: rgba(255, 255, 255, 0.05); }
+          65% { fill: rgba(0, 240, 255, 0.02); stroke: rgba(0, 240, 255, 0.3); stroke-dasharray: 2 2; }
+          100% { fill: rgba(0, 240, 255, 0.08); stroke: #00f0ff; }
+        }
+
         .console-selector-bar {
           display: grid;
           grid-template-columns: repeat(5, 1fr);
@@ -566,66 +603,196 @@ export default function NeurodiversityAdvocacy() {
                   <div className="story-grid">
                     
                     {/* Card 1: Autistic Burnout */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {/* Animated SVG 1 */}
+                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
+                        <svg viewBox="0 0 100 30" width="100%" height="100%">
+                          <rect x="25" y="6" width="46" height="14" rx="2" fill="none" stroke="#ffb300" strokeWidth="1.5" style={{ animation: 'discharge-burnout 4s infinite ease-in-out' }} />
+                          <rect x="71" y="9" width="3" height="8" rx="1" fill="#ffb300" style={{ animation: 'discharge-burnout 4s infinite ease-in-out' }} />
+                          <rect x="29" y="9" width="38" height="8" rx="1" style={{ animation: 'battery-drain 4s infinite ease-in-out' }} />
+                          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ BURNOUT LEVEL // MONITOR ]</text>
+                        </svg>
+                      </div>
+
+                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                         🔥 Autistic Burnout
                       </h4>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
+                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
                         A profound state of mental, emotional, and physical system collapse.
                       </p>
-                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
                         <strong>Why we are like that:</strong> Autistic burnout is not ordinary tiredness or &quot;defiance.&quot; It is a neurological crash caused by the cumulative, chronic trauma of constantly masking (forcing oneself to look neurotypical), enduring hostile or overstimulating sensory environments, and surviving unsafe social spaces. During burnout, an autistic person may experience a temporary or long-term loss of functional skills, extreme executive dysfunction, and highly reduced sensory tolerance.
                       </p>
-                      <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
                         [ RECOVERY PATHWAY: SENSORY REST & UNMASKING ]
                       </span>
                     </div>
 
                     {/* Card 2: The Social Battery */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {/* Animated SVG 2 */}
+                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
+                        <svg viewBox="0 0 100 30" width="100%" height="100%">
+                          <rect x="25" y="6" width="46" height="14" rx="2" fill="none" stroke="#00ff88" strokeWidth="1.5" />
+                          <rect x="71" y="9" width="3" height="8" rx="1" fill="#00ff88" />
+                          <rect x="29" y="9" width="38" height="8" rx="1" style={{ animation: 'battery-drain 5s infinite ease-in-out' }} />
+                          <circle cx="85" cy="13" r="1.5" fill="#00f0ff">
+                            <animate attributeName="cx" values="85;25" dur="1.2s" repeatCount="indefinite" />
+                          </circle>
+                          <circle cx="80" cy="8" r="1" fill="#ff5722">
+                            <animate attributeName="cx" values="80;30" dur="1.6s" repeatCount="indefinite" />
+                          </circle>
+                          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ REAL-TIME METRIC ANALYSIS ]</text>
+                        </svg>
+                      </div>
+
+                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                         🔋 The Social Battery
                       </h4>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
+                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
                         The finite cognitive and physical energy budget allotted for social stimuli.
                       </p>
-                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
                         <strong>Why we are like that:</strong> Autistic brains process incoming sensory and social details with immense, raw complexity, rather than filtering them out automatically. This high-definition processing operates at a steep energy cost. When an autistic person's social battery is depleted, quiet disengagement or seeking physical solitude is a vital physiological safety mechanism to prevent sensory overload and shutdown—not antisocial behavior or personal rejection.
                       </p>
-                      <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
                         [ METRIC BUDGET: FINITE // REQUIRES SAFE ISOLATION TO RECHARGE ]
                       </span>
                     </div>
 
                     {/* Card 3: Double Empathy & Boundary Mismatches */}
-                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {/* Animated SVG 3 */}
+                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
+                        <svg viewBox="0 0 160 30" width="100%" height="100%">
+                          <circle cx="30" cy="13" r="4.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 2px #00ff88)' }} />
+                          <circle cx="130" cy="13" r="4.5" fill="#ff007f" style={{ filter: 'drop-shadow(0 0 2px #ff007f)' }} />
+                          <path d="M 30,13 Q 55,3 80,13 T 130,13" fill="none" stroke="#00ff88" strokeWidth="1" strokeDasharray="30" strokeDashoffset="0" style={{ animation: 'laser-sweep 2.5s infinite linear' }} />
+                          <path d="M 130,13 Q 105,23 80,13 T 30,13" fill="none" stroke="#ff007f" strokeWidth="1" strokeDasharray="30" strokeDashoffset="0" style={{ animation: 'laser-sweep 2.5s infinite linear reverse' }} />
+                          <text x="80" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ MUTUAL DISSONANCE OR SYNC ]</text>
+                        </svg>
+                      </div>
+
+                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                         🤝 Double Empathy & Boundary Miscommunication
                       </h4>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
+                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
                         Bidirectional breakdowns in understanding due to diverging neurotypes and communication styles.
                       </p>
-                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
                         <strong>Why we are like that:</strong> Communication is always mutual. When an autistic individual's social battery is empty and they withdraw silently without explicit verbal announcements, a peer may misread that quietness as personal hostility or a mistake on their part. Because of the communication gap and a complete lack of active signals, boundaries are often accidentally invaded. True advocacy requires clear, explicit communication of limits from both sides and mutual respect for boundaries, rather than blaming one side for failing to guess.
                       </p>
-                      <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
                         [ INTERACTIVE SYNC: MUTUAL EXPLICITNESS // PREVENTS ACCIDENTAL BOUNDARY OVERRUNS ]
                       </span>
                     </div>
 
                     {/* Card 4: Masking & Camouflaging */}
-                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {/* Animated SVG 4 */}
+                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
+                        <svg viewBox="0 0 160 30" width="100%" height="100%">
+                          <circle cx="80" cy="13" r="5" fill="#00ff88" style={{ animation: 'true-self-shake 2s infinite ease-in-out', filter: 'drop-shadow(0 0 3px #00ff88)' }} />
+                          <circle cx="80" cy="13" r="9" fill="none" stroke="#00f0ff" strokeWidth="1.5" strokeDasharray="4 2">
+                            <animateTransform attributeName="transform" type="rotate" from="0 80 13" to="360 80 13" dur="6s" repeatCount="indefinite" />
+                          </circle>
+                          <text x="80" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ COGNITIVE CAMOUFLAGE SHIELD ]</text>
+                        </svg>
+                      </div>
+
+                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                         🎭 Masking & Camouflaging
                       </h4>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
+                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
                         The exhausting suppression of natural traits to pass as neurotypical.
                       </p>
-                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
                         <strong>Why we are like that:</strong> Masking is a trauma-driven coping mechanism. Autistic individuals learn to suppress natural behaviors (like stimming, avoiding eye contact, or speaking with absolute literal directness) in order to avoid harassment, social isolation, and exclusion. While masking acts as a protective shield, it operates at a devastating metabolic and emotional cost—acting as the single greatest driver of chronic anxiety, clinical depression, and sudden autistic burnout.
                       </p>
-                      <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
                         [ METABOLIC LOAD: HIGH // REQUIRES RADICAL SELF-ACCEPTANCE TO UNLEARN ]
+                      </span>
+                    </div>
+
+                    {/* Card 5: Autistic Inertia */}
+                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {/* Animated SVG 5 */}
+                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
+                        <svg viewBox="0 0 100 30" width="100%" height="100%">
+                          <line x1="10" y1="13" x2="90" y2="13" stroke="rgba(255,255,255,0.06)" strokeWidth="4" strokeLinecap="round" />
+                          <line x1="10" y1="13" x2="90" y2="13" stroke="rgba(255, 179, 0, 0.15)" strokeWidth="1" strokeLinecap="round" />
+                          <circle cx="20" cy="13" r="4" fill="#ffb300" style={{ animation: 'momentum-slide 3.5s infinite ease-in-out', filter: 'drop-shadow(0 0 3px #ffb300)' }} />
+                          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ NEUROLOGICAL MOMENTUM // INERTIA ]</text>
+                        </svg>
+                      </div>
+
+                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        ⏳ Autistic Inertia
+                      </h4>
+                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
+                        Difficulty initiating, stopping, or transitioning between cognitive states.
+                      </p>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                        <strong>Why we are like that:</strong> Inertia is a physiological reflection of neurological momentum, not laziness or poor motivation. Due to executive functioning differences, starting a new task, stopping an active task, or shifting focus requires substantial metabolic energy. It is heavily influenced by sensory sensitivities, emotional states, and individual interest. Once in motion, an autistic brain thrives in deep flow; shifting states creates intense sensory friction.
+                      </p>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
+                        [ COGNITIVE SYSTEMS STATE: MOMENTUM RESISTANT // REQUIRES TRANSLATIONAL BUFFERS ]
+                      </span>
+                    </div>
+
+                    {/* Card 6: Meltdowns & Shutdowns */}
+                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {/* Animated SVG 6 */}
+                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
+                        <svg viewBox="0 0 100 30" width="100%" height="100%">
+                          <circle cx="50" cy="13" r="5" style={{ animation: 'overload-crash 5s infinite ease-in-out' }} />
+                          <circle cx="50" cy="13" r="14" fill="none" stroke="#ea4335" strokeWidth="0.8" opacity="0">
+                            <animate attributeName="r" values="5;20" dur="2.5s" repeatCount="indefinite" />
+                            <animate attributeName="opacity" values="0.8;0" dur="2.5s" repeatCount="indefinite" />
+                          </circle>
+                          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ OVERLOAD SPECTRUM ANALYZER ]</text>
+                        </svg>
+                      </div>
+
+                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        ⚡ Meltdowns & Shutdowns
+                      </h4>
+                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
+                        Involuntary neurological reactions to extreme sensory or emotional overload.
+                      </p>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                        <strong>Why we are like that:</strong> Meltdowns (externalized fight/flight) and shutdowns (internalized freeze/dissociation) are absolutely **not tantrums** or behavioral choices. They are involuntary system crashes that occur when an autistic nervous system is pushed past its processing capabilities. The brain enters a raw survival state, rendering reasoning or compliance impossible. Recovery requires absolute safety, zero demands, and low-stimulus rest.
+                      </p>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
+                        [ CRITICAL OVERLOAD PROTECTOR: AUTOMATIC SYSTEM RESTORE REQUIRED ]
+                      </span>
+                    </div>
+
+                    {/* Card 7: Monotropism */}
+                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      {/* Animated SVG 7 */}
+                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
+                        <svg viewBox="0 0 160 30" width="100%" height="100%">
+                          <polygon points="80,0 72,13 88,13" fill="rgba(0,255,136,0.06)" />
+                          <circle cx="80" cy="13" r="4.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
+                          <circle cx="30" cy="13" r="2" fill="rgba(255,255,255,0.08)" />
+                          <circle cx="130" cy="13" r="2" fill="rgba(255,255,255,0.08)" />
+                          <line x1="80" y1="0" x2="80" y2="13" stroke="#00ff88" strokeWidth="1.5" strokeDasharray="30" strokeDashoffset="0" style={{ animation: 'laser-sweep 2s infinite linear' }} />
+                          <text x="80" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ MONOTROPIC TUNNEL FOCUS ]</text>
+                        </svg>
+                      </div>
+
+                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        🎯 Monotropic Focus Tunnels
+                      </h4>
+                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
+                        The cognitive processing style characterized by focusing intensely on a single stimulus channel.
+                      </p>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                        <strong>Why we are like that:</strong> Monotropism is the dominant cognitive style in autistic minds, funneling all processing resources into a single deep interest or task at any given moment. Rather than spreading attention across many shallow channels (polytropism), the brain locks into a highly efficient flow state. This makes autistic individuals incredibly skilled specialist thinkers, but it makes sudden interruptions extremely jarring to the nervous system, rapidly draining their energy reserve.
+                      </p>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
+                        [ COGNITIVE TUNNEL INDEX: HYPER-FOCUS ACTIVE // DO NOT INTERRUPT ]
                       </span>
                     </div>
 

@@ -69,6 +69,7 @@ export default function AresDashboard() {
   const [isMounted, setIsMounted] = useState(false);
 
   const [techSlide, setTechSlide] = useState(0);
+  const [scifiSlide, setScifiSlide] = useState(0);
 
   // Set mounted state to prevent hydration mismatches
   useEffect(() => {
@@ -78,6 +79,7 @@ export default function AresDashboard() {
   // Reset slide index when active interest changes
   useEffect(() => {
     setTechSlide(0);
+    setScifiSlide(0);
   }, [activeInterest]);
 
   // Dynamic Mars Age calculation based on current time - client side only
@@ -545,6 +547,7 @@ export default function AresDashboard() {
                        letterSpacing: '1px'
                      }}>
                        // DATA DESCRIPTIVE LOG {activeInterest.id === 'technology' && (techSlide === 0 ? '[ SYSTEM OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${techSlide}/02 ]`)}
+                       {activeInterest.id === 'scifi' && (scifiSlide === 0 ? '[ CINEMATIC OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${scifiSlide}/02 ]`)}
                      </span>
 
                      {/* Paging Indicators specifically for Technology */}
@@ -594,6 +597,57 @@ export default function AresDashboard() {
                            }}
                          >
                            [ 02 // GADGETS ]
+                         </button>
+                       </div>
+                     )}
+
+                     {/* Paging Indicators specifically for Sci-Fi / Fantasy */}
+                     {activeInterest.id === 'scifi' && (
+                       <div style={{ display: 'flex', gap: '6px' }}>
+                         <button 
+                           onClick={() => setScifiSlide(0)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: scifiSlide === 0 ? '#c259ff' : 'rgba(255,255,255,0.15)',
+                             background: scifiSlide === 0 ? 'rgba(194,89,255,0.08)' : 'transparent',
+                             color: scifiSlide === 0 ? '#c259ff' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ OVERVIEW ]
+                         </button>
+                         <button 
+                           onClick={() => setScifiSlide(1)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: scifiSlide === 1 ? '#c259ff' : 'rgba(255,255,255,0.15)',
+                             background: scifiSlide === 1 ? 'rgba(194,89,255,0.08)' : 'transparent',
+                             color: scifiSlide === 1 ? '#c259ff' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 01 // SCI-FI ]
+                         </button>
+                         <button 
+                           onClick={() => setScifiSlide(2)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: scifiSlide === 2 ? '#c259ff' : 'rgba(255,255,255,0.15)',
+                             background: scifiSlide === 2 ? 'rgba(194,89,255,0.08)' : 'transparent',
+                             color: scifiSlide === 2 ? '#c259ff' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 02 // FANTASY ]
                          </button>
                        </div>
                      )}
@@ -682,6 +736,96 @@ export default function AresDashboard() {
                            <div style={{ marginTop: '10px' }}>
                              <button
                                onClick={() => setTechSlide(0)}
+                               style={{
+                                 background: 'transparent',
+                                 border: 'none',
+                                 color: 'rgba(255,255,255,0.4)',
+                                 fontSize: '0.65rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 cursor: 'pointer',
+                                 padding: 0
+                               }}
+                             >
+                               [ ↩ BACK TO OVERVIEW ]
+                             </button>
+                           </div>
+                         </div>
+                       )
+                     ) : activeInterest.id === 'scifi' ? (
+                       scifiSlide === 0 ? (
+                         <div>
+                           <span style={{ display: 'block', marginBottom: '8px' }}>
+                             I am deeply inspired by the boundless imagination of science fiction and fantasy cinematic universes! For me, sci-fi is a gateway to imagining the next big thing—where high-tech gadgets and advanced user interfaces on screen directly fuel my passion for coding real-world systems. Meanwhile, fantasy worlds capture my heart with their magic, rich storytelling, and legendary journeys. A masterpiece like Back to the Future perfectly bridges both worlds, combining time-traveling science fiction gadgetry with the whimsical magic of timeline shifts and destiny! Explore each detailed realm below:
+                           </span>
+                           <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                             <button
+                               onClick={() => setScifiSlide(1)}
+                               className="hud-btn"
+                               style={{
+                                 flex: 1,
+                                 padding: '6px 10px',
+                                 fontSize: '0.7rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 borderColor: '#c259ff',
+                                 background: 'rgba(194, 89, 255, 0.05)',
+                                 color: '#c259ff',
+                                 borderRadius: '4px',
+                                 cursor: 'pointer',
+                                 textAlign: 'center'
+                               }}
+                             >
+                               [ EXPLORE SCIENCE FICTION ➔ ]
+                             </button>
+                             <button
+                               onClick={() => setScifiSlide(2)}
+                               className="hud-btn"
+                               style={{
+                                 flex: 1,
+                                 padding: '6px 10px',
+                                 fontSize: '0.7rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 borderColor: '#ffe082',
+                                 background: 'rgba(255, 224, 130, 0.05)',
+                                 color: '#ffe082',
+                                 borderRadius: '4px',
+                                 cursor: 'pointer',
+                                 textAlign: 'center'
+                               }}
+                             >
+                               [ EXPLORE FANTASY & MAGIC ➔ ]
+                             </button>
+                           </div>
+                         </div>
+                       ) : scifiSlide === 1 ? (
+                         <div>
+                           <span>
+                             Sci-Fi is where my tech and design interest runs wild! I love watching legendary space operas and futuristic movies to imagine the next generation of user interfaces and hardware. From the iconic, highly structured LCARS terminal screens in Star Trek, to the floating blue holograms, lightsabers, and stormtrooper lasers in Star Wars, and even the sleek, talking J.A.R.V.I.S. holographic system in Iron Man, these cinematic creations inspire me. Similarly, Back to the Future's customized time-traveling DeLorean, Doc Brown's legendary Flux Capacitor, and the wild mechanics of temporal displacement fuel my love for futuristic hardware!
+                           </span>
+                           <div style={{ marginTop: '10px' }}>
+                             <button
+                               onClick={() => setScifiSlide(0)}
+                               style={{
+                                 background: 'transparent',
+                                 border: 'none',
+                                 color: 'rgba(255,255,255,0.4)',
+                                 fontSize: '0.65rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 cursor: 'pointer',
+                                 padding: 0
+                               }}
+                             >
+                               [ ↩ BACK TO OVERVIEW ]
+                             </button>
+                           </div>
+                         </div>
+                       ) : (
+                         <div>
+                           <span>
+                             While sci-fi is driven by high-tech logic, fantasy captured my imagination through pure wonder and rich storytelling! Masterpieces like Harry Potter and The Lord of the Rings depict detailed worlds filled with deep history, magic, and legendary quests of self-discovery. These cinematic masterpieces tell exceptionally good stories, reminding me of the importance of narrative. Even Back to the Future functions as a beautiful storybook adventure—where the 'magic' of changing history, family destiny, and Doc Brown's whimsical inventions remind us of the emotional resonance in building premium user experiences.
+                           </span>
+                           <div style={{ marginTop: '10px' }}>
+                             <button
+                               onClick={() => setScifiSlide(0)}
                                style={{
                                  background: 'transparent',
                                  border: 'none',
@@ -833,29 +977,118 @@ export default function AresDashboard() {
                   )}
 
                   {/* Sci-Fi carousel graphic */}
-                  {activeInterest.type === 'scifi' && (
+                  {activeInterest.type === 'scifi' && scifiSlide === 0 && (
                     <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(194, 89, 255, 0.18)', boxShadow: 'inset 0 0 8px rgba(194,89,255,0.08)' }}>
-                      <line x1="80" y1="5" x2="80" y2="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                      <line x1="160" y1="5" x2="160" y2="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                      <line x1="240" y1="5" x2="240" y2="85" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                      <g>
-                        <line x1="30" y1="50" x2="36" y2="44" stroke="#888" strokeWidth="2.5" strokeLinecap="round" />
-                        <line x1="36" y1="44" x2="58" y2="22" stroke="#00f0ff" strokeWidth="2" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
-                        <text x="40" y="72" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">STAR WARS</text>
+                      <rect x="0" y="0" width="320" height="15" fill="#151324" />
+                      <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
+                      <circle cx="20" cy="7.5" r="3" fill="#ffb300" />
+                      <circle cx="30" cy="7.5" r="3" fill="#00ff88" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // CINEMATIC_INTEGRATION_CORE</text>
+
+                      <g opacity="0.1">
+                        <line x1="0" y1="40" x2="320" y2="40" stroke="#c259ff" strokeWidth="0.5" />
+                        <line x1="160" y1="15" x2="160" y2="90" stroke="#c259ff" strokeWidth="0.5" />
                       </g>
-                      <g transform="translate(10, 0)">
-                        <path d="M 110,48 L 122,23 L 118,48 L 128,48 M 115,22 L 125,12" fill="none" stroke="#ffe082" strokeWidth="1.2" style={{ filter: 'drop-shadow(0 0 2px #ffe082)' }} />
-                        <text x="110" y="72" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">H. POTTER</text>
+
+                      {/* Left side: Sci-Fi node (Lightsaber / Laser Emitter) */}
+                      <g transform="translate(15, 20)">
+                        <line x1="10" y1="40" x2="35" y2="20" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 4px #00f0ff)' }} />
+                        <line x1="10" y1="40" x2="18" y2="34" stroke="#555" strokeWidth="3" strokeLinecap="round" />
+                        <circle cx="50" cy="15" r="10" fill="none" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="3 1" />
+                        <text x="35" y="52" fill="rgba(255,255,255,0.6)" fontSize="6" fontFamily="monospace" textAnchor="middle">SCI-FI TELEMETRY</text>
                       </g>
-                      <g>
-                        <ellipse cx="200" cy="35" rx="12" ry="7" fill="none" stroke="#ffb300" strokeWidth="1.8" style={{ filter: 'drop-shadow(0 0 3px #ffb300)' }} />
-                        <text x="200" y="72" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">L.O.T.R.</text>
+
+                      {/* Center Link: Chrono Synapse */}
+                      <g transform="translate(110, 45)">
+                        <path d="M 10,0 Q 50,-10 90,0" fill="none" stroke="rgba(194, 89, 255, 0.3)" strokeWidth="1" strokeDasharray="2 2" />
+                        <circle cx="50" cy="-4" r="3.5" fill="#141a29" stroke="#ffe082" strokeWidth="1" />
+                        <text x="50" y="0.5" fill="#ffe082" fontSize="5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">SYNAPSE</text>
                       </g>
-                      <g>
-                        <rect x="252" y="18" width="36" height="24" rx="2" fill="#080b13" stroke="rgba(255,255,255,0.1)" />
-                        <text x="270" y="29" fill="#ff5722" fontSize="9" fontFamily="monospace" fontWeight="900" textAnchor="middle" style={{ filter: 'drop-shadow(0 0 2px #ff5722)' }}>88</text>
-                        <text x="270" y="39" fill="#ff5722" fontSize="4.5" fontFamily="monospace" textAnchor="middle">MPH</text>
-                        <text x="270" y="72" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">B.T.T.F.</text>
+
+                      {/* Right side: Fantasy node (Magic Wand / Synapse Node) */}
+                      <g transform="translate(210, 20)">
+                        <line x1="75" y1="40" x2="50" y2="20" stroke="#ffe082" strokeWidth="1.5" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 2px #ffe082)' }} />
+                        <path d="M 46,16 L 49,16 L 47,19 Z" fill="#ffe082" style={{ filter: 'drop-shadow(0 0 3px #ffe082)' }} />
+                        <circle cx="50" cy="20" r="1.5" fill="#fff" />
+                        <circle cx="42" cy="22" r="0.8" fill="#fff" />
+                        <circle cx="58" cy="16" r="0.8" fill="#fff" />
+                        <text x="45" y="52" fill="rgba(255,255,255,0.6)" fontSize="6" fontFamily="monospace" textAnchor="middle">FANTASY LORE</text>
+                      </g>
+
+                      <text x="10" y="84" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">SYSTEM: cinema_sync_v2.0</text>
+                      <text x="310" y="84" fill="#c259ff" fontSize="5.5" fontFamily="monospace" textAnchor="end">INTEGRATION: ACTIVE</text>
+                    </svg>
+                  )}
+
+                  {activeInterest.type === 'scifi' && scifiSlide === 1 && (
+                    <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(194, 89, 255, 0.18)', boxShadow: 'inset 0 0 8px rgba(194,89,255,0.08)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#151324" />
+                      <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
+                      <circle cx="20" cy="7.5" r="3" fill="#ffb300" />
+                      <circle cx="30" cy="7.5" r="3" fill="#00ff88" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // FUTURE_INTERFACE_GRID</text>
+                      
+                      {/* LCARS-style block elements on the left */}
+                      <g transform="translate(10, 20)">
+                        <path d="M 5,5 L 30,5 A 5 5 0 0 1 35,10 L 35,18 L 10,18 A 5 5 0 0 0 5,23 L 5,35" fill="none" stroke="#ffe082" strokeWidth="2.5" />
+                        <rect x="12" y="10" width="10" height="4" fill="#c259ff" />
+                        <rect x="24" y="10" width="8" height="4" fill="#00f0ff" />
+                        <text x="20" y="27" fill="rgba(255,255,255,0.5)" fontSize="5" fontFamily="monospace">LCARS v9</text>
+                      </g>
+
+                      {/* Iron Man circular HUD overlay in the center */}
+                      <g transform="translate(160, 50)" style={{ filter: 'drop-shadow(0 0 3px #00f0ff)' }}>
+                        <circle cx="0" cy="0" r="22" fill="none" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="4 2" />
+                        <circle cx="0" cy="0" r="14" fill="none" stroke="#ffe082" strokeWidth="1.2" />
+                        <path d="M -8,-8 L 8,8 M -8,8 L 8,-8" stroke="rgba(0, 240, 255, 0.4)" strokeWidth="0.6" />
+                        <circle cx="0" cy="0" r="4" fill="#00ff88" />
+                        <text x="25" y="-12" fill="#ffe082" fontSize="5" fontFamily="monospace">JARVIS_ONLINE</text>
+                        <line x1="12" y1="-8" x2="22" y2="-12" stroke="#00f0ff" strokeWidth="0.6" />
+                      </g>
+
+                      {/* Star Wars holographic vector on the right */}
+                      <g transform="translate(245, 20)">
+                        <path d="M 10,40 Q 30,10 50,40 Z" fill="none" stroke="#00ff88" strokeWidth="1.2" opacity="0.8" />
+                        <line x1="30" y1="48" x2="30" y2="40" stroke="#00ff88" strokeWidth="1" />
+                        <ellipse cx="30" cy="48" rx="12" ry="4" fill="#080b13" stroke="#00f0ff" strokeWidth="1" />
+                        <path d="M 18,48 L 30,25 L 42,48" fill="none" stroke="rgba(0,255,136,0.3)" strokeWidth="0.8" />
+                        <text x="30" y="58" fill="rgba(255,255,255,0.6)" fontSize="5" fontFamily="monospace" textAnchor="middle">HOLO_PROJECTOR</text>
+                      </g>
+                    </svg>
+                  )}
+
+                  {activeInterest.type === 'scifi' && scifiSlide === 2 && (
+                    <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(194, 89, 255, 0.18)', boxShadow: 'inset 0 0 8px rgba(194,89,255,0.08)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#151324" />
+                      <circle cx="10" cy="7.5" r="3" fill="#ea4335" />
+                      <circle cx="20" cy="7.5" r="3" fill="#ffb300" />
+                      <circle cx="30" cy="7.5" r="3" fill="#00ff88" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // FANTASY_LEGENDARY_DECK</text>
+
+                      {/* Harry Potter: Magic Wand and golden snitch on the left */}
+                      <g transform="translate(15, 20)">
+                        <line x1="10" y1="40" x2="45" y2="15" stroke="#ffe082" strokeWidth="1.5" strokeLinecap="round" style={{ filter: 'drop-shadow(0 0 3px #ffe082)' }} />
+                        <circle cx="48" cy="13" r="2.5" fill="#fff" />
+                        {/* Golden Snitch */}
+                        <circle cx="20" cy="18" r="4.5" fill="#ffe082" style={{ filter: 'drop-shadow(0 0 2px #ffe082)' }} />
+                        <path d="M 20,13.5 C 10,10 5,16 15.5,18" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.8" />
+                        <path d="M 20,13.5 C 30,10 35,16 24.5,18" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.8" />
+                        <text x="30" y="52" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">MAGIC & WANDS</text>
+                      </g>
+
+                      {/* Lord of the Rings: One Ring in the center */}
+                      <g transform="translate(160, 42)">
+                        <circle cx="0" cy="0" r="13" fill="none" stroke="#ffb300" strokeWidth="2.5" style={{ filter: 'drop-shadow(0 0 4px #ffb300)' }} />
+                        <circle cx="0" cy="0" r="10" fill="none" stroke="#ea4335" strokeWidth="0.8" opacity="0.6" />
+                        <text x="0" y="30" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">THE ONE RING</text>
+                      </g>
+
+                      {/* Back to the future: Delorean speed meter on the right */}
+                      <g transform="translate(255, 20)">
+                        <rect x="0" y="5" width="50" height="30" rx="3" fill="#080b13" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+                        <text x="25" y="18" fill="#ff5722" fontSize="11" fontFamily="monospace" fontWeight="900" textAnchor="middle" style={{ filter: 'drop-shadow(0 0 2px #ff5722)' }}>88</text>
+                        <text x="25" y="29" fill="#ff5722" fontSize="5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">MPH</text>
+                        <text x="25" y="52" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">TEMPORAL LOGIC</text>
                       </g>
                     </svg>
                   )}

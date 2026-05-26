@@ -340,8 +340,14 @@ export default function NeurodiversityAdvocacy() {
           grid-template-columns: 1fr 1fr;
           gap: 16px;
         }
+        .story-card-wide {
+          grid-column: span 2;
+        }
 
         @media (max-width: 900px) {
+          .story-card-wide {
+            grid-column: span 1 !important;
+          }
           .neuro-page-shell {
             height: auto !important;
             max-height: none !important;
@@ -854,20 +860,35 @@ export default function NeurodiversityAdvocacy() {
                       </p>
                     </div>
 
-                    {/* Card 4: Fostering Synapses */}
+                    {/* Card 4: Burnout & Communication Mismatch */}
                     <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(255,255,255,0.06)', paddingBottom: '8px' }}>
+                        <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#ffb300', fontWeight: 'bold' }}>
+                          PHASE 04 // BURNOUT & BARRIERS
+                        </span>
+                        <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)' }}>
+                          EARLY 20s // BURNOUT
+                        </span>
+                      </div>
+                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
+                        In my early 20s, I hit severe autistic burnout, driven by the accumulated trauma of being harassed in the unstable and unsafe special needs high school. I struggled with the painful thought that I would never make any friends. Socializing was further complicated because I often misread other autistic individuals' silent disengagement as a sign that I had done something wrong. In reality, their social batteries were simply drained—but because there was no active communication from them, I kept unknowingly invading their boundaries.
+                      </p>
+                    </div>
+
+                    {/* Card 5: Fostering Synapses */}
+                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(255,255,255,0.06)', paddingBottom: '8px' }}>
                         <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold' }}>
-                          PHASE 04 // ACTIVE SYNTHESIS
+                          PHASE 05 // ACTIVE SYNTHESIS
                         </span>
                         <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(0,255,136,0.3)' }}>
                           PRESENT // SELF-ACCEPTANCE
                         </span>
                       </div>
                       <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        I am slowly learning more about myself and autism every single day. I am unlearning pathologizing deficit labels, accepting my cognitive wiring, and actively trying to find new, authentic ways to socialize and connect with other people on my own terms.
+                        I am slowly learning more about myself and autism every single day. Armed with a deeper understanding of these communication mismatches and respect for social batteries, I am unlearning pathologizing deficit labels and fully accepting my unique cognitive wiring. I am actively finding new, authentic, and healthy ways to socialize and connect with other people on my own terms.
                       </p>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold', marginTop: 'auto', display: 'block', textAlign: 'center', textShadow: '0 0 5px rgba(0,255,136,0.3)' }}>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold', marginTop: '12px', display: 'block', textAlign: 'center', textShadow: '0 0 5px rgba(0,255,136,0.3)' }}>
                         [ UPLINK SYNC: NOMINAL // MORE SYNAPSES PENDING ]
                       </span>
                     </div>

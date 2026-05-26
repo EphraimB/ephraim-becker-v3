@@ -307,15 +307,18 @@ export default function NeurodiversityAdvocacy() {
         /* History layout float-wrapping styles */
         .history-text {
           position: relative;
-          padding-right: 170px;
+          padding-right: 280px;
           min-height: 185px;
           display: block;
+        }
+        .history-text p, .history-text h4 {
+          max-width: 680px;
         }
         .history-svg-box {
           position: absolute;
           right: 0;
           top: 0;
-          width: 150px;
+          width: 260px;
           height: 185px;
           background: #070a12;
           border: 1.5px solid rgba(255, 255, 255, 0.08);

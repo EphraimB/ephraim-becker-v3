@@ -562,7 +562,7 @@ export default function AresDashboard() {
                        {activeInterest.id === 'biking' && (bikingSlide === 0 ? '[ MOBILITY OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${bikingSlide}/02 ]`)}
                        {activeInterest.id === 'flag_football' && (footballSlide === 0 ? '[ TACTICAL OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${footballSlide}/02 ]`)}
                        {activeInterest.id === 'traveling' && (travelingSlide === 0 ? '[ TRAVELING OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${travelingSlide}/02 ]`)}
-                       {activeInterest.id === 'neurodiversity' && (neurodiversitySlide === 0 ? '[ COGNITIVE OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${neurodiversitySlide}/02 ]`)}
+                       {activeInterest.id === 'neurodiversity' && (neurodiversitySlide === 0 ? '[ COGNITIVE OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${neurodiversitySlide}/03 ]`)}
                      </span>
 
                      {/* Paging Indicators specifically for Technology */}
@@ -872,55 +872,70 @@ export default function AresDashboard() {
                      )}
 
                      {/* Paging Indicators specifically for Neurodiversity */}
-                     {activeInterest.id === 'neurodiversity' && (
-                       <div style={{ display: 'flex', gap: '6px' }}>
-                         <button 
-                           onClick={() => setNeurodiversitySlide(0)}
-                           className="hud-btn"
-                           style={{
-                             padding: '2px 8px',
-                             fontSize: '0.55rem',
-                             borderColor: neurodiversitySlide === 0 ? '#00ff88' : 'rgba(255,255,255,0.15)',
-                             background: neurodiversitySlide === 0 ? 'rgba(0,255,136,0.08)' : 'transparent',
-                             color: neurodiversitySlide === 0 ? '#00ff88' : 'rgba(255,255,255,0.6)',
-                             borderRadius: '4px',
-                             cursor: 'pointer'
-                           }}
-                         >
-                           [ OVERVIEW ]
-                         </button>
-                         <button 
-                           onClick={() => setNeurodiversitySlide(1)}
-                           className="hud-btn"
-                           style={{
-                             padding: '2px 8px',
-                             fontSize: '0.55rem',
-                             borderColor: neurodiversitySlide === 1 ? '#00ff88' : 'rgba(255,255,255,0.15)',
-                             background: neurodiversitySlide === 1 ? 'rgba(0,255,136,0.08)' : 'transparent',
-                             color: neurodiversitySlide === 1 ? '#00ff88' : 'rgba(255,255,255,0.6)',
-                             borderRadius: '4px',
-                             cursor: 'pointer'
-                           }}
-                         >
-                           [ 01 // DOUBLE EMPATHY ]
-                         </button>
-                         <button 
-                           onClick={() => setNeurodiversitySlide(2)}
-                           className="hud-btn"
-                           style={{
-                             padding: '2px 8px',
-                             fontSize: '0.55rem',
-                             borderColor: neurodiversitySlide === 2 ? '#00ff88' : 'rgba(255,255,255,0.15)',
-                             background: neurodiversitySlide === 2 ? 'rgba(0,255,136,0.08)' : 'transparent',
-                             color: neurodiversitySlide === 2 ? '#00ff88' : 'rgba(255,255,255,0.6)',
-                             borderRadius: '4px',
-                             cursor: 'pointer'
-                           }}
-                         >
-                           [ 02 // NEUROTYPE VALUES ]
-                         </button>
-                       </div>
-                     )}
+                      {activeInterest.id === 'neurodiversity' && (
+                        <div style={{ display: 'flex', gap: '6px' }}>
+                          <button 
+                            onClick={() => setNeurodiversitySlide(0)}
+                            className="hud-btn"
+                            style={{
+                              padding: '2px 8px',
+                              fontSize: '0.55rem',
+                              borderColor: neurodiversitySlide === 0 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                              background: neurodiversitySlide === 0 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                              color: neurodiversitySlide === 0 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                              borderRadius: '4px',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            [ OVERVIEW ]
+                          </button>
+                          <button 
+                            onClick={() => setNeurodiversitySlide(1)}
+                            className="hud-btn"
+                            style={{
+                              padding: '2px 8px',
+                              fontSize: '0.55rem',
+                              borderColor: neurodiversitySlide === 1 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                              background: neurodiversitySlide === 1 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                              color: neurodiversitySlide === 1 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                              borderRadius: '4px',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            [ 01 // FRIENDSHIP & ENERGY ]
+                          </button>
+                          <button 
+                            onClick={() => setNeurodiversitySlide(2)}
+                            className="hud-btn"
+                            style={{
+                              padding: '2px 8px',
+                              fontSize: '0.55rem',
+                              borderColor: neurodiversitySlide === 2 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                              background: neurodiversitySlide === 2 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                              color: neurodiversitySlide === 2 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                              borderRadius: '4px',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            [ 02 // DOUBLE EMPATHY & STIGMA ]
+                          </button>
+                          <button 
+                            onClick={() => setNeurodiversitySlide(3)}
+                            className="hud-btn"
+                            style={{
+                              padding: '2px 8px',
+                              fontSize: '0.55rem',
+                              borderColor: neurodiversitySlide === 3 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                              background: neurodiversitySlide === 3 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                              color: neurodiversitySlide === 3 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                              borderRadius: '4px',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            [ 03 // BURNOUT & LEARNING ]
+                          </button>
+                        </div>
+                      )}
                    </div>
 
                    <div style={{
@@ -1476,16 +1491,16 @@ export default function AresDashboard() {
                         neurodiversitySlide === 0 ? (
                           <div>
                             <span style={{ display: 'block', marginBottom: '8px' }}>
-                              Embracing self-discovery and neurodiversity has transformed my understanding of my cognitive wiring! Throughout my childhood, I always wondered why I felt so different from my peers in class, frequently feeling misunderstood and perceived as a problem. As neurodiverse voices have grown, I have discovered deep similarities and learned that brains work in beautifully diverse ways. Explore the concepts of double empathy and cognitive neurotype values below:
+                              Embracing neurodiversity has transformed my understanding of my cognitive wiring. Throughout my life, I wondered why I felt so different and misunderstood, but learning about cognitive variations has unlocked a journey of self-discovery and acceptance. Explore the core dimensions of my neurodiversity journey below:
                             </span>
-                            <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                            <div style={{ display: 'flex', gap: '8px', marginTop: '12px', flexWrap: 'wrap' }}>
                               <button
                                 onClick={() => setNeurodiversitySlide(1)}
                                 className="hud-btn"
                                 style={{
-                                  flex: 1,
-                                  padding: '6px 10px',
-                                  fontSize: '0.7rem',
+                                  flex: '1 1 140px',
+                                  padding: '6px 8px',
+                                  fontSize: '0.65rem',
                                   fontFamily: 'monospace, var(--font-tech)',
                                   borderColor: '#00ff88',
                                   background: 'rgba(0, 255, 136, 0.05)',
@@ -1495,15 +1510,15 @@ export default function AresDashboard() {
                                   textAlign: 'center'
                                 }}
                               >
-                                [ EXPLORE DOUBLE EMPATHY ➔ ]
+                                [ 01 // FRIENDSHIP & ENERGY ➔ ]
                               </button>
                               <button
                                 onClick={() => setNeurodiversitySlide(2)}
                                 className="hud-btn"
                                 style={{
-                                  flex: 1,
-                                  padding: '6px 10px',
-                                  fontSize: '0.7rem',
+                                  flex: '1 1 140px',
+                                  padding: '6px 8px',
+                                  fontSize: '0.65rem',
                                   fontFamily: 'monospace, var(--font-tech)',
                                   borderColor: '#00ff88',
                                   background: 'rgba(0, 255, 136, 0.05)',
@@ -1513,14 +1528,54 @@ export default function AresDashboard() {
                                   textAlign: 'center'
                                 }}
                               >
-                                [ EXPLORE NEUROTYPE VALUES ➔ ]
+                                [ 02 // DOUBLE EMPATHY & STIGMA ➔ ]
+                              </button>
+                              <button
+                                onClick={() => setNeurodiversitySlide(3)}
+                                className="hud-btn"
+                                style={{
+                                  flex: '1 1 140px',
+                                  padding: '6px 8px',
+                                  fontSize: '0.65rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  borderColor: '#00ff88',
+                                  background: 'rgba(0, 255, 136, 0.05)',
+                                  color: '#00ff88',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  textAlign: 'center'
+                                }}
+                              >
+                                [ 03 // BURNOUT & LEARNING ➔ ]
                               </button>
                             </div>
                           </div>
                         ) : neurodiversitySlide === 1 ? (
                           <div>
                             <span>
-                              One of the most eye-opening concepts I've learned is double empathy! Autistic and allistic (non-autistic) brains simply work and communicate differently. Socialization is highly contextual: allistic people communicate and socialize more easily among themselves, and autistic individuals do the exact same among other autistic peers. This shows that differences in socializing are a matter of distinct communication styles rather than a baseline social deficit or empathy failure.
+                              For neurotypicals looking at this: autistic people do not "not care about other people"—we simply socialize and form friendships differently! Our energy levels fluctuate and are not the same every single day. Socializing drains our social battery heavily. When we withdraw or need space, it is not due to a lack of interest or care, but is instead about managing intense sensory input, coping with a fully drained battery, or needing quiet rest to recover.
+                            </span>
+                            <div style={{ marginTop: '10px' }}>
+                              <button
+                                onClick={() => setNeurodiversitySlide(0)}
+                                style={{
+                                  background: 'transparent',
+                                  border: 'none',
+                                  color: 'rgba(255,255,255,0.4)',
+                                  fontSize: '0.65rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  cursor: 'pointer',
+                                  padding: 0
+                                }}
+                              >
+                                [ ↩ BACK TO OVERVIEW ]
+                              </button>
+                            </div>
+                          </div>
+                        ) : neurodiversitySlide === 2 ? (
+                          <div>
+                            <span>
+                              A major key to self-acceptance is double empathy—the reality that autistic individuals communicate and empathize very easily and naturally with other autistic peers, just as allistic (non-autistic) individuals do with their own allistic peers. Growing up in old-school traditional values that had no room for neurodiversity, my perception was temporarily skewed, making me view other autistic people as less socially capable when that is not the case. Unlearning these stigmas has taught me we are fully capable of rich socialization on our own terms.
                             </span>
                             <div style={{ marginTop: '10px' }}>
                               <button
@@ -1542,7 +1597,7 @@ export default function AresDashboard() {
                         ) : (
                           <div>
                             <span>
-                              My journey of self-discovery continues to unlock fascinating insights! I am constantly learning about concepts like autistic burnout—where intense masking and sensory overload lead to temporary exhaustion—and unique learning differences. Crucially, I have embraced the understanding that autism is a natural cognitive variation (neurotype) rather than a disability or medical pathology, contrary to what old-school perspectives traditionally asserted.
+                              Discovering concepts like autistic burnout (severe physical and mental exhaustion caused by masking and sensory overload) and unique learning differences has been life-changing. I now recognize that autism is a natural cognitive variation (neurotype) rather than a pathology or disability. Embracing these insights allows me to honor my specific learning style and prioritize authentic recovery and rest.
                             </span>
                             <div style={{ marginTop: '10px' }}>
                               <button
@@ -2340,8 +2395,56 @@ export default function AresDashboard() {
                   </svg>
                 )}
 
-                {/* Double Empathy socialization waves - Slide 1 */}
+                {/* Social battery & sensory load factor HUD - Slide 1 */}
                 {activeInterest.type === 'neurodiversity' && neurodiversitySlide === 1 && (
+                  <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
+                    <rect x="0" y="0" width="320" height="15" fill="#001a08" />
+                    <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // SOCIAL_BATTERY_HUD</text>
+
+                    {/* Left: Social Battery Meter */}
+                    <g transform="translate(15, 25)">
+                      <text x="0" y="8" fill="rgba(255,255,255,0.7)" fontSize="5.5" fontFamily="monospace">SOCIAL_BATTERY</text>
+                      <rect x="0" y="14" width="50" height="22" rx="3" fill="none" stroke="#00ff88" strokeWidth="1.5" />
+                      <rect x="50" y="20" width="3" height="10" fill="#00ff88" rx="1" />
+                      
+                      <rect x="3" y="17" width="8" height="16" fill="#00ff88" />
+                      <rect x="13" y="17" width="8" height="16" fill="#00ff88" />
+                      <rect x="23" y="17" width="8" height="16" fill="#00ff88" opacity="0.3" />
+                      <rect x="33" y="17" width="8" height="16" fill="#00ff88" opacity="0.1" />
+                      <rect x="43" y="17" width="4" height="16" fill="#00ff88" opacity="0.1" />
+                      <text x="0" y="46" fill="#ff007f" fontSize="6" fontFamily="monospace" fontWeight="bold">STATUS: DRAINING</text>
+                    </g>
+
+                    {/* Center: Sensory Gauge */}
+                    <g transform="translate(95, 25)">
+                      <text x="35" y="8" fill="rgba(255,255,255,0.7)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">SENSORY_LOAD_FACTOR</text>
+                      
+                      <path d="M 10,40 A 25,25 0 0,1 60,40" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="3" strokeLinecap="round" />
+                      <path d="M 15,40 A 20,20 0 0,1 55,40" fill="none" stroke="#00f0ff" strokeWidth="3" strokeLinecap="round" strokeDasharray="15 5" />
+                      <path d="M 20,40 A 15,15 0 0,1 50,40" fill="none" stroke="#00ff88" strokeWidth="3" strokeLinecap="round" />
+                      <path d="M 25,40 A 10,10 0 0,1 45,40" fill="none" stroke="#ff007f" strokeWidth="3" strokeLinecap="round" opacity="0.8" />
+                      
+                      <line x1="35" y1="40" x2="48" y2="22" stroke="#ff007f" strokeWidth="1.5" strokeLinecap="round" />
+                      <circle cx="35" cy="40" r="2" fill="#fff" />
+                      <text x="35" y="47" fill="#ff007f" fontSize="5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">OVERLOAD ALERT</text>
+                    </g>
+
+                    {/* Right: Recovery panel */}
+                    <g transform="translate(195, 22)">
+                      <rect x="0" y="0" width="110" height="52" rx="4" fill="rgba(0, 0, 0, 0.6)" stroke="rgba(0, 255, 136, 0.2)" strokeWidth="1" />
+                      <text x="8" y="12" fill="#00ff88" fontSize="6" fontFamily="monospace" fontWeight="bold">INPUT RATE: HIGH</text>
+                      <text x="8" y="22" fill="#fff" fontSize="5.5" fontFamily="monospace">BATTERY: 38% CAPACITY</text>
+                      <text x="8" y="32" fill="rgba(255,255,255,0.7)" fontSize="5" fontFamily="monospace">RECOVERY: 4.2h REST REQ</text>
+                      <text x="8" y="42" fill="#00f0ff" fontSize="5" fontFamily="monospace" fontWeight="bold">SENSORY CHANNELS: MAX</text>
+                    </g>
+
+                    <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">BATTERY: lithium_social_v4.5</text>
+                    <text x="310" y="102" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="end">ALERT_LEVEL: MODERATE</text>
+                  </svg>
+                )}
+
+                {/* Double Empathy socialization waves - Slide 2 */}
+                {activeInterest.type === 'neurodiversity' && neurodiversitySlide === 2 && (
                   <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
                     <rect x="0" y="0" width="320" height="15" fill="#001a08" />
                     <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // DOUBLE_EMPATHY_RESONANCE</text>
@@ -2364,8 +2467,8 @@ export default function AresDashboard() {
                   </svg>
                 )}
 
-                {/* Neurodiversity infinity loop & burnout meter - Slide 2 */}
-                {activeInterest.type === 'neurodiversity' && neurodiversitySlide === 2 && (
+                {/* Neurodiversity infinity loop & burnout meter - Slide 3 */}
+                {activeInterest.type === 'neurodiversity' && neurodiversitySlide === 3 && (
                   <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,255,255,0.1)' }}>
                     <defs>
                       <linearGradient id="neuroRainbowGradientFinal" x1="0%" y1="0%" x2="100%" y2="0%">

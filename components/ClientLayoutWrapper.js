@@ -114,7 +114,7 @@ export default function ClientLayoutWrapper({ children }) {
         
         <div className="workspace-deck">
           {/* Natural standing roomscale profile figure */}
-          {pathname !== '/portfolio' && pathname !== '/' && (
+          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/neurodiversity' && (
             <div className={`roomscale-natural-body page-${currentTheme}`}>
               <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
             </div>

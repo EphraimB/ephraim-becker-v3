@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import INTERESTS from '../data/interests.json';
 import PERSONAL from '../data/personal.json';
@@ -15,6 +15,18 @@ export default function AresDashboard() {
   const [isMounted, setIsMounted] = useState(false);
 
   const [activeSlide, setActiveSlide] = useState(0);
+  const activeTabRef = useRef(null);
+
+  // Scroll active slide button into view smoothly
+  useEffect(() => {
+    if (activeTabRef.current) {
+      activeTabRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'center'
+      });
+    }
+  }, [activeSlide]);
 
   // Set mounted state to prevent hydration mismatches
   useEffect(() => {
@@ -218,6 +230,91 @@ export default function AresDashboard() {
           .dashboard-social-link {
             padding: 12px 4px !important;
             font-size: 0.72rem !important;
+          }
+        }
+
+        /* Responsive Interest Modal Header & Tabs */
+        .interest-header-row {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 12px;
+          gap: 12px;
+          width: 100%;
+        }
+
+        .interest-log-label {
+          font-family: monospace, var(--font-tech);
+          font-size: 0.55rem;
+          color: rgba(255, 255, 255, 0.4);
+          letter-spacing: 1px;
+          white-space: nowrap;
+        }
+
+        .interest-tabs-container {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          gap: 6px;
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+          padding: 2px 0;
+        }
+
+        .interest-tabs-container::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Responsive CTA Grid and Tactile Buttons */
+        .interest-cta-grid {
+          display: flex;
+          flex-direction: row;
+          flex-wrap: nowrap;
+          gap: 10px;
+          margin-top: 12px;
+          width: 100%;
+        }
+
+        .interest-cta-btn {
+          flex: 1;
+          padding: 8px 12px;
+          font-family: monospace, var(--font-tech);
+          font-size: 0.68rem;
+          text-align: center;
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+          outline: none;
+        }
+
+        .interest-cta-btn:active {
+          transform: scale(0.97);
+        }
+
+        @media (max-width: 768px) {
+          .interest-header-row {
+            flex-direction: column !important;
+            align-items: stretch !important;
+            gap: 10px !important;
+          }
+          .interest-log-label {
+            text-align: left;
+            white-space: normal !important;
+          }
+          .interest-tabs-container {
+            justify-content: flex-start !important;
+            width: 100%;
+          }
+          .interest-cta-grid {
+            flex-direction: column !important;
+            align-items: stretch !important;
+          }
+          .interest-cta-btn {
+            width: 100% !important;
+            flex: none !important;
           }
         }
       `}} />
@@ -438,114 +535,136 @@ export default function AresDashboard() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 
                 {/* Description Narrative card */}
-<div style={{
-                   background: 'rgba(255, 255, 255, 0.02)',
-                   border: '1px solid rgba(255, 255, 255, 0.05)',
-                   borderRadius: '10px',
-                   padding: '16px',
-                   boxSizing: 'border-box'
-                 }}>
-                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                     <span style={{
-                       display: 'block',
-                       fontFamily: 'monospace, var(--font-tech)',
-                       fontSize: '0.55rem',
-                       color: 'rgba(255, 255, 255, 0.4)',
-                       letterSpacing: '1px'
-                     }}>
-                       // DATA DESCRIPTIVE LOG {activeSlide === 0 ? `[ ${activeInterest.tag} OVERVIEW_DECK ]` : `[ DECK_SLIDE 0${activeSlide}/0${activeInterest.slides ? activeInterest.slides.length - 1 : 1} ]`}
-                     </span>
+                <div style={{
+                  background: 'rgba(255, 255, 255, 0.02)',
+                  border: '1px solid rgba(255, 255, 255, 0.05)',
+                  borderRadius: '10px',
+                  padding: '16px',
+                  boxSizing: 'border-box'
+                }}>
+                  <div className="interest-header-row">
+                    <span className="interest-log-label">
+                      // DATA DESCRIPTIVE LOG {activeSlide === 0 ? `[ ${activeInterest.tag} OVERVIEW_DECK ]` : `[ DECK_SLIDE 0${activeSlide}/0${activeInterest.slides ? activeInterest.slides.length - 1 : 1} ]`}
+                    </span>
 
-                     {/* Dynamic Paging Indicators */}
-                     {activeInterest.slides && (
-                       <div style={{ display: 'flex', gap: '6px' }}>
-                         {activeInterest.slides.map((slide, idx) => (
-                           <button
-                             key={idx}
-                             onClick={() => setActiveSlide(idx)}
-                             className="hud-btn"
-                             style={{
-                               padding: '2px 8px',
-                               fontSize: '0.55rem',
-                               borderColor: activeSlide === idx ? activeInterest.themeColor : 'rgba(255,255,255,0.15)',
-                               background: activeSlide === idx ? activeInterest.themeBg : 'transparent',
-                               color: activeSlide === idx ? activeInterest.themeColor : 'rgba(255,255,255,0.6)',
-                               borderRadius: '4px',
-                               cursor: 'pointer'
-                             }}
-                           >
-                             [ {slide.label} ]
-                           </button>
-                         ))}
-                       </div>
-                     )}
-                   </div>
-
-                   <div style={{
-                     fontSize: '0.82rem',
-                     lineHeight: '1.6',
-                     color: 'rgba(255, 255, 255, 0.9)',
-                     margin: 0,
-                     minHeight: '80px',
-                     transition: 'all 0.25s ease'
-                   }}>
-                      {activeInterest.slides && activeInterest.slides[activeSlide] ? (
-                        <div>
-                          <span style={{ display: 'block', marginBottom: '8px' }}>
-                            {activeInterest.slides[activeSlide].content}
-                          </span>
-                          
-                          {/* Overview Slide buttons */}
-                          {activeSlide === 0 && activeInterest.slides[activeSlide].ctaButtons && (
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '12px' }}>
-                              {activeInterest.slides[activeSlide].ctaButtons.map((btn, btnIdx) => (
-                                <button
-                                  key={btnIdx}
-                                  onClick={() => setActiveSlide(btn.targetSlide)}
-                                  className="hud-btn"
-                                  style={{
-                                    flex: 1,
-                                    padding: '6px 10px',
-                                    fontSize: '0.7rem',
-                                    borderColor: activeInterest.themeColor,
-                                    color: '#fff',
-                                    background: activeInterest.themeBg,
-                                    borderRadius: '6px',
-                                    cursor: 'pointer'
-                                  }}
-                                >
-                                  {btn.label}
-                                </button>
-                              ))}
-                            </div>
-                          )}
-
-                          {/* Sub-slides back button */}
-                          {activeSlide > 0 && (
-                            <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
-                              <button
-                                onClick={() => setActiveSlide(0)}
-                                className="hud-btn"
-                                style={{
-                                  borderColor: 'rgba(255, 255, 255, 0.2)',
-                                  color: 'rgba(255, 255, 255, 0.6)',
-                                  background: 'rgba(255, 255, 255, 0.02)',
-                                  borderRadius: '6px',
-                                  cursor: 'pointer',
-                                  fontSize: '0.62rem',
-                                  padding: '6px 16px'
-                                }}
-                              >
-                                [ ↩ BACK TO OVERVIEW ]
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        <span>{activeInterest.desc}</span>
-                      )}
-                    </div>
+                    {/* Dynamic Paging Indicators */}
+                    {activeInterest.slides && (
+                      <div className="interest-tabs-container">
+                        {activeInterest.slides.map((slide, idx) => {
+                          const isActive = idx === activeSlide;
+                          return (
+                            <button
+                              key={idx}
+                              ref={isActive ? activeTabRef : null}
+                              onClick={() => setActiveSlide(idx)}
+                              className="hud-btn"
+                              style={{
+                                padding: '2px 8px',
+                                fontSize: '0.55rem',
+                                borderColor: isActive ? activeInterest.themeColor : 'rgba(255,255,255,0.15)',
+                                background: isActive ? activeInterest.themeBg : 'transparent',
+                                color: isActive ? activeInterest.themeColor : 'rgba(255,255,255,0.6)',
+                                borderRadius: '4px',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                                flexShrink: 0,
+                                outline: 'none'
+                              }}
+                              onMouseEnter={(e) => {
+                                if (!isActive) {
+                                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
+                                  e.currentTarget.style.color = 'rgba(255,255,255,0.9)';
+                                  e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
+                                }
+                              }}
+                              onMouseLeave={(e) => {
+                                if (!isActive) {
+                                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
+                                  e.currentTarget.style.color = 'rgba(255,255,255,0.6)';
+                                  e.currentTarget.style.background = 'transparent';
+                                }
+                              }}
+                            >
+                              [ {slide.label} ]
+                            </button>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
+
+                  <div style={{
+                    fontSize: '0.82rem',
+                    lineHeight: '1.6',
+                    color: 'rgba(255, 255, 255, 0.9)',
+                    margin: 0,
+                    minHeight: '80px',
+                    transition: 'all 0.25s ease'
+                  }}>
+                     {activeInterest.slides && activeInterest.slides[activeSlide] ? (
+                       <div>
+                         <span style={{ display: 'block', marginBottom: '8px' }}>
+                           {activeInterest.slides[activeSlide].content}
+                         </span>
+                         
+                         {/* Overview Slide buttons */}
+                         {activeSlide === 0 && activeInterest.slides[activeSlide].ctaButtons && (
+                           <div className="interest-cta-grid">
+                             {activeInterest.slides[activeSlide].ctaButtons.map((btn, btnIdx) => (
+                               <button
+                                 key={btnIdx}
+                                 onClick={() => setActiveSlide(btn.targetSlide)}
+                                 className="interest-cta-btn"
+                                 style={{
+                                   borderColor: activeInterest.themeColor,
+                                   color: '#fff',
+                                   background: activeInterest.themeBg,
+                                   border: '1.5px solid var(--theme-color)',
+                                   '--theme-color': activeInterest.themeColor
+                                 }}
+                               >
+                                 {btn.label}
+                               </button>
+                             ))}
+                           </div>
+                         )}
+
+                         {/* Sub-slides back button */}
+                         {activeSlide > 0 && (
+                           <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                             <button
+                               onClick={() => setActiveSlide(0)}
+                               className="hud-btn"
+                               style={{
+                                 borderColor: 'rgba(255, 255, 255, 0.25)',
+                                 color: 'rgba(255, 255, 255, 0.85)',
+                                 background: 'rgba(255, 255, 255, 0.03)',
+                                 borderRadius: '6px',
+                                 cursor: 'pointer',
+                                 fontSize: '0.62rem',
+                                 padding: '6px 16px',
+                                 transition: 'all 0.2s ease',
+                                 outline: 'none'
+                               }}
+                               onMouseEnter={(e) => {
+                                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
+                                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
+                               }}
+                               onMouseLeave={(e) => {
+                                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
+                                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
+                               }}
+                             >
+                               [ ↩ BACK TO OVERVIEW ]
+                             </button>
+                           </div>
+                         )}
+                       </div>
+                     ) : (
+                       <span>{activeInterest.desc}</span>
+                     )}
+                  </div>
+                </div>
 
                   {/* Tactical SVG Graphic Canvas */}
                   <div>

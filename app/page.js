@@ -72,6 +72,7 @@ export default function AresDashboard() {
   const [scifiSlide, setScifiSlide] = useState(0);
   const [musicSlide, setMusicSlide] = useState(0);
   const [bikingSlide, setBikingSlide] = useState(0);
+  const [footballSlide, setFootballSlide] = useState(0);
 
   // Set mounted state to prevent hydration mismatches
   useEffect(() => {
@@ -84,6 +85,7 @@ export default function AresDashboard() {
     setScifiSlide(0);
     setMusicSlide(0);
     setBikingSlide(0);
+    setFootballSlide(0);
   }, [activeInterest]);
 
   // Dynamic Mars Age calculation based on current time - client side only
@@ -554,6 +556,7 @@ export default function AresDashboard() {
                        {activeInterest.id === 'scifi' && (scifiSlide === 0 ? '[ CINEMATIC OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${scifiSlide}/02 ]`)}
                        {activeInterest.id === 'music' && (musicSlide === 0 ? '[ ACOUSTIC OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${musicSlide}/02 ]`)}
                        {activeInterest.id === 'biking' && (bikingSlide === 0 ? '[ MOBILITY OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${bikingSlide}/02 ]`)}
+                       {activeInterest.id === 'flag_football' && (footballSlide === 0 ? '[ TACTICAL OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${footballSlide}/02 ]`)}
                      </span>
 
                      {/* Paging Indicators specifically for Technology */}
@@ -756,6 +759,57 @@ export default function AresDashboard() {
                            }}
                          >
                            [ 02 // ENDURANCE ]
+                         </button>
+                       </div>
+                     )}
+
+                     {/* Paging Indicators specifically for Flag Football */}
+                     {activeInterest.id === 'flag_football' && (
+                       <div style={{ display: 'flex', gap: '6px' }}>
+                         <button 
+                           onClick={() => setFootballSlide(0)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: footballSlide === 0 ? '#ff5722' : 'rgba(255,255,255,0.15)',
+                             background: footballSlide === 0 ? 'rgba(255,87,34,0.08)' : 'transparent',
+                             color: footballSlide === 0 ? '#ff5722' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ OVERVIEW ]
+                         </button>
+                         <button 
+                           onClick={() => setFootballSlide(1)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: footballSlide === 1 ? '#ff5722' : 'rgba(255,255,255,0.15)',
+                             background: footballSlide === 1 ? 'rgba(255,87,34,0.08)' : 'transparent',
+                             color: footballSlide === 1 ? '#ff5722' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 01 // PLAYMAKER & THRILLS ]
+                         </button>
+                         <button 
+                           onClick={() => setFootballSlide(2)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: footballSlide === 2 ? '#ff5722' : 'rgba(255,255,255,0.15)',
+                             background: footballSlide === 2 ? 'rgba(255,87,34,0.08)' : 'transparent',
+                             color: footballSlide === 2 ? '#ff5722' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 02 // HUDDLES & STRATEGY ]
                          </button>
                        </div>
                      )}
@@ -1110,28 +1164,118 @@ export default function AresDashboard() {
                          <div>
                            <span>
                              At first, I didn't think I could manage to bike to campus every single weekday. But a friend inspired me to push past my self-imposed limits and commit to it every day—no matter what. Since then, I've embraced the challenge, riding consistently even in the pouring rain and slogging against powerful headwind currents. Over time, this daily discipline expanded my limits, inspiring me to tackle much longer distances. I even tested myself by biking over 2 hours one way to see if I could get to Manhattan, and I did it a few times with no problem round trip, proving that any weather or mileage barrier can be conquered!
-                           </span>
-                           <div style={{ marginTop: '10px' }}>
-                             <button
-                               onClick={() => setBikingSlide(0)}
-                               style={{
-                                 background: 'transparent',
-                                 border: 'none',
-                                 color: 'rgba(255,255,255,0.4)',
-                                 fontSize: '0.65rem',
-                                 fontFamily: 'monospace, var(--font-tech)',
-                                 cursor: 'pointer',
-                                 padding: 0
-                               }}
-                             >
-                               [ ↩ BACK TO OVERVIEW ]
-                             </button>
-                           </div>
+                            </span>
+                            <div style={{ marginTop: '10px' }}>
+                              <button
+                                onClick={() => setBikingSlide(0)}
+                                style={{
+                                  background: 'transparent',
+                                  border: 'none',
+                                  color: 'rgba(255,255,255,0.4)',
+                                  fontSize: '0.65rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  cursor: 'pointer',
+                                  padding: 0
+                                }}
+                              >
+                                [ ↩ BACK TO OVERVIEW ]
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      ) : activeInterest.id === 'flag_football' ? (
+                     footballSlide === 0 ? (
+                       <div>
+                         <span style={{ display: 'block', marginBottom: '8px' }}>
+                           Flag football represents a thrilling intersection of team strategy, structured play, and social inclusion! I first got into the sport by watching YouTube videos showing how much fun people have playing it. Every single position and action makes a difference on the field. Because the game has highly structured rules and clear social scripts, it provides an environment where I can easily follow, understand, and connect with others. Explore the strategic and playmaker dimensions of my flag football journey below:
+                         </span>
+                         <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                           <button
+                             onClick={() => setFootballSlide(1)}
+                             className="hud-btn"
+                             style={{
+                               flex: 1,
+                               padding: '6px 10px',
+                               fontSize: '0.7rem',
+                               fontFamily: 'monospace, var(--font-tech)',
+                               borderColor: '#ff5722',
+                               background: 'rgba(255, 87, 34, 0.05)',
+                               color: '#ff5722',
+                               borderRadius: '4px',
+                               cursor: 'pointer',
+                               textAlign: 'center'
+                             }}
+                           >
+                             [ EXPLORE PLAYMAKER & THRILLS ➔ ]
+                           </button>
+                           <button
+                             onClick={() => setFootballSlide(2)}
+                             className="hud-btn"
+                             style={{
+                               flex: 1,
+                               padding: '6px 10px',
+                               fontSize: '0.7rem',
+                               fontFamily: 'monospace, var(--font-tech)',
+                               borderColor: '#ff5722',
+                               background: 'rgba(255, 87, 34, 0.05)',
+                               color: '#ff5722',
+                               borderRadius: '4px',
+                               cursor: 'pointer',
+                               textAlign: 'center'
+                             }}
+                           >
+                             [ EXPLORE HUDDLES & STRATEGY ➔ ]
+                           </button>
                          </div>
-                       )
+                       </div>
+                     ) : footballSlide === 1 ? (
+                       <div>
+                         <span>
+                           There is a unique thrill in executing plays and making an impact! I feel a huge rush making a nice catch and having my teammates get excited and celebrate with me. On defense, intercepting a pass brings an incredible thrill. It is a highly structured sport where everyone makes a difference, and we can directly help teammates out—whether by running route scripts or blocking for them on the field. Flag football provides clear rules and social scripts that allow me to communicate and fit in very well without social struggles.
+                         </span>
+                         <div style={{ marginTop: '10px' }}>
+                           <button
+                             onClick={() => setFootballSlide(0)}
+                             style={{
+                               background: 'transparent',
+                               border: 'none',
+                               color: 'rgba(255,255,255,0.4)',
+                               fontSize: '0.65rem',
+                               fontFamily: 'monospace, var(--font-tech)',
+                               cursor: 'pointer',
+                               padding: 0
+                             }}
+                           >
+                             [ ↩ BACK TO OVERVIEW ]
+                           </button>
+                         </div>
+                       </div>
                      ) : (
-                       <span>{activeInterest.desc}</span>
-                     )}
+                       <div>
+                         <span>
+                           The ultimate power of flag football lies in team unity! Strategizing in huddles and being "all in it together as a team" makes me feel deeply included and valued. We operate in sync, discussing tactics, calling play scripts, and working as one cohesive unit to execute. Everyone has a specific role, yet we succeed only when we support one another, turning the playbook into a powerful platform for active collaboration and shared success.
+                         </span>
+                         <div style={{ marginTop: '10px' }}>
+                           <button
+                             onClick={() => setFootballSlide(0)}
+                             style={{
+                               background: 'transparent',
+                               border: 'none',
+                               color: 'rgba(255,255,255,0.4)',
+                               fontSize: '0.65rem',
+                               fontFamily: 'monospace, var(--font-tech)',
+                               cursor: 'pointer',
+                               padding: 0
+                             }}
+                           >
+                             [ ↩ BACK TO OVERVIEW ]
+                           </button>
+                         </div>
+                       </div>
+                     )
+                   ) : (
+                     <span>{activeInterest.desc}</span>
+                   )}
                     </div>
                   </div>
 
@@ -1606,54 +1750,129 @@ export default function AresDashboard() {
                     </svg>
                   )}
 
-                  {/* Flag Football tactical route chalkboard graphic */}
-                  {activeInterest.type === 'flag_football' && (
+                  {/* Flag Football tactical overview slide 0 */}
+                  {activeInterest.type === 'flag_football' && footballSlide === 0 && (
                     <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 87, 34, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,0,0,0.4)' }}>
-                      {/* Grid background */}
-                      <line x1="40" y1="5" x2="40" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                      <line x1="80" y1="5" x2="80" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                      <line x1="120" y1="5" x2="120" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                      <line x1="160" y1="5" x2="160" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                      <line x1="200" y1="5" x2="200" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                      <line x1="240" y1="5" x2="240" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                      <line x1="280" y1="5" x2="280" y2="105" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                      
-                      <line x1="5" y1="27" x2="315" y2="27" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                      <line x1="5" y1="55" x2="315" y2="55" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
-                      <line x1="5" y1="82" x2="315" y2="82" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+                      <rect x="0" y="0" width="320" height="15" fill="#1b100a" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // PLAYBOOK_INCLUSION_CORE</text>
 
-                      {/* Playbook elements */}
+                      {/* Left side: Playbook tactician's route chart */}
+                      <g transform="translate(15, 20)">
+                        <circle cx="20" cy="40" r="7" fill="none" stroke="#ff5722" strokeWidth="1" />
+                        <text x="20" y="43" fill="#ff5722" fontSize="8" fontFamily="monospace" textAnchor="middle">Q</text>
+                        <circle cx="45" cy="40" r="3" fill="#00f0ff" />
+                        <circle cx="70" cy="40" r="3" fill="#00f0ff" />
+                        <path d="M 45,40 Q 55,15 75,15" fill="none" stroke="#ff5722" strokeWidth="1.2" strokeDasharray="3 2" />
+                        <polygon points="75,12 72,17 78,17" fill="#ff5722" />
+                        <text x="45" y="58" fill="rgba(255,255,255,0.5)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">TACTICAL MATRIX</text>
+                      </g>
+
+                      {/* Center Link: Synapse / Delta Link */}
                       <g>
-                        <text x="160" y="80" fill="#fff" fontSize="8" fontFamily="monospace" textAnchor="middle">Q</text>
-                      <circle cx="160" cy="77" r="7" fill="none" stroke="#fff" strokeWidth="1" />
-                      
-                      {/* Receivers (O) */}
-                      <circle cx="120" cy="77" r="4" fill="none" stroke="#00f0ff" strokeWidth="1.2" />
-                      <text x="120" y="80" fill="#00f0ff" fontSize="6" fontFamily="monospace" textAnchor="middle">X</text>
+                        <path d="M 100,50 C 135,30 185,70 220,50" fill="none" stroke="#ff5722" strokeWidth="1.2" strokeDasharray="3 3" />
+                        <text x="160" y="46" fill="#fff" fontSize="5.5" fontFamily="monospace" textAnchor="middle" opacity="0.75">INCLUSION DELTA LINK</text>
+                        <rect x="125" y="52" width="70" height="8" rx="2" fill="rgba(255, 87, 34, 0.08)" stroke="rgba(255, 87, 34, 0.3)" strokeWidth="0.5" />
+                        <text x="160" y="58" fill="#ff5722" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">ROLE VALUE: 100%</text>
+                      </g>
 
-                      <circle cx="200" cy="77" r="4" fill="none" stroke="#00f0ff" strokeWidth="1.2" />
-                      <text x="200" y="80" fill="#00f0ff" fontSize="6" fontFamily="monospace" textAnchor="middle">Z</text>
+                      {/* Right side: Inclusion network node graph */}
+                      <g transform="translate(210, 20)">
+                        <circle cx="50" cy="30" r="4.5" fill="#ff5722" stroke="#fff" strokeWidth="0.8" />
+                        <circle cx="30" cy="15" r="3" fill="#00f0ff" />
+                        <circle cx="70" cy="15" r="3" fill="#00f0ff" />
+                        <circle cx="30" cy="45" r="3" fill="#00f0ff" />
+                        <circle cx="70" cy="45" r="3" fill="#00f0ff" />
+                        <line x1="50" y1="30" x2="30" y2="15" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" />
+                        <line x1="50" y1="30" x2="70" y2="15" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" />
+                        <line x1="50" y1="30" x2="30" y2="45" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" />
+                        <line x1="50" y1="30" x2="70" y2="45" stroke="rgba(255,255,255,0.2)" strokeWidth="0.8" />
+                        <text x="50" y="60" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">TEAM DYNAMICS</text>
+                      </g>
 
-                      {/* Routes (Arrows) */}
-                      {/* Left Out Route */}
-                      <path d="M 120,73 L 120,40 L 70,40" fill="none" stroke="#ff5722" strokeWidth="1.5" strokeDasharray="3 2" />
-                      <polygon points="70,37 63,40 70,43" fill="#ff5722" />
-                      <text x="95" y="34" fill="#ff5722" fontSize="5.5" fontFamily="monospace" textAnchor="middle">OUT ROUTE</text>
+                      <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">SYSTEM: playbook_sync_v1.0</text>
+                      <text x="310" y="102" fill="#ff5722" fontSize="5.5" fontFamily="monospace" textAnchor="end">INCLUSION: MAXIMIZED</text>
+                    </svg>
+                  )}
 
-                      {/* Right Post Route */}
-                      <path d="M 200,73 L 200,30 L 165,10" fill="none" stroke="#00ff88" strokeWidth="1.5" />
-                      <polygon points="167,7 160,10 168,14" fill="#00ff88" />
-                      <text x="210" y="24" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="left">POST ROUTE</text>
+                  {/* Flag Football playmaker thrills slide 1 */}
+                  {activeInterest.type === 'flag_football' && footballSlide === 1 && (
+                    <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 87, 34, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,0,0,0.4)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#1b100a" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // PLAYMAKER_HIGHLIGHT_GRID</text>
 
-                      {/* Defensive players (X) */}
-                      <text x="120" y="30" fill="#ea4335" fontSize="8" fontFamily="monospace" textAnchor="middle" fontWeight="bold">D</text>
-                      <text x="200" y="20" fill="#ea4335" fontSize="8" fontFamily="monospace" textAnchor="middle" fontWeight="bold">D</text>
-                      <text x="160" y="50" fill="#ea4335" fontSize="8" fontFamily="monospace" textAnchor="middle" fontWeight="bold">D</text>
+                      {/* Map grid background */}
+                      <g opacity="0.1">
+                        <line x1="10" y1="20" x2="310" y2="20" stroke="#ff5722" strokeWidth="0.5" />
+                        <line x1="10" y1="50" x2="310" y2="50" stroke="#ff5722" strokeWidth="0.5" />
+                        <line x1="10" y1="80" x2="310" y2="80" stroke="#ff5722" strokeWidth="0.5" />
+                        <line x1="50" y1="15" x2="50" y2="100" stroke="#ff5722" strokeWidth="0.5" />
+                        <line x1="110" y1="15" x2="110" y2="100" stroke="#ff5722" strokeWidth="0.5" />
+                        <line x1="170" y1="15" x2="170" y2="100" stroke="#ff5722" strokeWidth="0.5" />
+                        <line x1="230" y1="15" x2="230" y2="100" stroke="#ff5722" strokeWidth="0.5" />
+                      </g>
 
-                      <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">TACTICAL PLAYBOOK: playbook_matrix_09</text>
-                    </g>
-                  </svg>
-                )}
+                      {/* Left side: Interception tracker */}
+                      <g transform="translate(10, 20)">
+                        <circle cx="45" cy="30" r="18" fill="none" stroke="rgba(255, 87, 34, 0.2)" strokeWidth="1" strokeDasharray="2 2" />
+                        <circle cx="45" cy="30" r="10" fill="none" stroke="rgba(0, 240, 255, 0.3)" strokeWidth="1" />
+                        <circle cx="45" cy="30" r="3" fill="#ff5722" />
+                        <path d="M 15,48 L 35,35 L 45,30" fill="none" stroke="#ff5722" strokeWidth="2.2" style={{ filter: 'drop-shadow(0 0 3px rgba(255,87,34,0.6))' }} />
+                        <text x="45" y="58" fill="rgba(255,255,255,0.5)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">INTERCEPT RADAR</text>
+                      </g>
+
+                      {/* Telemetry panel */}
+                      <g transform="translate(180, 25)">
+                        <rect x="0" y="0" width="130" height="52" rx="4" fill="rgba(0, 0, 0, 0.6)" stroke="rgba(255, 87, 34, 0.2)" strokeWidth="1" />
+                        <text x="10" y="12" fill="#ff5722" fontSize="6.5" fontFamily="monospace" fontWeight="bold">HIGHLIGHT: PASS INT</text>
+                        <text x="10" y="22" fill="#fff" fontSize="5.5" fontFamily="monospace">TOUCHDOWN CAPTURE</text>
+                        <text x="10" y="32" fill="rgba(255,255,255,0.7)" fontSize="5" fontFamily="monospace">TEAM EXCITEMENT: PEAK</text>
+                        <text x="10" y="42" fill="#00f0ff" fontSize="5" fontFamily="monospace" fontWeight="bold">SOCIAL SCRIPTS: SUCCESS</text>
+                      </g>
+
+                      <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">PREDICTION: INTERCEPT_OK</text>
+                      <text x="310" y="102" fill="#ff5722" fontSize="5.5" fontFamily="monospace" textAnchor="end">THRILL_INDEX: 100%</text>
+                    </svg>
+                  )}
+
+                  {/* Flag Football huddles & playbook strategy slide 2 */}
+                  {activeInterest.type === 'flag_football' && footballSlide === 2 && (
+                    <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 87, 34, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,0,0,0.4)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#1b100a" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // STRATEGIC_PLAYBOOK_MATRIX</text>
+
+                      {/* Playbook route design */}
+                      <g transform="translate(10, 20)">
+                        <circle cx="80" cy="40" r="7" fill="none" stroke="#fff" strokeWidth="1" />
+                        <text x="80" y="43" fill="#fff" fontSize="8" fontFamily="monospace" textAnchor="middle">Q</text>
+                        <circle cx="40" cy="40" r="4" fill="none" stroke="#ff5722" strokeWidth="1.2" />
+                        <text x="40" y="43" fill="#ff5722" fontSize="6" fontFamily="monospace" textAnchor="middle">X</text>
+                        <circle cx="120" cy="40" r="4" fill="none" stroke="#ff5722" strokeWidth="1.2" />
+                        <text x="120" y="43" fill="#ff5722" fontSize="6" fontFamily="monospace" textAnchor="middle">Z</text>
+                        
+                        {/* Playbook routes */}
+                        <path d="M 40,36 L 40,15 L 15,15" fill="none" stroke="#ff5722" strokeWidth="1.5" strokeDasharray="3 2" />
+                        <polygon points="15,12 8,15 15,18" fill="#ff5722" />
+                        <text x="28" y="10" fill="#ff5722" fontSize="5.5" fontFamily="monospace">OUT ROUTE</text>
+                        
+                        <path d="M 120,36 L 120,10" fill="none" stroke="#00f0ff" strokeWidth="1.5" strokeDasharray="3 2" />
+                        <line x1="114" y1="10" x2="126" y2="10" stroke="#00f0ff" strokeWidth="1.5" />
+                        <text x="123" y="19" fill="#00f0ff" fontSize="5.5" fontFamily="monospace">BLOCK LINE</text>
+                        <text x="80" y="58" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">HUDDLE STRATEGY</text>
+                      </g>
+
+                      {/* Telemetry panel */}
+                      <g transform="translate(195, 25)">
+                        <rect x="0" y="0" width="115" height="52" rx="4" fill="rgba(0, 0, 0, 0.6)" stroke="rgba(255, 87, 34, 0.2)" strokeWidth="1" />
+                        <text x="8" y="12" fill="#ff5722" fontSize="6.5" fontFamily="monospace" fontWeight="bold">PLAYBOOK: ACTIVE</text>
+                        <text x="8" y="22" fill="#fff" fontSize="5.5" fontFamily="monospace">HUDDLE SYNC: OK</text>
+                        <text x="8" y="32" fill="rgba(255,255,255,0.7)" fontSize="5" fontFamily="monospace">STRUCTURED SOCIAL</text>
+                        <text x="8" y="42" fill="#00f0ff" fontSize="5" fontFamily="monospace" fontWeight="bold">ROLE: BLOCKER</text>
+                      </g>
+
+                      <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">SCHEDULING: TACTICAL</text>
+                      <text x="310" y="102" fill="#ff5722" fontSize="5.5" fontFamily="monospace" textAnchor="end">TEAM UNITY: SECURED</text>
+                    </svg>
+                  )}
 
                 {/* Traveling global/US flight deck map graphic */}
                 {activeInterest.type === 'traveling' && (

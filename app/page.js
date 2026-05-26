@@ -47,7 +47,7 @@ const INTERESTS = [
     id: 'traveling',
     title: 'Traveling & Exploration',
     tag: 'TRAVELING',
-    desc: "Traveling is one of my favorite passions because it allows me to explore more of the United States and other countries around the world! I love discovering new cities, learning about different cultures, and experiencing the unique geography of our planet beyond my home borders. It is an enriching journey that broadens my horizons.",
+    desc: "I love traveling because I want to explore new places that I have never explored before, discovering what their geography and culture are like rather than being stuck in the busy NYC area all the time. While I can't afford to travel right now, I hope to relocate to a less busy, more peaceful place when I graduate and get a job in my computer science field.",
     icon: '✈️',
     type: 'traveling'
   },
@@ -73,6 +73,7 @@ export default function AresDashboard() {
   const [musicSlide, setMusicSlide] = useState(0);
   const [bikingSlide, setBikingSlide] = useState(0);
   const [footballSlide, setFootballSlide] = useState(0);
+  const [travelingSlide, setTravelingSlide] = useState(0);
 
   // Set mounted state to prevent hydration mismatches
   useEffect(() => {
@@ -86,6 +87,7 @@ export default function AresDashboard() {
     setMusicSlide(0);
     setBikingSlide(0);
     setFootballSlide(0);
+    setTravelingSlide(0);
   }, [activeInterest]);
 
   // Dynamic Mars Age calculation based on current time - client side only
@@ -419,7 +421,7 @@ export default function AresDashboard() {
               fontFamily: 'var(--font-sans)',
               fontWeight: 400
             }}>
-              Ephraim Becker is a Computer Science major studying remote-class systems engineering. Backed by mathematical rigor in Calculus, his true passion lies in building highly interactive graphical user interfaces and responsive web layouts.
+              Ephraim Becker is a Computer Science major studying remote-class computer science. Backed by mathematical rigor in Calculus, his true passion lies in building highly interactive graphical user interfaces and responsive web layouts.
             </p>
           </div>
 
@@ -557,6 +559,7 @@ export default function AresDashboard() {
                        {activeInterest.id === 'music' && (musicSlide === 0 ? '[ ACOUSTIC OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${musicSlide}/02 ]`)}
                        {activeInterest.id === 'biking' && (bikingSlide === 0 ? '[ MOBILITY OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${bikingSlide}/02 ]`)}
                        {activeInterest.id === 'flag_football' && (footballSlide === 0 ? '[ TACTICAL OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${footballSlide}/02 ]`)}
+                       {activeInterest.id === 'traveling' && (travelingSlide === 0 ? '[ TRAVELING OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${travelingSlide}/02 ]`)}
                      </span>
 
                      {/* Paging Indicators specifically for Technology */}
@@ -813,6 +816,57 @@ export default function AresDashboard() {
                          </button>
                        </div>
                      )}
+
+                     {/* Paging Indicators specifically for Traveling */}
+                     {activeInterest.id === 'traveling' && (
+                       <div style={{ display: 'flex', gap: '6px' }}>
+                         <button 
+                           onClick={() => setTravelingSlide(0)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: travelingSlide === 0 ? '#ff007f' : 'rgba(255,255,255,0.15)',
+                             background: travelingSlide === 0 ? 'rgba(255,0,127,0.08)' : 'transparent',
+                             color: travelingSlide === 0 ? '#ff007f' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ OVERVIEW ]
+                         </button>
+                         <button 
+                           onClick={() => setTravelingSlide(1)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: travelingSlide === 1 ? '#ff007f' : 'rgba(255,255,255,0.15)',
+                             background: travelingSlide === 1 ? 'rgba(255,0,127,0.08)' : 'transparent',
+                             color: travelingSlide === 1 ? '#ff007f' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 01 // GEOGRAPHY & CULTURE ]
+                         </button>
+                         <button 
+                           onClick={() => setTravelingSlide(2)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: travelingSlide === 2 ? '#ff007f' : 'rgba(255,255,255,0.15)',
+                             background: travelingSlide === 2 ? 'rgba(255,0,127,0.08)' : 'transparent',
+                             color: travelingSlide === 2 ? '#ff007f' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 02 // RELOCATION PLANS ]
+                         </button>
+                       </div>
+                     )}
                    </div>
 
                    <div style={{
@@ -893,7 +947,7 @@ export default function AresDashboard() {
                        ) : (
                          <div>
                            <span>
-                             Beyond software interfaces, I am deeply passionate about futuristic hardware and pioneering gadgets! I always look forward to exploring the latest and greatest consumer tech, next-generation mobile devices, holographic displays, and experimental wearables. Keeping pace with cutting-edge tech innovations inspires me to think about what is possible tomorrow and fuels my drive to incorporate forward-looking concepts directly into my engineering work.
+                             Beyond software interfaces, I am deeply passionate about futuristic hardware and pioneering gadgets! I always look forward to exploring the latest and greatest consumer tech, next-generation mobile devices, holographic displays, and experimental wearables. Keeping pace with cutting-edge tech innovations inspires me to think about what is possible tomorrow and fuels my drive to incorporate forward-looking concepts directly into my computer science work.
                            </span>
                            <div style={{ marginTop: '10px' }}>
                              <button
@@ -1273,7 +1327,97 @@ export default function AresDashboard() {
                          </div>
                        </div>
                      )
-                   ) : (
+                   ) : activeInterest.id === 'traveling' ? (
+                        travelingSlide === 0 ? (
+                          <div>
+                            <span style={{ display: 'block', marginBottom: '8px' }}>
+                              Exploring the unknown and seeking cultural discovery defines my travel aspirations! I love traveling because I want to explore new places that I have never seen before, discovering what their geography and culture are like. I want to break free from being stuck in the busy New York City area all the time. While I can't afford to travel right now, the dream of discovery fuels my forward momentum. Discover my travel aspirations and future relocation plans below:
+                            </span>
+                            <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                              <button
+                                onClick={() => setTravelingSlide(1)}
+                                className="hud-btn"
+                                style={{
+                                  flex: 1,
+                                  padding: '6px 10px',
+                                  fontSize: '0.7rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  borderColor: '#ff007f',
+                                  background: 'rgba(255, 0, 127, 0.05)',
+                                  color: '#ff007f',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  textAlign: 'center'
+                                }}
+                              >
+                                [ EXPLORE GEOGRAPHY & CULTURE ➔ ]
+                              </button>
+                              <button
+                                onClick={() => setTravelingSlide(2)}
+                                className="hud-btn"
+                                style={{
+                                  flex: 1,
+                                  padding: '6px 10px',
+                                  fontSize: '0.7rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  borderColor: '#ff007f',
+                                  background: 'rgba(255, 0, 127, 0.05)',
+                                  color: '#ff007f',
+                                  borderRadius: '4px',
+                                  cursor: 'pointer',
+                                  textAlign: 'center'
+                                }}
+                              >
+                                [ EXPLORE RELOCATION PLANS ➔ ]
+                              </button>
+                            </div>
+                          </div>
+                        ) : travelingSlide === 1 ? (
+                          <div>
+                            <span>
+                              For me, traveling is about expanding horizons! I want to explore entirely new environments, understanding their unique local geography, physical landscapes, and rich cultural stories. Being stuck in the NYC area all the time feels limiting, and I yearn to discover new cities and scenery first-hand. Even though I cannot afford to travel right now due to financial constraints, my passion for mapping out new geographical locations and imagining their culture remains a powerful inspiration.
+                            </span>
+                            <div style={{ marginTop: '10px' }}>
+                              <button
+                                onClick={() => setTravelingSlide(0)}
+                                style={{
+                                  background: 'transparent',
+                                  border: 'none',
+                                  color: 'rgba(255,255,255,0.4)',
+                                  fontSize: '0.65rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  cursor: 'pointer',
+                                  padding: 0
+                                }}
+                              >
+                                [ ↩ BACK TO OVERVIEW ]
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div>
+                            <span>
+                              My long-term goal is to establish a home in a more peaceful environment! I don't like NYC so much because of how incredibly busy, crowded, and fast-paced it is. Once I graduate from college and secure a job in my computer science field, I hope to relocate permanently to a less busy, more serene place where I can enjoy spatial independence and a calmer way of life.
+                            </span>
+                            <div style={{ marginTop: '10px' }}>
+                              <button
+                                onClick={() => setTravelingSlide(0)}
+                                style={{
+                                  background: 'transparent',
+                                  border: 'none',
+                                  color: 'rgba(255,255,255,0.4)',
+                                  fontSize: '0.65rem',
+                                  fontFamily: 'monospace, var(--font-tech)',
+                                  cursor: 'pointer',
+                                  padding: 0
+                                }}
+                              >
+                                [ ↩ BACK TO OVERVIEW ]
+                              </button>
+                            </div>
+                          </div>
+                        )
+                      ) : (
                      <span>{activeInterest.desc}</span>
                    )}
                     </div>
@@ -1874,8 +2018,8 @@ export default function AresDashboard() {
                     </svg>
                   )}
 
-                {/* Traveling global/US flight deck map graphic */}
-                {activeInterest.type === 'traveling' && (
+                {/* Traveling global/US flight deck map graphic - Slide 0 */}
+                {activeInterest.type === 'traveling' && travelingSlide === 0 && (
                   <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 0, 127, 0.22)', boxShadow: 'inset 0 0 10px rgba(255, 0, 127, 0.08)' }}>
                     <defs>
                       <radialGradient id="pinkGlow" cx="50%" cy="50%" r="50%">
@@ -1923,6 +2067,92 @@ export default function AresDashboard() {
                     </g>
                     
                     <text x="160" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">ROUTE_MAP: US_EXPLORATION_AND_GLOBAL_TRANSIT</text>
+                  </svg>
+                )}
+
+                {/* Traveling geographic topography survey grid - Slide 1 */}
+                {activeInterest.type === 'traveling' && travelingSlide === 1 && (
+                  <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 0, 127, 0.22)', boxShadow: 'inset 0 0 10px rgba(255, 0, 127, 0.08)' }}>
+                    <rect x="0" y="0" width="320" height="15" fill="#1b000a" />
+                    <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // GEOGRAPHIC_SURVEY_DECK</text>
+
+                    {/* Grid Background */}
+                    <g opacity="0.05">
+                      <line x1="0" y1="35" x2="320" y2="35" stroke="#ff007f" strokeWidth="0.5" />
+                      <line x1="0" y1="65" x2="320" y2="65" stroke="#ff007f" strokeWidth="0.5" />
+                      <line x1="0" y1="95" x2="320" y2="95" stroke="#ff007f" strokeWidth="0.5" />
+                      <line x1="80" y1="15" x2="80" y2="110" stroke="#ff007f" strokeWidth="0.5" />
+                      <line x1="160" y1="15" x2="160" y2="110" stroke="#ff007f" strokeWidth="0.5" />
+                      <line x1="240" y1="15" x2="240" y2="110" stroke="#ff007f" strokeWidth="0.5" />
+                    </g>
+
+                    {/* Left: Compass / Coordinate Vector */}
+                    <g transform="translate(15, 20)">
+                      {/* Topography wavy contours */}
+                      <path d="M 5,45 Q 25,20 45,35 T 85,25" fill="none" stroke="rgba(255, 0, 127, 0.2)" strokeWidth="1.2" />
+                      <path d="M 5,55 Q 30,30 50,45 T 85,35" fill="none" stroke="rgba(255, 0, 127, 0.3)" strokeWidth="1.2" />
+                      <path d="M 5,65 Q 35,40 55,55 T 85,45" fill="none" stroke="rgba(255, 0, 127, 0.15)" strokeWidth="1" />
+                      
+                      {/* Compass rose / crosshair */}
+                      <circle cx="110" cy="35" r="14" fill="none" stroke="#ff007f" strokeWidth="1" strokeDasharray="2 1" />
+                      <line x1="110" y1="17" x2="110" y2="53" stroke="#ff007f" strokeWidth="0.8" />
+                      <line x1="92" y1="35" x2="128" y2="35" stroke="#ff007f" strokeWidth="0.8" />
+                      <polygon points="110,25 113,35 107,35" fill="#ff007f" />
+                      <text x="110" y="16" fill="#ff007f" fontSize="5" fontFamily="monospace" textAnchor="middle">N</text>
+                      <text x="50" y="58" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">TOPOGRAPHIC SCANNER</text>
+                    </g>
+
+                    {/* Right: Telemetry Panel */}
+                    <g transform="translate(180, 25)">
+                      <rect x="0" y="0" width="130" height="52" rx="4" fill="rgba(0, 0, 0, 0.6)" stroke="rgba(255, 0, 127, 0.2)" strokeWidth="1" />
+                      <text x="10" y="12" fill="#ff007f" fontSize="6.5" fontFamily="monospace" fontWeight="bold">EXPLORATION: ACTIVE</text>
+                      <text x="10" y="22" fill="#fff" fontSize="5.5" fontFamily="monospace">GEOGRAPHY SCAN: ON</text>
+                      <text x="10" y="32" fill="rgba(255,255,255,0.7)" fontSize="5" fontFamily="monospace">CULTURAL PROFILE: READY</text>
+                      <text x="10" y="42" fill="#00ff88" fontSize="5" fontFamily="monospace" fontWeight="bold">BUDGET RATIO: ASPIRATIONAL</text>
+                    </g>
+
+                    <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">SECTOR: BEYOND_NYC_METRO</text>
+                    <text x="310" y="102" fill="#ff007f" fontSize="5.5" fontFamily="monospace" textAnchor="end">TERRAIN_SURVEY: 100%</text>
+                  </svg>
+                )}
+
+                {/* Traveling relocation grid - Slide 2 */}
+                {activeInterest.type === 'traveling' && travelingSlide === 2 && (
+                  <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(255, 0, 127, 0.22)', boxShadow: 'inset 0 0 10px rgba(255, 0, 127, 0.08)' }}>
+                    <rect x="0" y="0" width="320" height="15" fill="#1b000a" />
+                    <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // COLONY_RELOCATION_GRID</text>
+
+                    {/* Congested NYC Node vs Peaceful Outpost Node */}
+                    <g transform="translate(10, 20)">
+                      {/* Busy NYC Congested Grid Node */}
+                      <circle cx="35" cy="35" r="16" fill="rgba(234, 67, 53, 0.08)" stroke="#ea4335" strokeWidth="0.8" strokeDasharray="2 2" />
+                      <circle cx="35" cy="35" r="5" fill="#ea4335" />
+                      <line x1="23" y1="35" x2="47" y2="35" stroke="#ea4335" strokeWidth="0.8" />
+                      <line x1="35" y1="23" x2="35" y2="47" stroke="#ea4335" strokeWidth="0.8" />
+                      <text x="35" y="58" fill="#ea4335" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">NYC: CONGESTED</text>
+                      
+                      {/* Transition Path Vector */}
+                      <path d="M 60,35 Q 95,15 130,35" fill="none" stroke="#ffffff" strokeWidth="1.2" strokeDasharray="3 3" style={{ filter: 'drop-shadow(0 0 2px #fff)' }} />
+                      <polygon points="130,35 122,31 125,37" fill="#ffffff" />
+                      <text x="95" y="22" fill="#fff" fontSize="5" fontFamily="monospace" textAnchor="middle" opacity="0.8">TRANSITION</text>
+
+                      {/* Serene Outpost Node */}
+                      <circle cx="155" cy="35" r="12" fill="none" stroke="#00ff88" strokeWidth="1.2" />
+                      <circle cx="155" cy="35" r="4.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
+                      <text x="155" y="58" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">OUTPOST: PEACEFUL</text>
+                    </g>
+
+                    {/* Right side: Relocation stats */}
+                    <g transform="translate(195, 25)">
+                      <rect x="0" y="0" width="115" height="52" rx="4" fill="rgba(0, 0, 0, 0.6)" stroke="rgba(255, 0, 127, 0.2)" strokeWidth="1" />
+                      <text x="8" y="12" fill="#ff007f" fontSize="6.5" fontFamily="monospace" fontWeight="bold">GOAL: RELOCATION</text>
+                      <text x="8" y="22" fill="#fff" fontSize="5.5" fontFamily="monospace">POST-GRAD TARGET</text>
+                      <text x="8" y="32" fill="rgba(255,255,255,0.7)" fontSize="5" fontFamily="monospace">CONGESTION: MINIMAL</text>
+                      <text x="8" y="42" fill="#00f0ff" fontSize="5" fontFamily="monospace" fontWeight="bold">JOBS LINK: ON GRAD</text>
+                    </g>
+
+                    <text x="10" y="102" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">TRAJECTORY: OUTWARD_BOUND</text>
+                    <text x="310" y="102" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="end">DENSITY RATIO: LOW</text>
                   </svg>
                 )}
 

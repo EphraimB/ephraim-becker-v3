@@ -841,7 +841,7 @@ export default function NeurodiversityAdvocacy() {
                         </span>
                       </div>
                       <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        My parents wanted me to try a mainstream ultra-orthodox yeshiva. However, back in grade school, I didn't know how to advocate for myself or explain my sensory and cognitive needs. I was misbehaving by calling out and acting out in class, so eventually I got a paraprofessional (para).
+                        My parents wanted me to try a mainstream ultra-orthodox yeshiva. In grade school, it was obvious to me that I was different from my peers. I was constantly wondering why I was getting special support when everybody in my environment made it look like I was normal—but they were just faking it because neurodiversity was not well known at the time. Lacking the vocabulary to advocate for myself, I acted out and called out in class, eventually getting a paraprofessional (para), still never knowing I was autistic.
                       </p>
                     </div>
 
@@ -856,7 +856,7 @@ export default function NeurodiversityAdvocacy() {
                         </span>
                       </div>
                       <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        People saw after 2 years of High School that the mainstream Yeshiva environment wasn't working out. I was transferred to a special needs school. This new environment was pretty unstable, and people constantly fought with each other.
+                        After 2 years of High School, it was clear that the mainstream Yeshiva wasn't working out, and I was transferred to a special needs school. The new environment was highly unstable, with constant interpersonal fighting and friction. During this time, another student pointed out to me that I was autistic. He didn't do it to be nice—he did it in a teasing, mocking way that framed autism strictly as a broken disability, scaring me deeply at first until I eventually discovered the neurodiversity paradigm and began reclaiming my identity.
                       </p>
                     </div>
 

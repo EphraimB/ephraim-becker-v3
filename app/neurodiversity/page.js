@@ -8,7 +8,7 @@ export default function NeurodiversityAdvocacy() {
   const [isMounted, setIsMounted] = useState(false);
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState("https://ephraim-becker.com/neurodiversity");
-  const [shareText, setShareText] = useState("Explore the Neurodiversity Advocacy portal in Ares City. Let's move past old-school special needs pathology models and celebrate cognitive variation: ");
+  const [shareText, setShareText] = useState("Explore the Neurodiversity Advocacy portal in Ephraim Becker's Ares City. Let's move past old-school special needs pathology models and celebrate cognitive variation: ");
   const [currentConsoleSector, setCurrentConsoleSector] = useState('matrix'); // 'matrix', 'history', 'story', 'advocacy'
   const [activeChapter, setActiveChapter] = useState(0); // 0 to 4 for historical Chapters I-V
   const [glitchActive, setGlitchActive] = useState(false);
@@ -855,7 +855,7 @@ export default function NeurodiversityAdvocacy() {
 
                         {/* Email Share */}
                         <a 
-                          href={`mailto:?subject=Neurodiversity%20Advocacy%20Portal&body=I%20just%20explored%20the%20Neurodiversity%20Advocacy%20portal%20in%20Ares%20City.%20Let's%20move%20past%20old-school%20special%20needs%20pathology%20models%20and%20celebrate%20cognitive%20variation%20as%20a%20natural%20biological%20reality.%20Read%20the%20history%20and%20spread%20the%20word:%20${encodeURIComponent(shareUrl)}`}
+                          href={`mailto:?subject=Ephraim%20Becker's%20Ares%20City%20-%20Neurodiversity%20Advocacy%20Portal&body=I%20just%20explored%20the%20Neurodiversity%20Advocacy%20portal%20in%20Ephraim%20Becker's%20Ares%20City.%20Let's%20move%20past%20old-school%20special%20needs%20pathology%20models%20and%20celebrate%20cognitive%20variation%20as%20a%20natural%20biological%20reality.%20Read%20the%20history%20and%20spread%20the%20word:%20${encodeURIComponent(shareUrl)}`}
                           className="share-pill-btn"
                         >
                           ✉️ Email

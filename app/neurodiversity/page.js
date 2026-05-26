@@ -721,98 +721,63 @@ export default function NeurodiversityAdvocacy() {
 
               {/* SECTION C: EPHRAIM'S PERSONAL STORY - THEMATIC UNDER CONSTRUCTION VIEW */}
               {currentConsoleSector === 'story' && (
-                <div className="bubbly-panel" style={{ flexShrink: 0, padding: '28px' }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 180px', gap: '24px' }}>
-                    <div>
-                      {/* High-tech warning block */}
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '14px' }}>
-                        <span 
-                          style={{ 
-                            fontSize: '0.62rem', 
-                            fontFamily: 'monospace', 
-                            background: 'rgba(255, 179, 0, 0.15)', 
-                            padding: '3px 8px', 
-                            borderRadius: '4px', 
-                            color: '#ffb300', 
-                            fontWeight: 'bold',
-                            border: '1px solid rgba(255, 179, 0, 0.3)',
-                            animation: 'pulse-amber-warn 2s infinite ease-in-out'
-                          }}
-                        >
-                          ⚠️ DECK STATUS: ACTIVE EXPLORATION
-                        </span>
-                        <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.3)' }}>
-                          // ID: UPLINK_SYNTHESIS
-                        </span>
-                      </div>
-                      
-                      <h3 style={{ margin: '0 0 12px 0', fontSize: '1.1rem', fontFamily: 'var(--font-tech)', color: '#ffffff', letterSpacing: '0.5px' }}>
-                        📖 The Unfinished Uplink: A Lifelong Narrative
-                      </h3>
-                      
-                      <p style={{ margin: 0, fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.85)', lineHeight: '1.65', textAlign: 'justify' }}>
-                        The truth about my story is that I don&apos;t fully know it myself yet. The final chapter of an autistic life is not a static, read-only log file retrieved from an archive—it is an active, ongoing synthesis of self-discovery and unmasking.
-                      </p>
-                      
-                      <p style={{ margin: '14px 0 0 0', fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.85)', lineHeight: '1.65', textAlign: 'justify' }}>
-                        Growing up in environments dominated by old-school clinical pathology models, trying to force compliance and mask my natural wiring created deep friction. Entering the field of Computer Science at **Adelphi University** and studying systems engineering was a powerful revelation. It proved that my deep analytical focus, systematic logical thinking, and graphical interface building are not clinical &quot;deficits&quot; to be erased—they are my greatest creative strengths.
-                      </p>
-
-                      <p style={{ margin: '14px 0 0 0', fontSize: '0.78rem', color: 'rgba(255, 255, 255, 0.85)', lineHeight: '1.65', textAlign: 'justify' }}>
-                        However, fully understanding how my autistic mind navigates social battery, unlearning early stigmas, and recovering from severe autistic burnout is an active frontier. For now, this transmission channel is left as **Under Construction**—a beautiful, glowing testament that self-realization is an active journey, and the best parts of the script are still being written.
-                      </p>
-                    </div>
-
-                    {/* Animated SVG: Synaptic Synthesis Matrix Visualizer */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', alignItems: 'center' }}>
-                      <div style={{ width: '100%', background: '#050810', border: '1.5px solid rgba(255, 179, 0, 0.25)', borderRadius: '10px', height: '210px', position: 'relative', overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' }}>
-                        <svg viewBox="0 0 100 100" width="100%" height="100%">
-                          {/* Radial glowing backdrop behind core */}
-                          <circle cx="50" cy="45" r="25" fill="none" stroke="rgba(255, 179, 0, 0.03)" strokeWidth="4" />
-                          
-                          {/* Synapse bridge lines drawing nodes closer */}
-                          <line x1="50" y1="45" x2="22" y2="22" stroke="rgba(0, 255, 136, 0.25)" strokeWidth="0.8" strokeDasharray="1 3" />
-                          <line x1="50" y1="45" x2="78" y2="22" stroke="rgba(0, 255, 136, 0.25)" strokeWidth="0.8" strokeDasharray="1 3" />
-                          <line x1="50" y1="45" x2="18" y2="65" stroke="rgba(255, 179, 0, 0.2)" strokeWidth="0.8" strokeDasharray="1 3" />
-                          <line x1="50" y1="45" x2="82" y2="65" stroke="rgba(255, 179, 0, 0.2)" strokeWidth="0.8" strokeDasharray="1 3" />
-
-                          {/* Pulsing Central Mind Core (Emerald) */}
-                          <circle cx="50" cy="45" r="6" fill="#00ff88" style={{ animation: 'synaptic-pulse 3s infinite ease-in-out' }} />
-                          <circle cx="50" cy="45" r="12" fill="none" stroke="#00f0ff" strokeWidth="0.5" opacity="0.35" style={{ animation: 'pulse-signal-ring 2.5s infinite ease-in-out' }} />
-
-                          {/* Fragment 1: Upper Left (Drifting golden fragment) */}
-                          <g style={{ animation: 'drift-and-gravitate-1 4s infinite ease-in-out' }}>
-                            <circle cx="22" cy="22" r="3.5" fill="#ffb300" opacity="0.8" />
-                            <line x1="22" y1="22" x2="35" y2="30" stroke="rgba(255, 179, 0, 0.4)" strokeWidth="0.5" />
-                          </g>
-
-                          {/* Fragment 2: Upper Right (Drifting golden fragment) */}
-                          <g style={{ animation: 'drift-and-gravitate-2 3.5s infinite ease-in-out' }}>
-                            <polygon points="78,19 81,24 75,24" fill="#ffb300" opacity="0.75" />
-                            <line x1="78" y1="22" x2="65" y2="30" stroke="rgba(255, 179, 0, 0.4)" strokeWidth="0.5" />
-                          </g>
-
-                          {/* Fragment 3: Lower Left (Drifting cyan fragment) */}
-                          <g style={{ animation: 'drift-and-gravitate-3 4.5s infinite ease-in-out' }}>
-                            <circle cx="18" cy="65" r="2.5" fill="#00f0ff" opacity="0.8" />
-                            <line x1="18" y1="65" x2="32" y2="55" stroke="rgba(0, 240, 255, 0.4)" strokeWidth="0.5" />
-                          </g>
-
-                          {/* Fragment 4: Lower Right (Drifting amber fragment) */}
-                          <g style={{ animation: 'drift-and-gravitate-4 3.8s infinite ease-in-out' }}>
-                            <rect x="80" y="63" width="4" height="4" fill="#ffb300" opacity="0.75" />
-                            <line x1="82" y1="65" x2="68" y2="55" stroke="rgba(255, 179, 0, 0.4)" strokeWidth="0.5" />
-                          </g>
-
-                          <text x="50" y="82" fill="#ffb300" fontSize="4.2" fontFamily="monospace" textAnchor="middle" fontWeight="bold">SYNAPSE_ASSEMBLY</text>
-                          <text x="50" y="89" fill="rgba(0,255,136,0.85)" fontSize="3.8" fontFamily="monospace" textAnchor="middle">UPLINK_OPEN // 48%</text>
-                        </svg>
-                      </div>
-                      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255, 179, 0, 0.5)', textTransform: 'uppercase', letterSpacing: '0.5px', textAlign: 'center' }}>
-                        [ ACTIVE SYNTHESIS ]
-                      </span>
-                    </div>
+                <div className="bubbly-panel" style={{ flexShrink: 0, padding: '60px 20px', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '20px' }}>
+                  
+                  {/* Glowing Hazard Warning SVG */}
+                  <div style={{ width: '100px', height: '100px', position: 'relative' }}>
+                    <svg viewBox="0 0 100 100" width="100%" height="100%" style={{ animation: 'pulse-amber-warn 2s infinite ease-in-out' }}>
+                      <path 
+                        d="M 50 12 L 88 78 L 12 78 Z" 
+                        fill="rgba(255, 179, 0, 0.06)" 
+                        stroke="#ffb300" 
+                        strokeWidth="3.5" 
+                        strokeLinejoin="round"
+                        style={{ filter: 'drop-shadow(0 0 8px rgba(255, 179, 0, 0.45))' }}
+                      />
+                      <text 
+                        x="50" 
+                        y="66" 
+                        fill="#ffb300" 
+                        fontSize="32" 
+                        fontFamily="var(--font-tech), monospace" 
+                        fontWeight="900" 
+                        textAnchor="middle"
+                        style={{ textShadow: '0 0 5px rgba(255, 179, 0, 0.6)' }}
+                      >
+                        !
+                      </text>
+                    </svg>
                   </div>
+
+                  {/* Under Construction Header */}
+                  <h3 
+                    style={{ 
+                      fontFamily: 'var(--font-tech)', 
+                      fontSize: '1.4rem', 
+                      color: '#ffb300', 
+                      textTransform: 'uppercase', 
+                      letterSpacing: '2.5px', 
+                      margin: 0, 
+                      textAlign: 'center',
+                      textShadow: '0 0 15px rgba(255, 179, 0, 0.5)' 
+                    }}
+                  >
+                    UNDER CONSTRUCTION
+                  </h3>
+
+                  {/* High-Tech Transmission Pending Readout */}
+                  <span 
+                    style={{ 
+                      fontSize: '0.68rem', 
+                      fontFamily: 'monospace', 
+                      color: 'rgba(255, 255, 255, 0.4)', 
+                      letterSpacing: '1px',
+                      textAlign: 'center'
+                    }}
+                  >
+                    [ STATUS: TRANSMISSION PENDING // SYNAPSE UPLINK INCOMPLETE ]
+                  </span>
+
                 </div>
               )}
 

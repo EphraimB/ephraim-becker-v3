@@ -12,6 +12,8 @@ export default function NeurodiversityAdvocacy() {
   const [currentConsoleSector, setCurrentConsoleSector] = useState('matrix'); // 'matrix', 'lexicon', 'history', 'story', 'advocacy'
   const [activeChapter, setActiveChapter] = useState(0); // 0 to 4 for historical Chapters I-V
   const [glitchActive, setGlitchActive] = useState(false);
+  const [lexiconSearch, setLexiconSearch] = useState('');
+  const [lexiconCategory, setLexiconCategory] = useState('all'); // 'all', 'energy', 'social', 'cognitive'
   
   // Local checklist states for Advocacy Protocols
   const [protocols, setProtocols] = useState({
@@ -168,6 +170,11 @@ export default function NeurodiversityAdvocacy() {
           52% { fill: rgba(0, 0, 0, 0.9); stroke: rgba(255, 255, 255, 0.05); }
           65% { fill: rgba(0, 240, 255, 0.02); stroke: rgba(0, 240, 255, 0.3); stroke-dasharray: 2 2; }
           100% { fill: rgba(0, 240, 255, 0.08); stroke: #00f0ff; }
+        }
+
+        .lexicon-search-input:focus {
+          border-color: #00ff88 !important;
+          box-shadow: 0 0 10px rgba(0, 255, 136, 0.15), inset 0 1px 3px rgba(0, 255, 136, 0.05) !important;
         }
 
         .console-selector-bar {
@@ -578,227 +585,231 @@ export default function NeurodiversityAdvocacy() {
               )}
 
               {/* SECTION LEXICON: COGNITIVE LEXICON & SYSTEM TERMINOLOGY */}
-              {currentConsoleSector === 'lexicon' && (
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                  
-                  {/* The Unique Mind Constellation Banner */}
-                  <div className="bubbly-panel" style={{ flexShrink: 0 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '8px' }}>
-                      <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.9rem', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        🌌 The Autistic Constellation
-                      </h3>
-                      <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(0, 255, 136, 0.5)', letterSpacing: '1px' }}>
-                        // THE SPECTRUM REFRAMED
-                      </span>
-                    </div>
-                    <p style={{ fontSize: '0.82rem', color: '#ffffff', fontWeight: 'bold', lineHeight: 1.6, margin: '6px 0 8px 0' }}>
-                      Every Autistic Person is Different — Just Like Neurotypicals.
-                    </p>
-                    <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0, textAlign: 'justify' }}>
-                      To look at autism as a single linear spectrum stretching from &quot;mild&quot; to &quot;severe&quot; is an obsolete medical relic. In reality, autism is a diverse, non-linear constellation of developmental, sensory, communication, and cognitive traits. No two autistic individuals have the same strengths, challenges, or experiential profiles—just as no two neurotypical individuals share the same mind. We are as wonderfully diverse as any other section of humanity.
-                    </p>
-                  </div>
+              {currentConsoleSector === 'lexicon' && (() => {
+                const filteredTerms = LEXICON_TERMS.filter(term => {
+                  const query = lexiconSearch.toLowerCase().trim();
+                  const matchesSearch = !query || 
+                                       term.title.toLowerCase().includes(query) ||
+                                       term.shortDef.toLowerCase().includes(query) ||
+                                       term.longDef.toLowerCase().includes(query) ||
+                                       term.takeaway.toLowerCase().includes(query);
+                  const matchesCategory = lexiconCategory === 'all' || term.category === lexiconCategory;
+                  return matchesSearch && matchesCategory;
+                });
 
-                  {/* Deep-Dive Vocabulary Cards */}
-                  <div className="story-grid">
+                return (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                     
-                    {/* Card 1: Autistic Burnout */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      {/* Animated SVG 1 */}
-                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
-                        <svg viewBox="0 0 100 30" width="100%" height="100%">
-                          <rect x="25" y="6" width="46" height="14" rx="2" fill="none" stroke="#ffb300" strokeWidth="1.5" style={{ animation: 'discharge-burnout 4s infinite ease-in-out' }} />
-                          <rect x="71" y="9" width="3" height="8" rx="1" fill="#ffb300" style={{ animation: 'discharge-burnout 4s infinite ease-in-out' }} />
-                          <rect x="29" y="9" width="38" height="8" rx="1" style={{ animation: 'battery-drain 4s infinite ease-in-out' }} />
-                          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ BURNOUT LEVEL // MONITOR ]</text>
-                        </svg>
+                    {/* The Unique Mind Constellation Banner */}
+                    <div className="bubbly-panel" style={{ flexShrink: 0 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '8px' }}>
+                        <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.9rem', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                          🌌 The Autistic Constellation
+                        </h3>
+                        <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(0, 255, 136, 0.5)', letterSpacing: '1px' }}>
+                          // THE SPECTRUM REFRAMED
+                        </span>
                       </div>
-
-                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        🔥 Autistic Burnout
-                      </h4>
-                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
-                        A profound state of mental, emotional, and physical system collapse.
+                      <p style={{ fontSize: '0.82rem', color: '#ffffff', fontWeight: 'bold', lineHeight: 1.6, margin: '6px 0 8px 0' }}>
+                        Every Autistic Person is Different — Just Like Neurotypicals.
                       </p>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
-                        <strong>Why we are like that:</strong> Autistic burnout is not ordinary tiredness or &quot;defiance.&quot; It is a neurological crash caused by the cumulative, chronic trauma of constantly masking (forcing oneself to look neurotypical), enduring hostile or overstimulating sensory environments, and surviving unsafe social spaces. During burnout, an autistic person may experience a temporary or long-term loss of functional skills, extreme executive dysfunction, and highly reduced sensory tolerance.
+                      <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0, textAlign: 'justify' }}>
+                        To look at autism as a single linear spectrum stretching from &quot;mild&quot; to &quot;severe&quot; is an obsolete medical relic. In reality, autism is a diverse, non-linear constellation of developmental, sensory, communication, and cognitive traits. No two autistic individuals have the same strengths, challenges, or experiential profiles—just as no two neurotypical individuals share the same mind. We are as wonderfully diverse as any other section of humanity.
                       </p>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
-                        [ RECOVERY PATHWAY: SENSORY REST & UNMASKING ]
-                      </span>
                     </div>
 
-                    {/* Card 2: The Social Battery */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      {/* Animated SVG 2 */}
-                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
-                        <svg viewBox="0 0 100 30" width="100%" height="100%">
-                          <rect x="25" y="6" width="46" height="14" rx="2" fill="none" stroke="#00ff88" strokeWidth="1.5" />
-                          <rect x="71" y="9" width="3" height="8" rx="1" fill="#00ff88" />
-                          <rect x="29" y="9" width="38" height="8" rx="1" style={{ animation: 'battery-drain 5s infinite ease-in-out' }} />
-                          <circle cx="85" cy="13" r="1.5" fill="#00f0ff">
-                            <animate attributeName="cx" values="85;25" dur="1.2s" repeatCount="indefinite" />
-                          </circle>
-                          <circle cx="80" cy="8" r="1" fill="#ff5722">
-                            <animate attributeName="cx" values="80;30" dur="1.6s" repeatCount="indefinite" />
-                          </circle>
-                          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ REAL-TIME METRIC ANALYSIS ]</text>
-                        </svg>
+                    {/* Futuristic Search & Filter Unit */}
+                    <div className="bubbly-panel" style={{ padding: '16px', display: 'flex', flexDirection: 'column', gap: '12px', flexShrink: 0 }}>
+                      <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                        <div style={{ position: 'relative', flex: 1 }}>
+                          <input 
+                            type="text" 
+                            value={lexiconSearch} 
+                            onChange={(e) => setLexiconSearch(e.target.value)} 
+                            placeholder="[ 🔍 SEARCH SYNAPTIC TERMS... ]" 
+                            style={{
+                              width: '100%',
+                              padding: '10px 14px 10px 36px',
+                              background: 'rgba(4, 6, 12, 0.75)',
+                              border: '1.5px solid rgba(255,255,255,0.08)',
+                              borderRadius: '8px',
+                              color: '#ffffff',
+                              fontFamily: 'monospace',
+                              fontSize: '0.74rem',
+                              outline: 'none',
+                              transition: 'all 0.25s ease'
+                            }}
+                            className="lexicon-search-input"
+                          />
+                          <span style={{ position: 'absolute', left: '12px', top: '10px', fontSize: '0.75rem', opacity: 0.5 }}>🔍</span>
+                        </div>
+                        
+                        {lexiconSearch && (
+                          <button 
+                            onClick={() => setLexiconSearch('')}
+                            className="hud-btn"
+                            style={{ 
+                              padding: '8px 12px', 
+                              fontSize: '0.65rem', 
+                              fontFamily: 'monospace', 
+                              color: '#ffb300', 
+                              borderColor: 'rgba(255,179,0,0.3)', 
+                              background: 'rgba(255,179,0,0.05)', 
+                              borderRadius: '6px',
+                              cursor: 'pointer'
+                            }}
+                          >
+                            [ CLEAR ]
+                          </button>
+                        )}
                       </div>
-
-                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        🔋 The Social Battery
-                      </h4>
-                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
-                        The finite cognitive and physical energy budget allotted for social stimuli.
-                      </p>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
-                        <strong>Why we are like that:</strong> Autistic brains process incoming sensory and social details with immense, raw complexity, rather than filtering them out automatically. This high-definition processing operates at a steep energy cost. When an autistic person's social battery is depleted, quiet disengagement or seeking physical solitude is a vital physiological safety mechanism to prevent sensory overload and shutdown—not antisocial behavior or personal rejection.
-                      </p>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
-                        [ METRIC BUDGET: FINITE // REQUIRES SAFE ISOLATION TO RECHARGE ]
-                      </span>
+                      
+                      {/* Category filter tabs */}
+                      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                        {[
+                          { id: 'all', label: 'ALL TERMS' },
+                          { id: 'energy', label: '⚡ ENERGY & BURNOUT' },
+                          { id: 'social', label: '🤝 SOCIAL & STYLE' },
+                          { id: 'cognitive', label: '🧠 COGNITIVE STYLES' }
+                        ].map((cat) => {
+                          const isActive = lexiconCategory === cat.id;
+                          return (
+                            <button
+                              key={cat.id}
+                              onClick={() => setLexiconCategory(cat.id)}
+                              className="hud-btn"
+                              style={{
+                                padding: '6px 12px',
+                                fontSize: '0.62rem',
+                                fontFamily: 'monospace',
+                                borderColor: isActive ? '#00ff88' : 'rgba(255,255,255,0.06)',
+                                background: isActive ? 'rgba(0, 255, 136, 0.12)' : 'rgba(4, 6, 12, 0.4)',
+                                color: isActive ? '#00ff88' : 'rgba(255,255,255,0.65)',
+                                borderRadius: '6px',
+                                cursor: 'pointer',
+                                fontWeight: 'bold',
+                                transition: 'all 0.2s ease',
+                                boxShadow: isActive ? '0 0 8px rgba(0, 255, 136, 0.15)' : 'none'
+                              }}
+                            >
+                              {cat.label}
+                            </button>
+                          );
+                        })}
+                      </div>
                     </div>
 
-                    {/* Card 3: Double Empathy & Boundary Mismatches */}
-                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      {/* Animated SVG 3 */}
-                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
-                        <svg viewBox="0 0 160 30" width="100%" height="100%">
-                          <circle cx="30" cy="13" r="4.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 2px #00ff88)' }} />
-                          <circle cx="130" cy="13" r="4.5" fill="#ff007f" style={{ filter: 'drop-shadow(0 0 2px #ff007f)' }} />
-                          <path d="M 30,13 Q 55,3 80,13 T 130,13" fill="none" stroke="#00ff88" strokeWidth="1" strokeDasharray="30" strokeDashoffset="0" style={{ animation: 'laser-sweep 2.5s infinite linear' }} />
-                          <path d="M 130,13 Q 105,23 80,13 T 30,13" fill="none" stroke="#ff007f" strokeWidth="1" strokeDasharray="30" strokeDashoffset="0" style={{ animation: 'laser-sweep 2.5s infinite linear reverse' }} />
-                          <text x="80" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ MUTUAL DISSONANCE OR SYNC ]</text>
-                        </svg>
+                    {/* Filtered Term Cards Grid */}
+                    {filteredTerms.length > 0 ? (
+                      <div className="story-grid">
+                        {filteredTerms.map((term) => (
+                          <div 
+                            key={term.id} 
+                            className={term.isWide ? 'story-card-wide' : ''}
+                            style={{ 
+                              background: 'rgba(6, 9, 20, 0.85)', 
+                              backdropFilter: 'blur(16px)', 
+                              border: `1.5px solid rgba(255, 255, 255, 0.08)`, 
+                              borderRadius: '10px', 
+                              padding: '18px', 
+                              display: 'flex', 
+                              flexDirection: 'column', 
+                              gap: '12px',
+                              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                              boxShadow: '0 4px 15px rgba(0,0,0,0.4)',
+                              position: 'relative',
+                              overflow: 'hidden'
+                            }}
+                          >
+                            {/* Animated SVG Visualizer Box */}
+                            <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '2px' }}>
+                              {renderLexiconSvg(term.id)}
+                            </div>
+
+                            {/* Header details */}
+                            <div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '4px', marginBottom: '2px' }}>
+                                <h4 style={{ margin: 0, fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: term.accentColor, textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                                  {term.title}
+                                </h4>
+                                <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)', background: 'rgba(255,255,255,0.04)', padding: '2px 6px', borderRadius: '4px' }}>
+                                  {term.category.toUpperCase()}
+                                </span>
+                              </div>
+                              <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.45)' }}>
+                                {term.pronunciation}
+                              </span>
+                            </div>
+
+                            {/* Short definition block */}
+                            <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: `2.5px solid ${term.accentColor}`, paddingLeft: '8px' }}>
+                              {term.shortDef}
+                            </p>
+
+                            {/* Detailed explanation (Why we are like that) */}
+                            <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                              <strong>Why we process like this:</strong> {term.longDef}
+                            </p>
+
+                            {/* Key Takeaway Highlight block */}
+                            <div style={{ 
+                              background: 'rgba(255, 255, 255, 0.01)', 
+                              border: `1px solid rgba(255, 255, 255, 0.06)`,
+                              borderLeft: `3px solid ${term.accentColor}`, 
+                              borderRadius: '6px', 
+                              padding: '10px 12px',
+                              boxShadow: `0 0 10px rgba(0,0,0,0.15)`
+                            }}>
+                              <span style={{ display: 'block', fontSize: '0.65rem', fontFamily: 'var(--font-tech)', color: term.accentColor, fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '2px' }}>
+                                💡 Key Synaptic Takeaway
+                              </span>
+                              <span style={{ fontSize: '0.7rem', color: '#ffffff', lineHeight: '1.5', display: 'block' }}>
+                                {term.takeaway}
+                              </span>
+                            </div>
+
+                            {/* Bottom System protocol readout */}
+                            <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: term.accentColor, marginTop: 'auto', display: 'block' }}>
+                              {term.recovery}
+                            </span>
+                          </div>
+                        ))}
                       </div>
-
-                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        🤝 Double Empathy & Boundary Miscommunication
-                      </h4>
-                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
-                        Bidirectional breakdowns in understanding due to diverging neurotypes and communication styles.
-                      </p>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
-                        <strong>Why we are like that:</strong> Communication is always mutual. When an autistic individual's social battery is empty and they withdraw silently without explicit verbal announcements, a peer may misread that quietness as personal hostility or a mistake on their part. Because of the communication gap and a complete lack of active signals, boundaries are often accidentally invaded. True advocacy requires clear, explicit communication of limits from both sides and mutual respect for boundaries, rather than blaming one side for failing to guess.
-                      </p>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
-                        [ INTERACTIVE SYNC: MUTUAL EXPLICITNESS // PREVENTS ACCIDENTAL BOUNDARY OVERRUNS ]
-                      </span>
-                    </div>
-
-                    {/* Card 4: Masking & Camouflaging */}
-                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      {/* Animated SVG 4 */}
-                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
-                        <svg viewBox="0 0 160 30" width="100%" height="100%">
-                          <circle cx="80" cy="13" r="5" fill="#00ff88" style={{ animation: 'true-self-shake 2s infinite ease-in-out', filter: 'drop-shadow(0 0 3px #00ff88)' }} />
-                          <circle cx="80" cy="13" r="9" fill="none" stroke="#00f0ff" strokeWidth="1.5" strokeDasharray="4 2">
-                            <animateTransform attributeName="transform" type="rotate" from="0 80 13" to="360 80 13" dur="6s" repeatCount="indefinite" />
-                          </circle>
-                          <text x="80" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ COGNITIVE CAMOUFLAGE SHIELD ]</text>
-                        </svg>
+                    ) : (
+                      /* Empty State */
+                      <div style={{ 
+                        background: 'rgba(6, 9, 20, 0.85)', 
+                        backdropFilter: 'blur(16px)', 
+                        border: '1.5px dashed rgba(234, 67, 53, 0.3)', 
+                        borderRadius: '10px', 
+                        padding: '40px 20px', 
+                        display: 'flex', 
+                        flexDirection: 'column', 
+                        alignItems: 'center', 
+                        justifyContent: 'center',
+                        gap: '12px',
+                        textAlign: 'center'
+                      }}>
+                        <span style={{ fontSize: '2rem', animation: 'pulse-amber-warn 2.5s infinite ease-in-out' }}>⚠️</span>
+                        <strong style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#ea4335', letterSpacing: '0.5px' }}>
+                          [ NO COGNITIVE MATCHES FOUND ]
+                        </strong>
+                        <span style={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.6)', maxWidth: '400px', lineHeight: '1.5' }}>
+                          The search term &quot;{lexiconSearch}&quot; did not match any active cognitive lexicon parameters in the selected category. Try searching for other terms like unmasking, battery, burnout, monotropism, or PDA.
+                        </span>
+                        <button 
+                          onClick={() => { setLexiconSearch(''); setLexiconCategory('all'); }}
+                          className="hud-btn"
+                          style={{ marginTop: '8px', padding: '8px 14px', fontSize: '0.68rem', fontFamily: 'monospace', color: '#00ff88', borderColor: '#00ff88', background: 'rgba(0, 255, 136, 0.04)' }}
+                        >
+                          [ RESET ALL DICTIONARY FILTERS ]
+                        </button>
                       </div>
-
-                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        🎭 Masking & Camouflaging
-                      </h4>
-                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
-                        The exhausting suppression of natural traits to pass as neurotypical.
-                      </p>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
-                        <strong>Why we are like that:</strong> Masking is a trauma-driven coping mechanism. Autistic individuals learn to suppress natural behaviors (like stimming, avoiding eye contact, or speaking with absolute literal directness) in order to avoid harassment, social isolation, and exclusion. While masking acts as a protective shield, it operates at a devastating metabolic and emotional cost—acting as the single greatest driver of chronic anxiety, clinical depression, and sudden autistic burnout.
-                      </p>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
-                        [ METABOLIC LOAD: HIGH // REQUIRES RADICAL SELF-ACCEPTANCE TO UNLEARN ]
-                      </span>
-                    </div>
-
-                    {/* Card 5: Autistic Inertia */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      {/* Animated SVG 5 */}
-                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
-                        <svg viewBox="0 0 100 30" width="100%" height="100%">
-                          <line x1="10" y1="13" x2="90" y2="13" stroke="rgba(255,255,255,0.06)" strokeWidth="4" strokeLinecap="round" />
-                          <line x1="10" y1="13" x2="90" y2="13" stroke="rgba(255, 179, 0, 0.15)" strokeWidth="1" strokeLinecap="round" />
-                          <circle cx="20" cy="13" r="4" fill="#ffb300" style={{ animation: 'momentum-slide 3.5s infinite ease-in-out', filter: 'drop-shadow(0 0 3px #ffb300)' }} />
-                          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ NEUROLOGICAL MOMENTUM // INERTIA ]</text>
-                        </svg>
-                      </div>
-
-                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        ⏳ Autistic Inertia
-                      </h4>
-                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
-                        Difficulty initiating, stopping, or transitioning between cognitive states.
-                      </p>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
-                        <strong>Why we are like that:</strong> Inertia is a physiological reflection of neurological momentum, not laziness or poor motivation. Due to executive functioning differences, starting a new task, stopping an active task, or shifting focus requires substantial metabolic energy. It is heavily influenced by sensory sensitivities, emotional states, and individual interest. Once in motion, an autistic brain thrives in deep flow; shifting states creates intense sensory friction.
-                      </p>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
-                        [ COGNITIVE SYSTEMS STATE: MOMENTUM RESISTANT // REQUIRES TRANSLATIONAL BUFFERS ]
-                      </span>
-                    </div>
-
-                    {/* Card 6: Meltdowns & Shutdowns */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      {/* Animated SVG 6 */}
-                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
-                        <svg viewBox="0 0 100 30" width="100%" height="100%">
-                          <circle cx="50" cy="13" r="5" style={{ animation: 'overload-crash 5s infinite ease-in-out' }} />
-                          <circle cx="50" cy="13" r="14" fill="none" stroke="#ea4335" strokeWidth="0.8" opacity="0">
-                            <animate attributeName="r" values="5;20" dur="2.5s" repeatCount="indefinite" />
-                            <animate attributeName="opacity" values="0.8;0" dur="2.5s" repeatCount="indefinite" />
-                          </circle>
-                          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ OVERLOAD SPECTRUM ANALYZER ]</text>
-                        </svg>
-                      </div>
-
-                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        ⚡ Meltdowns & Shutdowns
-                      </h4>
-                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
-                        Involuntary neurological reactions to extreme sensory or emotional overload.
-                      </p>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
-                        <strong>Why we are like that:</strong> Meltdowns (externalized fight/flight) and shutdowns (internalized freeze/dissociation) are absolutely **not tantrums** or behavioral choices. They are involuntary system crashes that occur when an autistic nervous system is pushed past its processing capabilities. The brain enters a raw survival state, rendering reasoning or compliance impossible. Recovery requires absolute safety, zero demands, and low-stimulus rest.
-                      </p>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
-                        [ CRITICAL OVERLOAD PROTECTOR: AUTOMATIC SYSTEM RESTORE REQUIRED ]
-                      </span>
-                    </div>
-
-                    {/* Card 7: Monotropism */}
-                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      {/* Animated SVG 7 */}
-                      <div style={{ height: '70px', background: '#070a12', border: '1px solid rgba(255, 255, 255, 0.05)', borderRadius: '6px', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '4px' }}>
-                        <svg viewBox="0 0 160 30" width="100%" height="100%">
-                          <polygon points="80,0 72,13 88,13" fill="rgba(0,255,136,0.06)" />
-                          <circle cx="80" cy="13" r="4.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
-                          <circle cx="30" cy="13" r="2" fill="rgba(255,255,255,0.08)" />
-                          <circle cx="130" cy="13" r="2" fill="rgba(255,255,255,0.08)" />
-                          <line x1="80" y1="0" x2="80" y2="13" stroke="#00ff88" strokeWidth="1.5" strokeDasharray="30" strokeDashoffset="0" style={{ animation: 'laser-sweep 2s infinite linear' }} />
-                          <text x="80" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ MONOTROPIC TUNNEL FOCUS ]</text>
-                        </svg>
-                      </div>
-
-                      <h4 style={{ margin: '0 0 2px 0', fontSize: '0.82rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
-                        🎯 Monotropic Focus Tunnels
-                      </h4>
-                      <p style={{ margin: 0, fontSize: '0.68rem', color: 'rgba(255,255,255,0.65)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
-                        The cognitive processing style characterized by focusing intensely on a single stimulus channel.
-                      </p>
-                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
-                        <strong>Why we are like that:</strong> Monotropism is the dominant cognitive style in autistic minds, funneling all processing resources into a single deep interest or task at any given moment. Rather than spreading attention across many shallow channels (polytropism), the brain locks into a highly efficient flow state. This makes autistic individuals incredibly skilled specialist thinkers, but it makes sudden interruptions extremely jarring to the nervous system, rapidly draining their energy reserve.
-                      </p>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
-                        [ COGNITIVE TUNNEL INDEX: HYPER-FOCUS ACTIVE // DO NOT INTERRUPT ]
-                      </span>
-                    </div>
+                    )}
 
                   </div>
-                </div>
-              )}
+                );
+              })()}
 
               {/* SECTION B: CHRONOLOGICAL HISTORY ARCHIVE VIEW */}
               {currentConsoleSector === 'history' && (
@@ -1344,3 +1355,251 @@ export default function NeurodiversityAdvocacy() {
     </div>
   );
 }
+
+// Custom animated SVG visualizer helper for the Synaptic Dictionary
+function renderLexiconSvg(id) {
+  switch (id) {
+    case 'autistic-burnout':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <rect x="25" y="6" width="46" height="14" rx="2" fill="none" stroke="#ffb300" strokeWidth="1.5" style={{ animation: 'discharge-burnout 4s infinite ease-in-out' }} />
+          <rect x="71" y="9" width="3" height="8" rx="1" fill="#ffb300" style={{ animation: 'discharge-burnout 4s infinite ease-in-out' }} />
+          <rect x="29" y="9" width="38" height="8" rx="1" style={{ animation: 'battery-drain 4s infinite ease-in-out' }} />
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ BURNOUT LEVEL // MONITOR ]</text>
+        </svg>
+      );
+    case 'social-battery':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <rect x="25" y="6" width="46" height="14" rx="2" fill="none" stroke="#00ff88" strokeWidth="1.5" />
+          <rect x="71" y="9" width="3" height="8" rx="1" fill="#00ff88" />
+          <rect x="29" y="9" width="38" height="8" rx="1" style={{ animation: 'battery-drain 5s infinite ease-in-out' }} />
+          <circle cx="85" cy="13" r="1.5" fill="#00f0ff">
+            <animate attributeName="cx" values="85;25" dur="1.2s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="80" cy="8" r="1" fill="#ff5722">
+            <animate attributeName="cx" values="80;30" dur="1.6s" repeatCount="indefinite" />
+          </circle>
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ REAL-TIME METRIC ANALYSIS ]</text>
+        </svg>
+      );
+    case 'double-empathy':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <circle cx="20" cy="12" r="3" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 2px #00ff88)' }} />
+          <circle cx="80" cy="12" r="3" fill="#ff007f" style={{ filter: 'drop-shadow(0 0 2px #ff007f)' }} />
+          <path d="M 20,12 Q 50,2 80,12" fill="none" stroke="#00ff88" strokeWidth="0.8" strokeDasharray="15" strokeDashoffset="0" style={{ animation: 'laser-sweep 2.5s infinite linear' }} />
+          <path d="M 80,12 Q 50,22 20,12" fill="none" stroke="#ff007f" strokeWidth="0.8" strokeDasharray="15" strokeDashoffset="0" style={{ animation: 'laser-sweep 2.5s infinite linear reverse' }} />
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ DOUBLE EMPATHY SYNC ]</text>
+        </svg>
+      );
+    case 'masking':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <circle cx="50" cy="12" r="3.5" fill="#00ff88" style={{ animation: 'true-self-shake 2s infinite ease-in-out', filter: 'drop-shadow(0 0 2px #00ff88)' }} />
+          <circle cx="50" cy="12" r="7" fill="none" stroke="#00f0ff" strokeWidth="1" strokeDasharray="3 1.5">
+            <animateTransform attributeName="transform" type="rotate" from="0 50 12" to="360 50 12" dur="6s" repeatCount="indefinite" />
+          </circle>
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ CAMOUFLAGE SHIELD ]</text>
+        </svg>
+      );
+    case 'unmasking':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <circle cx="50" cy="12" r="8" fill="none" stroke="#ffb300" strokeWidth="1" strokeDasharray="4 2" opacity="0.3" style={{ animation: 'true-self-shake 3s infinite ease-in-out' }}>
+            <animate attributeName="r" values="8;11" dur="2s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.4;0" dur="2s" repeatCount="indefinite" />
+          </circle>
+          <circle cx="50" cy="12" r="4" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 4px #00ff88)' }}>
+            <animate attributeName="r" values="3.5;5;3.5" dur="1.5s" repeatCount="indefinite" />
+          </circle>
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ SHEDDING SHIELDS // AUTHENTIC ]</text>
+        </svg>
+      );
+    case 'rsd':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <path d="M 50,15 L 47,12 Q 44,9 47,6 Q 50,6 50,9 Q 50,6 53,6 Q 56,9 53,12 Z" fill="#ff007f" opacity="0.8" style={{ transformOrigin: '50px 10px', animation: 'shiver-node 0.2s infinite' }}>
+            <animate attributeName="opacity" values="0.8;0.3;0.8" dur="1.5s" repeatCount="indefinite" />
+          </path>
+          <circle cx="50" cy="10" r="14" fill="none" stroke="#ff007f" strokeWidth="0.5" strokeDasharray="2 2" opacity="0.3">
+            <animate attributeName="r" values="14;8;2" dur="2s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.1;0.6;0.1" dur="2s" repeatCount="indefinite" />
+          </circle>
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ STRESS SIGNAL RIPPLES ]</text>
+        </svg>
+      );
+    case 'pda':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <circle cx="50" cy="12" r="4.5" fill="#00f0ff" style={{ filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
+          <line x1="15" y1="12" x2="35" y2="12" stroke="#ea4335" strokeWidth="1" strokeDasharray="3 2">
+            <animate attributeName="stroke-dashoffset" values="0;10" dur="1s" repeatCount="indefinite" />
+          </line>
+          <line x1="85" y1="12" x2="65" y2="12" stroke="#ea4335" strokeWidth="1" strokeDasharray="3 2">
+            <animate attributeName="stroke-dashoffset" values="0;-10" dur="1s" repeatCount="indefinite" />
+          </line>
+          <circle cx="50" cy="12" r="9" fill="none" stroke="#00f0ff" strokeWidth="1" opacity="0.6" style={{ animation: 'shiver-node 0.4s infinite' }} />
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ AUTONOMY THREAT RESPONSE ]</text>
+        </svg>
+      );
+    case 'autistic-inertia':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <line x1="15" y1="13" x2="85" y2="13" stroke="rgba(255,255,255,0.06)" strokeWidth="4" strokeLinecap="round" />
+          <line x1="15" y1="13" x2="85" y2="13" stroke="rgba(255, 179, 0, 0.15)" strokeWidth="1" strokeLinecap="round" />
+          <circle cx="20" cy="13" r="4" fill="#ffb300" style={{ animation: 'momentum-slide 3.5s infinite ease-in-out', filter: 'drop-shadow(0 0 3px #ffb300)' }} />
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ COGNITIVE MOMENTUM ]</text>
+        </svg>
+      );
+    case 'meltdowns':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <circle cx="50" cy="12" r="5" style={{ animation: 'overload-crash 5s infinite ease-in-out' }} />
+          <circle cx="50" cy="12" r="14" fill="none" stroke="#ea4335" strokeWidth="0.8" opacity="0">
+            <animate attributeName="r" values="5;20" dur="2.5s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.8;0" dur="2.5s" repeatCount="indefinite" />
+          </circle>
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ OVERLOAD PROTECTOR CRASH ]</text>
+        </svg>
+      );
+    case 'monotropism':
+      return (
+        <svg viewBox="0 0 100 30" width="100%" height="100%">
+          <polygon points="50,0 44,12 56,12" fill="rgba(0,255,136,0.06)" />
+          <circle cx="50" cy="12" r="3.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
+          <circle cx="20" cy="12" r="1.5" fill="rgba(255,255,255,0.08)" />
+          <circle cx="80" cy="12" r="1.5" fill="rgba(255,255,255,0.08)" />
+          <line x1="50" y1="0" x2="50" y2="12" stroke="#00ff88" strokeWidth="1" strokeDasharray="20" strokeDashoffset="0" style={{ animation: 'laser-sweep 2s infinite linear' }} />
+          <text x="50" y="27" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ MONOTROPIC TUNNEL FOCUS ]</text>
+        </svg>
+      );
+    default:
+      return null;
+  }
+}
+
+// High-Fidelity static lexicon terms for the Synaptic Dictionary
+const LEXICON_TERMS = [
+  {
+    id: 'autistic-burnout',
+    title: 'Autistic Burnout',
+    pronunciation: '/ɔːˈtɪs.tɪk ˈbɜːn.aʊt/',
+    category: 'energy',
+    shortDef: 'A profound state of mental, emotional, and physical system collapse.',
+    longDef: 'Autistic burnout is a physiological and neurological crash caused by the cumulative, chronic trauma of constantly masking (suppressing autistic traits to pass as neurotypical), surviving overstimulating sensory environments, and enduring unsafe social spaces. During burnout, executive functions fail, sensory tolerances plunge, and previously mastered tasks or communication skills can temporarily or permanently disintegrate.',
+    takeaway: 'Autistic burnout is not ordinary exhaustion or a behavioral choice—it is a neurological defense shutdown. Recovery is not solved by working harder, but through long-term sensory rest and radical self-acceptance.',
+    recovery: '[ SYSTEM STATUS: INTEGRITY LOW // REQUIRES RADICAL SENSORY DOWN-REGULATION ]',
+    accentColor: '#ffb300',
+    isWide: false
+  },
+  {
+    id: 'social-battery',
+    title: 'The Social Battery',
+    pronunciation: '/ðə ˈsoʊ.ʃəl ˈbæt.ər.i/',
+    category: 'energy',
+    shortDef: 'The finite daily energy budget allotted for processing social interactions.',
+    longDef: 'Unlike neurotypical brains which automatically filter out background social signals, an autistic brain processes all incoming social stimuli—micro-expressions, vocal inflections, unspoken rules, and sensory background noise—in high-definition with active, manual CPU effort. This comes at a staggering cognitive metabolic cost. Once this battery depletes, the nervous system enters an emergency fuel-conservation mode.',
+    takeaway: 'Seeking isolation or going silent is a healthy, biological recharging mechanism—not antisocial behavior, rudeness, or personal rejection.',
+    recovery: '[ POWER LEVEL: CRITICAL // POWER CONSERVATION DECK ACTIVE ]',
+    accentColor: '#ffb300',
+    isWide: false
+  },
+  {
+    id: 'double-empathy',
+    title: 'Double Empathy & Boundary Mismatch',
+    pronunciation: '/ˈdʌb.əl ˈem.pə.θi & ˈbaʊn.də.ri ˈmɪs.mætʃ/',
+    category: 'social',
+    shortDef: 'Bidirectional breakdowns in understanding between diverging neurotypes.',
+    longDef: 'First formulated by Dr. Damian Milton, the Double Empathy Problem states that communication breakdowns are a mutual, two-way mismatch in experiential background and communication styles, rather than a clinical deficit inside the autistic brain. When an autistic person\'s battery is empty and they withdraw without explicit warnings, peers may misread this as hostility. Lacking clear signals, boundaries are easily overrun.',
+    takeaway: 'Autistic and non-autistic people possess different "communication software." Bridges are built through mutual, explicit verbal communication of boundaries, rather than expecting either side to read minds.',
+    recovery: '[ BRIDGE ALIGNMENT: REQUIRES MUTUAL EXPLICITNESS // DEFICIT MODEL DEBUNKED ]',
+    accentColor: '#00ff88',
+    isWide: true
+  },
+  {
+    id: 'masking',
+    title: 'Masking & Camouflaging',
+    pronunciation: '/ˈmæsk.ɪŋ & ˈkæm.ə.flɑːʒ.ɪŋ/',
+    category: 'social',
+    shortDef: 'The exhausting, artificial performance of neurotypical behavior to survive.',
+    longDef: 'Masking is a trauma-driven coping strategy where an autistic individual manually choreographs eye contact, suppresses stims (natural repetitive movements that regulate their sensory systems), mimics gestures, and scripts conversations. It is built to avoid harassment, exclusion, and institutional trauma. While it offers a temporary shield of compliance, it drains massive mental energy.',
+    takeaway: 'Masking acts as a cognitive tax that leads directly to self-alienation, clinical depression, and suicidal ideation. De-pathologizing differences is the only way to make environments safe enough to drop the mask.',
+    recovery: '[ CAMOUFLAGE OVERLOAD: METABOLIC COST CRITICAL // SHIELD DEPLETION IN PROGRESS ]',
+    accentColor: '#00ff88',
+    isWide: true
+  },
+  {
+    id: 'unmasking',
+    title: 'Unmasking',
+    pronunciation: '/ʌnˈmæsk.ɪŋ/',
+    category: 'social',
+    shortDef: 'The radical, liberating process of shedding cognitive camouflage.',
+    longDef: 'Based on the philosophy of The Autistic Coach, unmasking is not a behavioral switch or simple "uninhibited behavior." It is a deep, sustainable, and often frightening recovery journey of shedding compliance-based programming. It involves reclaiming your natural sensory boundaries, allowing your body to stim, advocating for your specific comfort, and learning to honor your neurological limits without guilt.',
+    takeaway: 'Unmasking is a vital, self-preservative act of survival and healing. It is the active, beautiful process of unlearning neuronormative standards to reclaim your authentic self.',
+    recovery: '[ PROTOCOL ACTIVE: SHEDDING COGNITIVE SHIELDS // TRUE AUTONOMY RECONSTRUCTED ]',
+    accentColor: '#00ff88',
+    isWide: true
+  },
+  {
+    id: 'rsd',
+    title: 'Rejection Sensitive Dysphoria (RSD)',
+    pronunciation: '/rɪˈdʒek.ʃən ˈsen.sɪ.tɪv dɪsˈfɔːr.i.ə/',
+    category: 'social',
+    shortDef: 'An intense, involuntary emotional pain triggered by perceived rejection.',
+    longDef: 'Growing up in a world built for another neurotype means autistic individuals receive thousands of corrective, critical, or rejecting messages by the time they reach adulthood. This systemic exclusion primes the nervous system for extreme vulnerability. Under RSD, a perceived criticism or minor disengagement triggers a sudden, high-intensity neurological pain response indistinguishable from physical injury.',
+    takeaway: 'RSD is an involuntary neurological reflex, not emotional fragility. Recognizing it as a physical stress ripple allows us to step back, soothe our nervous systems, and verify reality before reacting.',
+    recovery: '[ SENSORY ALARM: EMOTIONAL RIPPLE SCAN ACTIVE // REQUIRE NERVOUS REGULATION ]',
+    accentColor: '#00ff88',
+    isWide: false
+  },
+  {
+    id: 'pda',
+    title: 'Pervasive Drive for Autonomy (PDA)',
+    pronunciation: '/pərˈveɪ.sɪv draɪv fɔːr ɔːˈtɒn.ə.mi/',
+    category: 'cognitive',
+    shortDef: 'A neurological profile where daily demands trigger a threat response.',
+    longDef: 'Historically termed "Pathological Demand Avoidance," PDA is reframed by neurodivergent advocates as a Pervasive Drive for Autonomy. Daily demands—even simple ones like eating, dressing, or expected social conventions—are perceived by the autistic nervous system as a direct threat to personal autonomy. This automatically activates a fight/flight/freeze defense response, bypassing logical reasoning entirely.',
+    takeaway: 'PDA is not refusal, stubbornness, or laziness—it is a neuro-biological anxiety lock. PDA individuals thrive through collaborative, egalitarian relationships, choice-based environments, and non-directive language.',
+    recovery: '[ THREAT ALARM ACTIVE: DEMAND ENCOUNTERED // SHIELDING AUTONOMY NODE ]',
+    accentColor: '#00f0ff',
+    isWide: false
+  },
+  {
+    id: 'autistic-inertia',
+    title: 'Autistic Inertia',
+    pronunciation: '/ɔːˈtɪs.tɪk ɪˈnɜː.ʃə/',
+    category: 'cognitive',
+    shortDef: 'The physiological resistance to initiating or transitioning between states.',
+    longDef: 'Autistic inertia represents the physical momentum of cognitive processing. Because of executive functioning and neurological differences, starting a new task, halting a current hyper-focused activity, or shifting attention requires significant metabolic energy. It is not a lack of willpower; it is a mechanical property of the autistic mind which, once set in motion, can maintain intense velocity but struggles to brake or steer.',
+    takeaway: 'Shifting states causes intense neurological friction. Support yourself and others by planning transitional buffers, utilizing gentle visual countdowns, and honoring flow states rather than demanding abrupt halts.',
+    recovery: '[ MOMENTUM COEFFICIENT: HIGH // BUFFER STATIONS MANDATORY ]',
+    accentColor: '#00f0ff',
+    isWide: false
+  },
+  {
+    id: 'meltdowns',
+    title: 'Meltdowns & Shutdowns',
+    pronunciation: '/ˈmelt.daʊnz & ˈʃʌt.daʊnz/',
+    category: 'energy',
+    shortDef: 'Extreme, involuntary survival crashes of the nervous system.',
+    longDef: 'When sensory input, emotional stress, and cognitive load exceed what the brain\'s processing channels can handle, the nervous system deploys an emergency circuit breaker. A meltdown is an externalized survival reaction (fight/flight), while a shutdown is an internalized survival response (freeze/dissociate). During these states, the prefrontal cortex goes offline, rendering rational communication impossible.',
+    takeaway: 'These are involuntary neurological events—never tantrums, choices, or manipulation. The only supportive responses are low sensory stimulation, absolute physical safety, and quiet patience.',
+    recovery: '[ CRITICAL ERROR: OVERLOAD CIRCUIT TRIPPED // SAFE RESTORE MANDATORY ]',
+    accentColor: '#ffb300',
+    isWide: false
+  },
+  {
+    id: 'monotropism',
+    title: 'Monotropic Focus Tunnels',
+    pronunciation: '/ˌmɒn.əˈtrɒp.ɪk ˈfoʊ.kəs ˈtʌn.əlz/',
+    category: 'cognitive',
+    shortDef: 'A specialist attention style focusing intensely on a single channel.',
+    longDef: 'Monotropism is the theory that autistic minds allocate attention to a few highly concentrated channels (monotropic), whereas allistic minds distribute attention across many shallow channels (polytropism). This deep-focus allocation allows for extreme immersion, meticulous pattern recognition, and elite flow states. However, it means any abrupt disruption causes intense sensory friction, as if being torn out of a high-speed vehicle.',
+    takeaway: 'Monotropic flow is a powerful, creative asset that generates deep expertise. Respect it by letting autistic people finish their focus tracks and avoiding sudden, high-sensory interruptions.',
+    recovery: '[ DEPTH METRIC: MAX // FOCUS TUNNEL SECURED // PROCEED WITH AUTONOMOUS VELOCITY ]',
+    accentColor: '#00f0ff',
+    isWide: true
+  }
+];
+

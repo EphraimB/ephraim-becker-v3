@@ -9,7 +9,7 @@ export default function NeurodiversityAdvocacy() {
   const [copied, setCopied] = useState(false);
   const [shareUrl, setShareUrl] = useState("https://ephraim-becker.com/neurodiversity");
   const [shareText, setShareText] = useState("Explore the Neurodiversity Advocacy portal in Ephraim Becker's Ares City. Let's move past old-school special needs pathology models and celebrate cognitive variation: ");
-  const [currentConsoleSector, setCurrentConsoleSector] = useState('matrix'); // 'matrix', 'history', 'story', 'advocacy'
+  const [currentConsoleSector, setCurrentConsoleSector] = useState('matrix'); // 'matrix', 'lexicon', 'history', 'story', 'advocacy'
   const [activeChapter, setActiveChapter] = useState(0); // 0 to 4 for historical Chapters I-V
   const [glitchActive, setGlitchActive] = useState(false);
   
@@ -135,8 +135,8 @@ export default function NeurodiversityAdvocacy() {
 
         .console-selector-bar {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 12px;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 10px;
           margin-bottom: 20px;
           flex-shrink: 0;
         }
@@ -410,6 +410,12 @@ export default function NeurodiversityAdvocacy() {
             📊 Paradigm Matrix
           </button>
           <button 
+            onClick={() => changeSector('lexicon')}
+            className={`console-selector-btn ${currentConsoleSector === 'lexicon' ? 'active' : ''}`}
+          >
+            📑 Synaptic Lexicon
+          </button>
+          <button 
             onClick={() => changeSector('history')}
             className={`console-selector-btn ${currentConsoleSector === 'history' ? 'active' : ''}`}
           >
@@ -532,6 +538,99 @@ export default function NeurodiversityAdvocacy() {
                     </div>
                   </div>
                 </>
+              )}
+
+              {/* SECTION LEXICON: COGNITIVE LEXICON & SYSTEM TERMINOLOGY */}
+              {currentConsoleSector === 'lexicon' && (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                  
+                  {/* The Unique Mind Constellation Banner */}
+                  <div className="bubbly-panel" style={{ flexShrink: 0 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '8px' }}>
+                      <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.9rem', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '6px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        🌌 The Autistic Constellation
+                      </h3>
+                      <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(0, 255, 136, 0.5)', letterSpacing: '1px' }}>
+                        // THE SPECTRUM REFRAMED
+                      </span>
+                    </div>
+                    <p style={{ fontSize: '0.82rem', color: '#ffffff', fontWeight: 'bold', lineHeight: 1.6, margin: '6px 0 8px 0' }}>
+                      Every Autistic Person is Different — Just Like Neurotypicals.
+                    </p>
+                    <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0, textAlign: 'justify' }}>
+                      To look at autism as a single linear spectrum stretching from &quot;mild&quot; to &quot;severe&quot; is an obsolete medical relic. In reality, autism is a diverse, non-linear constellation of developmental, sensory, communication, and cognitive traits. No two autistic individuals have the same strengths, challenges, or experiential profiles—just as no two neurotypical individuals share the same mind. We are as wonderfully diverse as any other section of humanity.
+                    </p>
+                  </div>
+
+                  {/* Deep-Dive Vocabulary Cards */}
+                  <div className="story-grid">
+                    
+                    {/* Card 1: Autistic Burnout */}
+                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        🔥 Autistic Burnout
+                      </h4>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
+                        A profound state of mental, emotional, and physical system collapse.
+                      </p>
+                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                        <strong>Why we are like that:</strong> Autistic burnout is not ordinary tiredness or &quot;defiance.&quot; It is a neurological crash caused by the cumulative, chronic trauma of constantly masking (forcing oneself to look neurotypical), enduring hostile or overstimulating sensory environments, and surviving unsafe social spaces. During burnout, an autistic person may experience a temporary or long-term loss of functional skills, extreme executive dysfunction, and highly reduced sensory tolerance.
+                      </p>
+                      <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
+                        [ RECOVERY PATHWAY: SENSORY REST & UNMASKING ]
+                      </span>
+                    </div>
+
+                    {/* Card 2: The Social Battery */}
+                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', fontFamily: 'var(--font-tech)', color: '#ffb300', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        🔋 The Social Battery
+                      </h4>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', borderLeft: '2px solid #ffb300', paddingLeft: '8px' }}>
+                        The finite cognitive and physical energy budget allotted for social stimuli.
+                      </p>
+                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                        <strong>Why we are like that:</strong> Autistic brains process incoming sensory and social details with immense, raw complexity, rather than filtering them out automatically. This high-definition processing operates at a steep energy cost. When an autistic person's social battery is depleted, quiet disengagement or seeking physical solitude is a vital physiological safety mechanism to prevent sensory overload and shutdown—not antisocial behavior or personal rejection.
+                      </p>
+                      <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#ffb300', marginTop: 'auto', display: 'block' }}>
+                        [ METRIC BUDGET: FINITE // REQUIRES SAFE ISOLATION TO RECHARGE ]
+                      </span>
+                    </div>
+
+                    {/* Card 3: Double Empathy & Boundary Mismatches */}
+                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        🤝 Double Empathy & Boundary Miscommunication
+                      </h4>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
+                        Bidirectional breakdowns in understanding due to diverging neurotypes and communication styles.
+                      </p>
+                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                        <strong>Why we are like that:</strong> Communication is always mutual. When an autistic individual's social battery is empty and they withdraw silently without explicit verbal announcements, a peer may misread that quietness as personal hostility or a mistake on their part. Because of the communication gap and a complete lack of active signals, boundaries are often accidentally invaded. True advocacy requires clear, explicit communication of limits from both sides and mutual respect for boundaries, rather than blaming one side for failing to guess.
+                      </p>
+                      <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
+                        [ INTERACTIVE SYNC: MUTUAL EXPLICITNESS // PREVENTS ACCIDENTAL BOUNDARY OVERRUNS ]
+                      </span>
+                    </div>
+
+                    {/* Card 4: Masking & Camouflaging */}
+                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                      <h4 style={{ margin: '0 0 4px 0', fontSize: '0.85rem', fontFamily: 'var(--font-tech)', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
+                        🎭 Masking & Camouflaging
+                      </h4>
+                      <p style={{ margin: 0, fontSize: '0.72rem', color: 'rgba(255,255,255,0.7)', fontStyle: 'italic', borderLeft: '2px solid #00ff88', paddingLeft: '8px' }}>
+                        The exhausting suppression of natural traits to pass as neurotypical.
+                      </p>
+                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.6', textAlign: 'justify' }}>
+                        <strong>Why we are like that:</strong> Masking is a trauma-driven coping mechanism. Autistic individuals learn to suppress natural behaviors (like stimming, avoiding eye contact, or speaking with absolute literal directness) in order to avoid harassment, social isolation, and exclusion. While masking acts as a protective shield, it operates at a devastating metabolic and emotional cost—acting as the single greatest driver of chronic anxiety, clinical depression, and sudden autistic burnout.
+                      </p>
+                      <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', marginTop: '4px', display: 'block' }}>
+                        [ METABOLIC LOAD: HIGH // REQUIRES RADICAL SELF-ACCEPTANCE TO UNLEARN ]
+                      </span>
+                    </div>
+
+                  </div>
+                </div>
               )}
 
               {/* SECTION B: CHRONOLOGICAL HISTORY ARCHIVE VIEW */}

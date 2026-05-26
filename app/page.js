@@ -71,6 +71,7 @@ export default function AresDashboard() {
   const [techSlide, setTechSlide] = useState(0);
   const [scifiSlide, setScifiSlide] = useState(0);
   const [musicSlide, setMusicSlide] = useState(0);
+  const [bikingSlide, setBikingSlide] = useState(0);
 
   // Set mounted state to prevent hydration mismatches
   useEffect(() => {
@@ -82,6 +83,7 @@ export default function AresDashboard() {
     setTechSlide(0);
     setScifiSlide(0);
     setMusicSlide(0);
+    setBikingSlide(0);
   }, [activeInterest]);
 
   // Dynamic Mars Age calculation based on current time - client side only
@@ -533,7 +535,7 @@ export default function AresDashboard() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 
                 {/* Description Narrative card */}
-                 <div style={{
+<div style={{
                    background: 'rgba(255, 255, 255, 0.02)',
                    border: '1px solid rgba(255, 255, 255, 0.05)',
                    borderRadius: '10px',
@@ -551,6 +553,7 @@ export default function AresDashboard() {
                        // DATA DESCRIPTIVE LOG {activeInterest.id === 'technology' && (techSlide === 0 ? '[ SYSTEM OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${techSlide}/02 ]`)}
                        {activeInterest.id === 'scifi' && (scifiSlide === 0 ? '[ CINEMATIC OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${scifiSlide}/02 ]`)}
                        {activeInterest.id === 'music' && (musicSlide === 0 ? '[ ACOUSTIC OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${musicSlide}/02 ]`)}
+                       {activeInterest.id === 'biking' && (bikingSlide === 0 ? '[ MOBILITY OVERVIEW_DECK ]' : `[ DECK_SLIDE 0${bikingSlide}/02 ]`)}
                      </span>
 
                      {/* Paging Indicators specifically for Technology */}
@@ -702,6 +705,57 @@ export default function AresDashboard() {
                            }}
                          >
                            [ 02 // VOCAL & CHOIR ]
+                         </button>
+                       </div>
+                     )}
+
+                     {/* Paging Indicators specifically for Biking */}
+                     {activeInterest.id === 'biking' && (
+                       <div style={{ display: 'flex', gap: '6px' }}>
+                         <button 
+                           onClick={() => setBikingSlide(0)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: bikingSlide === 0 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                             background: bikingSlide === 0 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                             color: bikingSlide === 0 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ OVERVIEW ]
+                         </button>
+                         <button 
+                           onClick={() => setBikingSlide(1)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: bikingSlide === 1 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                             background: bikingSlide === 1 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                             color: bikingSlide === 1 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 01 // TIME & ROUTING ]
+                         </button>
+                         <button 
+                           onClick={() => setBikingSlide(2)}
+                           className="hud-btn"
+                           style={{
+                             padding: '2px 8px',
+                             fontSize: '0.55rem',
+                             borderColor: bikingSlide === 2 ? '#00ff88' : 'rgba(255,255,255,0.15)',
+                             background: bikingSlide === 2 ? 'rgba(0,255,136,0.08)' : 'transparent',
+                             color: bikingSlide === 2 ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                             borderRadius: '4px',
+                             cursor: 'pointer'
+                           }}
+                         >
+                           [ 02 // ENDURANCE ]
                          </button>
                        </div>
                      )}
@@ -985,14 +1039,104 @@ export default function AresDashboard() {
                            </div>
                          </div>
                        )
+                     ) : activeInterest.id === 'biking' ? (
+                       bikingSlide === 0 ? (
+                         <div>
+                           <span style={{ display: 'block', marginBottom: '8px' }}>
+                             Biking represents the ultimate power of self-reliance and daily challenge in my life! While it's not simply my favorite leisure activity, it is far more fun and engaging than sitting in public transit or having someone drive me. Biking puts me in full, independent control of my journey. What started as a quest on Google Maps for a faster commute to Adelphi University transformed into a daily, all-weather test of endurance and distance. Explore each dimension of my cycling journey below:
+                           </span>
+                           <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
+                             <button
+                               onClick={() => setBikingSlide(1)}
+                               className="hud-btn"
+                               style={{
+                                 flex: 1,
+                                 padding: '6px 10px',
+                                 fontSize: '0.7rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 borderColor: '#00ff88',
+                                 background: 'rgba(0, 255, 136, 0.05)',
+                                 color: '#00ff88',
+                                 borderRadius: '4px',
+                                 cursor: 'pointer',
+                                 textAlign: 'center'
+                               }}
+                             >
+                               [ EXPLORE TIME & ROUTING ➔ ]
+                             </button>
+                             <button
+                               onClick={() => setBikingSlide(2)}
+                               className="hud-btn"
+                               style={{
+                                 flex: 1,
+                                 padding: '6px 10px',
+                                 fontSize: '0.7rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 borderColor: '#00ff88',
+                                 background: 'rgba(0, 255, 136, 0.05)',
+                                 color: '#00ff88',
+                                 borderRadius: '4px',
+                                 cursor: 'pointer',
+                                 textAlign: 'center'
+                               }}
+                             >
+                               [ EXPLORE DAILY ENDURANCE ➔ ]
+                             </button>
+                           </div>
+                         </div>
+                       ) : bikingSlide === 1 ? (
+                         <div>
+                           <span>
+                             The core of biking for me is absolute independence and time-efficiency! It began when I was mapping out public transportation routes to Adelphi University on Google Maps. I was astonished to see that cycling there would save me a full half hour over public transit, completing the trip in just 45 minutes! Biking liberates me from rigid transit schedules and relying on others to drive me. Being in full control of my speed and navigation is incredibly empowering—especially when catching a fast, exhilarating tailwind!
+                           </span>
+                           <div style={{ marginTop: '10px' }}>
+                             <button
+                               onClick={() => setBikingSlide(0)}
+                               style={{
+                                 background: 'transparent',
+                                 border: 'none',
+                                 color: 'rgba(255,255,255,0.4)',
+                                 fontSize: '0.65rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 cursor: 'pointer',
+                                 padding: 0
+                               }}
+                             >
+                               [ ↩ BACK TO OVERVIEW ]
+                             </button>
+                           </div>
+                         </div>
+                       ) : (
+                         <div>
+                           <span>
+                             At first, I didn't think I could manage to bike to campus every single weekday. But a friend inspired me to push past my self-imposed limits and commit to it every day—no matter what. Since then, I've embraced the challenge, riding consistently even in the pouring rain and slogging against powerful headwind currents. Over time, this daily discipline expanded my limits, inspiring me to tackle much longer distances. I even tested myself by biking over 2 hours one way to see if I could get to Manhattan, and I did it a few times with no problem round trip, proving that any weather or mileage barrier can be conquered!
+                           </span>
+                           <div style={{ marginTop: '10px' }}>
+                             <button
+                               onClick={() => setBikingSlide(0)}
+                               style={{
+                                 background: 'transparent',
+                                 border: 'none',
+                                 color: 'rgba(255,255,255,0.4)',
+                                 fontSize: '0.65rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 cursor: 'pointer',
+                                 padding: 0
+                               }}
+                             >
+                               [ ↩ BACK TO OVERVIEW ]
+                             </button>
+                           </div>
+                         </div>
+                       )
                      ) : (
                        <span>{activeInterest.desc}</span>
                      )}
-                   </div>
-                 </div>
+                    </div>
+                  </div>
 
-                {/* Tactical SVG Graphic Canvas */}
-                <div>
+                  {/* Tactical SVG Graphic Canvas */}
+                  <div>
                   <span style={{
                     display: 'block',
                     fontFamily: 'monospace, var(--font-tech)',
@@ -1313,21 +1457,152 @@ export default function AresDashboard() {
                     </svg>
                   )}
 
-                  {/* Biking track graphic */}
-                  {activeInterest.type === 'biking' && (
+                  {/* Biking overview slide 0 */}
+                  {activeInterest.type === 'biking' && bikingSlide === 0 && (
                     <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.15)', boxShadow: 'inset 0 0 8px rgba(0,0,0,0.4)' }}>
-                      <path d="M 0,70 Q 160,30 320,70" fill="none" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
-                      <line x1="0" y1="70" x2="320" y2="70" stroke="rgba(255,255,255,0.2)" strokeWidth="2.5" />
-                      <g transform="translate(130, 20)">
-                        <circle cx="10" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
-                        <circle cx="34" cy="36" r="8" fill="none" stroke="#fff" strokeWidth="1.2" />
-                        <path d="M 10,36 L 20,36 L 26,24 L 14,24 Z" fill="none" stroke="#00ff88" strokeWidth="1.6" />
-                        <line x1="34" y1="36" x2="30" y2="20" stroke="#00ff88" strokeWidth="1.6" />
-                        <path d="M 30,20 L 26,18 L 32,18" fill="none" stroke="#fff" strokeWidth="1.5" />
-                        <circle cx="23" cy="12" r="3" fill="#fff" />
-                        <line x1="23" y1="12" x2="29" y2="19" stroke="#fff" strokeWidth="1.6" />
+                      <rect x="0" y="0" width="320" height="15" fill="#081c13" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // MOBILITY_INTEGRATION_CORE</text>
+
+                      {/* Left side: Bicycle gear/wheel schematic */}
+                      <g transform="translate(45, 50)">
+                        <circle cx="0" cy="0" r="22" fill="none" stroke="#00ff88" strokeWidth="1" strokeDasharray="3 2" />
+                        <circle cx="0" cy="0" r="16" fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" />
+                        <circle cx="0" cy="0" r="8" fill="none" stroke="#00ff88" strokeWidth="1.5" />
+                        <circle cx="0" cy="0" r="2" fill="#fff" />
+                        <line x1="0" y1="-22" x2="0" y2="22" stroke="#00ff88" strokeWidth="0.8" opacity="0.6" />
+                        <line x1="-22" y1="0" x2="22" y2="0" stroke="#00ff88" strokeWidth="0.8" opacity="0.6" />
+                        <line x1="-15.5" y1="-15.5" x2="15.5" y2="15.5" stroke="#00ff88" strokeWidth="0.8" opacity="0.6" />
+                        <line x1="-15.5" y1="15.5" x2="15.5" y2="-15.5" stroke="#00ff88" strokeWidth="0.8" opacity="0.6" />
+                        <text x="0" y="32" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">GEAR HUB SPECS</text>
                       </g>
-                      <text x="160" y="85" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">CYCLING ROUTE: BIKE_WAY-A5 // 100% RELAXING</text>
+
+                      {/* Center Link: Synapse / Delta Link */}
+                      <g>
+                        <path d="M 67,50 C 120,30 190,70 243,50" fill="none" stroke="#00ff88" strokeWidth="1.2" strokeDasharray="3 3" />
+                        <text x="155" y="46" fill="#fff" fontSize="5.5" fontFamily="monospace" textAnchor="middle" opacity="0.7">TRANSIT DELTA LINK</text>
+                        <rect x="120" y="52" width="70" height="8" rx="2" fill="rgba(0, 255, 136, 0.08)" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.5" />
+                        <text x="155" y="58" fill="#00ff88" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">INDEPENDENCE: 100%</text>
+                      </g>
+
+                      {/* Right side: Transit map routing nodes */}
+                      <g>
+                        <path d="M 245,60 L 265,40 L 285,60" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
+                        <circle cx="245" cy="60" r="3" fill="#00f0ff" />
+                        <circle cx="265" cy="40" r="3.5" fill="#00ff88" stroke="#fff" strokeWidth="0.5" />
+                        <circle cx="285" cy="60" r="3" fill="#00f0ff" />
+                        <text x="265" y="74" fill="rgba(255,255,255,0.6)" fontSize="5.5" fontFamily="monospace" textAnchor="middle">COMMUTE NODES</text>
+                      </g>
+
+                      <text x="10" y="84" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">SYSTEM: mobility_core_v1.0</text>
+                      <text x="310" y="84" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="end">INTEGRATION: ARMED</text>
+                    </svg>
+                  )}
+
+                  {/* Biking time & routing slide 1 */}
+                  {activeInterest.type === 'biking' && bikingSlide === 1 && (
+                    <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.15)', boxShadow: 'inset 0 0 8px rgba(0,0,0,0.4)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#081c13" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // ROUTING_EFFICIENCY_DECK</text>
+
+                      {/* Map grid background */}
+                      <g opacity="0.15">
+                        <line x1="10" y1="20" x2="310" y2="20" stroke="#00ff88" strokeWidth="0.5" />
+                        <line x1="10" y1="40" x2="310" y2="40" stroke="#00ff88" strokeWidth="0.5" />
+                        <line x1="10" y1="60" x2="310" y2="60" stroke="#00ff88" strokeWidth="0.5" />
+                        <line x1="50" y1="15" x2="50" y2="80" stroke="#00ff88" strokeWidth="0.5" />
+                        <line x1="110" y1="15" x2="110" y2="80" stroke="#00ff88" strokeWidth="0.5" />
+                        <line x1="170" y1="15" x2="170" y2="80" stroke="#00ff88" strokeWidth="0.5" />
+                        <line x1="230" y1="15" x2="230" y2="80" stroke="#00ff88" strokeWidth="0.5" />
+                        <line x1="290" y1="15" x2="290" y2="80" stroke="#00ff88" strokeWidth="0.5" />
+                      </g>
+
+                      {/* Transit winding slow route */}
+                      <path d="M 20,65 L 50,65 L 50,45 L 110,45 L 110,25 L 140,25" fill="none" stroke="rgba(255, 87, 34, 0.4)" strokeWidth="1.5" strokeDasharray="2 2" />
+                      <text x="60" y="38" fill="rgba(255, 87, 34, 0.8)" fontSize="5" fontFamily="monospace">TRANSIT: 75 MINS</text>
+
+                      {/* Biking route (direct & glowing) */}
+                      <path d="M 20,65 L 80,65 L 140,25" fill="none" stroke="#00ff88" strokeWidth="2.5" style={{ filter: 'drop-shadow(0 0 3px rgba(0,255,136,0.6))' }} />
+                      
+                      {/* Start node */}
+                      <circle cx="20" cy="65" r="4" fill="#00ff88" stroke="#fff" strokeWidth="0.8" />
+                      <text x="20" y="58" fill="#fff" fontSize="4.5" fontFamily="monospace" fontWeight="bold">HOME</text>
+
+                      {/* End node */}
+                      <circle cx="140" cy="25" r="4" fill="#00f0ff" stroke="#fff" strokeWidth="0.8" />
+                      <text x="140" y="18" fill="#fff" fontSize="4.5" fontFamily="monospace" fontWeight="bold">ADELPHI</text>
+
+                      {/* Telemetry panel */}
+                      <g transform="translate(180, 22)">
+                        <rect x="0" y="0" width="130" height="52" rx="4" fill="rgba(0, 0, 0, 0.6)" stroke="rgba(0, 255, 136, 0.2)" strokeWidth="1" />
+                        <text x="10" y="12" fill="#00ff88" fontSize="7" fontFamily="monospace" fontWeight="bold">DELTA: -30 MINS</text>
+                        <text x="10" y="24" fill="#fff" fontSize="6.5" fontFamily="monospace">BIKE COMMUTE: 45m</text>
+                        <text x="10" y="34" fill="rgba(255,255,255,0.6)" fontSize="5" fontFamily="monospace">MAPS RATIO: 1.66x FASTER</text>
+                        <text x="10" y="44" fill="#00f0ff" fontSize="5.5" fontFamily="monospace" fontWeight="bold">TAILWIND SPEED BOOST</text>
+                      </g>
+
+                      <text x="10" y="84" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">SCHEDULING: INDEPENDENT</text>
+                      <text x="310" y="84" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="end">ROUTE A5: SAVINGS CORE</text>
+                    </svg>
+                  )}
+
+                  {/* Biking daily endurance slide 2 */}
+                  {activeInterest.type === 'biking' && bikingSlide === 2 && (
+                    <svg viewBox="0 0 320 90" width="100%" height="90px" style={{ background: '#0a0d17', borderRadius: '8px', border: '1px solid rgba(0, 255, 136, 0.15)', boxShadow: 'inset 0 0 8px rgba(0,0,0,0.4)' }}>
+                      <rect x="0" y="0" width="320" height="15" fill="#081c13" />
+                      <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // ENDURANCE_WEATHER_GRID</text>
+
+                      {/* Diagonal rain-drops representing severe precipitation and headwinds */}
+                      <g stroke="rgba(0, 240, 255, 0.3)" strokeWidth="0.8" strokeLinecap="round">
+                        <line x1="20" y1="20" x2="10" y2="40" />
+                        <line x1="60" y1="20" x2="50" y2="40" />
+                        <line x1="100" y1="20" x2="90" y2="40" />
+                        <line x1="140" y1="20" x2="130" y2="40" />
+                        <line x1="180" y1="20" x2="170" y2="40" />
+                        <line x1="220" y1="20" x2="210" y2="40" />
+                        <line x1="260" y1="20" x2="250" y2="40" />
+                        <line x1="300" y1="20" x2="290" y2="40" />
+                        <line x1="40" y1="40" x2="30" y2="60" />
+                        <line x1="80" y1="40" x2="70" y2="60" />
+                        <line x1="120" y1="40" x2="110" y2="60" />
+                        <line x1="160" y1="40" x2="150" y2="60" />
+                        <line x1="200" y1="40" x2="190" y2="60" />
+                        <line x1="240" y1="40" x2="230" y2="60" />
+                        <line x1="280" y1="40" x2="270" y2="60" />
+                        <line x1="30" y1="60" x2="20" y2="80" />
+                        <line x1="70" y1="60" x2="60" y2="80" />
+                        <line x1="110" y1="60" x2="100" y2="80" />
+                        <line x1="150" y1="60" x2="140" y2="80" />
+                        <line x1="190" y1="60" x2="180" y2="80" />
+                        <line x1="230" y1="60" x2="220" y2="80" />
+                        <line x1="270" y1="60" x2="260" y2="80" />
+                      </g>
+
+                      {/* Headwind vectors */}
+                      <g stroke="#00ff88" strokeWidth="1.2" strokeLinecap="round" opacity="0.75">
+                        <path d="M 120,32 L 95,32 M 100,28 L 95,32 L 100,36" fill="none" />
+                        <path d="M 175,55 L 150,55 M 155,51 L 150,55 L 155,59" fill="none" />
+                        <text x="145" y="27" fill="#00ff88" fontSize="4.5" fontFamily="monospace">HEADWIND CURRENT</text>
+                      </g>
+
+                      {/* Left side circular gauge */}
+                      <g transform="translate(45, 50)">
+                        <circle cx="0" cy="0" r="18" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="3" />
+                        <circle cx="0" cy="0" r="18" fill="none" stroke="#00ff88" strokeWidth="3" strokeDasharray="80 30" strokeDashoffset="15" />
+                        <text x="0" y="2.5" fill="#fff" fontSize="7" fontFamily="monospace" textAnchor="middle" fontWeight="bold">92%</text>
+                        <text x="0" y="26" fill="rgba(255,255,255,0.6)" fontSize="5" fontFamily="monospace" textAnchor="middle">GRIT RATIO</text>
+                      </g>
+
+                      {/* Telemetry panel */}
+                      <g transform="translate(205, 22)">
+                        <rect x="0" y="0" width="105" height="52" rx="4" fill="rgba(0, 0, 0, 0.6)" stroke="rgba(0, 255, 136, 0.2)" strokeWidth="1" />
+                        <text x="8" y="12" fill="#00ff88" fontSize="6.5" fontFamily="monospace" fontWeight="bold">DAILY GOAL: ACTIVE</text>
+                        <text x="8" y="22" fill="#fff" fontSize="5.5" fontFamily="monospace">ALL-WEATHER ENVIRO</text>
+                        <text x="8" y="32" fill="rgba(255,255,255,0.7)" fontSize="5" fontFamily="monospace">INSPIRING COMPANION</text>
+                        <text x="8" y="42" fill="#00f0ff" fontSize="5" fontFamily="monospace" fontWeight="bold">LIMITS: EXPANDED</text>
+                      </g>
+
+                      <text x="10" y="84" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace" textAnchor="start">ATMOSPHERE: PRECIPITATION_RAIN</text>
+                      <text x="310" y="84" fill="#00ff88" fontSize="5.5" fontFamily="monospace" textAnchor="end">ENDURANCE: MAX_LEVEL</text>
                     </svg>
                   )}
 

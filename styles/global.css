@@ -467,17 +467,36 @@ body {
 
 /* Responsive Overrides */
 @media (max-width: 900px) {
-  body {
-    overflow-y: auto;
-    height: auto;
+  html, body {
+    overflow-y: auto !important;
+    height: auto !important;
+    max-height: none !important;
   }
   .os-workspace {
-    height: auto;
-    padding: 10px;
+    height: auto !important;
+    max-height: none !important;
+    padding: 10px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: visible !important;
+  }
+  .os-workspace::before {
+    content: "" !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 98px !important;
+    background: #020306 !important; /* solid background matching dark mode penthouse underlay */
+    z-index: 1020 !important;
+    border-bottom: 1.5px solid rgba(0, 240, 255, 0.15) !important; /* clean high-tech cyber-cyan accent border */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5) !important;
+    pointer-events: none !important;
   }
   .citizen-card-shell {
-    height: auto;
-    padding-bottom: 20px;
+    height: auto !important;
+    max-height: none !important;
+    overflow: visible !important;
   }
   .citizen-card {
     max-height: none;
@@ -487,13 +506,18 @@ body {
     height: auto;
   }
   .system-hud-bar {
+    position: fixed !important;
+    top: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+    z-index: 1050 !important;
     flex-direction: row !important;
     justify-content: center !important;
     align-items: center !important;
     padding: 8px 12px !important;
     font-size: 0.72rem !important;
     gap: 10px !important;
-    margin-bottom: 12px !important;
+    margin-bottom: 0 !important;
   }
   .hud-citizen-info {
     display: none !important; /* Hide credentials on mobile to eliminate clutter */
@@ -610,8 +634,13 @@ body {
     width: auto !important;
   }
   .workspace-deck {
-    flex-direction: column;
-    gap: 15px;
+    flex: 1 !important;
+    flex-direction: column !important;
+    gap: 15px !important;
+    overflow-y: visible !important;
+    min-height: auto !important;
+    margin-top: 98px !important; /* Pushes content down past the solid sticky header block */
+    padding-bottom: 20px !important;
   }
   .comic-speech-bubble {
     position: relative !important;
@@ -1477,11 +1506,11 @@ body {
     box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.8) !important;
   }
 
-  /* Keep closed locator button fixed near the top header so it stays visible without getting in the way of content */
+  /* Keep closed locator button fixed exactly 10px below the HUD bar, staying stuck to the top while content scrolls under the header mask */
   .mobile-locator-btn {
     position: fixed !important;
-    top: 0 !important;
-    border-radius: 0 0 8px 0 !important;
+    top: 54px !important;
+    left: 0 !important;
     z-index: 1100 !important;
   }
 

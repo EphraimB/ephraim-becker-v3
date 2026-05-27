@@ -512,6 +512,7 @@ body {
     top: 10px !important;
     left: 10px !important;
     right: 10px !important;
+    width: auto !important; /* Prevents 100% width override from pushing the bar off-screen */
     z-index: 1050 !important;
     flex-direction: row !important;
     justify-content: center !important;

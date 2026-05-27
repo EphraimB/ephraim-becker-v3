@@ -729,12 +729,12 @@ export default function AresDashboard() {
                       height: 0,
                       borderRadius: '8px',
                       overflow: 'hidden',
-                      border: '1.5px solid rgba(255, 179, 0, 0.3)',
-                      boxShadow: '0 0 15px rgba(255, 179, 0, 0.12)'
+                      border: `1.5px solid ${activeInterest.themeColor || 'rgba(255, 179, 0, 0.3)'}`,
+                      boxShadow: `0 0 15px ${activeInterest.themeColor ? activeInterest.themeColor + '33' : 'rgba(255, 179, 0, 0.12)'}`
                     }}>
                       <iframe
-                        src="https://www.youtube.com/embed/videoseries?list=PL3IqUVH23uWxWTt4bWtFqcBu7BooiWXpf"
-                        title="Karaoke Favorites Playlist"
+                        src={activeInterest.slides?.[activeSlide]?.embedUrl || "https://www.youtube.com/embed/videoseries?list=PL3IqUVH23uWxWTt4bWtFqcBu7BooiWXpf"}
+                        title={`${activeInterest.title} Playlist`}
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                         allowFullScreen
                         style={{
@@ -747,6 +747,7 @@ export default function AresDashboard() {
                         }}
                       ></iframe>
                     </div>
+
                   </div>
                 )}
 

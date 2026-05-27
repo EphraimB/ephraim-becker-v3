@@ -267,5 +267,45 @@
         "svgType": "neuro_burnout"
       }
     ]
+  },
+  {
+    "id": "trains",
+    "title": "Trains & Railfanning",
+    "tag": "TRAINS",
+    "desc": "I am deeply passionate about trains and railfanning, particularly the NYC Subway, the Long Island Rail Road (LIRR), and Amtrak. From memorizing the stops of all three MTA connection systems to identifying subway car models like the R160 and R211 by heart, I find the mechanical propulsion sounds and automated announcements absolutely addicting. I even rode Amtrak all the way from NY Penn Station to Deerfield Beach, Florida just for the pure joy of the rail journey!",
+    "icon": "🚂",
+    "type": "trains",
+    "themeColor": "#00d2ff",
+    "themeBg": "rgba(0, 210, 255, 0.08)",
+    "slides": [
+      {
+        "label": "OVERVIEW",
+        "content": "Trains are a massive passion of mine! I love the mechanical engineering, rich history, and intricate operations of passenger rail systems. From the vast underground grid of the New York City Subway to the high-speed regional lines of the LIRR and the long-distance adventures of Amtrak, rail transit represents the ultimate system in motion. Explore the specific dimensions of my railfanning passion and passenger journeys in the other slides!",
+        "svgType": "trains_overview",
+        "ctaButtons": [
+          {
+            "label": "EXPLORE MTA & SUBWAYS ➔",
+            "targetSlide": 1
+          },
+          {
+            "label": "EXPLORE AMTRAK JOURNEYS ➔",
+            "targetSlide": 2
+          }
+        ]
+      },
+      {
+        "label": "01 // MTA & LIRR",
+        "content": "I know the NYC Subway and LIRR systems like the back of my hand! I have memorized almost every single stop across all three MTA connection systems that feed into NYC. I can easily identify the structural and electrical differences between train models like the R160, R211, M7, M9, and others. The automated station announcements are incredibly satisfying, and the unique alternating-current propulsion sounds from the traction motors are absolutely addicting to listen to!",
+        "svgType": "trains_mta",
+        "embed": "youtube_playlist",
+        "embedUrl": "https://www.youtube.com/embed/videoseries?list=PL3IqUVH23uWyjWCg3D4dGSE_HmH0gx-2i"
+      },
+      {
+        "label": "02 // AMTRAK ADVENTURE",
+        "content": "For me, the journey itself is the destination! To prove it, I chose to take a long-distance Amtrak train ride all the way from NY Penn Station to Deerfield Beach, Florida instead of taking a quick commercial flight—simply for the pure thrill and relaxation of watching the eastern seaboard scenery roll past. Traveling by rail let me experience the unique sights, sounds, and spatial geography of the country first-hand!",
+        "svgType": "trains_amtrak"
+      }
+    ]
   }
 ]
+

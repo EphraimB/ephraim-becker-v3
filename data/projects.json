@@ -153,5 +153,25 @@
         "type": "github"
       }
     ]
+  },
+  {
+    "id": 9,
+    "category": "Concepts",
+    "title": "Biking Forecast & Planner XR (Concept)",
+    "description": "A high-fidelity mixed reality concept design and UI ride planner proposal for spatial HUD cycling environments.",
+    "technologies": [],
+    "details": "Biking Forecast & Planner XR is an unrealized, speculative Extended Reality (XR) product concept and spatial UI design deck. The proposal overlays virtual parameters in physical spaces, allowing cyclists to theoretically swipe through virtual bikes inside their real room, tap mounting points to configure gear, and pinch-to-zoom routes on interactive spatial maps. It showcases a floating 7-day forecast timeline and an immersive VR Simulation Mode concept previewed by holding the bike's handlebars, complete with custom heads-up cockpit telemetry (HUD). This project exists solely as an interactive design system and presentation proposal.",
+    "takeaways": "This conceptual slide deck explored the convergence of spatial computing, real-world telemetry, and gamified customization. Designing speculative mixed reality mockups taught me how to architect intuitive physical gestures—like swiping virtual models in a real room, pinching spatial tables, and gripping handlebars to trigger VR transitions. Balancing functional parameters (like accessory weight drag and ETA forecasts) with immersive user interfaces remains a key principle in my spatial designs.",
+    "started": "2026-05-20",
+    "finished": "Concept Design",
+    "status": "Concept",
+    "image": "/projects/biking-forecast-xr.png",
+    "links": [
+      {
+        "src": "https://docs.google.com/presentation/d/1zGQUptMBxEAqYX1ZOfgqmBy41TSfyyIHZluAvoMbFbU/edit?usp=sharing",
+        "description": "Google Slides Concept Deck",
+        "type": "slides"
+      }
+    ]
   }
 ]

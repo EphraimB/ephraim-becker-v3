@@ -12,7 +12,8 @@ const CATEGORIES = [
   "3D modeling",
   "Calculator apps",
   "VR development",
-  "Computer building"
+  "Computer building",
+  "Concepts"
 ];
 
 export default function PortfolioDome() {
@@ -458,18 +459,20 @@ export default function PortfolioDome() {
 
                   <div>
                     {/* Tech Stack Chips */}
-                    <div style={{ marginBottom: '16px' }}>
-                      <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)', marginBottom: '6px' }}>
-                        TECHNOLOGICAL STACK UTILIZED:
-                      </span>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                        {activeProject.technologies.map((tech, idx) => (
-                          <span key={idx} style={{ fontSize: '0.6rem', background: 'rgba(var(--color-accent-rgb), 0.08)', padding: '3px 8px', borderRadius: '4px', border: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', color: 'var(--text-primary)', fontWeight: 500 }}>
-                            {tech}
-                          </span>
-                        ))}
+                    {activeProject.technologies && activeProject.technologies.length > 0 && (
+                      <div style={{ marginBottom: '16px' }}>
+                        <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)', marginBottom: '6px' }}>
+                          TECHNOLOGICAL STACK UTILIZED:
+                        </span>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                          {activeProject.technologies.map((tech, idx) => (
+                            <span key={idx} style={{ fontSize: '0.6rem', background: 'rgba(var(--color-accent-rgb), 0.08)', padding: '3px 8px', borderRadius: '4px', border: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', color: 'var(--text-primary)', fontWeight: 500 }}>
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Operational Action Buttons */}
                     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', borderTop: '1.5px solid rgba(255,255,255,0.06)', paddingTop: '14px' }}>

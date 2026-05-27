@@ -128,5 +128,50 @@
     "status": "Finished",
     "images": ["/projects/custom-computer.jpg", "/projects/custom-computer-monitors.jpg"],
     "links": []
+  },
+  {
+    "id": 8,
+    "category": "Web development",
+    "title": "Galaxy Life",
+    "description": "An immersive 3D space travel and planetary survival simulator featuring webcam-based face-tracking parallax controls and real-time physical calculations.",
+    "technologies": ["NextJS", "React Three Fiber", "MediaPipe", "Three.js", "TypeScript", "TailwindCSS"],
+    "details": "Developed as part of the Adelphi University AI Society Hackathon, Galaxy Life is an interactive space life simulation environment. By integrating Google MediaPipe's computer vision face tracking, the app dynamically pans and tilts the 3D cockpit perspective based on the pilot's physical head movements, creating a stunning glass-like perspective. The user inputs their height, weight, and age, and the physics engine recalculates their biological metrics—such as gravity, weight, jump heights, atmospheric density, and year-lengths—across custom-simulated planets and moons. I designed a highly intuitive, futuristic cockpit UI that won 1st Place for UI Design.",
+    "takeaways": "This project demonstrated the power of combining AI workflows with 3D web graphics to build a highly engaging and responsive user interface. Working solo under strict hackathon time constraints forced me to design efficiently. A week after the hackathon ended, I attempted to overhaul the cockpit in an experimental 'starship-redesign' branch on my own time; while that branch ultimately failed due to complex mesh synchronization issues and was abandoned, it taught me invaluable lessons in scope management, modular refactoring, and maintaining branch stability.",
+    "started": "2026-04-10",
+    "finished": "2026-04-12",
+    "status": "Finished",
+    "images": [
+      "/projects/galaxy-life-1.png",
+      "/projects/galaxy-life-2.png",
+      "/projects/galaxy-life-3.png",
+      "/projects/galaxy-life-4.png"
+    ],
+    "links": [
+      {
+        "src": "https://github.com/EphraimB/galaxy-life",
+        "description": "GitHub Repository",
+        "type": "github"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "category": "Concepts",
+    "title": "Biking Forecast & Planner XR (Concept)",
+    "description": "A high-fidelity mixed reality concept design and UI ride planner proposal for spatial HUD cycling environments.",
+    "technologies": [],
+    "details": "Biking Forecast & Planner XR is an unrealized, speculative Extended Reality (XR) product concept and spatial UI design deck. The proposal overlays virtual parameters in physical spaces, allowing cyclists to theoretically swipe through virtual bikes inside their real room, tap mounting points to configure gear, and pinch-to-zoom routes on interactive spatial maps. It showcases a floating 7-day forecast timeline and an immersive VR Simulation Mode concept previewed by holding the bike's handlebars, complete with custom heads-up cockpit telemetry (HUD). This project exists solely as an interactive design system and presentation proposal.",
+    "takeaways": "This conceptual slide deck explored the convergence of spatial computing, real-world telemetry, and gamified customization. Designing speculative mixed reality mockups taught me how to architect intuitive physical gestures—like swiping virtual models in a real room, pinching spatial tables, and gripping handlebars to trigger VR transitions. Balancing functional parameters (like accessory weight drag and ETA forecasts) with immersive user interfaces remains a key principle in my spatial designs.",
+    "started": "2026-05-20",
+    "finished": "Concept Design",
+    "status": "Concept",
+    "image": "/projects/biking-forecast-xr.png",
+    "links": [
+      {
+        "src": "https://docs.google.com/presentation/d/1zGQUptMBxEAqYX1ZOfgqmBy41TSfyyIHZluAvoMbFbU/edit?usp=sharing",
+        "description": "Google Slides Concept Deck",
+        "type": "slides"
+      }
+    ]
   }
 ]

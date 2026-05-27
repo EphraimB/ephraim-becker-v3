@@ -128,5 +128,30 @@
     "status": "Finished",
     "images": ["/projects/custom-computer.jpg", "/projects/custom-computer-monitors.jpg"],
     "links": []
+  },
+  {
+    "id": 8,
+    "category": "Web development",
+    "title": "Galaxy Life",
+    "description": "An immersive 3D space travel and planetary survival simulator featuring webcam-based face-tracking parallax controls and real-time physical calculations.",
+    "technologies": ["NextJS", "React Three Fiber", "MediaPipe", "Three.js", "TypeScript", "TailwindCSS"],
+    "details": "Developed as part of the Adelphi University AI Society Hackathon, Galaxy Life is an interactive space life simulation environment. By integrating Google MediaPipe's computer vision face tracking, the app dynamically pans and tilts the 3D cockpit perspective based on the pilot's physical head movements, creating a stunning glass-like perspective. The user inputs their height, weight, and age, and the physics engine recalculates their biological metrics—such as gravity, weight, jump heights, atmospheric density, and year-lengths—across custom-simulated planets and moons. I designed a highly intuitive, futuristic cockpit UI that won 1st Place for UI Design.",
+    "takeaways": "This project demonstrated the power of combining AI workflows with 3D web graphics to build a highly engaging and responsive user interface. Working solo under strict hackathon time constraints forced me to design efficiently. A week after the hackathon ended, I attempted to overhaul the cockpit in an experimental 'starship-redesign' branch on my own time; while that branch ultimately failed due to complex mesh synchronization issues and was abandoned, it taught me invaluable lessons in scope management, modular refactoring, and maintaining branch stability.",
+    "started": "2026-04-10",
+    "finished": "2026-04-12",
+    "status": "Finished",
+    "images": [
+      "/projects/galaxy-life-1.png",
+      "/projects/galaxy-life-2.png",
+      "/projects/galaxy-life-3.png",
+      "/projects/galaxy-life-4.png"
+    ],
+    "links": [
+      {
+        "src": "https://github.com/EphraimB/galaxy-life",
+        "description": "GitHub Repository",
+        "type": "github"
+      }
+    ]
   }
 ]

@@ -1480,7 +1480,9 @@ body {
   /* Keep closed locator button fixed near the top header so it stays visible without getting in the way of content */
   .mobile-locator-btn {
     position: fixed !important;
-    top: 105px !important;
+    top: 0 !important;
+    border-radius: 0 0 8px 0 !important;
+    z-index: 1100 !important;
   }
 
   /* Scale up map labels inside SVG to offset mobile browser down-scaling */

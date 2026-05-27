@@ -25,6 +25,7 @@ export default function PortfolioDome() {
   const [activeProject, setActiveProject] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' by default (recents first)
+  const [downloadDropdownOpen, setDownloadDropdownOpen] = useState(false);
 
   const getLightboxImages = () => {
     if (!activeProject) return [];
@@ -34,6 +35,9 @@ export default function PortfolioDome() {
   };
 
   const lightboxImages = getLightboxImages();
+
+  const downloadLinks = activeProject && activeProject.links ? activeProject.links.filter(l => l.type === 'download') : [];
+  const otherLinks = activeProject && activeProject.links ? activeProject.links.filter(l => l.type !== 'download') : [];
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -51,6 +55,11 @@ export default function PortfolioDome() {
       return () => clearTimeout(timer);
     }
   }, []);
+
+  useEffect(() => {
+    setDownloadDropdownOpen(false);
+  }, [activeProject]);
+
 
   const getProjectYear = (project) => {
     if (!project.finished) return 2026;
@@ -334,7 +343,7 @@ export default function PortfolioDome() {
       {activeProject && (
         <div 
           className="portfolio-modal-overlay"
-          onClick={() => { setActiveProject(null); setLightboxIndex(null); }}
+          onClick={() => { setActiveProject(null); setLightboxIndex(null); setDownloadDropdownOpen(false); }}
           style={{
             position: 'fixed',
             top: 0,
@@ -377,7 +386,7 @@ export default function PortfolioDome() {
                 {/* Finished Green Stamp badge removed */}
               </div>
               <button 
-                onClick={() => { setActiveProject(null); setLightboxIndex(null); }}
+                onClick={() => { setActiveProject(null); setLightboxIndex(null); setDownloadDropdownOpen(false); }}
                 className="hud-btn"
                 style={{
                   padding: '4px 12px',
@@ -559,34 +568,126 @@ export default function PortfolioDome() {
                     )}
 
                     {/* Operational Action Buttons */}
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', borderTop: '1.5px solid rgba(255,255,255,0.06)', paddingTop: '14px' }}>
-                      {activeProject.links && activeProject.links.map((link, idx) => (
+                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', borderTop: '1.5px solid rgba(255,255,255,0.06)', paddingTop: '14px', position: 'relative' }}>
+                      {/* Non-download direct links (GitHub, YouTube) */}
+                      {otherLinks.map((link, idx) => (
                         <a 
                           key={idx}
                           href={link.src}
-                          target={link.type === 'download' ? '_self' : '_blank'}
+                          target="_blank"
                           rel="noopener noreferrer"
-                          download={link.type === 'download'}
                           className="hud-btn"
                           style={{
                             padding: '10px 20px',
                             fontSize: '0.72rem',
                             fontWeight: 700,
                             borderRadius: '8px',
-                            borderColor: link.type === 'download' ? 'var(--neon-emerald)' : 'var(--neon-cyan)',
-                            background: link.type === 'download' ? 'rgba(0, 255, 136, 0.08)' : 'rgba(0, 240, 255, 0.08)',
+                            borderColor: 'var(--neon-cyan)',
+                            background: 'rgba(0, 240, 255, 0.08)',
                             color: '#fff',
                             textDecoration: 'none',
                             display: 'flex',
                             alignItems: 'center',
                             gap: '8px',
-                            boxShadow: link.type === 'download' ? '0 0 10px rgba(0, 255, 136, 0.15)' : '0 0 10px rgba(0, 240, 255, 0.15)'
+                            boxShadow: '0 0 10px rgba(0, 240, 255, 0.15)'
                           }}
                         >
-                          {link.type === 'download' ? '📥 ' : link.type === 'youtube' ? '🎬 ' : '📂 '}
+                          {link.type === 'youtube' ? '🎬 ' : '📂 '}
                           {link.description.toUpperCase()}
                         </a>
                       ))}
+
+                      {/* Download link handling */}
+                      {downloadLinks.length === 1 && (
+                        <a 
+                          href={downloadLinks[0].src}
+                          download
+                          className="hud-btn"
+                          style={{
+                            padding: '10px 20px',
+                            fontSize: '0.72rem',
+                            fontWeight: 700,
+                            borderRadius: '8px',
+                            borderColor: 'var(--neon-emerald)',
+                            background: 'rgba(0, 255, 136, 0.08)',
+                            color: '#fff',
+                            textDecoration: 'none',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            boxShadow: '0 0 10px rgba(0, 255, 136, 0.15)'
+                          }}
+                        >
+                          📥 {downloadLinks[0].description.toUpperCase()}
+                        </a>
+                      )}
+
+                      {downloadLinks.length > 1 && (
+                        <div style={{ position: 'relative' }}>
+                          <button
+                            onClick={() => setDownloadDropdownOpen(!downloadDropdownOpen)}
+                            className="hud-btn"
+                            style={{
+                              padding: '10px 20px',
+                              fontSize: '0.72rem',
+                              fontWeight: 700,
+                              borderRadius: '8px',
+                              borderColor: 'var(--neon-emerald)',
+                              background: 'rgba(0, 255, 136, 0.08)',
+                              color: '#fff',
+                              cursor: 'pointer',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '8px',
+                              boxShadow: '0 0 10px rgba(0, 255, 136, 0.15)'
+                            }}
+                          >
+                            📥 DOWNLOAD CONCEPT DECK {downloadDropdownOpen ? '▲' : '▼'}
+                          </button>
+                          
+                          {downloadDropdownOpen && (
+                            <div style={{
+                              position: 'absolute',
+                              bottom: 'calc(100% + 8px)',
+                              left: 0,
+                              background: 'rgba(6, 9, 20, 0.96)',
+                              border: '1.5px solid var(--neon-emerald)',
+                              borderRadius: '8px',
+                              boxShadow: '0 0 20px rgba(0, 255, 136, 0.25)',
+                              zIndex: 100,
+                              minWidth: '220px',
+                              overflow: 'hidden',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              animation: 'modal-scale-up 0.2s ease-out forwards'
+                            }}>
+                              {downloadLinks.map((link, idx) => (
+                                <a
+                                  key={idx}
+                                  href={link.src}
+                                  download
+                                  onClick={() => setDownloadDropdownOpen(false)}
+                                  style={{
+                                    padding: '12px 16px',
+                                    fontSize: '0.72rem',
+                                    color: '#fff',
+                                    textDecoration: 'none',
+                                    textAlign: 'left',
+                                    fontFamily: 'var(--font-tech)',
+                                    borderBottom: idx < downloadLinks.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
+                                    transition: 'all 0.2s ease',
+                                    background: 'rgba(0,0,0,0.2)'
+                                  }}
+                                  className="dropdown-item-hover"
+                                >
+                                  📄 {link.description}
+                                </a>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      )}
+
                       {(!activeProject.links || activeProject.links.length === 0) && (
                         <span style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-tech)', fontStyle: 'italic' }}>
                           NO OUTBOUND EXTERNAL DATA PORT DETECTED.
@@ -676,6 +777,12 @@ export default function PortfolioDome() {
           border-color: var(--color-accent) !important;
           box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.25) !important;
           transform: translateY(-2px);
+        }
+
+        .dropdown-item-hover:hover {
+          background: rgba(0, 255, 136, 0.15) !important;
+          color: var(--neon-emerald) !important;
+          text-shadow: 0 0 5px rgba(0, 255, 136, 0.5) !important;
         }
 
         .lightbox-arrow-btn {

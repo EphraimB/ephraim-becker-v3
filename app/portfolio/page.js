@@ -24,6 +24,7 @@ export default function PortfolioDome() {
   const [maxYear, setMaxYear] = useState(2026);
   const [activeProject, setActiveProject] = useState(null);
   const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [sortOrder, setSortOrder] = useState('desc'); // 'desc' by default (recents first)
 
   const getLightboxImages = () => {
     if (!activeProject) return [];
@@ -84,6 +85,17 @@ export default function PortfolioDome() {
     return true;
   });
 
+  const sortedProjects = [...filteredProjects].sort((a, b) => {
+    const timeA = a.finished ? Date.parse(a.finished) : Date.now();
+    const timeB = b.finished ? Date.parse(b.finished) : Date.now();
+    
+    // Handle invalid/custom date strings like "Concept Design" by falling back to May 2026
+    const valA = isNaN(timeA) ? (a.finished === "Concept Design" ? Date.parse("2026-05-25") : Date.now()) : timeA;
+    const valB = isNaN(timeB) ? (b.finished === "Concept Design" ? Date.parse("2026-05-25") : Date.now()) : timeB;
+
+    return sortOrder === 'desc' ? valB - valA : valA - valB;
+  });
+
   return (
     <div className="citizen-card-shell" style={{ flexDirection: 'column' }}>
       {/* Walking Transit Sweeper Overlays */}
@@ -105,7 +117,7 @@ export default function PortfolioDome() {
         {/* Advanced Holographic Filter Deck */}
         <div className="bubbly-panel" style={{ padding: '20px 24px', marginBottom: '20px', background: 'rgba(6,9,20,0.85)' }}>
           
-          <div className="filter-deck-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '16px' }}>
+          <div className="filter-deck-layout" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr 1fr', gap: '20px', marginBottom: '16px' }}>
             
             {/* Search Input Box */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
@@ -154,6 +166,29 @@ export default function PortfolioDome() {
                     [✕]
                   </button>
                 )}
+              </div>
+            </div>
+
+            {/* Sort Order Selector */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
+              <label style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1.5px', fontWeight: 700 }}>
+                ARCHIVE CHRONO SORT ORDER
+              </label>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  onClick={() => setSortOrder('desc')}
+                  className={`category-pill ${sortOrder === 'desc' ? 'active' : ''}`}
+                  style={{ flex: 1, padding: '10px 5px', fontSize: '0.68rem', margin: 0, height: '38px', whiteSpace: 'nowrap' }}
+                >
+                  ⏳ RECENTS
+                </button>
+                <button
+                  onClick={() => setSortOrder('asc')}
+                  className={`category-pill ${sortOrder === 'asc' ? 'active' : ''}`}
+                  style={{ flex: 1, padding: '10px 5px', fontSize: '0.68rem', margin: 0, height: '38px', whiteSpace: 'nowrap' }}
+                >
+                  ⌛ OLDEST
+                </button>
               </div>
             </div>
 
@@ -224,7 +259,7 @@ export default function PortfolioDome() {
         <div className="custom-scroll" style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
           
           <div className="portfolio-grid-deck" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px', paddingBottom: '10px' }}>
-            {filteredProjects.length === 0 ? (
+            {sortedProjects.length === 0 ? (
               <div style={{ gridColumn: '1 / -1', padding: '48px 24px', background: 'rgba(6, 9, 20, 0.5)', border: '1.5px dashed rgba(var(--color-accent-rgb), 0.25)', borderRadius: '14px', textAlign: 'center', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.4)' }}>
                 <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '12px' }}>🛰️</span>
                 <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: 'var(--color-accent)', marginBottom: '8px', letterSpacing: '1px' }}>NO PROJECTS MATCHED SECTOR QUERY</h4>
@@ -233,7 +268,7 @@ export default function PortfolioDome() {
                 </p>
               </div>
             ) : (
-              filteredProjects.map((project) => (
+              sortedProjects.map((project) => (
                 <div 
                   key={project.id}
                   onClick={() => setActiveProject(project)}

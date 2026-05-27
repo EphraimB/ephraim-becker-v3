@@ -231,6 +231,15 @@ export default function AresDashboard() {
             padding: 12px 4px !important;
             font-size: 0.72rem !important;
           }
+          .interest-modal-overlay {
+            align-items: flex-start !important;
+            padding: 108px 10px 20px 10px !important; /* Pushes content below the 98px sticky mobile header mask */
+            overflow-y: auto !important;
+          }
+          .interest-modal-content {
+            max-height: none !important;
+            height: auto !important;
+          }
         }
 
         /* Responsive Interest Modal Header & Tabs */
@@ -460,6 +469,7 @@ export default function AresDashboard() {
       {activeInterest && (
         <div 
           onClick={() => setActiveInterest(null)}
+          className="interest-modal-overlay"
           style={{
             position: 'fixed',
             top: 0,
@@ -469,7 +479,7 @@ export default function AresDashboard() {
             background: 'rgba(4, 6, 12, 0.85)',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
-            zIndex: 1000,
+            zIndex: 3000,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -479,6 +489,7 @@ export default function AresDashboard() {
         >
           <div 
             onClick={(e) => e.stopPropagation()}
+            className="interest-modal-content"
             style={{
               width: '100%',
               maxWidth: '720px',

@@ -539,6 +539,28 @@ body {
   .map-nav-header {
     padding: 10px;
   }
+
+  /* Full-Screen Holographic Modal Mobile & Touch Viewport Clearances */
+  .portfolio-modal-overlay,
+  .interest-modal-overlay {
+    align-items: flex-start !important;
+    padding: 108px 10px 20px 10px !important; /* Pushes content below the 98px sticky mobile header mask */
+    overflow-y: auto !important;
+  }
+  .portfolio-modal-content,
+  .interest-modal-content {
+    max-height: none !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: block !important;
+  }
+  .portfolio-modal-overlay .custom-scroll,
+  .interest-modal-overlay .custom-scroll {
+    overflow-y: visible !important;
+    height: auto !important;
+    flex: none !important;
+    max-height: none !important;
+  }
 }
 
 /* Scrollable left column inside card */

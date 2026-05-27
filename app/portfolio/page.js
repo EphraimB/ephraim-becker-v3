@@ -642,6 +642,61 @@ export default function PortfolioDome() {
           box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.25) !important;
           transform: translateY(-2px);
         }
+
+        .lightbox-arrow-btn {
+          position: absolute !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          width: 50px !important;
+          height: 50px !important;
+          border-radius: 50% !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          font-size: 1.25rem !important;
+          border: 2px solid rgba(var(--color-accent-rgb), 0.5) !important;
+          background: rgba(4, 6, 12, 0.75) !important;
+          color: #fff !important;
+          cursor: pointer !important;
+          z-index: 4200 !important;
+          transition: all 0.25s ease !important;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) !important;
+          outline: none !important;
+          padding: 0 !important;
+        }
+        .lightbox-arrow-btn:hover {
+          background: rgba(var(--color-accent-rgb), 0.15) !important;
+          border-color: var(--color-accent) !important;
+          box-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.4) !important;
+          transform: translateY(-50%) scale(1.05) !important;
+        }
+        .lightbox-arrow-btn:active {
+          transform: translateY(-50%) scale(0.95) !important;
+        }
+        .lightbox-arrow-left {
+          left: -65px !important;
+        }
+        .lightbox-arrow-right {
+          right: -65px !important;
+        }
+
+        /* Responsive Lightbox Arrows for tablets and mobile devices */
+        @media (max-width: 1160px) {
+          .lightbox-arrow-left {
+            left: 20px !important;
+          }
+          .lightbox-arrow-right {
+            right: 20px !important;
+          }
+          .lightbox-arrow-btn {
+            background: rgba(4, 6, 12, 0.85) !important; /* Higher contrast inside the image area */
+            width: 45px !important;
+            height: 45px !important;
+            font-size: 1.1rem !important;
+            border-color: var(--color-accent) !important; /* Always glowing on mobile for clear affordance */
+            box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.3) !important;
+          }
+        }
       `}</style>
 
       {/* IMMERSIVE HOLOGRAPHIC LIGHTBOX DECK */}
@@ -703,23 +758,7 @@ export default function PortfolioDome() {
             {lightboxImages.length > 1 && (
               <button
                 onClick={() => setLightboxIndex(prev => (prev === 0 ? lightboxImages.length - 1 : prev - 1))}
-                className="hud-btn"
-                style={{
-                  position: 'absolute',
-                  left: '-60px',
-                  width: '45px',
-                  height: '45px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1rem',
-                  borderColor: 'rgba(255,255,255,0.2)',
-                  background: 'rgba(255,255,255,0.05)',
-                  cursor: 'pointer',
-                  color: '#fff',
-                  zIndex: 4100
-                }}
+                className="lightbox-arrow-btn lightbox-arrow-left"
               >
                 ◀
               </button>
@@ -738,23 +777,7 @@ export default function PortfolioDome() {
             {lightboxImages.length > 1 && (
               <button
                 onClick={() => setLightboxIndex(prev => (prev === lightboxImages.length - 1 ? 0 : prev + 1))}
-                className="hud-btn"
-                style={{
-                  position: 'absolute',
-                  right: '-60px',
-                  width: '45px',
-                  height: '45px',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1rem',
-                  borderColor: 'rgba(255,255,255,0.2)',
-                  background: 'rgba(255,255,255,0.05)',
-                  cursor: 'pointer',
-                  color: '#fff',
-                  zIndex: 4100
-                }}
+                className="lightbox-arrow-btn lightbox-arrow-right"
               >
                 ▶
               </button>

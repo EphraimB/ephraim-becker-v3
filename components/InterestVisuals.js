@@ -908,7 +908,232 @@ export default function InterestVisuals({ svgType }) {
         </svg>
       );
 
+    case 'trains_overview':
+      return (
+        <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#080b13', borderRadius: '8px', border: '1px solid rgba(0, 210, 255, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,210,255,0.1)' }}>
+          <style>{`
+            @keyframes railDashing {
+              from { stroke-dashoffset: 40; }
+              to { stroke-dashoffset: 0; }
+            }
+            @keyframes trainVibrate {
+              0%, 100% { transform: translateY(0); }
+              50% { transform: translateY(-0.8px); }
+            }
+            .rail-line {
+              animation: railDashing 1.5s linear infinite;
+            }
+            .sleek-train {
+              animation: trainVibrate 0.15s ease-in-out infinite;
+            }
+          `}</style>
+          
+          <rect x="0" y="0" width="320" height="15" fill="#101524" />
+          <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">ARES_OS // RAIL_TRANSIT_OVERVIEW</text>
+
+          {/* Dashing tracks */}
+          <g transform="translate(10, 78)">
+            <line x1="0" y1="0" x2="300" y2="0" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+            <line x1="0" y1="4" x2="300" y2="4" stroke="#00d2ff" strokeWidth="1.2" strokeDasharray="15 8" className="rail-line" />
+            <line x1="0" y1="8" x2="300" y2="8" stroke="rgba(255,255,255,0.15)" strokeWidth="1" />
+          </g>
+
+          {/* Side-profile sleek futuristic bullet train */}
+          <g className="sleek-train" transform="translate(60, 32)">
+            {/* Train shadow/under-glow */}
+            <rect x="0" y="38" width="180" height="3" fill="#00d2ff" opacity="0.3" rx="1.5" style={{ filter: 'blur(2px)' }} />
+            
+            {/* Body */}
+            <path d="M 0,25 Q 20,5 50,5 L 180,5 L 180,38 L 5,38 Z" fill="#141c2e" stroke="#00d2ff" strokeWidth="1.5" />
+            
+            {/* Nose-cone accent stripe */}
+            <path d="M 2,28 Q 20,12 40,25" fill="none" stroke="#ffe082" strokeWidth="1.5" />
+            <path d="M 12,38 L 40,38 Q 30,30 25,38 Z" fill="#ffe082" />
+            
+            {/* Windows */}
+            <rect x="52" y="10" width="22" height="10" rx="2" fill="#080b13" stroke="rgba(0, 210, 255, 0.4)" strokeWidth="0.8" />
+            <rect x="80" y="10" width="22" height="10" rx="2" fill="#080b13" stroke="rgba(0, 210, 255, 0.4)" strokeWidth="0.8" />
+            <rect x="108" y="10" width="22" height="10" rx="2" fill="#080b13" stroke="rgba(0, 210, 255, 0.4)" strokeWidth="0.8" />
+            <rect x="136" y="10" width="22" height="10" rx="2" fill="#080b13" stroke="rgba(0, 210, 255, 0.4)" strokeWidth="0.8" />
+            
+            {/* Connection joints */}
+            <line x1="180" y1="8" x2="180" y2="35" stroke="#ffe082" strokeWidth="2" />
+          </g>
+
+          {/* Text HUD overlays */}
+          <text x="15" y="101" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace">PROPULSION: AC_INDUCTION // ACTIVE</text>
+          <text x="305" y="101" fill="#00d2ff" fontSize="5.5" fontFamily="monospace" textAnchor="end">SYSTEMS: ALL_NOMINAL</text>
+        </svg>
+      );
+
+    case 'trains_mta':
+      return (
+        <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#080b13', borderRadius: '8px', border: '1px solid rgba(0, 210, 255, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,210,255,0.1)' }}>
+          <style>{`
+            @keyframes pulseSpeaker {
+              0%, 100% { opacity: 0.3; transform: scale(1); }
+              50% { opacity: 0.95; transform: scale(1.05); }
+            }
+            @keyframes waveSine {
+              0% { stroke-dashoffset: 0; }
+              100% { stroke-dashoffset: 40; }
+            }
+            .announce-pulse {
+              animation: pulseSpeaker 1.5s ease-in-out infinite;
+              transform-origin: 220px 48px;
+            }
+            .sine-pulse {
+              animation: waveSine 2s linear infinite;
+            }
+          `}</style>
+          
+          <rect x="0" y="0" width="320" height="15" fill="#101524" />
+          <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">MTA_TRANSIT_DECK // AUTOMATED_CABIN</text>
+
+          {/* Perspective tunnel tracks */}
+          <g stroke="rgba(0, 210, 255, 0.15)" strokeWidth="0.8">
+            <line x1="10" y1="110" x2="110" y2="40" />
+            <line x1="150" y1="110" x2="130" y2="40" />
+            {/* Ties */}
+            <line x1="30" y1="90" x2="128" y2="90" strokeWidth="0.5" />
+            <line x1="50" y1="75" x2="125" y2="75" strokeWidth="0.5" />
+            <line x1="70" y1="62" x2="122" y2="62" strokeWidth="0.5" />
+          </g>
+
+          {/* Front view of MTA Subway car (R211/R160 inspired) */}
+          <g transform="translate(60, 25)">
+            {/* Chassis body */}
+            <rect x="0" y="0" width="70" height="52" rx="6" fill="#1e293b" stroke="#00d2ff" strokeWidth="1.8" />
+            
+            {/* Windshield */}
+            <rect x="5" y="5" width="60" height="24" rx="2" fill="#080b13" stroke="rgba(0, 210, 255, 0.4)" strokeWidth="1" />
+            
+            {/* LED Destination Board */}
+            <rect x="18" y="7" width="34" height="6" fill="#020617" />
+            <text x="35" y="12" fill="#ffb300" fontSize="5.2" fontFamily="monospace" textAnchor="middle" fontWeight="bold">TIMES SQ-42 ST</text>
+            
+            {/* Door joints & panels */}
+            <line x1="35" y1="29" x2="35" y2="52" stroke="#00d2ff" strokeWidth="1.2" />
+            <rect x="12" y="32" width="12" height="15" fill="#0f172a" stroke="rgba(0, 210, 255, 0.3)" strokeWidth="0.6" />
+            <rect x="46" y="32" width="12" height="15" fill="#0f172a" stroke="rgba(0, 210, 255, 0.3)" strokeWidth="0.6" />
+            
+            {/* Headlights */}
+            <circle cx="8" cy="45" r="2.5" fill="#fff" style={{ filter: 'drop-shadow(0 0 3px #fff)' }} />
+            <circle cx="62" cy="45" r="2.5" fill="#fff" style={{ filter: 'drop-shadow(0 0 3px #fff)' }} />
+            
+            {/* Route indicator tag [N] or [R] */}
+            <circle cx="10" cy="17" r="4.5" fill="#ffe082" />
+            <text x="10" y="20.2" fill="#000" fontSize="6.5" fontFamily="monospace" fontWeight="bold" textAnchor="middle">N</text>
+          </g>
+
+          {/* Interactive Announcements / Audio Display */}
+          <g transform="translate(160, 25)">
+            {/* Automated announcement HUD panel */}
+            <rect x="0" y="0" width="90" height="52" rx="4" fill="rgba(0, 0, 0, 0.6)" stroke="rgba(255, 179, 0, 0.2)" strokeWidth="1" />
+            <text x="8" y="11" fill="#ffe082" fontSize="5" fontFamily="monospace" fontWeight="bold">📢 ANNOUNCEMENT TRANSMIT</text>
+            <text x="8" y="21" fill="#fff" fontSize="5.5" fontFamily="monospace" style={{ fontStyle: 'italic' }}>"Stand clear of the..."</text>
+            
+            {/* AC Propulsion Motor wave representation */}
+            <text x="8" y="32" fill="#00ff88" fontSize="5" fontFamily="monospace" fontWeight="bold">AC PROPULSION SYNC</text>
+            <path d="M 8,43 Q 18,36 28,43 T 48,43 T 68,43 T 82,43" fill="none" stroke="#00ff88" strokeWidth="1" strokeDasharray="4 2" className="sine-pulse" />
+          </g>
+
+          <text x="15" y="99" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace">MODELS: R160 // R211 // M7 // M9</text>
+          <text x="305" y="99" fill="#ffe082" fontSize="5.5" fontFamily="monospace" textAnchor="end">MTA AUDIO: SYNCD</text>
+        </svg>
+      );
+
+    case 'trains_amtrak':
+      return (
+        <svg viewBox="0 0 320 110" width="100%" height="110px" style={{ background: '#080b13', borderRadius: '8px', border: '1px solid rgba(0, 210, 255, 0.22)', boxShadow: 'inset 0 0 10px rgba(0,210,255,0.1)' }}>
+          <style>{`
+            @keyframes routePulse {
+              0%, 100% { stroke-dashoffset: 0; }
+              50% { stroke-dashoffset: -20; }
+            }
+            @keyframes sweepNode {
+              0% { stroke-dashoffset: 140; }
+              100% { stroke-dashoffset: 0; }
+            }
+            .route-line {
+              animation: routePulse 4s linear infinite;
+            }
+            .sweep-dot {
+              animation: sweepNode 6s linear infinite;
+            }
+          `}</style>
+          
+          <rect x="0" y="0" width="320" height="15" fill="#101524" />
+          <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" fontSize="6" fontFamily="monospace" textAnchor="middle">AMTRAK // EAST_COAST_ROUTE_MAP</text>
+
+          {/* Dotted Geographic Grid for Eastern Seaboard */}
+          <g opacity="0.1" stroke="#00d2ff" strokeWidth="0.5">
+            <line x1="20" y1="20" x2="20" y2="100" />
+            <line x1="60" y1="20" x2="60" y2="100" />
+            <line x1="100" y1="20" x2="100" y2="100" />
+            <line x1="140" y1="20" x2="140" y2="100" />
+            <line x1="180" y1="20" x2="180" y2="100" />
+            <line x1="40" y1="20" x2="310" y2="20" />
+            <line x1="40" y1="50" x2="310" y2="50" />
+            <line x1="40" y1="80" x2="310" y2="80" />
+          </g>
+
+          {/* Winding East Coast route map line from NY to FL */}
+          <path 
+            id="amtrakRoutePath" 
+            d="M 125,25 Q 110,40 100,50 T 80,75 T 70,100" 
+            fill="none" 
+            stroke="rgba(255,255,255,0.2)" 
+            strokeWidth="2" 
+          />
+          <path 
+            d="M 125,25 Q 110,40 100,50 T 80,75 T 70,100" 
+            fill="none" 
+            stroke="#00d2ff" 
+            strokeWidth="2" 
+            strokeDasharray="6 3" 
+            className="route-line"
+          />
+
+          {/* Winding route sweeping node */}
+          <path 
+            d="M 125,25 Q 110,40 100,50 T 80,75 T 70,100" 
+            fill="none" 
+            stroke="#ff5722" 
+            strokeWidth="3.5" 
+            strokeLinecap="round" 
+            strokeDasharray="4 140" 
+            className="sweep-dot"
+          />
+
+          {/* NYC Station Node */}
+          <g transform="translate(125, 25)">
+            <circle cx="0" cy="0" r="3" fill="#ffe082" stroke="#fff" strokeWidth="0.6" style={{ filter: 'drop-shadow(0 0 2px #ffe082)' }} />
+            <text x="6" y="2" fill="#ffe082" fontSize="5.5" fontFamily="monospace" fontWeight="bold">NY PENN</text>
+          </g>
+
+          {/* Florida Station Node */}
+          <g transform="translate(70, 98)">
+            <circle cx="0" cy="0" r="3" fill="#ffe082" stroke="#fff" strokeWidth="0.6" style={{ filter: 'drop-shadow(0 0 2px #ffe082)' }} />
+            <text x="6" y="1" fill="#ffe082" fontSize="5.5" fontFamily="monospace" fontWeight="bold">DEERFIELD BEACH, FL</text>
+          </g>
+
+          {/* Amtrak Ride Telemetry Card */}
+          <g transform="translate(180, 24)">
+            <rect x="0" y="0" width="130" height="52" rx="4" fill="rgba(0, 0, 0, 0.75)" stroke="rgba(0, 210, 255, 0.25)" strokeWidth="1" />
+            <text x="10" y="11" fill="#00d2ff" fontSize="6.5" fontFamily="monospace" fontWeight="bold">AMTRAK: SILVER METEOR</text>
+            <text x="10" y="22" fill="#fff" fontSize="5.5" fontFamily="monospace">ROUTE: 1,389 MILES</text>
+            <text x="10" y="32" fill="rgba(255,255,255,0.7)" fontSize="5" fontFamily="monospace">JOURNEY OVER FLIGHT: 100%</text>
+            <text x="10" y="43" fill="#ff5722" fontSize="5.5" fontFamily="monospace" fontWeight="bold">FUN VALUE: ABSOLUTE MAX</text>
+          </g>
+
+          <text x="15" y="99" fill="rgba(255,255,255,0.4)" fontSize="5.5" fontFamily="monospace">TRANSPORT: LONG_DISTANCE_RAIL</text>
+          <text x="305" y="99" fill="#00d2ff" fontSize="5.5" fontFamily="monospace" textAnchor="end">DESTINATION: DEERFIELD BEACH</text>
+        </svg>
+      );
+
     default:
       return null;
   }
 }
+

@@ -297,7 +297,7 @@ export default function PortfolioDome() {
             height: '100vh',
             background: 'rgba(4, 6, 12, 0.85)',
             backdropFilter: 'blur(20px)',
-            zIndex: 1000,
+            zIndex: 3000,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -562,14 +562,23 @@ export default function PortfolioDome() {
           }
         }
 
+        @media (max-width: 900px) {
+          .portfolio-modal-overlay {
+            align-items: flex-start !important;
+            padding: 108px 10px 20px 10px !important; /* Pushes content below the 98px sticky mobile header mask */
+            overflow-y: auto !important;
+          }
+          .portfolio-modal-content {
+            max-height: none !important;
+            height: auto !important;
+          }
+        }
+
         @media (max-width: 800px) {
           .modal-columns-grid {
             display: flex !important;
             flex-direction: column !important;
             gap: 20px !important;
-          }
-          .portfolio-modal-content {
-            max-height: 95vh !important;
           }
         }
       `}</style>

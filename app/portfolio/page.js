@@ -12,7 +12,8 @@ const CATEGORIES = [
   "3D modeling",
   "Calculator apps",
   "VR development",
-  "Computer building"
+  "Computer building",
+  "Concepts"
 ];
 
 export default function PortfolioDome() {
@@ -22,6 +23,17 @@ export default function PortfolioDome() {
   const [minYear, setMinYear] = useState(2014);
   const [maxYear, setMaxYear] = useState(2026);
   const [activeProject, setActiveProject] = useState(null);
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+  const [sortOrder, setSortOrder] = useState('desc'); // 'desc' by default (recents first)
+
+  const getLightboxImages = () => {
+    if (!activeProject) return [];
+    if (activeProject.images) return activeProject.images;
+    if (activeProject.image) return [activeProject.image];
+    return [];
+  };
+
+  const lightboxImages = getLightboxImages();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -73,6 +85,17 @@ export default function PortfolioDome() {
     return true;
   });
 
+  const sortedProjects = [...filteredProjects].sort((a, b) => {
+    const timeA = a.finished ? Date.parse(a.finished) : Date.now();
+    const timeB = b.finished ? Date.parse(b.finished) : Date.now();
+    
+    // Handle invalid/custom date strings like "Concept Design" by falling back to May 2026
+    const valA = isNaN(timeA) ? (a.finished === "Concept Design" ? Date.parse("2026-05-25") : Date.now()) : timeA;
+    const valB = isNaN(timeB) ? (b.finished === "Concept Design" ? Date.parse("2026-05-25") : Date.now()) : timeB;
+
+    return sortOrder === 'desc' ? valB - valA : valA - valB;
+  });
+
   return (
     <div className="citizen-card-shell" style={{ flexDirection: 'column' }}>
       {/* Walking Transit Sweeper Overlays */}
@@ -94,7 +117,7 @@ export default function PortfolioDome() {
         {/* Advanced Holographic Filter Deck */}
         <div className="bubbly-panel" style={{ padding: '20px 24px', marginBottom: '20px', background: 'rgba(6,9,20,0.85)' }}>
           
-          <div className="filter-deck-layout" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px', marginBottom: '16px' }}>
+          <div className="filter-deck-layout" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr 1fr', gap: '20px', marginBottom: '16px' }}>
             
             {/* Search Input Box */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
@@ -143,6 +166,29 @@ export default function PortfolioDome() {
                     [✕]
                   </button>
                 )}
+              </div>
+            </div>
+
+            {/* Sort Order Selector */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
+              <label style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1.5px', fontWeight: 700 }}>
+                ARCHIVE CHRONO SORT ORDER
+              </label>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                <button
+                  onClick={() => setSortOrder('desc')}
+                  className={`category-pill ${sortOrder === 'desc' ? 'active' : ''}`}
+                  style={{ flex: 1, padding: '10px 5px', fontSize: '0.68rem', margin: 0, height: '38px', whiteSpace: 'nowrap' }}
+                >
+                  ⏳ RECENTS
+                </button>
+                <button
+                  onClick={() => setSortOrder('asc')}
+                  className={`category-pill ${sortOrder === 'asc' ? 'active' : ''}`}
+                  style={{ flex: 1, padding: '10px 5px', fontSize: '0.68rem', margin: 0, height: '38px', whiteSpace: 'nowrap' }}
+                >
+                  ⌛ OLDEST
+                </button>
               </div>
             </div>
 
@@ -213,7 +259,7 @@ export default function PortfolioDome() {
         <div className="custom-scroll" style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
           
           <div className="portfolio-grid-deck" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px', paddingBottom: '10px' }}>
-            {filteredProjects.length === 0 ? (
+            {sortedProjects.length === 0 ? (
               <div style={{ gridColumn: '1 / -1', padding: '48px 24px', background: 'rgba(6, 9, 20, 0.5)', border: '1.5px dashed rgba(var(--color-accent-rgb), 0.25)', borderRadius: '14px', textAlign: 'center', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.4)' }}>
                 <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '12px' }}>🛰️</span>
                 <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: 'var(--color-accent)', marginBottom: '8px', letterSpacing: '1px' }}>NO PROJECTS MATCHED SECTOR QUERY</h4>
@@ -222,7 +268,7 @@ export default function PortfolioDome() {
                 </p>
               </div>
             ) : (
-              filteredProjects.map((project) => (
+              sortedProjects.map((project) => (
                 <div 
                   key={project.id}
                   onClick={() => setActiveProject(project)}
@@ -288,7 +334,7 @@ export default function PortfolioDome() {
       {activeProject && (
         <div 
           className="portfolio-modal-overlay"
-          onClick={() => setActiveProject(null)}
+          onClick={() => { setActiveProject(null); setLightboxIndex(null); }}
           style={{
             position: 'fixed',
             top: 0,
@@ -331,7 +377,7 @@ export default function PortfolioDome() {
                 {/* Finished Green Stamp badge removed */}
               </div>
               <button 
-                onClick={() => setActiveProject(null)}
+                onClick={() => { setActiveProject(null); setLightboxIndex(null); }}
                 className="hud-btn"
                 style={{
                   padding: '4px 12px',
@@ -369,33 +415,72 @@ export default function PortfolioDome() {
                         style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
                       />
                     </div>
-                  ) : activeProject.images ? (
-                    /* Double side-by-side or stacked image showcase (e.g. calculator screens or computer monitors) */
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                      {activeProject.images.map((img, idx) => (
-                        <div key={idx} style={{ borderRadius: '10px', overflow: 'hidden', border: '1.5px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.3)', padding: '6px' }}>
-                          <img 
-                            src={img} 
-                            alt={`${activeProject.title} screenshot ${idx + 1}`} 
-                            style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '6px', objectFit: 'contain', maxHeight: '180px', margin: '0 auto' }} 
-                          />
-                        </div>
-                      ))}
-                    </div>
-                  ) : activeProject.image ? (
-                    /* Single large screenshot */
-                    <div style={{ borderRadius: '10px', overflow: 'hidden', border: '1.5px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.3)', padding: '8px' }}>
-                      <img 
-                        src={activeProject.image} 
-                        alt={activeProject.title} 
-                        style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '6px', maxHeight: '320px', objectFit: 'contain' }} 
-                      />
-                    </div>
                   ) : (
-                    /* Default Visual placeholder if zero media */
-                    <div style={{ height: '220px', borderRadius: '10px', background: 'radial-gradient(circle, rgba(var(--color-accent-rgb), 0.05) 0%, rgba(4,6,12,0.8) 100%)', border: '1.5px dashed rgba(var(--color-accent-rgb), 0.25)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                      <span style={{ fontSize: '2.5rem' }}>🗃️</span>
-                      <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.3)' }}>HOLOGRAPHIC COMPONENT LOCALIZED</span>
+                    /* Holographic Media Gallery Grid */
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+                      <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: activeProject.images ? 'repeat(2, 1fr)' : '1fr', 
+                        gap: '12px' 
+                      }}>
+                        {activeProject.images ? (
+                          activeProject.images.map((img, idx) => (
+                            <div 
+                              key={idx} 
+                              onClick={() => setLightboxIndex(idx)}
+                              className="gallery-thumbnail"
+                              style={{ 
+                                borderRadius: '10px', 
+                                overflow: 'hidden', 
+                                border: '1.5px solid rgba(255,255,255,0.08)', 
+                                background: 'rgba(0,0,0,0.3)', 
+                                padding: '6px', 
+                                cursor: 'pointer',
+                                transition: 'all 0.25s ease'
+                              }}
+                            >
+                              <img 
+                                src={img} 
+                                alt={`${activeProject.title} screenshot ${idx + 1}`} 
+                                style={{ width: '100%', height: '120px', display: 'block', borderRadius: '6px', objectFit: 'cover' }} 
+                              />
+                              <div style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', marginTop: '4px', textAlign: 'center', fontFamily: 'var(--font-tech)' }}>
+                                [ EXPAND SCREENSHOT {idx + 1} 🔍 ]
+                              </div>
+                            </div>
+                          ))
+                        ) : activeProject.image ? (
+                          <div 
+                            onClick={() => setLightboxIndex(0)}
+                            className="gallery-thumbnail"
+                            style={{ 
+                              borderRadius: '10px', 
+                              overflow: 'hidden', 
+                              border: '1.5px solid rgba(255,255,255,0.08)', 
+                              background: 'rgba(0,0,0,0.3)', 
+                              padding: '8px', 
+                              cursor: 'pointer',
+                              transition: 'all 0.25s ease',
+                              textAlign: 'center'
+                            }}
+                          >
+                            <img 
+                              src={activeProject.image} 
+                              alt={activeProject.title} 
+                              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '6px', maxHeight: '320px', objectFit: 'contain', margin: '0 auto' }} 
+                            />
+                            <div style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', marginTop: '6px', textAlign: 'center', fontFamily: 'var(--font-tech)' }}>
+                              [ EXPAND SCREENSHOT 🔍 ]
+                            </div>
+                          </div>
+                        ) : (
+                          /* Default Visual placeholder if zero media */
+                          <div style={{ height: '220px', borderRadius: '10px', background: 'radial-gradient(circle, rgba(var(--color-accent-rgb), 0.05) 0%, rgba(4,6,12,0.8) 100%)', border: '1.5px dashed rgba(var(--color-accent-rgb), 0.25)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '2.5rem' }}>🗃️</span>
+                            <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.3)' }}>HOLOGRAPHIC COMPONENT LOCALIZED</span>
+                          </div>
+                        )}
+                      </div>
                     </div>
                   )}
 
@@ -458,18 +543,20 @@ export default function PortfolioDome() {
 
                   <div>
                     {/* Tech Stack Chips */}
-                    <div style={{ marginBottom: '16px' }}>
-                      <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)', marginBottom: '6px' }}>
-                        TECHNOLOGICAL STACK UTILIZED:
-                      </span>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
-                        {activeProject.technologies.map((tech, idx) => (
-                          <span key={idx} style={{ fontSize: '0.6rem', background: 'rgba(var(--color-accent-rgb), 0.08)', padding: '3px 8px', borderRadius: '4px', border: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', color: 'var(--text-primary)', fontWeight: 500 }}>
-                            {tech}
-                          </span>
-                        ))}
+                    {activeProject.technologies && activeProject.technologies.length > 0 && (
+                      <div style={{ marginBottom: '16px' }}>
+                        <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)', marginBottom: '6px' }}>
+                          TECHNOLOGICAL STACK UTILIZED:
+                        </span>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                          {activeProject.technologies.map((tech, idx) => (
+                            <span key={idx} style={{ fontSize: '0.6rem', background: 'rgba(var(--color-accent-rgb), 0.08)', padding: '3px 8px', borderRadius: '4px', border: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', color: 'var(--text-primary)', fontWeight: 500 }}>
+                              {tech}
+                            </span>
+                          ))}
+                        </div>
                       </div>
-                    </div>
+                    )}
 
                     {/* Operational Action Buttons */}
                     <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', borderTop: '1.5px solid rgba(255,255,255,0.06)', paddingTop: '14px' }}>
@@ -581,7 +668,184 @@ export default function PortfolioDome() {
             gap: 20px !important;
           }
         }
+
+        .gallery-thumbnail {
+          transition: all 0.25s ease !important;
+        }
+        .gallery-thumbnail:hover {
+          border-color: var(--color-accent) !important;
+          box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.25) !important;
+          transform: translateY(-2px);
+        }
+
+        .lightbox-arrow-btn {
+          position: absolute !important;
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          width: 50px !important;
+          height: 50px !important;
+          border-radius: 50% !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+          font-size: 1.25rem !important;
+          border: 2px solid rgba(var(--color-accent-rgb), 0.5) !important;
+          background: rgba(4, 6, 12, 0.75) !important;
+          color: #fff !important;
+          cursor: pointer !important;
+          z-index: 4200 !important;
+          transition: all 0.25s ease !important;
+          box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) !important;
+          outline: none !important;
+          padding: 0 !important;
+        }
+        .lightbox-arrow-btn:hover {
+          background: rgba(var(--color-accent-rgb), 0.15) !important;
+          border-color: var(--color-accent) !important;
+          box-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.4) !important;
+          transform: translateY(-50%) scale(1.05) !important;
+        }
+        .lightbox-arrow-btn:active {
+          transform: translateY(-50%) scale(0.95) !important;
+        }
+        .lightbox-arrow-left {
+          left: -65px !important;
+        }
+        .lightbox-arrow-right {
+          right: -65px !important;
+        }
+
+        /* Responsive Lightbox Arrows for tablets and mobile devices */
+        @media (max-width: 1160px) {
+          .lightbox-arrow-left {
+            left: 20px !important;
+          }
+          .lightbox-arrow-right {
+            right: 20px !important;
+          }
+          .lightbox-arrow-btn {
+            background: rgba(4, 6, 12, 0.85) !important; /* Higher contrast inside the image area */
+            width: 45px !important;
+            height: 45px !important;
+            font-size: 1.1rem !important;
+            border-color: var(--color-accent) !important; /* Always glowing on mobile for clear affordance */
+            box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.3) !important;
+          }
+        }
       `}</style>
+
+      {/* IMMERSIVE HOLOGRAPHIC LIGHTBOX DECK */}
+      {lightboxIndex !== null && lightboxImages.length > 0 && (
+        <div 
+          className="lightbox-overlay"
+          onClick={() => setLightboxIndex(null)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100vw',
+            height: '100vh',
+            background: 'rgba(2, 3, 6, 0.95)',
+            backdropFilter: 'blur(25px)',
+            zIndex: 4000,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            animation: 'modal-fade-in 0.25s ease-out forwards'
+          }}
+        >
+          {/* Lightbox Controls HUD */}
+          <div style={{ width: '90%', maxWidth: '1000px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+            <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px' }}>
+              // UPLINK_SCREEN_VIEW: IMAGE {lightboxIndex + 1} / {lightboxImages.length}
+            </span>
+            <button 
+              onClick={() => setLightboxIndex(null)}
+              className="hud-btn"
+              style={{
+                padding: '6px 16px',
+                fontSize: '0.65rem',
+                borderColor: 'var(--color-accent)',
+                borderRadius: '8px',
+                background: 'rgba(var(--color-accent-rgb), 0.05)',
+                cursor: 'pointer',
+                color: '#fff'
+              }}
+            >
+              [ ✕ CLOSE SCREEN ]
+            </button>
+          </div>
+
+          {/* Lightbox Stage (Image & Slide Arrows) */}
+          <div 
+            onClick={(e) => e.stopPropagation()}
+            style={{ 
+              position: 'relative', 
+              width: '90%', 
+              maxWidth: '1000px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center' 
+            }}
+          >
+            {/* Left Slide Arrow */}
+            {lightboxImages.length > 1 && (
+              <button
+                onClick={() => setLightboxIndex(prev => (prev === 0 ? lightboxImages.length - 1 : prev - 1))}
+                className="lightbox-arrow-btn lightbox-arrow-left"
+              >
+                ◀
+              </button>
+            )}
+
+            {/* Central Expanded Image Box */}
+            <div style={{ borderRadius: '12px', border: '2px solid var(--color-accent)', padding: '10px', background: 'rgba(0,0,0,0.5)', boxShadow: '0 0 30px rgba(var(--color-accent-rgb), 0.2)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img 
+                src={lightboxImages[lightboxIndex]} 
+                alt={`${activeProject.title} expanded view`} 
+                style={{ maxWidth: '100%', maxHeight: '75vh', borderRadius: '6px', objectFit: 'contain', display: 'block' }} 
+              />
+            </div>
+
+            {/* Right Slide Arrow */}
+            {lightboxImages.length > 1 && (
+              <button
+                onClick={() => setLightboxIndex(prev => (prev === lightboxImages.length - 1 ? 0 : prev + 1))}
+                className="lightbox-arrow-btn lightbox-arrow-right"
+              >
+                ▶
+              </button>
+            )}
+          </div>
+
+          {/* Floating Slide Index Indicator */}
+          {lightboxImages.length > 1 && (
+            <div style={{ display: 'flex', gap: '8px', marginTop: '20px' }}>
+              {lightboxImages.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setLightboxIndex(idx);
+                  }}
+                  style={{
+                    width: '8px',
+                    height: '8px',
+                    borderRadius: '50%',
+                    background: lightboxIndex === idx ? 'var(--color-accent)' : 'rgba(255,255,255,0.2)',
+                    border: 'none',
+                    padding: 0,
+                    cursor: 'pointer',
+                    boxShadow: lightboxIndex === idx ? '0 0 8px var(--color-accent)' : 'none',
+                    transition: 'all 0.25s ease'
+                  }}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }

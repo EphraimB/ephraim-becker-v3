@@ -3,14 +3,11 @@
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 
-// 1. Pressurized Colony Network Coordinates Map (in meters)
 const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
   '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
-  'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }, // Academics sector toggled
-  '/atmosphere-dome': { x: -150, y: 150, name: 'BIOSPHERE DOME' },
-  '/quantum-net': { x: -150, y: -150, name: 'QUANTUM NET' },
-  '/metropolis-core': { x: 250, y: 0, name: 'METROPOLIS CORE' }
+  '/neurodiversity': { x: 150, y: -100, name: 'NEURODIVERSITY DECK' },
+  'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }
 };
 
 export default function CityGridMap({ isDrawer = false }) {
@@ -75,6 +72,16 @@ export default function CityGridMap({ isDrawer = false }) {
       rgb: '194, 89, 255',
       icon: '📂',
       desc: 'Retrospective engineering files'
+    },
+    {
+      id: 'neurodiversity',
+      label: 'SECTOR 02 // ADVOCACY',
+      title: 'NEURODIVERSITY DECK',
+      route: '/neurodiversity',
+      color: '#00ff88',
+      rgb: '0, 255, 136',
+      icon: '🧠',
+      desc: 'Ares colony neuro-advocacy portal'
     }
   ];
 

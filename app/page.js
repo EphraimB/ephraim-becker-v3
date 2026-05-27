@@ -607,8 +607,42 @@ export default function AresDashboard() {
                            {activeInterest.slides[activeSlide].content}
                          </span>
                          
+                         {/* Link to Dedicated Neurodiversity Advocacy Page */}
+                         {activeInterest.id === 'neurodiversity' && (
+                           <div style={{ marginTop: '12px', marginBottom: '8px' }}>
+                             <a
+                               href="/neurodiversity"
+                               className="hud-btn"
+                               style={{
+                                 display: 'inline-block',
+                                 padding: '6px 12px',
+                                 fontSize: '0.68rem',
+                                 fontFamily: 'monospace, var(--font-tech)',
+                                 borderColor: '#00ff88',
+                                 background: 'rgba(0, 255, 136, 0.05)',
+                                 color: '#00ff88',
+                                 borderRadius: '6px',
+                                 textDecoration: 'none',
+                                 textAlign: 'center',
+                                 transition: 'all 0.2s ease'
+                               }}
+                               onMouseEnter={(e) => {
+                                 e.currentTarget.style.background = 'rgba(0, 255, 136, 0.12)';
+                                 e.currentTarget.style.boxShadow = '0 0 10px rgba(0, 255, 136, 0.2)';
+                               }}
+                               onMouseLeave={(e) => {
+                                 e.currentTarget.style.background = 'rgba(0, 255, 136, 0.05)';
+                                 e.currentTarget.style.boxShadow = 'none';
+                               }}
+                             >
+                               [ 🧠 ENTER FULL ADVOCACY DECK ➔ ]
+                             </a>
+                           </div>
+                         )}
+                         
                          {/* Sub-slides back button */}
                          {activeSlide > 0 && (
+
                            <div style={{ display: 'flex', gap: '10px', marginTop: '12px' }}>
                              <button
                                onClick={() => setActiveSlide(0)}

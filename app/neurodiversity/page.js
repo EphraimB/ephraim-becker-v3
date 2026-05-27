@@ -10,7 +10,8 @@ export default function NeurodiversityAdvocacy() {
   const [shareUrl, setShareUrl] = useState("https://ephraim-becker.com/neurodiversity");
   const [shareText, setShareText] = useState("Explore the Neurodiversity Advocacy portal in Ephraim Becker's Ares City. Let's move past old-school special needs pathology models and celebrate cognitive variation: ");
   const [currentConsoleSector, setCurrentConsoleSector] = useState('matrix'); // 'matrix', 'lexicon', 'history', 'story', 'advocacy'
-  const [activeChapter, setActiveChapter] = useState(0); // 0 to 4 for historical Chapters I-V
+  const [activeChapter, setActiveChapter] = useState(0); // 0 to 4 for historical Chapters 01-05
+  const [activeStoryPhase, setActiveStoryPhase] = useState(0); // 0 to 4 for story Phases 01-05
   const [glitchActive, setGlitchActive] = useState(false);
   const [lexiconSearch, setLexiconSearch] = useState('');
   const [lexiconCategory, setLexiconCategory] = useState('all'); // 'all', 'energy', 'social', 'cognitive'
@@ -225,6 +226,61 @@ export default function NeurodiversityAdvocacy() {
           background: rgba(255, 179, 0, 0.04);
         }
 
+        .deck-tab-bar {
+          display: grid;
+          grid-template-columns: repeat(5, 1fr);
+          gap: 8px;
+          margin-bottom: 20px;
+        }
+        .deck-tab-btn {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          padding: 10px 4px;
+          font-family: monospace, var(--font-tech);
+          background: rgba(6, 9, 20, 0.65);
+          border: 1.5px solid rgba(255, 255, 255, 0.15);
+          color: rgba(255, 255, 255, 0.85);
+          border-radius: 8px;
+          cursor: pointer;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+          outline: none;
+          min-height: 54px;
+          box-shadow: inset 0 1px 3px rgba(255,255,255,0.02);
+        }
+        .deck-tab-btn:hover {
+          background: rgba(0, 255, 136, 0.05);
+          border-color: rgba(0, 255, 136, 0.5);
+          color: #00ff88;
+          box-shadow: 0 0 10px rgba(0, 255, 136, 0.15);
+        }
+        .deck-tab-btn.active {
+          background: rgba(0, 255, 136, 0.15);
+          border-color: #00ff88;
+          color: #00ff88;
+          box-shadow: 0 0 15px rgba(0, 255, 136, 0.35);
+          font-weight: bold;
+          text-shadow: 0 0 6px rgba(0, 255, 136, 0.5);
+        }
+        .deck-tab-btn .tab-num {
+          font-size: 0.8rem;
+          font-weight: 800;
+          letter-spacing: 0.5px;
+        }
+        .deck-tab-btn .tab-sub {
+          font-size: 0.55rem;
+          opacity: 0.7;
+          letter-spacing: 0.5px;
+          text-transform: uppercase;
+          margin-top: 2px;
+          font-weight: normal;
+        }
+        .deck-tab-btn.active .tab-sub {
+          opacity: 0.95;
+        }
+
         .timeline-box {
           background: rgba(6, 9, 20, 0.85);
           backdrop-filter: blur(16px);
@@ -435,6 +491,39 @@ export default function NeurodiversityAdvocacy() {
             margin-bottom: 8px !important;
             width: 140px !important;
             height: 110px !important;
+          }
+          .deck-tab-bar {
+            grid-template-columns: repeat(5, 1fr) !important;
+            gap: 4px !important;
+            margin-bottom: 12px !important;
+          }
+          .deck-tab-btn {
+            padding: 6px 2px !important;
+            min-height: 44px !important;
+          }
+          .deck-tab-btn .tab-num {
+            font-size: 0.68rem !important;
+          }
+          .deck-tab-btn .tab-sub {
+            font-size: 0.46rem !important;
+            letter-spacing: 0px !important;
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+            width: 100% !important;
+          }
+        }
+
+        @media (max-width: 540px) {
+          .deck-tab-btn .tab-sub {
+            display: none !important;
+          }
+          .deck-tab-btn {
+            min-height: 36px !important;
+            padding: 8px 4px !important;
+          }
+          .deck-tab-btn .tab-num {
+            font-size: 0.72rem !important;
           }
         }
       `}} />
@@ -827,35 +916,23 @@ export default function NeurodiversityAdvocacy() {
                   </p>
 
                   {/* Cybernetic Tabbed Grid Selection */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', marginBottom: '20px' }}>
+                  <div className="deck-tab-bar">
                     {[
-                      { label: 'CHAP I', id: 0, name: 'Confinement' },
-                      { label: 'CHAP II', id: 1, name: 'Mother Shame' },
-                      { label: 'CHAP III', id: 2, name: 'Violent Mod' },
-                      { label: 'CHAP IV', id: 3, name: 'Self-Advocacy' },
-                      { label: 'CHAP V', id: 4, name: 'Double Empathy' }
+                      { num: '01', id: 0, title: 'Confinement' },
+                      { num: '02', id: 1, title: 'Mother Shame' },
+                      { num: '03', id: 2, title: 'Violent Mod' },
+                      { num: '04', id: 3, title: 'Self-Advocacy' },
+                      { num: '05', id: 4, title: 'Double Empathy' }
                     ].map((tab) => {
                       const isActive = activeChapter === tab.id;
                       return (
                         <button
                           key={tab.id}
                           onClick={() => setActiveChapter(tab.id)}
-                          className="hud-btn"
-                          style={{
-                            padding: '8px 4px',
-                            fontSize: '0.62rem',
-                            fontFamily: 'monospace',
-                            borderColor: isActive ? '#00ff88' : 'rgba(255,255,255,0.06)',
-                            background: isActive ? 'rgba(0, 255, 136, 0.12)' : 'rgba(4, 6, 12, 0.4)',
-                            color: isActive ? '#00ff88' : 'rgba(255,255,255,0.65)',
-                            borderRadius: '6px',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            transition: 'all 0.2s ease',
-                            boxShadow: isActive ? '0 0 10px rgba(0, 255, 136, 0.2)' : 'none'
-                          }}
+                          className={`deck-tab-btn ${isActive ? 'active' : ''}`}
                         >
-                          {tab.label}
+                          <span className="tab-num">CHAP {tab.num}</span>
+                          <span className="tab-sub">{tab.title}</span>
                         </button>
                       );
                     })}
@@ -889,7 +966,7 @@ export default function NeurodiversityAdvocacy() {
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                           <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(234, 67, 53, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#ea4335', fontWeight: 'bold' }}>
-                            CHAPTER I // 1930s - 1940s
+                            CHAPTER 01 // 1930s - 1940s
                           </span>
                         </div>
                         <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
@@ -923,7 +1000,7 @@ export default function NeurodiversityAdvocacy() {
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                           <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 240, 255, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00f0ff', fontWeight: 'bold' }}>
-                            CHAPTER II // 1950s - 1960s
+                            CHAPTER 02 // 1950s - 1960s
                           </span>
                         </div>
                         <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
@@ -961,7 +1038,7 @@ export default function NeurodiversityAdvocacy() {
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                           <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(255, 117, 34, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#ff7522', fontWeight: 'bold' }}>
-                            CHAPTER III // 1960s - 1970s
+                            CHAPTER 03 // 1960s - 1970s
                           </span>
                         </div>
                         <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
@@ -1000,7 +1077,7 @@ export default function NeurodiversityAdvocacy() {
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                           <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 255, 136, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00ff88', fontWeight: 'bold' }}>
-                            CHAPTER IV // LATE 1980s - 1990s
+                            CHAPTER 04 // LATE 1980s - 1990s
                           </span>
                         </div>
                         <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
@@ -1035,7 +1112,7 @@ export default function NeurodiversityAdvocacy() {
 
                         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
                           <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 255, 136, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00ff88', fontWeight: 'bold' }}>
-                            CHAPTER V // 2012 - PRESENT
+                            CHAPTER 05 // 2012 - PRESENT
                           </span>
                         </div>
                         <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
@@ -1063,112 +1140,251 @@ export default function NeurodiversityAdvocacy() {
                     <span style={{ fontSize: '1.4rem', animation: 'pulse-amber-warn 2s infinite ease-in-out', filter: 'drop-shadow(0 0 6px rgba(255, 179, 0, 0.4))' }}>⚠️</span>
                     <div>
                       <strong style={{ display: 'block', fontFamily: 'var(--font-tech)', fontSize: '0.8rem', color: '#ffb300', letterSpacing: '0.5px', textShadow: '0 0 6px rgba(255, 179, 0, 0.2)' }}>
-                        DECK STATUS: ACTIVE EXPLORATION // STORY IN PROGRESS
+                        DECK STATUS: ACTIVE EXPLORATION // MEMOIR TIMELINE ACTIVE
                       </strong>
                       <span style={{ fontSize: '0.65rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.85)', lineHeight: '1.4', display: 'block', marginTop: '2px' }}>
-                        This sector represents a living memoir—the data streams are actively synthesized as I slowly learn more about myself and autism.
+                        Understanding one's own neurotype is a lifelong journey. Select a phase below to explore my lived experiences through interactive console visualizers:
                       </span>
                     </div>
                   </div>
 
-                  {/* Chronological 4-Card Story Grid */}
-                  <div className="story-grid">
-                    
-                    {/* Card 1: Early Intervention */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(255,255,255,0.06)', paddingBottom: '8px' }}>
-                        <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#ffb300', fontWeight: 'bold' }}>
-                          PHASE 01 // EARLY INTERVENTION
-                        </span>
-                        <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)' }}>
-                          AGE 3.5 // BEHAVIORAL
-                        </span>
-                      </div>
-                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        My story started out with Applied Behavior Analysis (ABA) when I was 3 and a half years old. I had intensive ABA sessions similar to historical behaviorist training videos every Sunday for some time, back when the old-school compliance model of special needs was the dominant practice.
-                      </p>
-                      
-                      <a 
-                        href="https://youtu.be/gB_RJ0lRQ-E?si=MzVT-AhfMmZWU98K" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="share-pill-btn"
-                        style={{
-                          marginTop: 'auto',
-                          borderColor: '#ffb300',
-                          color: '#ffb300',
-                          background: 'rgba(255, 179, 0, 0.04)',
-                          padding: '6px 10px',
-                          fontSize: '0.62rem',
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        📺 View Historical ABA Video ➔
-                      </a>
-                    </div>
+                  {/* Cybernetic Tabbed Memoir Slide Selector */}
+                  <div className="deck-tab-bar">
+                    {[
+                      { num: '01', id: 0, title: 'ABA Sessions' },
+                      { num: '02', id: 1, title: 'Orthodox Yeshiva' },
+                      { num: '03', id: 2, title: 'Special Needs' },
+                      { num: '04', id: 3, title: 'Autistic Burnout' },
+                      { num: '05', id: 4, title: 'Self-Acceptance' }
+                    ].map((phase) => {
+                      const isActive = activeStoryPhase === phase.id;
+                      return (
+                        <button
+                          key={phase.id}
+                          onClick={() => setActiveStoryPhase(phase.id)}
+                          className={`deck-tab-btn ${isActive ? 'active' : ''}`}
+                        >
+                          <span className="tab-num">PHASE {phase.num}</span>
+                          <span className="tab-sub">{phase.title}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
 
-                    {/* Card 2: Mainstream Yeshiva */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(255,255,255,0.06)', paddingBottom: '8px' }}>
-                        <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#ffb300', fontWeight: 'bold' }}>
-                          PHASE 02 // MAINSTREAM SCHOOLING
-                        </span>
-                        <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)' }}>
-                          GRADE SCHOOL // ADVOCACY GAP
-                        </span>
-                      </div>
-                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        My parents wanted me to try a mainstream orthodox yeshiva. In grade school, it was obvious to me that I was different from my peers. I was constantly wondering why I was getting special support when everybody in my environment made it look like I was normal—but they were just faking it because neurodiversity was not well known at the time. Lacking the vocabulary to advocate for myself, I acted out and called out in class, eventually getting a paraprofessional (para), still never knowing I was autistic.
-                      </p>
-                    </div>
+                  {/* Spacious Timeline Card displaying active Memoir Phase */}
+                  <div className="timeline-box">
 
-                    {/* Card 3: Academic Transition */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(255,255,255,0.06)', paddingBottom: '8px' }}>
-                        <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#ffb300', fontWeight: 'bold' }}>
-                          PHASE 03 // SPECIAL EDUCATION
-                        </span>
-                        <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)' }}>
-                          HIGH SCHOOL // TRANSITION
-                        </span>
-                      </div>
-                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        After 2 years of High School, it was clear that the mainstream yeshiva wasn't working out. I was taken out of the mainstream yeshiva because my parents thought that a special needs school would be better for me and heard very good things about the program, and they didn't send me back because it would be hard to re-enter again. I ended up going to two special needs schools. In the first special needs school, another kid pointed out to me that I was autistic. He didn't do it to be nice—he did it in a teasing, mocking way that framed autism strictly as a broken disability, scaring me deeply at first until I eventually discovered the neurodiversity paradigm and began reclaiming my identity. In the second special needs school, there was a tough leader there who turned the whole school against me, causing a lot of fear in my life.
-                      </p>
-                    </div>
+                    {activeStoryPhase === 0 && (
+                      <div className="history-text">
+                        {/* Animated SVG Phase 1 */}
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(255, 179, 0, 0.25)' }}>
+                          <svg viewBox="0 0 100 80" width="100%" height="100%">
+                            <rect x="18" y="15" width="18" height="18" rx="2" fill="none" stroke="#ffb300" strokeWidth="1.5">
+                              <animate attributeName="stroke" values="#ffb300;#00ff88;#ffb300" dur="2.5s" repeatCount="indefinite" />
+                              <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" repeatCount="indefinite" />
+                            </rect>
+                            <rect x="41" y="15" width="18" height="18" rx="2" fill="none" stroke="#ffb300" strokeWidth="1.5">
+                              <animate attributeName="stroke" values="#ffb300;#00ff88;#ffb300" dur="2.5s" begin="0.8s" repeatCount="indefinite" />
+                              <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" begin="0.8s" repeatCount="indefinite" />
+                            </rect>
+                            <rect x="64" y="15" width="18" height="18" rx="2" fill="none" stroke="#ffb300" strokeWidth="1.5">
+                              <animate attributeName="stroke" values="#ffb300;#00ff88;#ffb300" dur="2.5s" begin="1.6s" repeatCount="indefinite" />
+                              <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" begin="1.6s" repeatCount="indefinite" />
+                            </rect>
+                            <line x1="20" y1="46" x2="80" y2="46" stroke="rgba(255,255,255,0.15)" strokeWidth="2" strokeLinecap="round" />
+                            <line x1="20" y1="46" x2="50" y2="46" stroke="#ffb300" strokeWidth="2.5" strokeLinecap="round">
+                              <animate attributeName="x2" values="20;80;20" dur="4s" repeatCount="indefinite" />
+                            </line>
+                            <circle cx="50" cy="46" r="3" fill="#ffb300" style={{ filter: 'drop-shadow(0 0 2px #ffb300)' }}>
+                              <animate attributeName="cx" values="20;80;20" dur="4s" repeatCount="indefinite" />
+                            </circle>
+                            <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ ABA TRIAL METRIC ]</text>
+                          </svg>
+                        </div>
 
-                    {/* Card 4: Burnout & Communication Mismatch */}
-                    <div style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(255,255,255,0.06)', paddingBottom: '8px' }}>
-                        <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#ffb300', fontWeight: 'bold' }}>
-                          PHASE 04 // BURNOUT & BARRIERS
-                        </span>
-                        <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.3)' }}>
-                          EARLY 20s // BURNOUT
-                        </span>
-                      </div>
-                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        In my early 20s, I hit severe autistic burnout, which was mostly driven by the trauma and harassment from that unsafe environment in the second special needs school. I struggled with the painful thought that I would never make any friends. Socializing was further complicated because I often misread other autistic individuals' silent disengagement as a sign that I had done something wrong. In reality, their social batteries were simply drained—but because there was no active communication from them, I kept unknowingly invading their boundaries.
-                      </p>
-                    </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(255, 179, 0, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#ffb300', fontWeight: 'bold' }}>
+                            PHASE 01 // AGE 3.5 // BEHAVIORAL INTERVENTION
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          Applied Behavior Analysis (ABA) Early Training
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          My story started out with Applied Behavior Analysis (ABA) when I was 3 and a half years old. I had intensive ABA sessions similar to historical behaviorist training videos every Sunday for some time, back when the old-school compliance model of special needs was the dominant practice.
+                        </p>
 
-                    {/* Card 5: Fostering Synapses */}
-                    <div className="story-card-wide" style={{ background: 'rgba(6, 9, 20, 0.85)', backdropFilter: 'blur(16px)', border: '1.5px solid rgba(255, 255, 255, 0.08)', borderRadius: '10px', padding: '18px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(255,255,255,0.06)', paddingBottom: '8px' }}>
-                        <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold' }}>
-                          PHASE 05 // ACTIVE SYNTHESIS
-                        </span>
-                        <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(0,255,136,0.3)' }}>
-                          PRESENT // SELF-ACCEPTANCE
+                        <a 
+                          href="https://youtu.be/gB_RJ0lRQ-E?si=MzVT-AhfMmZWU98K" 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="share-pill-btn"
+                          style={{
+                            marginTop: '14px',
+                            borderColor: '#ffb300',
+                            color: '#ffb300',
+                            background: 'rgba(255, 179, 0, 0.04)',
+                            padding: '6px 12px',
+                            fontSize: '0.65rem',
+                            fontWeight: 'bold',
+                            width: 'fit-content',
+                            display: 'flex'
+                          }}
+                        >
+                          📺 View Historical ABA Video ➔
+                        </a>
+                      </div>
+                    )}
+
+                    {activeStoryPhase === 1 && (
+                      <div className="history-text">
+                        {/* Animated SVG Phase 2 */}
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(0, 240, 255, 0.2)' }}>
+                          <svg viewBox="0 0 100 80" width="100%" height="100%">
+                            <circle cx="20" cy="20" r="3" fill="rgba(255,255,255,0.15)" />
+                            <circle cx="50" cy="15" r="3" fill="rgba(255,255,255,0.15)" />
+                            <circle cx="80" cy="20" r="3" fill="rgba(255,255,255,0.15)" />
+                            <circle cx="25" cy="45" r="3" fill="rgba(255,255,255,0.15)" />
+                            <circle cx="75" cy="45" r="3" fill="rgba(255,255,255,0.15)" />
+                            <circle cx="50" cy="42" r="5.5" fill="#00f0ff" style={{ animation: 'shiver-node 0.4s infinite', filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
+                            <path d="M 38,32 A 13,13 0 0,1 62,32" fill="none" stroke="#ffb300" strokeWidth="1.5" strokeDasharray="3 1.5">
+                              <animateTransform attributeName="transform" type="rotate" from="0 50 42" to="360 50 42" dur="10s" repeatCount="indefinite" />
+                            </path>
+                            <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ FACADE CIRCLE // PARA SHIELD ]</text>
+                          </svg>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 240, 255, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00f0ff', fontWeight: 'bold' }}>
+                            PHASE 02 // GRADE SCHOOL // THE COMMUNICATION GAP
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          Mainstream Orthodox Yeshiva & The normalcy Facade
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          My parents wanted me to try a mainstream orthodox yeshiva. In grade school, it was obvious to me that I was different from my peers. I was constantly wondering why I was getting special support when everybody in my environment made it look like I was normal—but they were just faking it because neurodiversity was not well known at the time. Lacking the vocabulary to advocate for myself, I acted out and called out in class, eventually getting a paraprofessional (para), still never knowing I was autistic.
+                        </p>
+                      </div>
+                    )}
+
+                    {activeStoryPhase === 2 && (
+                      <div className="history-text">
+                        {/* Animated SVG Phase 3 */}
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(234, 67, 53, 0.25)' }}>
+                          <svg viewBox="0 0 100 80" width="100%" height="100%">
+                            <rect x="0" y="0" width="100" height="80" style={{ animation: 'pulse-red-alert 3s infinite' }} />
+                            <circle cx="25" cy="25" r="8" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+                            <circle cx="25" cy="25" r="2.5" fill="#ffb300" />
+                            <line x1="25" y1="25" x2="48" y2="44" stroke="#ffb300" strokeWidth="0.8" strokeDasharray="1.5 1.5" />
+                            <circle cx="75" cy="25" r="8" fill="none" stroke="rgba(234, 67, 53, 0.15)" strokeWidth="0.8" />
+                            <circle cx="75" cy="25" r="3.5" fill="#ea4335" style={{ filter: 'drop-shadow(0 0 3px #ea4335)' }} />
+                            <path d="M 70,29 Q 60,40 52,43" fill="none" stroke="#ea4335" strokeWidth="1" strokeDasharray="2 2">
+                              <animate attributeName="stroke-dashoffset" values="0;5" dur="1s" repeatCount="indefinite" />
+                            </path>
+                            <circle cx="50" cy="46" r="4.5" fill="#00f0ff" style={{ animation: 'shiver-node 0.12s infinite', filter: 'drop-shadow(0 0 2.5px #00f0ff)' }} />
+                            <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ HARASSMENT VECTOR COLLISION ]</text>
+                          </svg>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(234, 67, 53, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#ea4335', fontWeight: 'bold' }}>
+                            PHASE 03 // HIGH SCHOOL // TRANSITION & HARASSMENT
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          Special Education Transfer & Bullying Dynamics
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          After 2 years of High School, it was clear that the mainstream yeshiva wasn't working out. I was taken out of the mainstream yeshiva because my parents thought that a special needs school would be better for me and heard very good things about the program, and they didn't send me back because it would be hard to re-enter again.
+                        </p>
+                        <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          I ended up going to two special needs schools. In the first special needs school, another kid pointed out to me that I was autistic. He didn't do it to be nice—he did it in a teasing, mocking way that framed autism strictly as a broken disability, scaring me deeply at first until I eventually discovered the neurodiversity paradigm and began reclaiming my identity. In the second special needs school, there was a tough leader there who turned the whole school against me, causing a lot of fear in my life.
+                        </p>
+                      </div>
+                    )}
+
+                    {activeStoryPhase === 3 && (
+                      <div className="history-text">
+                        {/* Animated SVG Phase 4 */}
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(255, 179, 0, 0.25)' }}>
+                          <svg viewBox="0 0 100 80" width="100%" height="100%">
+                            <rect x="30" y="16" width="40" height="12" rx="2" fill="none" stroke="#ea4335" strokeWidth="1.5" />
+                            <rect x="70" y="20" width="2" height="4" rx="0.5" fill="#ea4335" />
+                            <rect x="33" y="19" width="6" height="6" rx="0.5" fill="#ea4335" style={{ animation: 'pulse-amber-warn 1.5s infinite' }} />
+                            <circle cx="30" cy="48" r="8" fill="none" stroke="#ea4335" strokeWidth="0.8" strokeDasharray="2 2" />
+                            <circle cx="70" cy="48" r="8" fill="none" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="2 2" />
+                            <path d="M 38,48 Q 50,38 62,48" fill="none" stroke="#ea4335" strokeWidth="1" strokeDasharray="2 1">
+                              <animate attributeName="stroke-dashoffset" values="0;6" dur="1.2s" repeatCount="indefinite" />
+                            </path>
+                            <line x1="30" y1="48" x2="70" y2="48" stroke="#ea4335" strokeWidth="1" strokeDasharray="3 3" />
+                            <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ BURNOUT CRASH // MISMATCH ]</text>
+                          </svg>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(255, 179, 0, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#ffb300', fontWeight: 'bold' }}>
+                            PHASE 04 // EARLY 20s // AUTISTIC BURNOUT
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          Autistic Burnout & Boundary Overruns
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          In my early 20s, I hit severe autistic burnout, which was mostly driven by the trauma and harassment from that unsafe environment in the second special needs school. I struggled with the painful thought that I would never make any friends.
+                        </p>
+                        <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          Socializing was further complicated because I often misread other autistic individuals' silent disengagement as a sign that I had done something wrong. In reality, their social batteries were simply drained—but because there was no active communication from them, I kept unknowingly invading their boundaries due to no communication from the other person.
+                        </p>
+                      </div>
+                    )}
+
+                    {activeStoryPhase === 5 || activeStoryPhase === 4 && (
+                      <div className="history-text">
+                        {/* Animated SVG Phase 5 */}
+                        <div className="history-svg-box" style={{ borderColor: 'rgba(0, 255, 136, 0.25)' }}>
+                          <svg viewBox="0 0 100 80" width="100%" height="100%">
+                            <circle cx="50" cy="35" r="5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 5px #00ff88)' }} />
+                            <circle cx="20" cy="20" r="3" fill="#00f0ff" />
+                            <circle cx="80" cy="20" r="3" fill="#00f0ff" />
+                            <circle cx="25" cy="50" r="3" fill="#00f0ff" />
+                            <circle cx="75" cy="50" r="3" fill="#00f0ff" />
+                            <line x1="50" y1="35" x2="20" y2="20" stroke="#00ff88" strokeWidth="1" strokeDasharray="2 2">
+                              <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite" />
+                            </line>
+                            <line x1="50" y1="35" x2="80" y2="20" stroke="#00ff88" strokeWidth="1" strokeDasharray="2 2">
+                              <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite" />
+                            </line>
+                            <line x1="50" y1="35" x2="25" y2="50" stroke="#00ff88" strokeWidth="1" strokeDasharray="2 2">
+                              <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite" />
+                            </line>
+                            <line x1="50" y1="35" x2="75" y2="50" stroke="#00ff88" strokeWidth="1" strokeDasharray="2 2">
+                              <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite" />
+                            </line>
+                            <circle cx="50" cy="35" r="14" fill="none" stroke="#00ff88" strokeWidth="0.8" style={{ animation: 'pulse-signal-ring 2s infinite' }} />
+                            <text x="50" y="70" fill="#00ff88" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ SYNAPSE SYNC NOMINAL ]</text>
+                          </svg>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
+                          <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', background: 'rgba(0, 255, 136, 0.15)', padding: '2px 6px', borderRadius: '3px', color: '#00ff88', fontWeight: 'bold' }}>
+                            PHASE 05 // PRESENT // SELF-ACCEPTANCE
+                          </span>
+                        </div>
+                        <h4 style={{ margin: '0 0 8px 0', fontSize: '0.88rem', fontFamily: 'monospace', color: '#ffffff', fontWeight: 'bold' }}>
+                          Active Synaptic Synthesis & The Future Journey
+                        </h4>
+                        <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          I am slowly learning more about myself and autism every single day. Armed with a deeper understanding of these communication mismatches and respect for social batteries, I am unlearning pathologizing deficit labels and fully accepting my unique cognitive wiring.
+                        </p>
+                        <p style={{ margin: '8px 0 0 0', fontSize: '0.74rem', color: 'rgba(255,255,255,0.8)', lineHeight: '1.6', textAlign: 'justify' }}>
+                          I am actively finding new, authentic, and healthy ways to socialize and connect with other people on my own terms.
+                        </p>
+                        <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold', marginTop: '12px', display: 'block', textShadow: '0 0 5px rgba(0,255,136,0.3)' }}>
+                          [ UPLINK SYNC: NOMINAL // MORE SYNAPSES PENDING ]
                         </span>
                       </div>
-                      <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        I am slowly learning more about myself and autism every single day. Armed with a deeper understanding of these communication mismatches and respect for social batteries, I am unlearning pathologizing deficit labels and fully accepting my unique cognitive wiring. I am actively finding new, authentic, and healthy ways to socialize and connect with other people on my own terms.
-                      </p>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold', marginTop: '12px', display: 'block', textAlign: 'center', textShadow: '0 0 5px rgba(0,255,136,0.3)' }}>
-                        [ UPLINK SYNC: NOMINAL // MORE SYNAPSES PENDING ]
-                      </span>
-                    </div>
+                    )}
 
                   </div>
 

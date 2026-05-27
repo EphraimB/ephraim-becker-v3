@@ -14,27 +14,18 @@ export default function ClientLayoutWrapper({ children }) {
   let hudSectorName = 'Citizen Suite';
   let currentLocationName = 'CITIZEN SUITE';
 
-  if (pathname === '/metropolis-core') {
-    bgImage = '/assets/images/backgrounds/metropolis-core.png';
-    currentTheme = 'metropolis';
-    hudSectorName = 'Metropolis Core';
-    currentLocationName = 'METROPOLIS';
-  } else if (pathname === '/atmosphere-dome') {
-    bgImage = '/assets/images/backgrounds/atmosphere-dome.png';
-    currentTheme = 'biosphere';
-    hudSectorName = 'Biosphere Dome';
-    currentLocationName = 'BIOSPHERE';
-  } else if (pathname === '/quantum-net') {
-    bgImage = '/assets/images/backgrounds/quantum-net.png';
-    currentTheme = 'quantum';
-    hudSectorName = 'Quantum Net';
-    currentLocationName = 'QUANTUM NET';
-  } else if (pathname === '/portfolio') {
+  if (pathname === '/portfolio') {
     bgImage = '/assets/images/backgrounds/metropolis-core.png';
     currentTheme = 'metropolis';
     hudSectorName = 'Portfolio Archives';
     currentLocationName = 'PORTFOLIO';
+  } else if (pathname === '/neurodiversity') {
+    bgImage = '/assets/images/backgrounds/atmosphere-dome.png';
+    currentTheme = 'biosphere';
+    hudSectorName = 'Neurodiversity Deck';
+    currentLocationName = 'ADVOCACY HUB';
   }
+
 
   // Close the drawer automatically when pathname changes (teleportation succeeds)
   useEffect(() => {
@@ -108,7 +99,7 @@ export default function ClientLayoutWrapper({ children }) {
         
         <div className="workspace-deck">
           {/* Natural standing roomscale profile figure */}
-          {pathname !== '/portfolio' && pathname !== '/' && (
+          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/neurodiversity' && (
             <div className={`roomscale-natural-body page-${currentTheme}`}>
               <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
             </div>

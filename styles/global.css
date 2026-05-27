@@ -82,7 +82,7 @@ body {
 
 /* Full-Screen Immersive Penthouse Background */
 .background-canvas {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;

@@ -1118,7 +1118,7 @@ export default function NeurodiversityAdvocacy() {
                         </span>
                       </div>
                       <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        My parents wanted me to try a mainstream ultra-orthodox yeshiva. In grade school, it was obvious to me that I was different from my peers. I was constantly wondering why I was getting special support when everybody in my environment made it look like I was normal—but they were just faking it because neurodiversity was not well known at the time. Lacking the vocabulary to advocate for myself, I acted out and called out in class, eventually getting a paraprofessional (para), still never knowing I was autistic.
+                        My parents wanted me to try a mainstream orthodox yeshiva. In grade school, it was obvious to me that I was different from my peers. I was constantly wondering why I was getting special support when everybody in my environment made it look like I was normal—but they were just faking it because neurodiversity was not well known at the time. Lacking the vocabulary to advocate for myself, I acted out and called out in class, eventually getting a paraprofessional (para), still never knowing I was autistic.
                       </p>
                     </div>
 
@@ -1133,7 +1133,7 @@ export default function NeurodiversityAdvocacy() {
                         </span>
                       </div>
                       <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        After 2 years of High School, it was clear that the mainstream Yeshiva wasn't working out, and I was transferred to a special needs school. The new environment was highly unstable, with constant interpersonal fighting and friction. During this time, another student pointed out to me that I was autistic. He didn't do it to be nice—he did it in a teasing, mocking way that framed autism strictly as a broken disability, scaring me deeply at first until I eventually discovered the neurodiversity paradigm and began reclaiming my identity.
+                        After 2 years of High School, it was clear that the mainstream yeshiva wasn't working out. I was taken out of the mainstream yeshiva because my parents thought that a special needs school would be better for me and heard very good things about the program, and they didn't send me back because it would be hard to re-enter again. I ended up going to two special needs schools. In the first special needs school, another kid pointed out to me that I was autistic. He didn't do it to be nice—he did it in a teasing, mocking way that framed autism strictly as a broken disability, scaring me deeply at first until I eventually discovered the neurodiversity paradigm and began reclaiming my identity. In the second special needs school, there was a tough leader there who turned the whole school against me, causing a lot of fear in my life.
                       </p>
                     </div>
 
@@ -1148,7 +1148,7 @@ export default function NeurodiversityAdvocacy() {
                         </span>
                       </div>
                       <p style={{ margin: 0, fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: '1.55', textAlign: 'justify' }}>
-                        In my early 20s, I hit severe autistic burnout, driven by the accumulated trauma of being harassed in the unstable and unsafe special needs high school. I struggled with the painful thought that I would never make any friends. Socializing was further complicated because I often misread other autistic individuals' silent disengagement as a sign that I had done something wrong. In reality, their social batteries were simply drained—but because there was no active communication from them, I kept unknowingly invading their boundaries.
+                        In my early 20s, I hit severe autistic burnout, which was mostly driven by the trauma and harassment from that unsafe environment in the second special needs school. I struggled with the painful thought that I would never make any friends. Socializing was further complicated because I often misread other autistic individuals' silent disengagement as a sign that I had done something wrong. In reality, their social batteries were simply drained—but because there was no active communication from them, I kept unknowingly invading their boundaries.
                       </p>
                     </div>
 

@@ -168,9 +168,14 @@
     "image": "/projects/biking-forecast-xr.png",
     "links": [
       {
-        "src": "https://docs.google.com/presentation/d/1zGQUptMBxEAqYX1ZOfgqmBy41TSfyyIHZluAvoMbFbU/edit?usp=sharing",
-        "description": "Google Slides Concept Deck",
-        "type": "slides"
+        "src": "/projects/downloads/Biking Forecast & Planner XR.pptx",
+        "description": "PowerPoint (.pptx)",
+        "type": "download"
+      },
+      {
+        "src": "/projects/downloads/Biking Forecast & Planner XR.pdf",
+        "description": "PDF (.pdf)",
+        "type": "download"
       }
     ]
   }

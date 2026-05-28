@@ -18,6 +18,8 @@ export default function NeurodiversityTacticalMuseum() {
   const [activeStoryPhase, setActiveStoryPhase] = useState(0); // 0 to 4 for Memoir Phases 01-05 (Exhibit 5)
   const [activeMatrixTrait, setActiveMatrixTrait] = useState('stimming'); // 'stimming', 'hyperfocus', 'comms', 'autonomy' (Exhibit 4)
   const [isMounted, setIsMounted] = useState(false);
+  const [passportId, setPassportId] = useState(null);
+  const [shareUrl, setShareUrl] = useState('');
   const [transitState, setTransitState] = useState('slide-active');
   const [activeStarNode, setActiveStarNode] = useState(null); // Selected Lexicon Term object
   
@@ -42,6 +44,10 @@ export default function NeurodiversityTacticalMuseum() {
 
   useEffect(() => {
     setIsMounted(true);
+    setPassportId(Math.round(Math.random() * 90000) + 10000);
+    if (typeof window !== 'undefined') {
+      setShareUrl(window.location.href);
+    }
   }, []);
 
   const changeSector = (sector) => {
@@ -590,6 +596,9 @@ export default function NeurodiversityTacticalMuseum() {
           font-weight: bold;
         }
         
+        .custom-scroll {
+          overflow-y: auto;
+        }
         .custom-scroll::-webkit-scrollbar {
           width: 4px;
         }
@@ -1137,15 +1146,15 @@ export default function NeurodiversityTacticalMuseum() {
               SANCTUARY & PLEDGE SECTOR
               ==================================== */}
           {activeSector === 'sanctuary' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', margin: '0 auto', maxWidth: '800px' }}>
+            <div className="custom-scroll" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', margin: '0 auto', maxWidth: '800px', height: '100%', padding: '10px 8px 40px 8px' }}>
               
               {/* Box Breathing Regulator Component */}
-              <div className="bubbly-panel">
+              <div style={{ flexShrink: 0 }}>
                 <BreathingRegulator />
               </div>
 
               {/* Colony Pledging Terminal */}
-              <div className="bubbly-panel">
+              <div className="bubbly-panel" style={{ flexShrink: 0 }}>
                 <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.85rem', color: '#00ff88', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '6px' }}>
                   🛠️ Ares Colony Cognitive Citizen Pledge
                 </h3>
@@ -1259,12 +1268,12 @@ export default function NeurodiversityTacticalMuseum() {
 
                       <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px dashed rgba(0, 255, 136, 0.3)', paddingBottom: '6px', marginBottom: '10px' }}>
                         <span style={{ fontFamily: 'monospace', fontSize: '0.5rem', color: '#00ff88', fontWeight: 'bold' }}>ARES COLONY INTEGRITY SECURITY</span>
-                        <span style={{ fontFamily: 'monospace', fontSize: '0.5rem', color: '#00ff88' }}>ID: {Math.round(Math.random() * 90000) + 10000}</span>
+                        <span style={{ fontFamily: 'monospace', fontSize: '0.5rem', color: '#00ff88' }}>ID: {passportId || '-----'}</span>
                       </div>
 
                       <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
                         {/* Futuristic Barcode SVG */}
-                        <svg viewBox="0 0 40 40" style={{ width: '45px', height: '45px', background: '#04060c', padding: '3px', borderRadius: '4px', border: '1px stroke #00ff88' }}>
+                        <svg viewBox="0 0 40 40" style={{ width: '45px', height: '45px', background: '#04060c', padding: '3px', borderRadius: '4px', borderWidth: '1px', borderStyle: 'solid', borderColor: '#00ff88' }}>
                           <line x1="4" y1="5" x2="4" y2="35" stroke="#00ff88" strokeWidth="1.5" />
                           <line x1="8" y1="5" x2="8" y2="35" stroke="#00ff88" strokeWidth="0.8" />
                           <line x1="12" y1="5" x2="12" y2="35" stroke="#00ff88" strokeWidth="2.5" />
@@ -1302,8 +1311,8 @@ export default function NeurodiversityTacticalMuseum() {
 
                     {/* Social share anchors */}
                     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '6px', width: '100%', maxWidth: '380px' }}>
-                      <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} target="_blank" rel="noopener noreferrer" className="audio-deck-btn" style={{ textDecoration: 'none' }}>🔗 LinkedIn</a>
-                      <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(typeof window !== 'undefined' ? window.location.href : '')}`} target="_blank" rel="noopener noreferrer" className="audio-deck-btn" style={{ textDecoration: 'none' }}>🐦 Twitter / X</a>
+                      <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="audio-deck-btn" style={{ textDecoration: 'none' }}>🔗 LinkedIn</a>
+                      <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`} target="_blank" rel="noopener noreferrer" className="audio-deck-btn" style={{ textDecoration: 'none' }}>🐦 Twitter / X</a>
                     </div>
 
                   </div>

@@ -187,7 +187,8 @@ export function MaskingDiagnostics() {
                   fill="none" 
                   stroke="#ffb300" 
                   strokeWidth="1"
-                  opacity={Math.random() > 0.4 ? 0.9 : 0.2}
+                  opacity={0.8}
+                  style={{ animation: 'shiver-node 0.15s infinite' }}
                 />
               )}
 
@@ -914,14 +915,12 @@ export function BreathingRegulator() {
           <circle 
             cx="50" 
             cy="50" 
-            r="16" 
+            r={16 * scale} 
             fill="rgba(0, 255, 136, 0.05)" 
             stroke="#00ff88" 
             strokeWidth="2.5" 
             style={{ 
-              transform: `scale(${scale})`, 
-              transformOrigin: '50px 50px', 
-              transition: 'transform 1s linear, stroke-width 0.3s ease',
+              transition: 'r 1s linear, stroke-width 0.3s ease',
               filter: 'drop-shadow(0 0 4px #00ff88)'
             }} 
           />
@@ -1300,7 +1299,9 @@ const styles = {
   },
   consoleBtnNext: {
     background: 'rgba(255,255,255,0.04)',
-    border: '1px solid rgba(255,255,255,0.15)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255,255,255,0.15)',
     color: '#fff',
     fontFamily: 'monospace',
     fontSize: '0.62rem',
@@ -1313,7 +1314,9 @@ const styles = {
   },
   successAlertPanel: {
     background: 'rgba(0, 255, 136, 0.08)',
-    border: '1px solid #00ff88',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: '#00ff88',
     borderRadius: '8px',
     padding: '10px 14px',
     color: '#00ff88',
@@ -1322,7 +1325,8 @@ const styles = {
   },
   dialogueResetBtn: {
     background: 'transparent',
-    border: 'none',
+    borderWidth: '0px',
+    borderStyle: 'none',
     color: 'rgba(255,255,255,0.4)',
     fontFamily: 'monospace',
     fontSize: '0.6rem',
@@ -1332,7 +1336,9 @@ const styles = {
   },
   sliderDashboardPanel: {
     background: 'rgba(4, 6, 12, 0.65)',
-    border: '1px solid rgba(255, 255, 255, 0.06)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255, 255, 255, 0.06)',
     borderRadius: '8px',
     padding: '10px 14px',
     display: 'flex',
@@ -1368,7 +1374,9 @@ const styles = {
     display: 'flex',
     flexDirection: 'row',
     height: '240px',
-    border: '1.5px solid rgba(255,255,255,0.06)',
+    borderWidth: '1.5px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255,255,255,0.06)',
     borderRadius: '12px',
     overflow: 'hidden',
     position: 'relative',
@@ -1433,7 +1441,9 @@ const styles = {
     background: 'rgba(6, 9, 20, 0.5)',
     borderRadius: '8px',
     padding: '10px 14px',
-    border: '1px solid rgba(255,255,255,0.05)'
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255,255,255,0.05)'
   },
   sliderReadoutRow: {
     display: 'flex',
@@ -1490,7 +1500,9 @@ const styles = {
     fontSize: '0.58rem',
     fontFamily: 'monospace',
     background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.06)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255,255,255,0.06)',
     padding: '4px 6px',
     borderRadius: '4px',
     color: 'rgba(255,255,255,0.45)',

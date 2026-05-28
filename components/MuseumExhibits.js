@@ -950,7 +950,9 @@ export function BreathingRegulator() {
 const styles = {
   consoleContainer: {
     background: 'rgba(6, 9, 20, 0.85)',
-    border: '1.5px solid rgba(255, 255, 255, 0.08)',
+    borderWidth: '1.5px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255, 255, 255, 0.08)',
     borderRadius: '16px',
     padding: '20px',
     boxShadow: '0 10px 35px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.05)',
@@ -999,7 +1001,9 @@ const styles = {
   },
   svgTelemetryBox: {
     background: '#04060c',
-    border: '1.5px solid rgba(255, 255, 255, 0.05)',
+    borderWidth: '1.5px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255, 255, 255, 0.05)',
     borderRadius: '10px',
     overflow: 'hidden',
     display: 'flex',
@@ -1010,7 +1014,9 @@ const styles = {
   },
   telemetryReadoutBox: {
     background: 'rgba(255, 255, 255, 0.02)',
-    border: '1px solid rgba(255, 255, 255, 0.06)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255, 255, 255, 0.06)',
     borderRadius: '8px',
     padding: '10px 14px',
     display: 'flex',

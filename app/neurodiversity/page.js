@@ -13,8 +13,10 @@ import {
 } from '../../components/MuseumExhibits';
 
 export default function NeurodiversityTacticalMuseum() {
-  const [activeSector, setActiveSector] = useState('foyer'); // 'foyer', 'exhibits', 'constellation', 'sanctuary'
-  const [activeExhibitIndex, setActiveExhibitIndex] = useState(0); // 0 (Masking), 1 (Monotropic), 2 (Empathy), 3 (Autonomy)
+  const [activeSector, setActiveSector] = useState('foyer'); // 'foyer', 'corridor', 'constellation', 'sanctuary'
+  const [activeExhibitIndex, setActiveExhibitIndex] = useState(0); // 0 to 5 for Exhibits 1-6
+  const [activeStoryPhase, setActiveStoryPhase] = useState(0); // 0 to 4 for Memoir Phases 01-05 (Exhibit 5)
+  const [activeMatrixTrait, setActiveMatrixTrait] = useState('stimming'); // 'stimming', 'hyperfocus', 'comms', 'autonomy' (Exhibit 4)
   const [isMounted, setIsMounted] = useState(false);
   const [transitState, setTransitState] = useState('slide-active');
   const [activeStarNode, setActiveStarNode] = useState(null); // Selected Lexicon Term object
@@ -36,7 +38,7 @@ export default function NeurodiversityTacticalMuseum() {
   const [copied, setCopied] = useState(false);
 
   // Share details
-  const shareText = "Explore the Tactical Dome of the Cognitive Biosphere in Ares City. Let's move past pathological special-needs deficits and adapt mutual neurotype bridges: ";
+  const shareText = "Explore the Refined Dome of the Cognitive Biosphere in Ares City. Let's move past pathological special-needs deficits and adapt mutual neurotype bridges: ";
 
   useEffect(() => {
     setIsMounted(true);
@@ -72,13 +74,12 @@ export default function NeurodiversityTacticalMuseum() {
       return;
     }
 
-    // Clean up html and get clean text
+    // Clean up HTML tags and get clean text
     const cleanText = textToSpeak.replace(/<[^>]*>/g, '');
     
     const utterance = new SpeechSynthesisUtterance(cleanText);
     utterance.rate = narrationSpeed;
     
-    // Find a good deep space voice if possible
     const voices = window.speechSynthesis.getVoices();
     const synthVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.lang.startsWith('en'));
     if (synthVoice) utterance.voice = synthVoice;
@@ -160,70 +161,159 @@ export default function NeurodiversityTacticalMuseum() {
     );
   };
 
-  // Interactive Exhibits definitions
+  // 6 Refined Exhibits definitions
   const exhibits = [
     {
-      id: 'exhibit-masking',
-      title: 'Hall I: The Masking Reactor Diagnostics',
-      storyPhase: 'PHASE 01 // GRADE SCHOOL // THE COMPLIANCE FACADE',
-      storyText: 'My story started out with Applied Behavior Analysis (ABA) when I was 3 and a half years old. I had intensive Sunday compliance sessions to modify my natural behaviors. Later, in my mainstream Orthodox Yeshiva, it was obvious to me that I was different from my peers. I was constantly wondering why I received special support when everyone faked that I was normal. Lacking the vocabulary to advocate, I called out and acted out, eventually being assigned a paraprofessional (para), still never knowing I was autistic.',
-      abaLink: true,
-      component: <MaskingDiagnostics />
-    },
-    {
-      id: 'exhibit-autonomy',
-      title: 'Hall II: Pathology Maze vs. Autonomy Horizon',
-      storyPhase: 'PHASE 02 // HIGH SCHOOL // THE SPECIAL NEEDS PATHOLOGY MAZE',
-      storyText: 'After Yeshiva failed, I went to two special needs schools. In the first, another kid pointed out my autism—mocking it strictly as a broken medical deficit, which scared me deeply. In the second, a hostile peer leader turned the school against me. Hitting a severe burnout, I realized the clinical pathology model was a cage framing me as a list of defective behaviors. Reclaiming my identity through the neurodiversity paradigm gave me the autonomy to grow on my own terms.',
-      abaLink: false,
-      component: <EnvironmentalTransition />
-    },
-    {
-      id: 'exhibit-communication',
-      title: 'Hall III: Double Empathy & Boundary Mismatch',
-      storyPhase: 'PHASE 03 // EARLY 20s // METABOLIC BURN & BOUNDARY CLASHES',
-      storyText: 'In my early 20s, I hit severe autistic burnout, driven by past trauma from that unsafe environment in the second special needs school. Socializing was further complicated because I often misread other autistic individuals\' silent energy battery drainage as personal rejection. When they went quiet, I unknowingly invaded their boundaries due to a double-blind lack of explicit verbal communication from both of us. Discovering Dr. Milton\'s Double Empathy theory showed me that breakdowns are mutual mismatches, not personal defects.',
-      abaLink: false,
+      id: 'exhibit-comms',
+      title: 'Exhibit 1: When communication breaks down',
+      subtitle: '⚡ DOUBLE EMPATHY & SIGNAL MISMATCHES',
+      desc: 'Communication breakdowns are bidirectional, mutual mismatches in wiring (Milton\'s Double Empathy), rather than an individual defect inside one brain. Bridges are built through explicit, non-judgmental expectations.',
       component: <DoubleEmpathySync />
     },
     {
-      id: 'exhibit-attention',
-      title: 'Hall IV: Sensory Overwhelm & The Monotropic Spotlight',
-      storyPhase: 'PHASE 04 // PRESENT // SELF-ACCEPTANCE & FLOW CHANNELS',
-      storyText: 'Today, I am slowly learning more about myself every single Sol. Armed with respect for social batteries and an understanding of attention inertia, I am unlearning pathology deficit labels. I accept my specialized monotropic attention flow tunnels and practice unmasking. Rather than forcing compliance, I am finding healthy, explicit ways to connect with others on my own terms.',
-      abaLink: false,
+      id: 'exhibit-envs',
+      title: 'Exhibit 2: When environments overwhelm',
+      subtitle: '🚨 SENSORY FLUIDITY & MONOTROPIC FLOWS',
+      desc: 'Autistic brains process sensory data in high definition, lacking automatic background noise filters. Overstimulating environments drain social batteries at staggering metabolic rates, triggering emergency system shutdowns.',
       component: <MonotropicSpotlight />
+    },
+    {
+      id: 'exhibit-behavior',
+      title: 'Exhibit 3: When behavior is misread',
+      subtitle: '🔋 MASKING DIAGNOSTICS & THE REACTOR CORE',
+      desc: 'Suppressing natural stims or forcing eye contact to pass as normal (masking) comes at a massive daily CPU tax. Forcing behavioral compliance lead directly to autistic burnout and systemic nervous system failure.',
+      component: <MaskingDiagnostics />
+    },
+    {
+      id: 'exhibit-reality',
+      title: 'Exhibit 4: Two ways of explaining the same reality',
+      subtitle: '📊 PARADIGM COMPARATIVE INTERACTIVE MATRIX',
+      desc: 'Every cognitive trait can be explained through two lenses. The deficit model pathologizes differences as intrinsic diseases inside the individual. The neurodiversity paradigm reframes them as biological assets disabled by exclusive environmental structures. Compare traits below.',
+      component: 'custom-matrix'
+    },
+    {
+      id: 'exhibit-story',
+      title: 'Exhibit 5: A lived perspective',
+      subtitle: '📖 THE CHRONOLOGICAL TRANSMISSION FILE',
+      desc: 'Weave through the emotional coordinates of my lived experiences—from compliance sessions to mainstream yeshiva classrooms, special education cells, severe burnout, and self-acceptance.',
+      component: 'custom-story'
+    },
+    {
+      id: 'exhibit-lens',
+      title: 'Exhibit 6: What changes when you switch lenses',
+      subtitle: '🌿 THE ENVIRONMENTAL SHUTTLE TRANSPORTER',
+      desc: 'Biological difference is distinct from disability; disability is created when environments mismatch wiring. Switch lenses and observe how adjusting structural inputs removes the disability entirely.',
+      component: <EnvironmentalTransition />
     }
   ];
+
+  // Memoir chronological phases (Exhibit 5)
+  const storyPhases = [
+    {
+      id: 0,
+      tabTitle: 'ABA Session',
+      phaseName: 'PHASE 01 // AGE 3.5 // COMPLIANCE INTERVENTION',
+      storyText: 'My story started out with Applied Behavior Analysis (ABA) Sunday training sessions when I was three and a half years old. This was back when old-school compliance models of special needs dominated practices, manually training autistic kids to suppress self-regulation behaviors to fit standard behaviors.',
+      abaLink: true
+    },
+    {
+      id: 1,
+      tabTitle: 'Yeshiva School',
+      phaseName: 'PHASE 02 // GRADE SCHOOL // THE NORMALCY FACADE',
+      storyText: 'My parents tried placing me in a mainstream Orthodox Yeshiva. I quickly felt a deep mismatch, wondering why I needed special support when everyone pretended everything was normal—they were just faking it because neurodiversity was unknown. Lacking the vocabulary to advocate, I called out in class, acted out, and was eventually assigned a paraprofessional (para), still never knowing I was autistic.',
+      abaLink: false
+    },
+    {
+      id: 2,
+      tabTitle: 'Special Ed Transfer',
+      phaseName: 'PHASE 03 // HIGH SCHOOL // EXCLUSION & BULK CELLS',
+      storyText: 'Mainstream yeshiva failed, so I went to two special needs schools. In the first, another kid pointed out my autism in a teasing, mocking way that framed it as a broken medical deficit, which terrified me. In the second, a tough peer leader turned the school against me, causing immense fear in my daily coordinates.',
+      abaLink: false
+    },
+    {
+      id: 3,
+      tabTitle: 'Autistic Burnout',
+      phaseName: 'PHASE 04 // EARLY 20s // METABOLIC BURN & CLASHES',
+      storyText: 'In my early 20s, the high school trauma culminated in severe autistic burnout. I hit a physiological crash, struggling with the thought that I would never make friends. Socializing was further complicated because I misread other autistic peers\' silent battery drainage as personal rejection. Lacking explicit verbal coordinates, I unknowingly invaded their boundaries because neither of us communicated explicitly.',
+      abaLink: false
+    },
+    {
+      id: 4,
+      tabTitle: 'Self-Acceptance',
+      phaseName: 'PHASE 05 // PRESENT // NOMINAL SYNAPTIC UPLINK',
+      storyText: 'Today, I am slowly learning more about myself every Sol. Armed with respect for social batteries and an understanding of attention inertia, I am unlearning pathology deficit labels. I accept my specialized monotropic attention flow tunnels and practice unmasking. Rather than forcing compliance, I am finding healthy, explicit ways to connect with others on my own terms.',
+      abaLink: false
+    }
+  ];
+
+  // Interactive Comparative Matrix definitions (Exhibit 4)
+  const matrixTraits = {
+    stimming: {
+      title: 'Stimming / Self-Regulation',
+      pathologyTitle: '❌ Pathology / Deficit Model',
+      pathologyText: 'Viewed as "purposeless", "stereotypic", or "maladaptive" behavior. Diagnosed as a social disturbance that must be clinically suppressed using behavioral compliance to make the individual appear indistinguishable from peers.',
+      affirmingTitle: '✨ Neurodiversity Paradigm',
+      affirmingText: 'Reframed as a vital, biological self-regulatory tool used to soothe an overstimulated nervous system, discharge excess energy, and maintain cognitive focus. Accommodated by providing safe spaces to move.',
+      colonyRule: 'Never demand still hands or rigid postures; self-regulation is a healthy processing buffer.'
+    },
+    hyperfocus: {
+      title: 'Hyperfocus / Special Interests',
+      pathologyTitle: '❌ Pathology / Deficit Model',
+      pathologyText: 'Classified as "restricted, repetitive patterns of interest" that are "abnormal in intensity or focus." Treated as a clinical symptom of rigidity or an obsession that should be limited or rationed.',
+      affirmingTitle: '✨ Neurodiversity Paradigm',
+      affirmingText: 'Celebrated as an elite monotropic attention flow state that generates deep expertise, meticulous pattern-matching, and creative passion. Utilized as a powerful strength-based developmental asset.',
+      colonyRule: 'Provide uninterrupted focus buffers. Hyperfocus flow is a valuable creative resource.'
+    },
+    comms: {
+      title: 'Social Communication style',
+      pathologyTitle: '❌ Pathology / Deficit Model',
+      pathologyText: 'Labeled as a "social communication deficit," characterized by failure to read allistic social rules, lack of spontaneous sharing, and poor eye contact. Blamed entirely on the individual\'s defective brain.',
+      affirmingTitle: '✨ Neurodiversity Paradigm',
+      affirmingText: 'Understood as a valid, direct, and explicit communication style. Recognizes the Double Empathy Problem: communication breakdowns are mutual mismatches across differing neurotype hardware, not one-sided deficits.',
+      colonyRule: 'Bridges are built through mutual, explicit verbal communication—avoid unstated social guessing.'
+    },
+    autonomy: {
+      title: 'Autonomy / PDA Profile',
+      pathologyTitle: '❌ Pathology / Deficit Model',
+      pathologyText: 'Termed "Pathological Demand Avoidance" and diagnosed as stubbornness, oppositional defiance, or behavioral non-compliance. Managed through authoritarian reward/punishment compliance charts.',
+      affirmingTitle: '✨ Neurodiversity Paradigm',
+      affirmingText: 'Reframed as a Pervasive Drive for Autonomy. Daily external demands trigger an involuntary threat response in the autonomic nervous system. Managed through collaborative, choice-based, and non-directive coordination.',
+      colonyRule: 'Coordinate using egalitarian, non-coercive partnerships to support the drive for autonomy.'
+    }
+  };
 
   return (
     <div className="citizen-card-shell neuro-page-shell" style={{ flexDirection: 'column' }}>
       
-      {/* Immersive Martian Biosphere Core Styles */}
+      {/* Immersive Martian Biosphere Core CSS and Viewport Fixes */}
       <style dangerouslySetInnerHTML={{ __html: `
         .neuro-page-shell {
-          height: calc(100vh - 120px);
-          max-height: calc(100vh - 120px);
+          height: calc(100vh - 140px);
+          max-height: calc(100vh - 140px);
           min-height: 0;
           width: 100%;
+          display: flex;
+          flex-direction: column;
         }
         .museum-floor-nav-deck {
           display: grid;
           grid-template-columns: repeat(4, 1fr);
-          gap: 12px;
-          margin-bottom: 16px;
+          gap: 10px;
+          margin-bottom: 14px;
           flex-shrink: 0;
           z-index: 10;
         }
         .museum-nav-btn {
-          padding: 12px 6px;
+          padding: 10px 4px;
           font-family: var(--font-tech);
-          font-size: 0.74rem;
-          letter-spacing: 1px;
+          font-size: 0.72rem;
+          letter-spacing: 0.5px;
           text-transform: uppercase;
           background: rgba(6, 9, 20, 0.7);
-          border: 1.5px solid rgba(255, 255, 255, 0.08);
-          color: rgba(255, 255, 255, 0.65);
+          border-width: 1.5px;
+          border-style: solid;
+          borderColor: rgba(255, 255, 255, 0.08);
+          color: rgba(255, 255, 255, 0.6);
           border-radius: 10px;
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
@@ -232,12 +322,12 @@ export default function NeurodiversityTacticalMuseum() {
           box-shadow: inset 0 1px 2px rgba(255,255,255,0.02);
         }
         .museum-nav-btn:hover {
-          border-color: rgba(0, 255, 136, 0.4);
+          borderColor: rgba(0, 255, 136, 0.4);
           color: #00ff88;
           background: rgba(0, 255, 136, 0.04);
         }
         .museum-nav-btn.active {
-          border-color: #00ff88;
+          borderColor: #00ff88;
           color: #00ff88;
           background: rgba(0, 255, 136, 0.12);
           box-shadow: 0 0 15px rgba(0, 255, 136, 0.2), inset 0 1px 3px rgba(0, 255, 136, 0.1);
@@ -253,17 +343,17 @@ export default function NeurodiversityTacticalMuseum() {
           max-height: 100%;
         }
         .museum-left-feed {
-          flex: 1.2;
+          flex: 1.1;
           display: flex;
           flex-direction: column;
-          gap: 16px;
+          gap: 14px;
           overflow-y: auto;
           padding-right: 4px;
           min-height: 0;
           height: 100%;
         }
         .museum-right-diagnostics {
-          flex: 1.8;
+          flex: 1.9;
           display: flex;
           flex-direction: column;
           overflow-y: auto;
@@ -273,19 +363,23 @@ export default function NeurodiversityTacticalMuseum() {
         }
         .narration-control-panel {
           background: rgba(4, 6, 12, 0.7);
-          border: 1.5px solid rgba(255,255,255,0.06);
+          border-width: 1.5px;
+          border-style: solid;
+          borderColor: rgba(255,255,255,0.06);
           border-radius: 12px;
-          padding: 12px 16px;
+          padding: 12px;
           display: flex;
           flex-direction: column;
-          gap: 10px;
+          gap: 8px;
         }
         .audio-wave-box {
           display: flex;
           align-items: center;
           justify-content: space-between;
           background: rgba(0, 0, 0, 0.4);
-          border: 1px solid rgba(255,255,255,0.04);
+          border-width: 1px;
+          border-style: solid;
+          borderColor: rgba(255,255,255,0.04);
           border-radius: 6px;
           padding: 6px 12px;
         }
@@ -305,21 +399,24 @@ export default function NeurodiversityTacticalMuseum() {
           font-family: monospace;
           font-size: 0.65rem;
           background: rgba(255,255,255,0.03);
-          border: 1px solid rgba(255,255,255,0.1);
+          border-width: 1px;
+          border-style: solid;
+          borderColor: rgba(255,255,255,0.1);
           color: #fff;
           border-radius: 6px;
           cursor: pointer;
           transition: all 0.2s ease;
           text-align: center;
+          outline: none;
         }
         .audio-deck-btn:hover {
           background: rgba(0, 255, 136, 0.08);
-          border-color: #00ff88;
+          borderColor: #00ff88;
           color: #00ff88;
         }
         .audio-deck-btn.active {
           background: rgba(0, 255, 136, 0.15);
-          border-color: #00ff88;
+          borderColor: #00ff88;
           color: #00ff88;
           font-weight: bold;
         }
@@ -340,9 +437,9 @@ export default function NeurodiversityTacticalMuseum() {
           accent-color: #00ff88;
         }
         .story-text-body {
-          font-size: 0.84rem;
+          font-size: 0.82rem;
           color: #f2f6fc;
-          line-height: 1.7;
+          line-height: 1.6;
           text-align: justify;
           margin: 0;
           font-weight: 300;
@@ -353,7 +450,9 @@ export default function NeurodiversityTacticalMuseum() {
           align-items: center;
           flex-shrink: 0;
           background: rgba(6, 9, 20, 0.6);
-          border: 1px solid rgba(255,255,255,0.06);
+          border-width: 1px;
+          border-style: solid;
+          borderColor: rgba(255,255,255,0.06);
           border-radius: 12px;
           padding: 8px 16px;
           margin-top: auto;
@@ -363,15 +462,15 @@ export default function NeurodiversityTacticalMuseum() {
           border: none;
           color: #00ff88;
           font-family: var(--font-tech);
-          font-size: 0.72rem;
+          font-size: 0.7rem;
           cursor: pointer;
           outline: none;
           transition: all 0.2s ease;
-          letter-spacing: 1px;
+          letter-spacing: 0.5px;
         }
         .gallery-arrow-btn:hover {
           text-shadow: 0 0 8px #00ff88;
-          transform: scale(1.05);
+          transform: scale(1.03);
         }
         .gallery-arrow-btn:disabled {
           color: rgba(255,255,255,0.25);
@@ -380,7 +479,9 @@ export default function NeurodiversityTacticalMuseum() {
         }
         .starmap-canvas-box {
           background: #04060c;
-          border: 1.5px solid rgba(255, 255, 255, 0.08);
+          border-width: 1.5px;
+          border-style: solid;
+          borderColor: rgba(255, 255, 255, 0.08);
           border-radius: 16px;
           overflow: hidden;
           position: relative;
@@ -422,22 +523,28 @@ export default function NeurodiversityTacticalMuseum() {
           padding: 12px;
           border-radius: 8px;
           background: rgba(255, 255, 255, 0.02);
-          border: 1px dashed rgba(255,255,255,0.08);
+          border-width: 1px;
+          border-style: dashed;
+          borderColor: rgba(255,255,255,0.08);
           cursor: pointer;
           transition: all 0.25s ease;
         }
         .protocol-toggle-badge:hover {
-          border-color: rgba(0,255,136,0.3);
+          borderColor: rgba(0,255,136,0.3);
           background: rgba(255,255,255,0.03);
         }
         .protocol-toggle-badge.active {
           background: rgba(0, 255, 136, 0.06);
-          border: 1.5px solid #00ff88;
+          border-width: 1.5px;
+          border-style: solid;
+          borderColor: #00ff88;
           box-shadow: 0 0 10px rgba(0, 255, 136, 0.1);
         }
         .colony-passport-print-card {
           background: linear-gradient(135deg, rgba(6, 9, 20, 0.94) 0%, rgba(10, 14, 30, 0.98) 100%);
-          border: 2px solid #00ff88;
+          border-width: 2px;
+          border-style: solid;
+          borderColor: #00ff88;
           border-radius: 16px;
           padding: 20px;
           position: relative;
@@ -447,6 +554,58 @@ export default function NeurodiversityTacticalMuseum() {
           max-width: 380px;
           margin: 10px auto 0 auto;
         }
+
+        /* Exhibit 4 Matrix specific */
+        .trait-select-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 8px;
+          margin-bottom: 12px;
+        }
+        .trait-select-btn {
+          padding: 8px 4px;
+          font-family: var(--font-tech);
+          font-size: 0.64rem;
+          letter-spacing: 0.5px;
+          background: rgba(4,6,12,0.6);
+          border-width: 1px;
+          border-style: solid;
+          borderColor: rgba(255,255,255,0.08);
+          color: rgba(255,255,255,0.6);
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.25s ease;
+          text-align: center;
+          outline: none;
+        }
+        .trait-select-btn:hover {
+          borderColor: rgba(0, 255, 136, 0.4);
+          color: #00ff88;
+        }
+        .trait-select-btn.active {
+          borderColor: #00ff88;
+          background: rgba(0, 255, 136, 0.08);
+          color: #00ff88;
+          box-shadow: 0 0 8px rgba(0, 255, 136, 0.15);
+          font-weight: bold;
+        }
+        
+        .custom-scroll::-webkit-scrollbar {
+          width: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.01);
+          border-radius: 4px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+          background: rgba(0, 255, 136, 0.15);
+          border-radius: 4px;
+          transition: background 0.2s ease;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb:hover {
+          background: rgba(0, 255, 136, 0.4);
+        }
+
         @media (max-width: 900px) {
           .neuro-page-shell {
             height: auto !important;
@@ -466,45 +625,50 @@ export default function NeurodiversityTacticalMuseum() {
             height: auto !important;
             max-height: none !important;
             overflow: visible !important;
+            flex: none !important;
+            width: 100% !important;
+          }
+          .trait-select-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
           }
         }
       `}} />
 
-      {/* Corridor transitions swipe helper */}
+      {/* Corridor sweep overlay */}
       <div className="walking-motion-overlay" style={{ position: 'fixed' }}></div>
 
       {/* Main OS content container */}
       <div className={`walking-content-container ${transitState}`} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         
-        {/* Futuristic Museum Floor Navigation Console */}
+        {/* Navigation Console */}
         <div className="museum-floor-nav-deck">
           <button 
             onClick={() => changeSector('foyer')} 
             className={`museum-nav-btn ${activeSector === 'foyer' ? 'active' : ''}`}
           >
-            🛰️ Foyer Entrance
+            🛰️ Teleport Lobby
           </button>
           <button 
-            onClick={() => changeSector('exhibits')} 
-            className={`museum-nav-btn ${activeSector === 'exhibits' ? 'active' : ''}`}
+            onClick={() => changeSector('corridor')} 
+            className={`museum-nav-btn ${activeSector === 'corridor' ? 'active' : ''}`}
           >
-            🖼️ Exhibit Galleries
+            🖼️ 6-Exhibit Corridor
           </button>
           <button 
             onClick={() => changeSector('constellation')} 
             className={`museum-nav-btn ${activeSector === 'constellation' ? 'active' : ''}`}
           >
-            🌌 Synaptic Constellation
+            🌌 Neural Constellation
           </button>
           <button 
             onClick={() => changeSector('sanctuary')} 
             className={`museum-nav-btn ${activeSector === 'sanctuary' ? 'active' : ''}`}
           >
-            🌿 Down-Reg & Pledge
+            🌿 Sanctuary rest
           </button>
         </div>
 
-        {/* Dynamic Sector Rendering Viewport */}
+        {/* Dynamic Sector Rendering */}
         <div className="museum-view-corridor">
           
           {/* ====================================
@@ -523,18 +687,22 @@ export default function NeurodiversityTacticalMuseum() {
                   ARES CITY DIGITAL MUSEUM OF THE MIND
                 </h3>
                 <p style={{ fontSize: '0.88rem', color: '#8a9bb5', lineHeight: '1.7', margin: '0 0 20px 0', textAlign: 'justify' }}>
-                  Welcome, Citizen. This atmospheric dome houses a cybernetic, reflective exploration of the human cognitive landscape. Rather than analyzing minds through clinical deficit matrices, this museum reframes differences as natural biological variations. 
+                  Welcome, Citizen. This atmospheric dome houses a cybernetic, reflective exploration of the human cognitive landscape. Rather than analyzing minds through clinical pathology metrics, this museum reframes differences as natural biological variations. 
                 </p>
                 <p style={{ fontSize: '0.86rem', color: '#8a9bb5', lineHeight: '1.7', margin: '0 0 24px 0', textAlign: 'justify' }}>
-                  Follow the guiding threat of my own narrative—growing up in mainstream Orthodox Yeshivas, navigating pathologizing compliance training programs, surviving special education bulwark corridors, and later discovering the liberating neurodiversity paradigm. Discover how accommodations, mutual empathy, and autonomy build bridges across our colony.
+                  Explore the structured **6-Exhibit Corridor** tracing universal questions about communication, sensory processing, masking, neurotype paradigms, lived memoir narratives, and environmental transitions.
                 </p>
 
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <button onClick={() => changeSector('exhibits')} className="hud-btn" style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: '#00ff88', color: '#00ff88', background: 'rgba(0, 255, 136, 0.08)' }}>
-                    [ 🖼️ INITIATE TELEPORTATION TO EXHIBITS ]
+                  <button 
+                    onClick={() => changeSector('corridor')} 
+                    className="hud-btn" 
+                    style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: '#00ff88', color: '#00ff88', background: 'rgba(0, 255, 136, 0.08)' }}
+                  >
+                    [ 🖼️ ENTER THE 6-EXHIBIT CORRIDOR ]
                   </button>
                   <button onClick={() => changeSector('constellation')} className="hud-btn">
-                    [ 🌌 OPEN SYNAPTIC CONSTELLATION MAP ]
+                    [ 🌌 OPEN NEURAL CONSTELLATION MAP ]
                   </button>
                 </div>
               </div>
@@ -542,121 +710,279 @@ export default function NeurodiversityTacticalMuseum() {
           )}
 
           {/* ====================================
-              EXHIBIT GALLERIES SECTOR
+              THE 6-EXHIBIT CORRIDOR SECTOR
               ==================================== */}
-          {activeSector === 'exhibits' && (() => {
+          {activeSector === 'corridor' && (() => {
             const currentExhibit = exhibits[activeExhibitIndex];
+            const isCustomExhibit4 = currentExhibit.component === 'custom-matrix';
+            const isCustomExhibit5 = currentExhibit.component === 'custom-story';
+
             return (
               <>
-                {/* LEFT PANE: Memoir Narration Feed */}
+                {/* LEFT PANE: Exhibit Core Information & Details */}
                 <div className="museum-left-feed custom-scroll">
                   <div className="bubbly-panel" style={{ flexShrink: 0 }}>
                     <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
-                      // SUBSPACE MEMOIR FEED TRANSMITTER
+                      // EXHIBITION DATA NODESEC // EX-{activeExhibitIndex + 1}
                     </span>
                     <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
-                      {currentExhibit.storyPhase}
+                      {currentExhibit.title}
                     </h3>
-                    <span style={{ fontSize: '0.6rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: '14px' }}>
-                      NARRATOR ARCHIVE // CITIZEN BECKER (MY23)
+                    <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', display: 'block', marginBottom: '14px' }}>
+                      {currentExhibit.subtitle}
                     </span>
+                    
+                    <p style={{ fontSize: '0.78rem', color: '#8a9bb5', lineHeight: 1.45, margin: 0, textAlign: 'justify' }}>
+                      {currentExhibit.desc}
+                    </p>
+                  </div>
 
-                    {/* Subspace Narration control deck */}
-                    <div className="narration-control-panel">
-                      <div className="audio-wave-box">
-                        <span className="audio-wave-label">UPLINK FREQUENCY WAVEFORM</span>
-                        {renderWaveformSvg()}
-                      </div>
-                      
-                      <div className="narration-action-row">
-                        <button 
-                          onClick={() => toggleNarration(currentExhibit.storyText)} 
-                          className={`audio-deck-btn ${isNarrating ? 'active' : ''}`}
-                        >
-                          {isNarrating ? '⏸ PAUSE FREQ' : '▶ TRANSMIT AUDIO'}
-                        </button>
-                        <button onClick={stopNarration} className="audio-deck-btn">
-                          ⏹ CUT OFF
-                        </button>
-                      </div>
+                  {/* Standard exhibit text body block */}
+                  {!isCustomExhibit5 && (
+                    <div className="bubbly-panel">
+                      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: '6px' }}>
+                        // PARADIGM LEDGER TEXT
+                      </span>
+                      <p style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5, margin: 0, textAlign: 'justify' }}>
+                        {activeExhibitIndex === 0 && "In traditional systems, verbal silence is pathologized as a clinical deficit. In reality, it is a metabolic conservation response. Synchronized verbal clarity bridges boundaries."}
+                        {activeExhibitIndex === 1 && "Sensory details like ambient ticks or humming lights act as active CPU interrupts. Adjusting environments directly alleviates the disabling impact."}
+                        {activeExhibitIndex === 2 && "Masking is a cognitive tax paid to purchase immediate safety. Reclaiming autonomy requires droping behavioral compliance filters."}
+                        {activeExhibitIndex === 3 && "By shifting from deficit explanations to structural accommodations, we realize stimming, special interests, and autonomy drives are vital evolutionary assets."}
+                        {activeExhibitIndex === 5 && "switching lenses proves that disability is formed by restrictive barriers, not biological anomalies. Swapping coordinates resolves the disability entirely."}
+                      </p>
+                    </div>
+                  )}
 
-                      <div className="speed-slider-row">
-                        <span>FREQUENCY PITCH (SPEED): {narrationSpeed}x</span>
-                        <input 
-                          type="range" 
-                          min="0.5" 
-                          max="2" 
-                          step="0.1" 
-                          value={narrationSpeed} 
-                          onChange={(e) => setNarrationSpeed(Number(e.target.value))} 
-                          className="audio-speed-slider"
-                        />
+                  {/* Exhibit 5 dedicated Narration Control panel */}
+                  {isCustomExhibit5 && (
+                    <div className="bubbly-panel">
+                      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
+                        // SUBSPACE TRANSMISSION FEED AUDIO CONTROLLER
+                      </span>
+                      <div className="narration-control-panel">
+                        <div className="audio-wave-box">
+                          <span className="audio-wave-label">TRANSMISSION FREQUENCY STATUS</span>
+                          {renderWaveformSvg()}
+                        </div>
+                        
+                        <div className="narration-action-row">
+                          <button 
+                            onClick={() => toggleNarration(storyPhases[activeStoryPhase].storyText)} 
+                            className={`audio-deck-btn ${isNarrating ? 'active' : ''}`}
+                          >
+                            {isNarrating ? '⏸ PAUSE FREQ' : '▶ TRANSMIT NARRATION'}
+                          </button>
+                          <button onClick={stopNarration} className="audio-deck-btn">
+                            ⏹ CUT OFF
+                          </button>
+                        </div>
+
+                        <div className="speed-slider-row">
+                          <span>TRANSMISSION SPEED: {narrationSpeed}x</span>
+                          <input 
+                            type="range" 
+                            min="0.5" 
+                            max="2" 
+                            step="0.1" 
+                            value={narrationSpeed} 
+                            onChange={(e) => setNarrationSpeed(Number(e.target.value))} 
+                            className="audio-speed-slider"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  )}
 
-                  {/* Memoir long-form narrative body card */}
-                  <div className="bubbly-panel">
-                    <p className="story-text-body" style={{
-                      transition: 'color 0.4s ease',
-                      textShadow: isNarrating ? '0 0 3px rgba(0,255,136,0.15)' : 'none'
-                    }}>
-                      {currentExhibit.storyText}
-                    </p>
-
-                    {currentExhibit.abaLink && (
-                      <a 
-                        href="https://youtu.be/gB_RJ0lRQ-E?si=MzVT-AhfMmZWU98K" 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="social-link-port"
-                        style={{
-                          marginTop: '16px',
-                          borderWidth: '1px',
-                          borderStyle: 'solid',
-                          borderColor: '#ffb300',
-                          color: '#ffb300',
-                          background: 'rgba(255, 179, 0, 0.04)',
-                          width: 'fit-content'
-                        }}
-                      >
-                        📺 View Historical ABA Video ➔
-                      </a>
-                    )}
-                  </div>
-
-                  {/* Horizontal Exhibit switcher bar */}
+                  {/* Floor Map exhibits switcher */}
                   <div className="gallery-nav-buttons-deck">
                     <button 
                       onClick={() => { stopUtterance(); setActiveExhibitIndex(prev => Math.max(0, prev - 1)); }}
                       disabled={activeExhibitIndex === 0}
                       className="gallery-arrow-btn"
                     >
-                      ◀ PREVIOUS SECTOR
+                      ◀ PREV HALL
                     </button>
                     <span style={{ fontSize: '0.68rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.45)' }}>
-                      [ SEC 0{activeExhibitIndex + 1} / 04 ]
+                      [ HALL 0{activeExhibitIndex + 1} / 06 ]
                     </span>
                     <button 
                       onClick={() => { stopUtterance(); setActiveExhibitIndex(prev => Math.min(exhibits.length - 1, prev + 1)); }}
                       disabled={activeExhibitIndex === exhibits.length - 1}
                       className="gallery-arrow-btn"
                     >
-                      NEXT SECTOR ▶
+                      NEXT HALL ▶
                     </button>
                   </div>
                 </div>
 
-                {/* RIGHT PANE: Modular Simulation exhibit */}
+                {/* RIGHT PANE: Interactive Simulation Panel */}
                 <div className="museum-right-diagnostics custom-scroll">
-                  {currentExhibit.component}
+                  
+                  {/* Render standard visual components */}
+                  {!isCustomExhibit4 && !isCustomExhibit5 && currentExhibit.component}
+
+                  {/* ===================================================
+                      EXHIBIT 4: Two ways of explaining the same reality (Comparative Paradigm Matrix)
+                      =================================================== */}
+                  {isCustomExhibit4 && (() => {
+                    const trait = matrixTraits[activeMatrixTrait];
+                    return (
+                      <div className="bubbly-panel" style={{ gap: '14px' }}>
+                        <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px' }}>
+                          // INTERACTIVE MATRIX TERMINAL: SELECT TRAIT PARAMETER
+                        </span>
+                        
+                        {/* Selector Tabs */}
+                        <div className="trait-select-grid">
+                          {Object.keys(matrixTraits).map(key => (
+                            <button
+                              key={key}
+                              onClick={() => setActiveMatrixTrait(key)}
+                              className={`trait-select-btn ${activeMatrixTrait === key ? 'active' : ''}`}
+                            >
+                              {matrixTraits[key].title}
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Trait display details */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          
+                          {/* pathology card */}
+                          <div style={{ background: 'rgba(234, 67, 53, 0.02)', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(234, 67, 53, 0.18)', borderRadius: '8px', padding: '14px' }}>
+                            <strong style={{ display: 'block', fontFamily: 'monospace', fontSize: '0.72rem', color: '#ea4335', marginBottom: '6px' }}>
+                              {trait.pathologyTitle}
+                            </strong>
+                            <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', margin: 0, lineHeight: 1.5, textAlign: 'justify' }}>
+                              {trait.pathologyText}
+                            </p>
+                          </div>
+
+                          {/* affirming card */}
+                          <div style={{ background: 'rgba(0, 255, 136, 0.02)', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(0, 255, 136, 0.22)', borderRadius: '8px', padding: '14px' }}>
+                            <strong style={{ display: 'block', fontFamily: 'monospace', fontSize: '0.72rem', color: '#00ff88', marginBottom: '6px' }}>
+                              {trait.affirmingTitle}
+                            </strong>
+                            <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', margin: 0, lineHeight: 1.5, textAlign: 'justify' }}>
+                              {trait.affirmingText}
+                            </p>
+                          </div>
+
+                          {/* highlight rule */}
+                          <div style={{ background: 'rgba(0, 240, 255, 0.04)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(0, 240, 255, 0.15)', borderRadius: '8px', padding: '10px 14px' }}>
+                            <strong style={{ display: 'block', fontFamily: 'monospace', fontSize: '0.62rem', color: '#00f0ff', marginBottom: '2px', letterSpacing: '0.5px' }}>
+                              💡 DOME SYSTEM RULE FOR EXPLICIT ACCOMMODATION
+                            </strong>
+                            <span style={{ fontSize: '0.7rem', color: '#fff', lineHeight: 1.4, display: 'block' }}>
+                              {trait.colonyRule}
+                            </span>
+                          </div>
+
+                        </div>
+                      </div>
+                    );
+                  })()}
+
+                  {/* ===================================================
+                      EXHIBIT 5: A lived perspective (Ephraim's Chronological Narrative walk)
+                      =================================================== */}
+                  {isCustomExhibit5 && (() => {
+                    const phase = storyPhases[activeStoryPhase];
+                    return (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        
+                        {/* Timeline chronological tab selector */}
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '6px' }}>
+                          {storyPhases.map(p => (
+                            <button
+                              key={p.id}
+                              onClick={() => { stopUtterance(); setActiveStoryPhase(p.id); }}
+                              style={{
+                                ...styles.storyTabBtn,
+                                ...(activeStoryPhase === p.id ? styles.storyTabBtnActive : {})
+                              }}
+                            >
+                              <span style={{ fontSize: '0.62rem', fontWeight: 'bold', display: 'block' }}>SOL 0{p.id + 1}</span>
+                              <span style={{ fontSize: '0.48rem', opacity: 0.7, letterSpacing: '0px', display: 'block', marginTop: '1px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                {p.tabTitle}
+                              </span>
+                            </button>
+                          ))}
+                        </div>
+
+                        {/* Story phase text display */}
+                        <div className="bubbly-panel" style={{ gap: '12px' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', borderBottom: '1px dashed rgba(255,255,255,0.08)', paddingBottom: '6px' }}>
+                            <span style={{ fontFamily: 'monospace', fontSize: '0.62rem', color: '#00ff88', fontWeight: 'bold' }}>
+                              {phase.phaseName}
+                            </span>
+                            <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)' }}>
+                              NARRATOR FEED LOCKED
+                            </span>
+                          </div>
+
+                          <p className="story-text-body" style={{
+                            transition: 'color 0.4s ease',
+                            textShadow: isNarrating ? '0 0 3px rgba(0,255,136,0.15)' : 'none'
+                          }}>
+                            {phase.storyText}
+                          </p>
+
+                          {phase.abaLink && (
+                            <a 
+                              href="https://youtu.be/gB_RJ0lRQ-E?si=MzVT-AhfMmZWU98K" 
+                              target="_blank" 
+                              rel="noopener noreferrer"
+                              className="social-link-port"
+                              style={{
+                                marginTop: '10px',
+                                borderWidth: '1px',
+                                borderStyle: 'solid',
+                                borderColor: '#ffb300',
+                                color: '#ffb300',
+                                background: 'rgba(255, 179, 0, 0.04)',
+                                width: 'fit-content'
+                              }}
+                            >
+                              📺 View Historical ABA Video ➔
+                            </a>
+                          )}
+                        </div>
+
+                        {/* Narrative timeline navigation */}
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                          <button
+                            onClick={() => { stopUtterance(); setActiveStoryPhase(prev => Math.max(0, prev - 1)); }}
+                            disabled={activeStoryPhase === 0}
+                            className="hud-btn"
+                            style={{ padding: '6px 12px', fontSize: '0.62rem', opacity: activeStoryPhase === 0 ? 0.3 : 1 }}
+                          >
+                            [ ↩ PREVIOUS SOL ]
+                          </button>
+                          <span style={{ fontSize: '0.6rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)' }}>
+                            MEMOIR SEGMENT 0{activeStoryPhase + 1} / 05
+                          </span>
+                          <button
+                            onClick={() => { stopUtterance(); setActiveStoryPhase(prev => Math.min(storyPhases.length - 1, prev + 1)); }}
+                            disabled={activeStoryPhase === storyPhases.length - 1}
+                            className="hud-btn"
+                            style={{ padding: '6px 12px', fontSize: '0.62rem', opacity: activeStoryPhase === storyPhases.length - 1 ? 0.3 : 1 }}
+                          >
+                            [ FORWARD SOL ➔ ]
+                          </button>
+                        </div>
+
+                      </div>
+                    );
+                  })()}
+
                 </div>
               </>
             );
           })()}
 
           {/* ====================================
-              THE SYNAPTIC CONSTELLATION (LEXICON MAP)
+              THE SYNAPTIC CONSTELLATION MAP
               ==================================== */}
           {activeSector === 'constellation' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%', minHeight: 0, height: '100%', position: 'relative' }}>
@@ -783,7 +1109,7 @@ export default function NeurodiversityTacticalMuseum() {
                         <strong>Diagnostic analysis:</strong> {activeStarNode.longDef}
                       </p>
 
-                      <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px', padding: '10px' }}>
+                      <div style={{ background: 'rgba(0,0,0,0.3)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(255,255,255,0.05)', borderRadius: '8px', padding: '10px' }}>
                         <strong style={{ display: 'block', fontSize: '0.62rem', fontFamily: 'monospace', color: '#00f0ff', marginBottom: '2px' }}>
                           📡 BECKERMEMOIR_LOGENTRY.DAT:
                         </strong>
@@ -792,7 +1118,7 @@ export default function NeurodiversityTacticalMuseum() {
                         </p>
                       </div>
 
-                      <div style={{ background: 'rgba(0, 255, 136, 0.02)', border: '1px solid rgba(0, 255, 136, 0.1)', borderRadius: '8px', padding: '10px' }}>
+                      <div style={{ background: 'rgba(0, 255, 136, 0.02)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(0, 255, 136, 0.1)', borderRadius: '8px', padding: '10px' }}>
                         <strong style={{ display: 'block', fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', marginBottom: '2px' }}>
                           💡 COLONY ACCOMMODATION RULE:
                         </strong>
@@ -892,7 +1218,9 @@ export default function NeurodiversityTacticalMuseum() {
                           flex: 1,
                           padding: '10px 14px',
                           background: 'rgba(4, 6, 12, 0.8)',
-                          border: '1.5px solid rgba(255,255,255,0.1)',
+                          borderWidth: '1.5px',
+                          borderStyle: 'solid',
+                          borderColor: 'rgba(255,255,255,0.1)',
                           borderRadius: '8px',
                           color: '#fff',
                           fontFamily: 'monospace',
@@ -1001,6 +1329,29 @@ function stopUtterance() {
   }
 }
 
+// Dynamic styles variables specifically for Exhibit 5 story tabs
+const styles = {
+  storyTabBtn: {
+    padding: '8px 4px',
+    background: 'rgba(6,9,20,0.65)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255,255,255,0.08)',
+    color: 'rgba(255,255,255,0.6)',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    textAlign: 'center',
+    transition: 'all 0.2s ease',
+    outline: 'none'
+  },
+  storyTabBtnActive: {
+    background: 'rgba(0, 255, 136, 0.08)',
+    borderColor: '#00ff88',
+    color: '#00ff88',
+    boxShadow: '0 0 8px rgba(0, 255, 136, 0.15)'
+  }
+};
+
 // Static Lexicon items definitions (Coordinate star nodes)
 const LEXICON_ITEMS = [
   {
@@ -1033,7 +1384,7 @@ const LEXICON_ITEMS = [
     cx: 65, cy: 25,
     shortDef: 'Exhausting performance of mimicking normal behaviors to avoid exclusion.',
     longDef: 'Masking is a trauma-driven coping response where the individual choreographs eye contact, suppresses stims, and scripts conversations. While it shields from immediate harassment, it extracts a massive metabolic tax, causing depression and self-alienation.',
-    storyReflection: 'Mygrade school yeshiva years were a constant performance of normalcy. Lacking understanding, I faked the facade until I acted out in classrooms.',
+    storyReflection: 'My grade school yeshiva years were a constant performance of normalcy. Lacking understanding, I faked the facade until I acted out in classrooms.',
     takeaway: 'Challenge compliance expectations. Drop demands for normal eye contact or still postures in class or meetings.'
   },
   {

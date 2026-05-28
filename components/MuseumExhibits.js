@@ -1057,7 +1057,9 @@ const styles = {
   },
   toggleBtn: {
     background: 'rgba(255, 255, 255, 0.02)',
-    border: '1px dashed rgba(255, 255, 255, 0.1)',
+    borderWidth: '1px',
+    borderStyle: 'dashed',
+    borderColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: '8px',
     padding: '8px 12px',
     cursor: 'pointer',
@@ -1070,13 +1072,17 @@ const styles = {
   },
   toggleBtnActive: {
     background: 'rgba(0, 255, 136, 0.08)',
-    border: '1.5px solid #00ff88',
+    borderWidth: '1.5px',
+    borderStyle: 'solid',
+    borderColor: '#00ff88',
     boxShadow: '0 0 10px rgba(0, 255, 136, 0.15)'
   },
   toggleBtnDisabled: {
     opacity: 0.3,
     cursor: 'not-allowed',
     background: 'rgba(0,0,0,0.4)',
+    borderWidth: '1px',
+    borderStyle: 'dashed',
     borderColor: 'rgba(255,255,255,0.03)'
   },
   toggleBtnHeader: {
@@ -1104,7 +1110,9 @@ const styles = {
   },
   resetBtn: {
     background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.12)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255,255,255,0.12)',
     color: 'rgba(255,255,255,0.7)',
     fontFamily: 'monospace',
     fontSize: '0.65rem',
@@ -1119,7 +1127,9 @@ const styles = {
   },
   dangerResetBtn: {
     background: 'rgba(234, 67, 53, 0.15)',
-    border: '1.5px solid #ea4335',
+    borderWidth: '1.5px',
+    borderStyle: 'solid',
+    borderColor: '#ea4335',
     color: '#ea4335',
     fontFamily: 'monospace',
     fontSize: '0.68rem',
@@ -1143,7 +1153,9 @@ const styles = {
   },
   selectorBtn: {
     background: 'rgba(4, 6, 12, 0.5)',
-    border: '1.5px solid rgba(255,255,255,0.08)',
+    borderWidth: '1.5px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255,255,255,0.08)',
     color: 'rgba(255,255,255,0.6)',
     padding: '8px 4px',
     borderRadius: '8px',
@@ -1156,8 +1168,9 @@ const styles = {
   },
   selectorBtnActiveCyan: {
     background: 'rgba(0, 240, 255, 0.12)',
-    border: '1.5px solid #00f0ff',
-    color: '#00f0ff',
+    borderWidth: '1.5px',
+    borderStyle: 'solid',
+    borderColor: '#00f0ff',
     boxShadow: '0 0 10px rgba(0, 240, 255, 0.15)',
     textShadow: '0 0 5px rgba(0,240,255,0.4)'
   },
@@ -1175,18 +1188,24 @@ const styles = {
   },
   dangerPulseBtn: {
     background: 'rgba(234, 67, 53, 0.12)',
-    border: '1.5px solid #ea4335',
+    borderWidth: '1.5px',
+    borderStyle: 'solid',
+    borderColor: '#ea4335',
     color: '#ea4335',
     boxShadow: '0 0 12px rgba(234,67,53,0.2)'
   },
   infoPulseBtn: {
     background: 'rgba(0, 240, 255, 0.08)',
-    border: '1.5px solid #00f0ff',
+    borderWidth: '1.5px',
+    borderStyle: 'solid',
+    borderColor: '#00f0ff',
     color: '#00f0ff'
   },
   hazardAlertPanel: {
     background: 'rgba(234, 67, 53, 0.08)',
-    border: '1px solid #ea4335',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: '#ea4335',
     borderRadius: '8px',
     padding: '10px 14px',
     color: '#ea4335',
@@ -1200,7 +1219,9 @@ const styles = {
   // Exhibit 3 specific styles
   dialogueBox: {
     background: 'rgba(4, 6, 12, 0.75)',
-    border: '1px solid rgba(255, 255, 255, 0.06)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255, 255, 255, 0.06)',
     borderRadius: '10px',
     padding: '14px',
     display: 'flex',
@@ -1227,7 +1248,9 @@ const styles = {
   },
   deficitChoiceBtn: {
     background: 'rgba(234, 67, 53, 0.03)',
-    border: '1px dashed rgba(234, 67, 53, 0.3)',
+    borderWidth: '1px',
+    borderStyle: 'dashed',
+    borderColor: 'rgba(234, 67, 53, 0.3)',
     color: '#ea4335',
     padding: '10px 12px',
     borderRadius: '6px',
@@ -1239,7 +1262,9 @@ const styles = {
   },
   affirmingChoiceBtn: {
     background: 'rgba(0, 255, 136, 0.03)',
-    border: '1px dashed rgba(0, 255, 136, 0.3)',
+    borderWidth: '1px',
+    borderStyle: 'dashed',
+    borderColor: 'rgba(0, 255, 136, 0.3)',
     color: '#00ff88',
     padding: '10px 12px',
     borderRadius: '6px',

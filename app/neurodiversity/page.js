@@ -171,28 +171,28 @@ export default function NeurodiversityTacticalMuseum() {
       component: <MaskingDiagnostics />
     },
     {
-      id: 'exhibit-attention',
-      title: 'Hall II: Sensory Overwhelm & The Monotropic Spotlight',
-      storyPhase: 'PHASE 02 // HIGH SCHOOL // ATTENTIONAL CHANNELS',
-      storyText: 'High school quickly became a sensory minefield. My attention functioned as a monotropic focus tunnel—intensely locked onto single channels. Any abrupt interruption from educators felt like a physical shockwave tearing me out of a moving vehicle. Because the environment lacked transitional buffers or sensory accommodations, my executive processors frequently overloaded, which was misinterpreted by staff as defiance rather than acute sensory distress.',
+      id: 'exhibit-autonomy',
+      title: 'Hall II: Pathology Maze vs. Autonomy Horizon',
+      storyPhase: 'PHASE 02 // HIGH SCHOOL // THE SPECIAL NEEDS PATHOLOGY MAZE',
+      storyText: 'After Yeshiva failed, I went to two special needs schools. In the first, another kid pointed out my autism—mocking it strictly as a broken medical deficit, which scared me deeply. In the second, a hostile peer leader turned the school against me. Hitting a severe burnout, I realized the clinical pathology model was a cage framing me as a list of defective behaviors. Reclaiming my identity through the neurodiversity paradigm gave me the autonomy to grow on my own terms.',
       abaLink: false,
-      component: <MonotropicSpotlight />
+      component: <EnvironmentalTransition />
     },
     {
       id: 'exhibit-communication',
       title: 'Hall III: Double Empathy & Boundary Mismatch',
-      storyPhase: 'PHASE 03 // EARLY 20s // THE COMMUNICATION GAP',
-      storyText: 'In my early 20s, I hit severe autistic burnout, driven by past trauma. Socializing was further complicated because I often misread other autistic individuals\' silent energy battery drainage as personal rejection. When they went quiet, I unknowingly invaded their boundaries due to a double-blind lack of explicit verbal communication from both of us. Discovering Dr. Milton\'s Double Empathy theory showed me that breakdowns are mutual mismatches, not personal defects.',
+      storyPhase: 'PHASE 03 // EARLY 20s // METABOLIC BURN & BOUNDARY CLASHES',
+      storyText: 'In my early 20s, I hit severe autistic burnout, driven by past trauma from that unsafe environment in the second special needs school. Socializing was further complicated because I often misread other autistic individuals\' silent energy battery drainage as personal rejection. When they went quiet, I unknowingly invaded their boundaries due to a double-blind lack of explicit verbal communication from both of us. Discovering Dr. Milton\'s Double Empathy theory showed me that breakdowns are mutual mismatches, not personal defects.',
       abaLink: false,
       component: <DoubleEmpathySync />
     },
     {
-      id: 'exhibit-autonomy',
-      title: 'Hall IV: Pathology Maze vs. Autonomy Horizon',
-      storyPhase: 'PHASE 04 // SPECIAL NEEDS TRANSFER // RECLAIMING ID',
-      storyText: 'After Yeshiva failed, I went to two special needs schools. In the first, another kid pointed out my autism—mocking it strictly as a broken medical deficit, which scared me deeply. In the second, a hostile peer leader turned the school against me. Hitting a severe burnout, I realized the clinical pathology model was a cage framing me as a list of defective behaviors. Reclaiming my identity through the neurodiversity paradigm gave me the autonomy to grow on my own terms.',
+      id: 'exhibit-attention',
+      title: 'Hall IV: Sensory Overwhelm & The Monotropic Spotlight',
+      storyPhase: 'PHASE 04 // PRESENT // SELF-ACCEPTANCE & FLOW CHANNELS',
+      storyText: 'Today, I am slowly learning more about myself every single Sol. Armed with respect for social batteries and an understanding of attention inertia, I am unlearning pathology deficit labels. I accept my specialized monotropic attention flow tunnels and practice unmasking. Rather than forcing compliance, I am finding healthy, explicit ways to connect with others on my own terms.',
       abaLink: false,
-      component: <EnvironmentalTransition />
+      component: <MonotropicSpotlight />
     }
   ];
 
@@ -530,7 +530,7 @@ export default function NeurodiversityTacticalMuseum() {
                 </p>
 
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <button onClick={() => changeSector('exhibits')} className="hud-btn" style={{ borderColor: '#00ff88', color: '#00ff88', background: 'rgba(0, 255, 136, 0.08)' }}>
+                  <button onClick={() => changeSector('exhibits')} className="hud-btn" style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: '#00ff88', color: '#00ff88', background: 'rgba(0, 255, 136, 0.08)' }}>
                     [ 🖼️ INITIATE TELEPORTATION TO EXHIBITS ]
                   </button>
                   <button onClick={() => changeSector('constellation')} className="hud-btn">
@@ -612,6 +612,8 @@ export default function NeurodiversityTacticalMuseum() {
                         className="social-link-port"
                         style={{
                           marginTop: '16px',
+                          borderWidth: '1px',
+                          borderStyle: 'solid',
                           borderColor: '#ffb300',
                           color: '#ffb300',
                           background: 'rgba(255, 179, 0, 0.04)',
@@ -961,7 +963,7 @@ export default function NeurodiversityTacticalMuseum() {
                       <button 
                         onClick={handleCopyLink} 
                         className="hud-btn" 
-                        style={{ borderColor: '#00ff88', color: '#00ff88', fontSize: '0.65rem', background: copied ? 'rgba(0, 255, 136, 0.15)' : 'rgba(0, 255, 136, 0.04)' }}
+                        style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: '#00ff88', color: '#00ff88', fontSize: '0.65rem', background: copied ? 'rgba(0, 255, 136, 0.15)' : 'rgba(0, 255, 136, 0.04)' }}
                       >
                         {copied ? '[ ✓ PASSPORT SECURED ]' : '[ 📋 COPY CITIZEN TRANSMISSION LINK ]'}
                       </button>

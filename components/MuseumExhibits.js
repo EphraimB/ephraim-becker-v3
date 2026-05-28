@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import exhibitData from '../data/neurodiversity-exhibit.json';
 
 // ==========================================
 // 🛠️ EXHIBIT 1: MASKING CPU & BATTERY DIAGNOSTICS
@@ -225,12 +226,7 @@ export function MaskingDiagnostics() {
           <span style={styles.consoleSectionLabel}>[ COMPLIANCE REGULATION PROTOCOLS ]</span>
 
           <div style={styles.gridToggles}>
-            {[
-              { key: 'eyeContact', label: '👁️ Manual Eye Contact', cost: '+25% CPU // 2.0x Drain', desc: 'Choreograph eye gaze patterns manually' },
-              { key: 'suppressStims', label: '🤚 Suppress Natural Stims', cost: '+20% CPU // 1.5x Drain', desc: 'Squeeze hands, lock muscles to look still' },
-              { key: 'scripting', label: '💬 Script Conversation', cost: '+30% CPU // 2.5x Drain', desc: 'Pre-calculate sentences, verify jokes' },
-              { key: 'noiseFilter', label: '🎧 Manual Audio Filter', cost: '+20% CPU // 1.5x Drain', desc: 'Manually parse vocals from server buzz' }
-            ].map(toggle => (
+            {exhibitData.maskingToggles.map(toggle => (
               <button
                 key={toggle.key}
                 onClick={() => toggleSwitch(toggle.key)}
@@ -277,13 +273,7 @@ export function MonotropicSpotlight() {
   const [shockwaveActive, setShockwaveActive] = useState(false);
   const [shakeActive, setShakeActive] = useState(false);
 
-  const nodes = {
-    hyperfocus: { x: 100, y: 35, label: '🎯 HYPERFOCUS FLIGHT TRACT', desc: 'Elite flow state, deep analysis' },
-    clock: { x: 35, y: 70, label: '⏰ TICKING WALL CHRONOMETER', desc: 'Loud repetitive ticking, ambient clock' },
-    fluorescent: { x: 65, y: 90, label: '💡 FLUORESCENT LIGHT HUM', desc: 'High frequency background electronic buzz' },
-    socialChatter: { x: 135, y: 90, label: '💬 BACKGROUND CONVERSATIONS', desc: 'Ambient corridor murmurs, micro-signals' },
-    teacherVo: { x: 165, y: 70, label: '📢 CRITICAL VERBAL DIRECTION', desc: 'Incoming educator instruction signal' },
-  };
+  const nodes = exhibitData.monotropicNodes;
 
   const handleTriggerInterrupt = () => {
     setShockwaveActive(true);
@@ -559,14 +549,14 @@ export function DoubleEmpathySync() {
         <div style={styles.dialogueBox}>
           <div style={styles.commTranscriptLabel}>[ MISSION UPLINK: COMMUNICATION FAULT CONTEXT ]</div>
           <p style={styles.dialogueTeaser}>
-            <strong>Context:</strong> Becker\'s daily social battery core has depleted to 5% after hours of collaborative mapping. Becker retreats to a recharge corridor without warning. How does the station staff respond?
+            <strong>Context:</strong> {exhibitData.doubleEmpathyDialogue.teaser}
           </p>
           <div style={styles.choiceBtnStack}>
             <button onClick={() => { setDialoguePath('deficit'); setDialogueStep(1); }} style={styles.deficitChoiceBtn}>
-              ❌ SECTOR RESPONSE A: Pathologize & Demean (Deficit Model)
+              {exhibitData.doubleEmpathyDialogue.deficit.label}
             </button>
             <button onClick={() => { setDialoguePath('affirming'); setDialogueStep(1); }} style={styles.affirmingChoiceBtn}>
-              ✨ SECTOR RESPONSE B: Mutual Adaptation (Double Empathy Model)
+              {exhibitData.doubleEmpathyDialogue.affirming.label}
             </button>
           </div>
         </div>
@@ -574,6 +564,7 @@ export function DoubleEmpathySync() {
     }
 
     if (dialoguePath === 'deficit') {
+      const data = exhibitData.doubleEmpathyDialogue.deficit;
       return (
         <div style={styles.dialogueBox}>
           <div style={styles.commTranscriptLabel}>[ UPLINK TRANSCRIPT // DEFICIT CLINICAL LOG ]</div>
@@ -581,10 +572,10 @@ export function DoubleEmpathySync() {
           {dialogueStep === 1 && (
             <>
               <div style={styles.chatBubbleNt}>
-                <strong>PEER_ALLISTIC:</strong> &quot;Becker is displaying social communication deficits. He is ignoring my task coordination and retreating. This antisocial behavior is unacceptable.&quot;
+                <strong>PEER_ALLISTIC:</strong> &quot;{data.step1Nt}&quot;
               </div>
               <div style={styles.chatBubbleNd}>
-                <strong>CITIZEN_BECKER (Quiet, Stressed):</strong> *Forces himself to re-enter, masking pain, stuttering scripts* &quot;O-okay, I will sit here...&quot; (Battery drains to 0%, enters burnout).
+                <strong>CITIZEN_BECKER (Quiet, Stressed):</strong> {data.step1Nd}
               </div>
               <button onClick={() => setDialogueStep(2)} style={styles.consoleBtnNext}>[ EXAMINE DIAGNOSTIC OUTCOME ➔ ]</button>
             </>
@@ -593,9 +584,9 @@ export function DoubleEmpathySync() {
           {dialogueStep === 2 && (
             <>
               <div style={styles.hazardAlertPanel}>
-                <strong>🚨 CRITICAL FAILURE: DOUBLE-BLIND EMPATHY COLLAPSE 🚨</strong>
+                <strong>{data.failureTitle}</strong>
                 <p style={{ margin: '4px 0 0 0', fontSize: '0.68rem' }}>
-                  By assuming the breakdown was a personal &quot;autistic social deficit&quot; rather than a mutual wiring gap, the peer overran Becker\'s boundaries, causing severe system overload and complete communication burnout.
+                  {data.failureDesc}
                 </p>
               </div>
               <button onClick={resetDialogue} style={styles.dialogueResetBtn}>[ REBOOT COMMS LOG ]</button>
@@ -606,6 +597,7 @@ export function DoubleEmpathySync() {
     }
 
     if (dialoguePath === 'affirming') {
+      const data = exhibitData.doubleEmpathyDialogue.affirming;
       return (
         <div style={styles.dialogueBox}>
           <div style={styles.commTranscriptLabel}>[ UPLINK TRANSCRIPT // DOUBLE EMPATHY BRIDGE ]</div>
@@ -613,10 +605,10 @@ export function DoubleEmpathySync() {
           {dialogueStep === 1 && (
             <>
               <div style={styles.chatBubbleNd}>
-                <strong>CITIZEN_BECKER (Explicit Communication):</strong> &quot;Uplink staff, my social reactor core is at 5%. I cannot process conversations further. Entering charging cycle for 2 Sol cycles. I value our task.&quot;
+                <strong>CITIZEN_BECKER (Explicit Communication):</strong> &quot;{data.step1Nd}&quot;
               </div>
               <div style={styles.chatBubbleNt}>
-                <strong>PEER_ALLISTIC (Accommodating):</strong> &quot;Transmission received, Becker. Copy that. Rest your reactor, I will lock in the coordinates and we will sync up tomorrow.&quot;
+                <strong>PEER_ALLISTIC (Accommodating):</strong> &quot;{data.step1Nt}&quot;
               </div>
               <button onClick={() => setDialogueStep(2)} style={styles.consoleBtnNext}>[ EXAMINE DIAGNOSTIC OUTCOME ➔ ]</button>
             </>
@@ -625,9 +617,9 @@ export function DoubleEmpathySync() {
           {dialogueStep === 2 && (
             <>
               <div style={styles.successAlertPanel}>
-                <strong>✨ SUCCESSFUL NOMINAL SYNC: EXPLICIT UPLINK SECURED ✨</strong>
+                <strong>{data.successTitle}</strong>
                 <p style={{ margin: '4px 0 0 0', fontSize: '0.68rem' }}>
-                  Mutual empathy achieved. Becker verbalized boundaries explicitly, and the peer adjusted environmental expectations. No masking was forced, protecting the reactor and securing task success.
+                  {data.successDesc}
                 </p>
               </div>
               <button onClick={resetDialogue} style={styles.dialogueResetBtn}>[ REBOOT COMMS LOG ]</button>
@@ -787,12 +779,11 @@ export function EnvironmentalTransition() {
           </div>
 
           <div style={styles.environDescriptionBox}>
-            <span style={styles.deficitSectionHeader}>❌ DEFICIT / CLINICAL PATHOLOGY CAGE</span>
+            <span style={styles.deficitSectionHeader}>{exhibitData.environmentalTransition.deficit.header}</span>
             <ul style={styles.environListUl}>
-              <li><strong>Philosophy:</strong> Neuro-variations are biological errors that must be fixed or &quot;cured.&quot;</li>
-              <li><strong>Barriers:</strong> Intrinsic deficit in the individual; social difficulties blamed on autism.</li>
-              <li><strong>Goals:</strong> Normalization compliance; suppression of stims/avoiding eye contact; forced masking.</li>
-              <li><strong>Ephraim\'s Thread:</strong> Compliance training (ABA), Yeshiva exclusion, and isolating special needs models.</li>
+              {exhibitData.environmentalTransition.deficit.items.map((item, idx) => (
+                <li key={idx}><strong>{item.label}:</strong> {item.text}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -823,12 +814,11 @@ export function EnvironmentalTransition() {
           </div>
 
           <div style={styles.environDescriptionBox}>
-            <span style={styles.affirmingSectionHeader}>✨ NEURODIVERSITY AFFIRMING DOME</span>
+            <span style={styles.affirmingSectionHeader}>{exhibitData.environmentalTransition.affirming.header}</span>
             <ul style={styles.environListUl}>
-              <li><strong>Philosophy:</strong> Neurological differences are natural assets, analogous to biodiversity.</li>
-              <li><strong>Barriers:</strong> Created by rigid environments built exclusively for one neurotype style.</li>
-              <li><strong>Goals:</strong> Sensory accommodations, self-determination, explicit comm bridges.</li>
-              <li><strong>Ephraim\'s Thread:</strong> Deep unmasking, structural rest, self-acceptance, and mutual adaptations.</li>
+              {exhibitData.environmentalTransition.affirming.items.map((item, idx) => (
+                <li key={idx}><strong>{item.label}:</strong> {item.text}</li>
+              ))}
             </ul>
           </div>
         </div>
@@ -860,17 +850,17 @@ export function EnvironmentalTransition() {
 // 🧘 EXHIBIT 5: BREATHING REGULATOR (SENSORY DOWN-REGULATION)
 // ==========================================
 export function BreathingRegulator() {
-  const [phase, setPhase] = useState('Inhale'); // Inhale (4s), Hold (4s), Exhale (4s), Hold (4s)
+  const [phase, setPhase] = useState(exhibitData.breathingRegulator.phases.inhale); // Inhale (4s), Hold (4s), Exhale (4s), Hold (4s)
   const [ticks, setTicks] = useState(0);
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTicks(prev => {
         const nextTick = (prev + 1) % 16;
-        if (nextTick === 0) setPhase('Inhale');
-        else if (nextTick === 4) setPhase('Hold (Retain)');
-        else if (nextTick === 8) setPhase('Exhale');
-        else if (nextTick === 12) setPhase('Hold (Empty)');
+        if (nextTick === 0) setPhase(exhibitData.breathingRegulator.phases.inhale);
+        else if (nextTick === 4) setPhase(exhibitData.breathingRegulator.phases.holdRetain);
+        else if (nextTick === 8) setPhase(exhibitData.breathingRegulator.phases.exhale);
+        else if (nextTick === 12) setPhase(exhibitData.breathingRegulator.phases.holdEmpty);
         return nextTick;
       });
     }, 1000);
@@ -903,7 +893,7 @@ export function BreathingRegulator() {
       </div>
       
       <p style={{ ...styles.exhibitDesc, marginBottom: '20px' }}>
-        Practice box breathing to calm sensory overstimulation and reset your metabolic energy battery. Follow the glowing emerald telemetry node below:
+        {exhibitData.breathingRegulator.desc}
       </p>
 
       <div style={styles.breathingCanvasBox}>
@@ -933,10 +923,14 @@ export function BreathingRegulator() {
       </div>
 
       <div style={styles.breathingInstructionsRow}>
-        <div style={{ ...styles.breathStepChip, ...(ticks < 4 ? styles.breathStepActive : {}) }}>1. INHALE</div>
-        <div style={{ ...styles.breathStepChip, ...(ticks >= 4 && ticks < 8 ? styles.breathStepActive : {}) }}>2. HOLD</div>
-        <div style={{ ...styles.breathStepChip, ...(ticks >= 8 && ticks < 12 ? styles.breathStepActive : {}) }}>3. EXHALE</div>
-        <div style={{ ...styles.breathStepChip, ...(ticks >= 12 ? styles.breathStepActive : {}) }}>4. HOLD</div>
+        {exhibitData.breathingRegulator.steps.map((step, idx) => (
+          <div key={idx} style={{ 
+            ...styles.breathStepChip, 
+            ...((idx === 0 && ticks < 4) || (idx === 1 && ticks >= 4 && ticks < 8) || (idx === 2 && ticks >= 8 && ticks < 12) || (idx === 3 && ticks >= 12) ? styles.breathStepActive : {}) 
+          }}>
+            {step}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -948,28 +942,7 @@ export function BreathingRegulator() {
 export function ExhibitPlaqueVisualization() {
   const [selectedNode, setSelectedNode] = useState('none');
 
-  const nodeDetails = {
-    none: {
-      title: 'SELECT A COGNITIVE ORBITAL WAVELENGTH',
-      desc: 'Click on any of the orbiting telemetry paths in the radar grid above to analyze its core processing protocol.',
-      color: '#8a9bb5'
-    },
-    monotropic: {
-      title: '🎯 MONOTROPIC SPECTRUM ORBITAL',
-      desc: 'Overclocks a single processor core to run one channel in maximum definition. Excellent deep flow states, though transitions require cooling buffers.',
-      color: '#00ff88'
-    },
-    polytropic: {
-      title: '🌐 POLYTROPIC BANDWIDTH ORBITAL',
-      desc: 'Maintains shallow scanning channels across multiple ambient servers simultaneously. Broad alertness profile, but easily overloaded in high-frequency crowds.',
-      color: '#00f0ff'
-    },
-    adhd: {
-      title: '⚡ INTEREST-DRIVEN AUTONOMIC FLUIDITY',
-      desc: 'An orbital that speeds up or shifts focus dynamically based on interest, novelty, or urgency metrics rather than standard static lists.',
-      color: '#ffb300'
-    }
-  };
+  const nodeDetails = exhibitData.exhibit1Orbitals;
 
   const details = nodeDetails[selectedNode];
 
@@ -1297,140 +1270,311 @@ export function ExhibitMatrixVisualization({ activeTrait }) {
 export function ExhibitHistoryModel() {
   const [activeEra, setActiveEra] = useState('era-1800s');
 
-  const eras = {
-    'era-1800s': {
-      label: '1800s',
-      x: 15,
-      title: 'The Industrial Stamp (Standardization)',
-      meta: 'GENESIS OF CLINICAL MEASUREMENT RULES',
-      desc: 'With the rise of mass manufacturing plants and factory schools, society demanded absolute uniformity. Human behavior was measured like steel parts. Individuals with differing cognitive rhythms were labeled as statistical "errors" or "defective machinery" that lacked utility.',
-      takeaway: 'Impact: Shifted unique behavioral profiles out of community settings and placed them under technical medical custody.'
-    },
-    'era-1910s': {
-      label: '1910s',
-      x: 43,
-      title: 'The "Defect" Label (Early Psychiatry)',
-      meta: 'CLINICAL CATALOGING PROTOCOLS',
-      desc: 'Early institutional medicine formally categorized cognitive variations as medical diseases. Doctors viewed quiet retreats, sensory reactions, or hyper-focused pursuits as biological flaws to be cured, completely ignoring the social environment.',
-      takeaway: 'Impact: Institutional lockups and early psychiatry treatments designed to suppress and hide difference.'
-    },
-    'era-1940s': {
-      label: '1940s',
-      x: 71,
-      title: 'Pediatric Classifiers (Asperger & Kanner)',
-      meta: 'THE ORIGINAL DIAGNOSTIC CATEGORIES',
-      desc: 'Leo Kanner and Hans Asperger formally published the first descriptions of autistic children. While Asperger recognized special interests as valuable assets, Kanner framed autism as a severe, tragic withdrawal, blaming "refrigerator parents" for their children\'s wiring.',
-      takeaway: 'Impact: The medical diagnosis was defined as an organic tragedy, generating decades of emotional shame for families.'
-    },
-    'era-1960s': {
-      label: '1960s',
-      x: 99,
-      title: 'Institutional Isolation (Segregation)',
-      meta: 'MASS SEGREGATION DOCKING CELLS',
-      desc: 'Autistic and neurodivergent individuals were institutionalized en masse in large warehouses. Early behavioral modification techniques (including aggressive old-school ABA systems) focused entirely on forcefully erasing natural traits to achieve physical compliance.',
-      takeaway: 'Impact: Massive trauma and complete loss of autonomy, treating differences as dangerous behaviors to stamp out.'
-    },
-    'era-1980s': {
-      label: '1980s',
-      x: 127,
-      title: 'The Special Ed Tracking Rooms (Labeling)',
-      meta: 'EDUCATIONAL PIPELINE SEPARATION',
-      desc: 'As psychiatric diagnoses formalized in DSM checklists, schools created segregated "Special Needs" rooms. Support was conditional on trying to appear standard, making kids feel like their brains were permanently broken computers.',
-      takeaway: 'Impact: Divergent teenagers internalized deep inadequacy, viewing natural self-regulation or hyperfocus as systemic failure.'
-    },
-    'era-2000s': {
-      label: '2000s',
-      x: 155,
-      title: 'The Self-Advocacy Rebellion (Singer & ASAN)',
-      meta: 'COINAGE OF NEURODIVERSITY',
-      desc: 'Sociologist Judy Singer coined the term "Neurodiversity" in the late 1990s. By the 2000s, self-advocates founded groups like ASAN, declaring: "Nothing About Us Without Us!" Divergent minds demanded human rights, rejecting psychiatric custody.',
-      takeaway: 'Impact: Redefined autism from a tragic medical defect to a natural biological aspect of human diversity.'
-    },
-    'era-present': {
-      label: 'Present',
-      x: 185,
-      title: 'The Cybernetic Biosphere (Universal Design)',
-      meta: 'RADICAL UNMASKING & COGNITIVE PRIDE',
-      desc: 'Today, the Social Model of Disability is changing design. Divergent citizens are unmasking, managing social energy batteries, and requesting sensory zones. We model society as a biosphere built to fit multiple smartphone operating systems.',
-      takeaway: 'Impact: Dismantles normalization rules, building explicit communication channels and affirming workspaces.'
+  const eras = exhibitData.historyEras;
+  const era = eras[activeEra];
+
+  const renderEraSvg = () => {
+    switch (activeEra) {
+      case 'era-1800s':
+        return (
+          <g>
+            {/* Rotating Cog 1 */}
+            <g style={{ transformOrigin: '30px 40px', animation: 'spin-turntable 8s infinite linear' }}>
+              <circle cx="30" cy="40" r="10" fill="none" stroke="#ffb300" strokeWidth="1" strokeDasharray="3 2" />
+              <circle cx="30" cy="40" r="14" fill="none" stroke="#ffb300" strokeWidth="1.2" />
+              <path d="M 30,22 L 30,26 M 30,54 L 30,58 M 12,40 L 16,40 M 44,40 L 48,40 M 17,27 L 21,31 M 39,49 L 43,53 M 17,53 L 21,49 M 39,27 L 43,31" stroke="#ffb300" strokeWidth="2.5" strokeLinecap="round" />
+            </g>
+
+            {/* Rotating Cog 2 (Interlocking and reversed) */}
+            <g style={{ transformOrigin: '55px 30px', animation: 'spin-turntable-reverse 6s infinite linear' }}>
+              <circle cx="55" cy="30" r="7" fill="none" stroke="#ffb300" strokeWidth="1" strokeDasharray="2 2" opacity="0.8" />
+              <circle cx="55" cy="30" r="10" fill="none" stroke="#ffb300" strokeWidth="1.2" />
+              <path d="M 55,17 L 55,20 M 55,40 L 55,43 M 42,30 L 45,30 M 65,30 L 68,30 M 46,21 L 48,24 M 62,36 L 64,39 M 46,39 L 48,36 M 62,21 L 64,24" stroke="#ffb300" strokeWidth="2" strokeLinecap="round" />
+            </g>
+
+            {/* Standardization Behavior bars */}
+            <g opacity="0.75" stroke="#ffb300" strokeWidth="0.8" fill="none">
+              <rect x="75" y="15" width="6" height="50" rx="1" />
+              <rect x="85" y="15" width="6" height="50" rx="1" />
+              
+              <rect x="76" y="25" width="4" height="39" fill="#ffb300" opacity="0.6">
+                <animate attributeName="height" values="0;39;0" dur="4s" repeatCount="indefinite" />
+                <animate attributeName="y" values="64;25;64" dur="4s" repeatCount="indefinite" />
+              </rect>
+              <rect x="86" y="25" width="4" height="39" fill="#ffb300" opacity="0.8">
+                <animate attributeName="height" values="0;39;0" dur="3s" repeatCount="indefinite" />
+                <animate attributeName="y" values="64;25;64" dur="3s" repeatCount="indefinite" />
+              </rect>
+
+              <line x1="30" y1="40" x2="55" y2="30" stroke="rgba(255, 179, 0, 0.25)" strokeWidth="0.8" strokeDasharray="2 2" />
+            </g>
+
+            <text x="50" y="73" fill="#ffb300" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">STANDARDIZE</text>
+          </g>
+        );
+
+      case 'era-1910s':
+        return (
+          <g>
+            <circle cx="50" cy="35" r="16" fill="none" stroke="rgba(0, 240, 255, 0.15)" strokeWidth="0.8" strokeDasharray="3 3" />
+            <circle cx="50" cy="35" r="12" fill="none" stroke="rgba(0, 240, 255, 0.3)" strokeWidth="0.5" />
+            <circle cx="50" cy="35" r="4.5" fill="#00f0ff" style={{ animation: 'shiver-node 0.18s infinite linear', filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
+            <circle cx="15" cy="65" r="3" fill="rgba(255,255,255,0.25)" />
+            <line x1="50" y1="35" x2="15" y2="65" stroke="rgba(255,255,255,0.1)" strokeWidth="0.8" strokeDasharray="2 2" />
+            <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">ISOLATION</text>
+          </g>
+        );
+
+      case 'era-1940s':
+        return (
+          <g>
+            <rect x="0" y="0" width="100" height="80" rx="4" style={{ animation: 'pulse-red-alert 3s infinite' }} />
+            <line x1="20" y1="5" x2="20" y2="75" stroke="#333" strokeWidth="1.5" />
+            <line x1="35" y1="5" x2="35" y2="75" stroke="#333" strokeWidth="1.5" />
+            <line x1="50" y1="5" x2="50" y2="75" stroke="#333" strokeWidth="1.5" />
+            <line x1="65" y1="5" x2="65" y2="75" stroke="#333" strokeWidth="1.5" />
+            <line x1="80" y1="5" x2="80" y2="75" stroke="#333" strokeWidth="1.5" />
+            <line x1="5" y1="25" x2="95" y2="25" stroke="#222" strokeWidth="2.5" />
+            <line x1="5" y1="55" x2="95" y2="55" stroke="#222" strokeWidth="2.5" />
+            <g style={{ animation: 'sweep-spotlight 4s infinite ease-in-out', transformOrigin: '50px 0px' }}>
+              <polygon points="50,0 20,80 80,80" fill="rgba(234,67,53,0.18)" stroke="rgba(234,67,53,0.08)" strokeWidth="0.5" />
+            </g>
+            <text x="50" y="73" fill="#ea4335" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">CONFINED</text>
+          </g>
+        );
+
+      case 'era-1960s':
+        return (
+          <g>
+            <g opacity="0.1" stroke="#ff5722" strokeWidth="0.5">
+              <line x1="0" y1="20" x2="100" y2="20" />
+              <line x1="0" y1="40" x2="100" y2="40" />
+              <line x1="0" y1="60" x2="100" y2="60" />
+              <line x1="25" y1="0" x2="25" y2="80" />
+              <line x1="50" y1="0" x2="50" y2="80" />
+              <line x1="75" y1="0" x2="75" y2="80" />
+            </g>
+            <path d="M 50,5 L 45,30 L 60,35 L 50,70" fill="none" stroke="#ff7522" strokeWidth="1.8" strokeDasharray="30" strokeDashoffset="0" style={{ animation: 'electrical-discharge 0.6s infinite steps(4)', filter: 'drop-shadow(0 0 3px #ff7522)' }} />
+            <circle cx="50" cy="70" r="3" fill="#ffb300" style={{ animation: 'shiver-node 0.1s infinite' }} />
+            <text x="50" y="74" fill="#ff7522" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">AVERSIVE_DISCHARGE</text>
+          </g>
+        );
+
+      case 'era-1980s':
+        return (
+          <g>
+            <g opacity="0.3" stroke="#ffb300" strokeWidth="0.6" strokeDasharray="2 2" fill="none">
+              <line x1="15" y1="20" x2="85" y2="20" />
+              <line x1="15" y1="35" x2="85" y2="35" />
+              <line x1="15" y1="50" x2="85" y2="50" />
+            </g>
+            
+            <g fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.2)" strokeWidth="0.5">
+              <circle cx="25" cy="20" r="2.5" />
+              <circle cx="50" cy="20" r="2.5" />
+              <circle cx="75" cy="20" r="2.5" />
+              <circle cx="25" cy="35" r="2.5" />
+              <circle cx="75" cy="35" r="2.5" />
+              <circle cx="25" cy="50" r="2.5" />
+              <circle cx="50" cy="50" r="2.5" />
+              <circle cx="75" cy="50" r="2.5" />
+            </g>
+
+            <rect x="40" y="30" width="20" height="15" rx="2" fill="rgba(255, 179, 0, 0.04)" stroke="#ffb300" strokeWidth="1" strokeDasharray="1.5 1.5" />
+            
+            <g>
+              <circle cx="50" cy="37.5" r="3" fill="#ffb300" style={{ filter: 'drop-shadow(0 0 3px #ffb300)' }} />
+              <path d="M 47.5,37.5 L 52.5,37.5 M 50,35 L 50,40" stroke="#04060c" strokeWidth="0.8" />
+            </g>
+
+            <text x="50" y="68" fill="#ffb300" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">SEGREGATED_TRACKS</text>
+          </g>
+        );
+
+      case 'era-2000s':
+        return (
+          <g>
+            <circle cx="50" cy="40" r="3.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 3px #00ff88)' }} />
+            <circle cx="20" cy="20" r="2.5" fill="#00f0ff" />
+            <circle cx="80" cy="20" r="2.5" fill="#00f0ff" />
+            <circle cx="30" cy="60" r="2.5" fill="#00f0ff" />
+            <circle cx="70" cy="60" r="2.5" fill="#00f0ff" />
+            <line x1="50" y1="40" x2="20" y2="20" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.8" />
+            <line x1="50" y1="40" x2="80" y2="20" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.8" />
+            <line x1="50" y1="40" x2="30" y2="60" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.8" />
+            <line x1="50" y1="40" x2="70" y2="60" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.8" />
+            <circle cx="50" cy="40" r="10" fill="none" stroke="#00ff88" strokeWidth="0.8" style={{ animation: 'pulse-signal-ring 1.8s infinite' }} />
+            <circle cx="50" cy="40" r="20" fill="none" stroke="#00f0ff" strokeWidth="0.8" style={{ animation: 'pulse-signal-ring 1.8s infinite 0.9s' }} />
+            <text x="50" y="73" fill="#00ff88" fontSize="4.5" fontFamily="monospace" textAnchor="middle">ADVOCACY_NET</text>
+          </g>
+        );
+
+      case 'era-present':
+      default:
+        return (
+          <g>
+            <path d="M 5,30 Q 20,10 35,30 T 65,30 T 95,30" fill="none" stroke="#00ff88" strokeWidth="1.5" strokeDasharray="40" strokeDashoffset="0" style={{ animation: 'phase-wave-emerald 1.5s infinite linear' }} />
+            <path d="M 5,50 Q 20,70 35,50 T 65,50 T 95,50" fill="none" stroke="#ff007f" strokeWidth="1.5" strokeDasharray="40" strokeDashoffset="0" style={{ animation: 'phase-wave-emerald 1.5s infinite linear reverse' }} />
+            <line x1="35" y1="30" x2="35" y2="50" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" strokeDasharray="2 2" />
+            <line x1="65" y1="30" x2="65" y2="50" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" strokeDasharray="2 2" />
+            <circle cx="35" cy="40" r="1.5" fill="#fff" />
+            <circle cx="65" cy="40" r="1.5" fill="#fff" />
+            <text x="50" y="73" fill="#00ff88" fontSize="4.5" fontFamily="monospace" textAnchor="middle">MUTUAL_SYNC</text>
+          </g>
+        );
     }
   };
 
-  const era = eras[activeEra];
-
   return (
-    <div style={{ ...styles.consoleContainer, maxWidth: '500px', margin: '0 auto' }}>
+    <div style={styles.consoleContainer}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes spin-turntable {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes spin-turntable-reverse {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(-360deg); }
+        }
+        @keyframes shiver-node {
+          0% { transform: translate(0, 0); }
+          25% { transform: translate(-1px, 1px); }
+          50% { transform: translate(0, -1px); }
+          75% { transform: translate(1px, 0); }
+          100% { transform: translate(0, 0); }
+        }
+        @keyframes pulse-red-alert {
+          0% { opacity: 0.15; fill: rgba(234, 67, 53, 0.05); stroke: rgba(234, 67, 53, 0.2); }
+          50% { opacity: 0.6; fill: rgba(234, 67, 53, 0.15); stroke: rgba(234, 67, 53, 0.5); }
+          100% { opacity: 0.15; fill: rgba(234, 67, 53, 0.05); stroke: rgba(234, 67, 53, 0.2); }
+        }
+        @keyframes sweep-spotlight {
+          0% { transform: rotate(-25deg); opacity: 0.2; }
+          50% { transform: rotate(25deg); opacity: 0.5; }
+          100% { transform: rotate(-25deg); opacity: 0.2; }
+        }
+        @keyframes electrical-discharge {
+          0% { opacity: 0.1; stroke-dashoffset: 0; }
+          20% { opacity: 1; stroke-dashoffset: 5; }
+          40% { opacity: 0.2; stroke-dashoffset: 15; }
+          60% { opacity: 0.8; stroke-dashoffset: 8; }
+          80% { opacity: 0.1; stroke-dashoffset: 20; }
+          100% { opacity: 0.1; stroke-dashoffset: 0; }
+        }
+        @keyframes pulse-signal-ring {
+          0% { r: 5px; opacity: 1; stroke: #00ff88; }
+          100% { r: 35px; opacity: 0; stroke: #00f0ff; }
+        }
+        @keyframes phase-wave-emerald {
+          0% { stroke-dashoffset: 0; }
+          100% { stroke-dashoffset: -40; }
+        }
+      `}} />
+
       <div style={styles.consoleHeader}>
         <span style={styles.consoleTitle}>📜 HISTORICAL TELEMETRY MATRIX</span>
-        <span style={styles.telemetryTag}>HIST_DATABASE_LOCKED</span>
+        <span style={styles.telemetryTag}>HIST_DATABASE_UPLINK</span>
       </div>
 
-      <p style={{ ...styles.exhibitDesc, marginBottom: '10px' }}>
+      <p style={{ ...styles.exhibitDesc, marginBottom: '16px' }}>
         Interactive Timeline Rail. Click the timeline nodes in the glowing SVG pipeline below to analyze the historic roots of the pathology deficit model:
       </p>
 
-      {/* Horizontal glowing SVG timeline railway */}
-      <div style={{ background: '#04060c', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '10px', padding: '10px 4px', marginBottom: '14px', position: 'relative', overflow: 'hidden' }}>
-        <svg viewBox="0 0 200 35" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
-          {/* Main pipeline rail */}
-          <line x1="10" y1="18" x2="190" y2="18" stroke="rgba(255,255,255,0.05)" strokeWidth="3" />
-          <line x1="10" y1="18" x2={era.x} y2="18" stroke="#ffb300" strokeWidth="2" style={{ transition: 'x2 0.3s ease' }} />
+      <div style={styles.historySplitLayout}>
+        {/* Left Control Column: Timeline & Descriptive Plaque */}
+        <div style={styles.historyControlColumn}>
+          {/* Horizontal glowing SVG timeline railway */}
+          <div style={{ background: '#04060c', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '10px', padding: '10px 4px', marginBottom: '14px', position: 'relative', overflow: 'hidden' }}>
+            <svg viewBox="0 0 200 35" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+              {/* Main pipeline rail */}
+              <line x1="10" y1="18" x2="190" y2="18" stroke="rgba(255,255,255,0.05)" strokeWidth="3" />
+              <line x1="10" y1="18" x2={era.x} y2="18" stroke="#ffb300" strokeWidth="2" style={{ transition: 'x2 0.3s ease' }} />
 
-          {/* Interactive Era Nodes */}
-          {Object.keys(eras).map(key => {
-            const node = eras[key];
-            const isActive = activeEra === key;
-            return (
-              <g key={key} style={{ cursor: 'pointer' }} onClick={() => setActiveEra(key)}>
-                <circle 
-                  cx={node.x} 
-                  cy="18" 
-                  r={isActive ? "5.5" : "3.5"} 
-                  fill={isActive ? '#ffb300' : 'rgba(255,255,255,0.2)'} 
-                  stroke={isActive ? '#04060c' : 'rgba(255,255,255,0.05)'} 
-                  strokeWidth="1.5"
-                  style={{ transition: 'all 0.25s ease' }}
-                />
-                <circle 
-                  cx={node.x} 
-                  cy="18" 
-                  r="8" 
-                  fill="none" 
-                  stroke={isActive ? '#ffb300' : 'transparent'} 
-                  strokeWidth="0.5" 
-                  strokeDasharray="2 1"
-                />
-                <text 
-                  x={node.x} 
-                  y="9" 
-                  fill={isActive ? '#ffb300' : 'rgba(255,255,255,0.35)'} 
-                  fontSize="4.2" 
-                  fontFamily="monospace" 
-                  textAnchor="middle" 
-                  fontWeight={isActive ? 'bold' : 'normal'}
-                >
-                  {node.label}
-                </text>
-              </g>
-            );
-          })}
-        </svg>
-      </div>
+              {/* Interactive Era Nodes */}
+              {Object.keys(eras).map(key => {
+                const node = eras[key];
+                const isActive = activeEra === key;
+                return (
+                  <g key={key} style={{ cursor: 'pointer' }} onClick={() => setActiveEra(key)}>
+                    <circle 
+                      cx={node.x} 
+                      cy="18" 
+                      r={isActive ? "5.5" : "3.5"} 
+                      fill={isActive ? '#ffb300' : 'rgba(255,255,255,0.2)'} 
+                      stroke={isActive ? '#04060c' : 'rgba(255,255,255,0.05)'} 
+                      strokeWidth="1.5"
+                      style={{ transition: 'all 0.25s ease' }}
+                    />
+                    <circle 
+                      cx={node.x} 
+                      cy="18" 
+                      r="8" 
+                      fill="none" 
+                      stroke={isActive ? '#ffb300' : 'transparent'} 
+                      strokeWidth="0.5" 
+                      strokeDasharray="2 1"
+                    />
+                    <text 
+                      x={node.x} 
+                      y="9" 
+                      fill={isActive ? '#ffb300' : 'rgba(255,255,255,0.35)'} 
+                      fontSize="4.2" 
+                      fontFamily="monospace" 
+                      textAnchor="middle" 
+                      fontWeight={isActive ? 'bold' : 'normal'}
+                    >
+                      {node.label}
+                    </text>
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
 
-      {/* Readout console screen */}
-      <div style={{ background: '#04060c', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '10px', padding: '14px', minHeight: '150px', display: 'flex', flexDirection: 'column', gap: '8px', justifyContent: 'center' }}>
-        <div style={{ borderBottom: '1px dashed rgba(255,255,255,0.1)', paddingBottom: '4px' }}>
-          <span style={{ fontSize: '0.5rem', fontFamily: 'monospace', color: '#ffb300', fontWeight: 'bold' }}>📡 {era.meta}</span>
-          <h4 style={{ margin: '2px 0 0 0', fontSize: '0.74rem', color: '#fff', fontFamily: 'var(--font-tech)' }}>{era.title}</h4>
+          {/* Readout console screen */}
+          <div style={{ background: '#04060c', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '10px', padding: '14px', minHeight: '150px', display: 'flex', flexDirection: 'column', gap: '8px', justifyContent: 'center' }}>
+            <div style={{ borderBottom: '1px dashed rgba(255,255,255,0.1)', paddingBottom: '4px' }}>
+              <span style={{ fontSize: '0.5rem', fontFamily: 'monospace', color: '#ffb300', fontWeight: 'bold' }}>📡 {era.meta}</span>
+              <h4 style={{ margin: '2px 0 0 0', fontSize: '0.74rem', color: '#fff', fontFamily: 'var(--font-tech)' }}>{era.title}</h4>
+            </div>
+            <p style={{ margin: 0, fontSize: '0.68rem', color: '#8a9bb5', lineHeight: 1.4, textAlign: 'justify', fontFamily: 'monospace' }}>
+              {era.desc}
+            </p>
+            <div style={{ background: 'rgba(255,179,0,0.02)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(255,179,0,0.12)', borderRadius: '6px', padding: '8px', marginTop: '4px' }}>
+              <strong style={{ fontSize: '0.6rem', color: '#ffb300', display: 'block', marginBottom: '2px', fontFamily: 'monospace' }}>💡 SYSTEMIC HISTORIC OUTCOME:</strong>
+              <p style={{ margin: 0, fontSize: '0.66rem', color: '#fff', lineHeight: 1.35, fontFamily: 'monospace' }}>
+                {era.takeaway}
+              </p>
+            </div>
+          </div>
         </div>
-        <p style={{ margin: 0, fontSize: '0.68rem', color: '#8a9bb5', lineHeight: 1.4, textAlign: 'justify', fontFamily: 'monospace' }}>
-          {era.desc}
-        </p>
-        <div style={{ background: 'rgba(255,179,0,0.02)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(255,179,0,0.12)', borderRadius: '6px', padding: '8px', marginTop: '4px' }}>
-          <strong style={{ fontSize: '0.6rem', color: '#ffb300', display: 'block', marginBottom: '2px', fontFamily: 'monospace' }}>💡 SYSTEMIC HISTORIC OUTCOME:</strong>
-          <p style={{ margin: 0, fontSize: '0.66rem', color: '#fff', lineHeight: 1.35, fontFamily: 'monospace' }}>
-            {era.takeaway}
-          </p>
+
+        {/* Right Visual Column: Dynamic Animated SVG Vector Plaque */}
+        <div style={styles.historyVisualColumn}>
+          <div style={{ ...styles.svgTelemetryBox, height: '240px' }}>
+            <svg viewBox="0 0 100 80" style={{ width: '100%', height: '100%', background: '#04060c' }}>
+              {/* Background technical scanning grids */}
+              <g opacity="0.04" stroke="#ffb300" strokeWidth="0.3">
+                <line x1="10" y1="0" x2="10" y2="80" />
+                <line x1="20" y1="0" x2="20" y2="80" />
+                <line x1="30" y1="0" x2="30" y2="80" />
+                <line x1="40" y1="0" x2="40" y2="80" />
+                <line x1="50" y1="0" x2="50" y2="80" />
+                <line x1="60" y1="0" x2="60" y2="80" />
+                <line x1="70" y1="0" x2="70" y2="80" />
+                <line x1="80" y1="0" x2="80" y2="80" />
+                <line x1="90" y1="0" x2="90" y2="80" />
+              </g>
+
+              {/* Dynamic era-specific vector */}
+              {renderEraSvg()}
+
+              {/* Inscribed Era tag inside visual frame */}
+              <text x="5" y="75" fill="rgba(255, 179, 0, 0.35)" fontSize="3.8" fontFamily="monospace">
+                {`TELEMETRY: [${activeEra.toUpperCase()}] // NOMINAL`}
+              </text>
+            </svg>
+          </div>
         </div>
       </div>
     </div>
@@ -1467,7 +1611,7 @@ export function ExhibitMartianBiosphere() {
       </div>
 
       <p style={{ ...styles.exhibitDesc, marginBottom: '10px' }}>
-        Flick the interactive parameters (+ / -) to balance cognitive factors inside Ares City\'s Martian Bio-dome canopy shield:
+        {exhibitData.martianBiosphere.desc}
       </p>
 
       {/* Stable canopy biome SVG */}
@@ -1533,8 +1677,8 @@ export function ExhibitMartianBiosphere() {
         {/* Sensory control */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.02)', padding: '6px 10px', borderRadius: '6px' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#ffb300', fontFamily: 'monospace' }}>☀️ SENSORY DAMPING (SHIELD SHADING)</span>
-            <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>Prevents sensory glare spikes</span>
+            <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#ffb300', fontFamily: 'monospace' }}>{exhibitData.martianBiosphere.parameters.sensory.title}</span>
+            <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>{exhibitData.martianBiosphere.parameters.sensory.desc}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button onClick={() => setSensoryDamping(p => Math.max(10, p - 10))} style={styles.selectorBtn}>[ - ]</button>
@@ -1546,8 +1690,8 @@ export function ExhibitMartianBiosphere() {
         {/* Task Autonomy control */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.02)', padding: '6px 10px', borderRadius: '6px' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#00ff88', fontFamily: 'monospace' }}>🤖 TASK AUTONOMY (PROJECT CONTROL)</span>
-            <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>Secures self-directed coordination bounds</span>
+            <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#00ff88', fontFamily: 'monospace' }}>{exhibitData.martianBiosphere.parameters.autonomy.title}</span>
+            <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>{exhibitData.martianBiosphere.parameters.autonomy.desc}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button onClick={() => setTaskAutonomy(p => Math.max(10, p - 10))} style={styles.selectorBtn}>[ - ]</button>
@@ -1559,8 +1703,8 @@ export function ExhibitMartianBiosphere() {
         {/* Direct Comms control */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', background: 'rgba(255,255,255,0.02)', padding: '6px 10px', borderRadius: '6px' }}>
           <div style={{ display: 'flex', flexDirection: 'column' }}>
-            <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#00f0ff', fontFamily: 'monospace' }}>📡 DIRECT COMMUNICATION PROTOCOL</span>
-            <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>Explicit, direct instructions override</span>
+            <span style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#00f0ff', fontFamily: 'monospace' }}>{exhibitData.martianBiosphere.parameters.comms.title}</span>
+            <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.45)', fontFamily: 'monospace' }}>{exhibitData.martianBiosphere.parameters.comms.desc}</span>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button onClick={() => setDirectComms(p => Math.max(10, p - 10))} style={styles.selectorBtn}>[ - ]</button>
@@ -1579,13 +1723,7 @@ export function ExhibitMartianBiosphere() {
 // 📖 EXHIBIT 7: BECKER NARRATIVE MEMOIR CONSTELLATION MAP
 // ==========================================
 export function ExhibitMemoirCrystalMap({ activePhase, setActivePhase }) {
-  const crystalCoordinates = [
-    { id: 0, x: 25, y: 80, label: 'SOL 01', short: 'ABA compliance sessions' },
-    { id: 1, x: 60, y: 40, label: 'SOL 02', short: 'Yeshiva mainstream room' },
-    { id: 2, x: 100, y: 70, label: 'SOL 03', short: 'Special Ed separation' },
-    { id: 3, x: 140, y: 30, label: 'SOL 04', short: 'Early adult burnout crash' },
-    { id: 4, x: 175, y: 80, label: 'SOL 05', short: 'Radical unmasking acceptance' }
-  ];
+  const crystalCoordinates = exhibitData.memoirCrystalMap.coordinates;
 
   return (
     <div style={styles.consoleContainer}>
@@ -1595,16 +1733,27 @@ export function ExhibitMemoirCrystalMap({ activePhase, setActivePhase }) {
       </div>
 
       <p style={{ ...styles.exhibitDesc, marginBottom: '10px' }}>
-        Interactive Neural Constellation. Click the Sol memory crystals in the network starmap below to uplink memoir coordinates:
+        {exhibitData.memoirCrystalMap.desc}
       </p>
 
       <div style={styles.svgTelemetryBox}>
         <svg viewBox="0 0 200 110" style={{ width: '100%', height: '100%', background: '#04060c', overflow: 'visible' }}>
           {/* Constellation link wires */}
-          <line x1="25" y1="80" x2="60" y2="40" stroke={activePhase >= 1 ? '#00ff88' : 'rgba(255,255,255,0.05)'} strokeWidth={activePhase >= 1 ? '1.5' : '0.5'} style={{ transition: 'all 0.3s' }} />
-          <line x1="60" y1="40" x2="100" y2="70" stroke={activePhase >= 2 ? '#00ff88' : 'rgba(255,255,255,0.05)'} strokeWidth={activePhase >= 2 ? '1.5' : '0.5'} style={{ transition: 'all 0.3s' }} />
-          <line x1="100" y1="70" x2="140" y2="30" stroke={activePhase >= 3 ? '#00ff88' : 'rgba(255,255,255,0.05)'} strokeWidth={activePhase >= 3 ? '1.5' : '0.5'} style={{ transition: 'all 0.3s' }} />
-          <line x1="140" y1="30" x2="175" y2="80" stroke={activePhase >= 4 ? '#00ff88' : 'rgba(255,255,255,0.05)'} strokeWidth={activePhase >= 4 ? '1.5' : '0.5'} style={{ transition: 'all 0.3s' }} />
+          {crystalCoordinates.slice(0, -1).map((crystal, idx) => {
+            const nextCrystal = crystalCoordinates[idx + 1];
+            return (
+              <line
+                key={idx}
+                x1={crystal.x}
+                y1={crystal.y}
+                x2={nextCrystal.x}
+                y2={nextCrystal.y}
+                stroke={activePhase >= idx + 1 ? '#00ff88' : 'rgba(255,255,255,0.05)'}
+                strokeWidth={activePhase >= idx + 1 ? '1.5' : '0.5'}
+                style={{ transition: 'all 0.3s' }}
+              />
+            );
+          })}
 
           {/* Interactive Memory Crystals */}
           {crystalCoordinates.map(crystal => {
@@ -1704,6 +1853,27 @@ const styles = {
     flexDirection: 'row',
     gap: '24px',
     flexWrap: 'wrap'
+  },
+  historySplitLayout: {
+    display: 'flex',
+    flexDirection: 'row',
+    gap: '16px',
+    flexWrap: 'nowrap',
+    width: '100%'
+  },
+  historyControlColumn: {
+    flex: '1.2',
+    minWidth: '0',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px'
+  },
+  historyVisualColumn: {
+    flex: '1',
+    minWidth: '0',
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '12px'
   },
   visualColumn: {
     flex: '1.1',

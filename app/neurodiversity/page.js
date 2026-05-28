@@ -17,6 +17,8 @@ import {
   ExhibitMemoirCrystalMap
 } from '../../components/MuseumExhibits';
 
+import exhibitData from '../../data/neurodiversity-exhibit.json';
+
 export default function NeurodiversityTacticalMuseum() {
   const [activeSector, setActiveSector] = useState('foyer'); // 'foyer', 'corridor', 'constellation', 'sanctuary'
   const [activeExhibitIndex, setActiveExhibitIndex] = useState(0); // 0 to 6 for Exhibits 1-7
@@ -176,233 +178,72 @@ export default function NeurodiversityTacticalMuseum() {
 
   // 5 Refined Exhibits definitions
   const getExhibitDesc = (id) => {
-    switch (id) {
-      case 'exhibit-what-is-nd':
-        if (analogyTheme === 'tech') {
-          return 'Think of human brains like different smartphone operating systems. Having iOS and Android exist together isn\'t a defect—it\'s a choice of architectures. They compile code differently, but both run powerful devices. Diversity is a feature, not a bug. Neurodiversity is the biological reality that human operating systems naturally vary in their wiring, rather than classifying differences as clinical errors.';
-        }
-        if (analogyTheme === 'rpg') {
-          return 'Think of human brains like game character classes. An RPG would be extremely boring if every player was a standard Warrior. Having Mages, Rogues, and Healers is what makes a balanced raid team. Each class has unique base stats and talent trees, not deficits. Neurodiversity is the biological reality of this character-class distribution, modeling variation as an asset that enriches collective adaptability.';
-        }
-        if (analogyTheme === 'nature') {
-          return 'Think of human brains like plant species in an ecosystem. Cacti are built to store water in deserts, while ferns thrive in deep damp swamp shades. You wouldn\'t call a cactus "broken" because it rots in a swamp. Different plants need different soil wiring. Neurodiversity is the biological reality of our cognitive biosphere, celebrating variation as normal biodiversity.';
-        }
-        if (analogyTheme === 'sports') {
-          return 'Think of human brains like athlete specializations. An Olympic sprinter has high-twitch muscle fibers for explosive speed, a powerlifter has dense fiber for lifting, and a marathon runner has massive cardiovascular endurance. You don\'t call a powerlifter "broken" because they can\'t run a 4-minute mile. Neurodiversity is the biological reality of these differing athletic profiles, which co-exist to support diverse roles.';
-        }
-        return '';
-
-      case 'exhibit-two-ways':
-        if (analogyTheme === 'tech') {
-          return 'The Pathology lens views an Android trying to run iOS apps directly as "defective" because the compile fails. The Accommodation lens says: Android just runs a different kernel—it needs an Android-native compiler. It\'s a software mismatch, not a broken chip. Select traits below to compare the two models neutrally through this system lens.';
-        }
-        if (analogyTheme === 'rpg') {
-          return 'The Pathology lens views a Mage trying to swing a giant steel claymore as "weak and defective." The Accommodation lens says: Mages are built to cast spells from a distance—give them a staff. It\'s a class mismatch, not a player failure. Select traits below to compare the two models neutrally through this character class lens.';
-        }
-        if (analogyTheme === 'nature') {
-          return 'The Pathology lens views a desert cactus rotting in a wet marsh as having a "root deficit." The Affirming lens says: The cactus is designed to conserve water—replant it in dry sand. It\'s a soil mismatch, not a sick plant. Select traits below to compare the two models neutrally through this ecological lens.';
-        }
-        if (analogyTheme === 'sports') {
-          return 'The Pathology lens views a heavy powerlifter failing to keep pace in a 100-meter sprint as having a "cardio failure." The Affirming lens says: Powerlifters are designed for explosive barbell lifts—give them heavy weights. It\'s a role mismatch, not an athletic failure. Select traits below to compare the two models neutrally through this athletic lens.';
-        }
-        return '';
-
-      case 'exhibit-real-life':
-        if (analogyTheme === 'tech') {
-          return 'Explore interactive simulations of everyday operating dynamics. Experience how cross-play desync manifests as communication lag (Double Empathy), how single-task CPU overclocking creates focus spotlights (Monotropic attention), and how runaway background tasks drain the social battery core (Masking). Select a tab below to engage the interactive simulations.';
-        }
-        if (analogyTheme === 'rpg') {
-          return 'Explore simulations of daily questing dynamics. Experience how different tick-rates create keyboard-vs-controller trading desync (Double Empathy), how channeling high-level spell casts locks attention (Monotropic focus), and how active stealth spells drain your mana bar to zero (Masking). Select a tab below to engage the interactive simulations.';
-        }
-        if (analogyTheme === 'nature') {
-          return 'Explore simulations of natural processing dynamics. Experience how different species mismatches create communication desync (Double Empathy), how deep taproot designs draw water (Monotropic spotlight), and how extreme environmental camouflage mimicry drains organic energy (Masking). Select a tab below to engage the interactive simulations.';
-        }
-        if (analogyTheme === 'sports') {
-          return 'Explore simulations of athletic processing dynamics. Experience how rule desyncs create soccer-vs-basketball playbook lag (Double Empathy), how being in-the-zone creates tunnel-vision focus (Monotropic spotlight), and how running a race in a 50lb weighted vest drains physical stamina (Masking). Select a tab below to engage the interactive simulations.';
-        }
-        return '';
-
-      case 'exhibit-accommodation':
-        if (analogyTheme === 'tech') {
-          return 'The Social Model of Disability. Disability is created when software is locked to a single proprietary OS format. Drag the transition slide handle in the right-hand panel to install explicit translation drivers, converting a rigid deficit cell into a cross-play affirming bio-dome.';
-        }
-        if (analogyTheme === 'rpg') {
-          return 'The Social Model of Disability. Disability is created when you demand Mages fight in close-quarters melee combat. Drag the slider to provide proper tank shield covers, shifting a high-risk deficit cage into an affirming, balanced guild biome.';
-        }
-        if (analogyTheme === 'nature') {
-          return 'The Social Model of Disability. Disability is created when you try to grow cacti in swamps or ferns in sand. Drag the slider to adjust soil moisture and shading coordinates, transforming a hostile pathology cell into a thriving biological terrarium.';
-        }
-        if (analogyTheme === 'sports') {
-          return 'The Social Model of Disability. Disability is created when you force sprinters, powerlifters, and high jumpers to compete solely on a swimming track. Drag the slider to build custom sports coordinates, shifting a hostile cell into an affirming athletic biome.';
-        }
-        return '';
-
-      case 'exhibit-future':
-        if (analogyTheme === 'tech') {
-          return 'Designing future operating systems designed from the ground up to support native multi-compilation cross-play APIs. Use the dials in the Martian Biosphere SVG stabilizer in the right-hand panel to balance sensory glare shields, direct instructions, and task control variables.';
-        }
-        if (analogyTheme === 'rpg') {
-          return 'Designing future game dungeons that require a diverse guild of Mages, Rogues, and Warriors working in lockstep, rather than a single uniform class. Adjust the canopy stabilizer dials in the right-hand panel to balance guild parameters.';
-        }
-        if (analogyTheme === 'nature') {
-          return 'Planting a diverse permaculture garden where multiple species share soil minerals, enriching the entire soil biome. Use the canopy stabilizer dials in the right-hand panel to balance moisture, direct light, and root autonomy variables.';
-        }
-        if (analogyTheme === 'sports') {
-          return 'Building a decathlon team that scores high by combining world-class specialists in every track and field discipline. Tune the canopy stabilizer dials in the right-hand panel to balance training parameters.';
-        }
-        return '';
-
-      case 'exhibit-history':
-        return 'History of behavior control and classification. Trace how society developed the pathology deficit model over time—from factory-school behavior standardization in the 1800s, psychiatric asylum lockups in the 1960s, special education tracking rooms in the 1980s, to self-advocacy and dome designs today. Click the pipeline nodes in the SVG above to load database history logs.';
-
-      case 'exhibit-story':
-      default:
-        return 'Ground the conceptual operating frameworks in a single lived human experience. Select Sol crystals in the interactive neural Constellation map to trace Ephraim\'s story across five checkpoints—from childhood Yeshiva compliance and para-exclusion to adult burnout and unmasked synaptic pride.';
+    const exh = exhibitData.exhibits[id];
+    if (!exh) return '';
+    if (exh.desc) return Array.isArray(exh.desc) ? exh.desc.join(' ') : exh.desc;
+    if (exh.analogies && exh.analogies[analogyTheme]) {
+      return Array.isArray(exh.analogies[analogyTheme]) ? exh.analogies[analogyTheme].join(' ') : exh.analogies[analogyTheme];
     }
+    return '';
   };
 
   const exhibits = [
     {
       id: 'exhibit-what-is-nd',
-      title: 'Exhibit 1: What is Neurodiversity?',
-      subtitle: '🌿 PLURAL COGNITIVISM & HUMAN VARIATION',
+      title: exhibitData.exhibits['exhibit-what-is-nd'].title,
+      subtitle: exhibitData.exhibits['exhibit-what-is-nd'].subtitle,
       desc: getExhibitDesc('exhibit-what-is-nd'),
       component: <ExhibitPlaqueVisualization />
     },
     {
       id: 'exhibit-two-ways',
-      title: 'Exhibit 2: Two Ways of Seeing the Same Person',
-      subtitle: '📊 INTERACTIVE MODEL COMPARATIVE MATRIX',
+      title: exhibitData.exhibits['exhibit-two-ways'].title,
+      subtitle: exhibitData.exhibits['exhibit-two-ways'].subtitle,
       desc: getExhibitDesc('exhibit-two-ways'),
       component: 'custom-matrix'
     },
     {
       id: 'exhibit-history',
-      title: 'Exhibit 3: How the Old Model Developed',
-      subtitle: '📜 HISTORICAL ROOT GEOGRAPHY & COGNITIVE STRUCTURES',
+      title: exhibitData.exhibits['exhibit-history'].title,
+      subtitle: exhibitData.exhibits['exhibit-history'].subtitle,
       desc: getExhibitDesc('exhibit-history'),
       component: <ExhibitHistoryModel />
     },
     {
       id: 'exhibit-real-life',
-      title: 'Exhibit 4: What it looks like in real life',
-      subtitle: '⚙️ CHANNELS OF INTERACTIVE LIFE EXPERIENCES',
+      title: exhibitData.exhibits['exhibit-real-life'].title,
+      subtitle: exhibitData.exhibits['exhibit-real-life'].subtitle,
       desc: getExhibitDesc('exhibit-real-life'),
       component: 'custom-real-life'
     },
     {
       id: 'exhibit-accommodation',
-      title: 'Exhibit 5: The Power of Accommodation',
-      subtitle: '🌿 SOCIAL MODEL OF DISABILITY SHUTTLE',
+      title: exhibitData.exhibits['exhibit-accommodation'].title,
+      subtitle: exhibitData.exhibits['exhibit-accommodation'].subtitle,
       desc: getExhibitDesc('exhibit-accommodation'),
       component: 'custom-accommodation'
     },
     {
       id: 'exhibit-future',
-      title: 'Exhibit 6: Neurodiversity in the Future',
-      subtitle: '🛰️ FUTURE MARTIAN CANOPY STABILIZER',
+      title: exhibitData.exhibits['exhibit-future'].title,
+      subtitle: exhibitData.exhibits['exhibit-future'].subtitle,
       desc: getExhibitDesc('exhibit-future'),
       component: 'custom-future'
     },
     {
       id: 'exhibit-story',
-      title: 'Exhibit 7: Lived experience (your story)',
-      subtitle: '📖 EPHRAIM\'S SOL CHRONOLOGICAL TIMELINE MEMOIR',
+      title: exhibitData.exhibits['exhibit-story'].title,
+      subtitle: exhibitData.exhibits['exhibit-story'].subtitle,
       desc: getExhibitDesc('exhibit-story'),
       component: 'custom-story'
     }
   ];
 
   // Memoir chronological phases (Exhibit 5)
-  const storyPhases = [
-    {
-      id: 0,
-      tabTitle: 'ABA Session',
-      phaseName: 'PHASE 01 // AGE 3.5 // COMPLIANCE INTERVENTION',
-      storyText: 'My story started out with Applied Behavior Analysis (ABA) Sunday training sessions when I was three and a half years old. This was back when old-school compliance models of special needs dominated practices, manually training autistic kids to suppress self-regulation behaviors to fit standard behaviors.',
-      abaLink: true
-    },
-    {
-      id: 1,
-      tabTitle: 'Yeshiva School',
-      phaseName: 'PHASE 02 // GRADE SCHOOL // THE NORMALCY FACADE',
-      storyText: 'My parents tried placing me in a mainstream Orthodox Yeshiva. I quickly felt a deep mismatch, wondering why I needed special support when everyone pretended everything was normal—they were just faking it because neurodiversity was unknown. Lacking the vocabulary to advocate, I called out in class, acted out, and was eventually assigned a paraprofessional (para), still never knowing I was autistic.',
-      abaLink: false
-    },
-    {
-      id: 2,
-      tabTitle: 'Special Ed Transfer',
-      phaseName: 'PHASE 03 // HIGH SCHOOL // EXCLUSION & BULK CELLS',
-      storyText: 'Mainstream yeshiva failed, so I went to two special needs schools. In the first, another kid pointed out my autism in a teasing, mocking way that framed it as a broken medical deficit, which terrified me. In the second, a tough peer leader turned the school against me, causing immense fear in my daily coordinates.',
-      abaLink: false
-    },
-    {
-      id: 3,
-      tabTitle: 'Autistic Burnout',
-      phaseName: 'PHASE 04 // EARLY 20s // METABOLIC BURN & CLASHES',
-      storyText: 'In my early 20s, the high school trauma culminated in severe autistic burnout. I hit a physiological crash, struggling with the thought that I would never make friends. Socializing was further complicated because I misread other autistic peers\' silent battery drainage as personal rejection. Lacking explicit verbal coordinates, I unknowingly invaded their boundaries because neither of us communicated explicitly.',
-      abaLink: false
-    },
-    {
-      id: 4,
-      tabTitle: 'Self-Acceptance',
-      phaseName: 'PHASE 05 // PRESENT // NOMINAL SYNAPTIC UPLINK',
-      storyText: 'Today, I am slowly learning more about myself every Sol. Armed with respect for social batteries and an understanding of attention inertia, I am unlearning pathology deficit labels. I accept my specialized monotropic attention flow tunnels and practice unmasking. Rather than forcing compliance, I am finding healthy, explicit ways to connect with others on my own terms.',
-      abaLink: false
-    }
-  ];
+  const storyPhases = exhibitData.storyPhases;
 
   // Interactive Comparative Matrix definitions (Exhibit 2)
-  const matrixTraits = {
-    stimming: {
-      title: 'Stimming / Self-Regulation',
-      pathologyTitle: '📊 Deficit / Special Needs Lens',
-      pathologyText: 'Interpreted as purposeless, repetitive, or non-functional behaviors. Interventions typically focus on suppressing these behaviors to help the individual blend in socially and appear indistinguishable from peers.',
-      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
-      affirmingText: 'Interpreted as a natural biological tool to regulate an overstimulated nervous system, release excess motor energy, and manage focus. Accommodated by providing safe spaces to move and accepting standard self-regulation.',
-      colonyRule: 'Never demand still hands or rigid postures; self-regulation is a healthy processing buffer.'
-    },
-    hyperfocus: {
-      title: 'Hyperfocus / Special Interests',
-      pathologyTitle: '📊 Deficit / Special Needs Lens',
-      pathologyText: 'Interpreted as an abnormal intensity of interest, or highly restricted repetitive behaviors. Interventions typically aim to redirect the individual toward broader topics or ration access to interests.',
-      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
-      affirmingText: 'Interpreted as a monotropic attention flow state that fosters deep, meticulous expertise and creative focus. Accommodated by creating strengths-based pathways and respecting deep focus states.',
-      colonyRule: 'Provide uninterrupted focus buffers. Hyperfocus flow is a valuable creative resource.'
-    },
-    comms: {
-      title: 'Social Communication style',
-      pathologyTitle: '📊 Deficit / Special Needs Lens',
-      pathologyText: 'Interpreted as a communication deficit marked by failure to follow standard eye contact, facial expressions, and unstated social rules. Blamed entirely on the individual\'s social hardware.',
-      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
-      affirmingText: 'Interpreted as a direct, literal communication style. Recognizes the Double Empathy Problem: breakdowns are mutual mismatches across differing neurotype hardware, not one-sided deficits.',
-      colonyRule: 'Bridges are built through mutual, explicit verbal communication—avoid unstated social guessing.'
-    },
-    autonomy: {
-      title: 'Autonomy / PDA Profile',
-      pathologyTitle: '📊 Deficit / Special Needs Lens',
-      pathologyText: 'Interpreted as Pathological Demand Avoidance, characterized by irrational avoidance of everyday demands and oppositional non-compliance. Managed through reward/punishment compliance programs.',
-      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
-      affirmingText: 'Interpreted as a Pervasive Drive for Autonomy, where standard daily demands trigger an involuntary threat response in the autonomic nervous system. Managed through collaborative, non-coercive partnerships.',
-      colonyRule: 'Coordinate using egalitarian, non-coercive partnerships to support the drive for autonomy.'
-    },
-    sensory: {
-      title: 'Sensory Processing',
-      pathologyTitle: '📊 Deficit / Special Needs Lens',
-      pathologyText: 'Interpreted as sensory processing dysfunction or abnormal reactivity (hypo- or hyper-sensitivity) to ambient stimuli. Managed by forcing standard tolerance or systematic desensitization.',
-      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
-      affirmingText: 'Interpreted as a high-definition sensory processing system that gathers detailed ambient data without automatic filters. Accommodated by providing environmental control options like dimmable lighting and noise-reducing gear.',
-      colonyRule: 'Respect sensory boundaries; provide dimmable spaces and quiet zones to preserve battery.'
-    },
-    attention: {
-      title: 'Attention / Focus profile',
-      pathologyTitle: '📊 Deficit / Special Needs Lens',
-      pathologyText: 'Interpreted as attention deficit hyperactivity disorder (ADHD), characterized by chronic distractibility, lack of discipline, or executive dysfunction. Managed through stimulant regulation and compliance routines.',
-      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
-      affirmingText: 'Interpreted as a dynamic, interest-based nervous system that excels in novel, urgent, or highly engaging contexts. Accommodated by structuring flexible, self-directed timelines and goal-aligned collaboration.',
-      colonyRule: 'Structure collaboration around self-directed projects that leverage natural interest-based focus.'
-    }
-  };
+  const matrixTraits = exhibitData.matrixTraits;
 
   return (
     <div className="citizen-card-shell neuro-page-shell" style={{ flexDirection: 'column' }}>
@@ -1587,115 +1428,4 @@ const styles = {
 };
 
 // Static Lexicon items definitions (Coordinate star nodes)
-const LEXICON_ITEMS = [
-  {
-    id: 'autistic-burnout',
-    title: 'Burnout',
-    pronunciation: '/ɔːˈtɪs.tɪk ˈbɜːn.aʊt/',
-    category: 'energy',
-    cx: 30, cy: 35,
-    shortDef: 'Mental, emotional, and physical reactor core system collapse.',
-    longDef: 'Autistic burnout is a deep physiological and executive functioning crash caused by the chronic trauma of forcing compliance, masking behaviors, and surviving toxic sensory or social environments. Recovery is not solved by working harder, but through long-term sensory rest and radical unmasking.',
-    storyReflection: 'In my early 20s, I hit severe burnout driven by bullying and harassment in the second special needs school. Executive failure made me believe I would never make friends.',
-    takeaway: 'Provide absolute sensory downtime. Cut off demands, drop compliance expectations, and prioritize self-care and radical unmasking.'
-  },
-  {
-    id: 'social-battery',
-    title: 'Reactor Battery',
-    pronunciation: '/ðə ˈsoʊ.ʃəl ˈbæt.ər.i/',
-    category: 'energy',
-    cx: 55, cy: 75,
-    shortDef: 'The finite daily energy budget allotted for parsing social telemetry.',
-    longDef: 'An autistic mind processes social signals manually with high CPU overclock cost, rather than filtering them out automatically. When the reactor battery is depleted, the nervous system initiates emergency fuel conservation, triggering silence or withdrawal.',
-    storyReflection: 'During grade school and Yeshiva, I struggled to understand why socializing was so exhausting, manually scripting normal reactions until my battery bottomed out.',
-    takeaway: 'Quiet rest or isolating to recharge is a vital biological necessity, not anti-social behavior or rejection.'
-  },
-  {
-    id: 'masking',
-    title: 'Masking',
-    pronunciation: '/ˈmæsk.ɪŋ/',
-    category: 'social',
-    cx: 65, cy: 25,
-    shortDef: 'Exhausting performance of mimicking normal behaviors to avoid exclusion.',
-    longDef: 'Masking is a trauma-driven coping response where the individual choreographs eye contact, suppresses stims, and scripts conversations. While it shields from immediate harassment, it extracts a massive metabolic tax, causing depression and self-alienation.',
-    storyReflection: 'My grade school yeshiva years were a constant performance of normalcy. Lacking understanding, I faked the facade until I acted out in classrooms.',
-    takeaway: 'Challenge compliance expectations. Drop demands for normal eye contact or still postures in class or meetings.'
-  },
-  {
-    id: 'unmasking',
-    title: 'Unmasking',
-    pronunciation: '/ʌnˈmæsk.ɪŋ/',
-    category: 'social',
-    cx: 90, cy: 85,
-    shortDef: 'The radical healing journey of shedding cognitive camouflage.',
-    longDef: 'Unmasking is the deep process of unlearning neuronormative programming. It involves reclaiming your sensory limits, allowing natural body stims, and honoring neurological boundaries without self-blame.',
-    storyReflection: 'Discovering the neurodiversity paradigm was my portal to unmasking. I stopped pathologizing my boundaries and began accepting my natural wiring.',
-    takeaway: 'Celebrate differences. Create safe biospheres where neurodivergent individuals can express themselves authentically.'
-  },
-  {
-    id: 'double-empathy',
-    title: 'Double Empathy',
-    pronunciation: '/ˈdʌb.əl ˈem.pə.θi/',
-    category: 'social',
-    cx: 110, cy: 40,
-    shortDef: 'Bidirectional mismatches in empathy across diverging neurotypes.',
-    longDef: 'Formulated by Dr. Damian Milton, it debunks the myth that autistic people lack empathy. Breakdowns are two-way, resulting from diverging software and communication wires, not a clinical deficit in the autistic mind.',
-    storyReflection: 'In my early 20s, I misread silent disengagement as rejection. I didn\'t understand their battery was simply dead, leading to accidental boundary overruns.',
-    takeaway: 'Encourage explicit verbal communication. Never assume NT styles are correct; validate both styles as equal.'
-  },
-  {
-    id: 'rsd',
-    title: 'RSD',
-    pronunciation: '/rɪˈdʒek.ʃən ˈsen.sɪ.tɪv dɪsˈfɔːr.i.ə/',
-    category: 'social',
-    cx: 130, cy: 90,
-    shortDef: 'Extreme emotional pain response triggered by perceived rejection.',
-    longDef: 'Rejection Sensitive Dysphoria is an involuntary neurological reflex where perceived criticism or social exclusion is experienced as physical pain, caused by a nervous system primed by thousands of developmental correction logs.',
-    storyReflection: 'When peers went silent, my RSD triggered immense panic, leading me to rush comms and accidentally overrun boundaries in an attempt to secure reassurance.',
-    takeaway: 'Communicate boundaries clearly and explicitly. Reassure the individual that quietude is energy-based, not rejection.'
-  },
-  {
-    id: 'pda',
-    title: 'PDA Profile',
-    pronunciation: '/pərˈveɪ.sɪv draɪv fɔːr ɔːˈtɒn.ə.mi/',
-    category: 'cognitive',
-    cx: 155, cy: 30,
-    shortDef: 'A Pervasive Drive for Autonomy; demands trigger threat alarms.',
-    longDef: 'Historically pathologized as "Demand Avoidance," neurodivergent advocates reframe it as a Pervasive Drive for Autonomy. Ordinary, externalized expectations are perceived by the nervous system as direct threats, triggering fight/flight locks.',
-    storyReflection: 'Being forced into locked schedules or rigid behavioral protocols triggered my anxiety alarms, causing me to call out and resist yeshiva demands.',
-    takeaway: 'Employ egalitarian, collaborative relationships. Offer choice-based environments and utilize non-directive language.'
-  },
-  {
-    id: 'inertia',
-    title: 'Inertia',
-    pronunciation: '/ɔːˈtɪs.tɪk ɪˈnɜː.ʃə/',
-    category: 'cognitive',
-    cx: 175, cy: 80,
-    shortDef: 'Physiological resistance to starting or transitioning tasks.',
-    longDef: 'Autistic inertia represents the physical momentum of deep attention focus. Starting a new task, stopping an ongoing focus channel, or redirecting energy requires massive executive metabolic expenditure.',
-    storyReflection: 'Shifting classes in Yeshiva or halting hyperfocus zones was highly taxing. Abrupt classroom transitions felt like intense structural friction.',
-    takeaway: 'Plan buffer transitions. Provide advance visual or verbal countdown alerts, and respect active deep flow states.'
-  },
-  {
-    id: 'meltdowns',
-    title: 'Meltdowns',
-    pronunciation: '/ˈmelt.daʊnz/',
-    category: 'energy',
-    cx: 200, cy: 45,
-    shortDef: 'Involuntary survival crashes of an overloaded nervous system.',
-    longDef: 'When sensory and cognitive inputs trip the system breaker, the brain initiates a survival lock (fight/flight meltdowns, or freeze/dissociate shutdowns). These are biological reflexes, never tantrums or behavioral choices.',
-    storyReflection: 'In Yeshiva, when sensory levels maxed out, I acted out in classrooms—it was an involuntary safety breaker trip, but staff treated it as bad behavior.',
-    takeaway: 'Provide absolute safety. Dim lights, eliminate auditory inputs, remain patient, and never demand rational dialogue.'
-  },
-  {
-    id: 'monotropism',
-    title: 'Monotropism',
-    pronunciation: '/ˌmɒn.əˈtrɒp.ɪk ˈfoʊ.kəs/',
-    category: 'cognitive',
-    cx: 210, cy: 70,
-    shortDef: 'A specialist focus style allocating attention to concentrated channels.',
-    longDef: 'Unlike polytropic minds that distribute attention across shallow waves, monotropic minds funnel resources into a single focus tunnel. This enables incredible hyperfocus and meticulous pattern parsing, but makes transitions highly friction-prone.',
-    storyReflection: 'My specialized hyperfocus channels allowed me to master intricate data logs (like yeshiva texts or mapping), but sudden interruptions caused deep distress.',
-    takeaway: 'Respect flow tracks. Let individuals finish their attention loops, and avoid sudden sensory intrusions.'
-  }
-];
+const LEXICON_ITEMS = exhibitData.lexiconItems;

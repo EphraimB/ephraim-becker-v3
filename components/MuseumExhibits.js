@@ -942,6 +942,176 @@ export function BreathingRegulator() {
   );
 }
 
+// ==========================================
+// 🌿 EXHIBIT 1: WHAT IS NEURODIVERSITY PLAQUE GRAPHIC
+// ==========================================
+export function ExhibitPlaqueVisualization() {
+  return (
+    <div style={{ ...styles.consoleContainer, maxWidth: '400px', margin: '0 auto', textAlign: 'center' }}>
+      <div style={styles.consoleHeader}>
+        <span style={styles.consoleTitle}>🛰️ COGNITIVE ECOSYSTEM MATRIX</span>
+        <span style={styles.telemetryTag}>SYS_NOMINAL</span>
+      </div>
+      
+      <p style={{ ...styles.exhibitDesc, marginBottom: '16px', textAlign: 'center' }}>
+        A dynamic visual representation of human cognitive variation. Pulsing nodes represent differing neurological wavelengths coexisting within a balanced ecosystem:
+      </p>
+
+      <div style={{ background: '#04060c', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(255,255,255,0.05)', borderRadius: '12px', padding: '16px', display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: 'inset 0 0 15px rgba(0,0,0,0.8)', minHeight: '180px' }}>
+        <svg viewBox="0 0 100 100" style={{ width: '160px', height: '160px' }}>
+          {/* Outer orbit path */}
+          <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(0, 255, 136, 0.05)" strokeWidth="0.8" strokeDasharray="3 3" />
+          {/* Middle orbit path */}
+          <circle cx="50" cy="50" r="30" fill="none" stroke="rgba(0, 240, 255, 0.05)" strokeWidth="0.8" strokeDasharray="1 4" />
+          {/* Inner orbit path */}
+          <circle cx="50" cy="50" r="18" fill="none" stroke="rgba(255, 179, 0, 0.05)" strokeWidth="0.8" />
+
+          {/* Central sun (Ecosystem core) */}
+          <circle cx="50" cy="50" r="4" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 5px #00ff88)' }} />
+
+          {/* Pulsing Node 1 (Monotropic spotlight path) */}
+          <circle cx="50" cy="8" r="3" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 4px #00ff88)' }}>
+            <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite" />
+          </circle>
+
+          {/* Pulsing Node 2 (Polytropic waves) */}
+          <circle cx="50" cy="20" r="2.5" fill="#00f0ff" style={{ filter: 'drop-shadow(0 0 4px #00f0ff)' }}>
+            <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="12s" repeatCount="indefinite" />
+          </circle>
+
+          {/* Pulsing Node 3 (Dynamic battery core) */}
+          <circle cx="50" cy="32" r="2" fill="#ffb300" style={{ filter: 'drop-shadow(0 0 4px #ffb300)' }}>
+            <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="540 50 50" dur="6s" repeatCount="indefinite" />
+          </circle>
+
+          {/* Interconnecting laser telemetry lines */}
+          <line x1="50" y1="50" x2="50" y2="8" stroke="rgba(0, 255, 136, 0.15)" strokeWidth="0.5">
+            <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="8s" repeatCount="indefinite" />
+          </line>
+          <line x1="50" y1="50" x2="50" y2="20" stroke="rgba(0, 240, 255, 0.12)" strokeWidth="0.5">
+            <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="12s" repeatCount="indefinite" />
+          </line>
+        </svg>
+      </div>
+
+      <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', marginTop: '12px' }}>
+        <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', background: 'rgba(0, 255, 136, 0.06)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(0, 255, 136, 0.15)', padding: '2px 6px', borderRadius: '4px', color: '#00ff88' }}>
+          MONOTROPIC NODES
+        </span>
+        <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', background: 'rgba(0, 240, 255, 0.06)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(0, 240, 255, 0.15)', padding: '2px 6px', borderRadius: '4px', color: '#00f0ff' }}>
+          POLYTROPIC NODES
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// ==========================================
+// 📜 EXHIBIT 3: HISTORY OF THE PATHOLOGY MODEL INTERACTIVE NODE MATRIX
+// ==========================================
+export function ExhibitHistoryModel() {
+  const [activeEra, setActiveEra] = useState('era-19th');
+
+  const eras = {
+    'era-19th': {
+      title: 'Late 19th Century: The Factory Era',
+      meta: 'GENESIS OF INDUSTRIAL STANDARDIZATION',
+      desc: 'As factories and mass public schools grew during the Industrial Revolution, society wanted everyone to act like compliant, uniform machines. Behaviors that differed from statistical averages were labeled as medical "defects" or "errors" that needed to be reprogrammed.',
+      takeaway: 'Impact: Natural brain differences were placed under medical custody, shifting them from simple quirks to diseases requiring psychiatric cures.'
+    },
+    'era-20th-mid': {
+      title: 'Mid 20th Century: The Isolation Era',
+      meta: 'CARE AND SEGREGATION STRATEGIES',
+      desc: 'People who didn\'t fit the strict behavioral standards were separated from society and institutionalized. Treatments focused entirely on forcefully suppressing difference, making patients mimic typical behaviors through heavy compliance strategies.',
+      takeaway: 'Impact: Extreme social isolation and trauma, as individuals were forced to completely overwrite their natural wiring.'
+    },
+    'era-20th-late': {
+      title: 'Late 20th Century: The "Special Needs" Room',
+      meta: 'EDUCATIONAL TRACKING SYSTEMS',
+      desc: 'Segregation moved inside schools under the "Special Needs" framework. Support was conditional on compliance and trying to look "normal" at school. This often made children feel like their brains were broken or less-than.',
+      takeaway: 'Impact: Kids internalized the idea that their natural self-regulation or hyperfocus was a failure, creating deep emotional shame.'
+    },
+    'era-present': {
+      title: '21st Century: Deficit Behavior Checklists',
+      meta: 'THE MANUAL OF DEFICIT CHECKLISTS',
+      desc: 'Standardized diagnosis remains dominated by checklists (like the DSM) that count how much a person\'s behaviors "disrupt" others or their environment. They completely ignore the person\'s internal sensory experiences or emotional struggles.',
+      takeaway: 'Impact: Teenagers and adults still feel massive pressure to fake typical traits (masking) to be accepted, leading directly to burnout.'
+    }
+  };
+
+  const era = eras[activeEra];
+
+  return (
+    <div style={{ ...styles.consoleContainer, maxWidth: '500px', margin: '0 auto' }}>
+      <div style={styles.consoleHeader}>
+        <span style={styles.consoleTitle}>📜 HISTORICAL TELEMETRY MATRIX</span>
+        <span style={styles.telemetryTag}>HIST_DATABASE_LOCKED</span>
+      </div>
+
+      <p style={{ ...styles.exhibitDesc, marginBottom: '14px' }}>
+        Click a historical era tab to explore how society developed the deficit pathology paradigm:
+      </p>
+
+      {/* Grid of era selection buttons */}
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '6px', marginBottom: '12px' }}>
+        <button
+          onClick={() => setActiveEra('era-19th')}
+          style={{
+            ...styles.historyEraBtn,
+            ...(activeEra === 'era-19th' ? styles.historyEraBtnActive : {})
+          }}
+        >
+          19TH CENTURY
+        </button>
+        <button
+          onClick={() => setActiveEra('era-20th-mid')}
+          style={{
+            ...styles.historyEraBtn,
+            ...(activeEra === 'era-20th-mid' ? styles.historyEraBtnActive : {})
+          }}
+        >
+          MID 20TH CENTURY
+        </button>
+        <button
+          onClick={() => setActiveEra('era-20th-late')}
+          style={{
+            ...styles.historyEraBtn,
+            ...(activeEra === 'era-20th-late' ? styles.historyEraBtnActive : {})
+          }}
+        >
+          LATE 20TH CENTURY
+        </button>
+        <button
+          onClick={() => setActiveEra('era-present')}
+          style={{
+            ...styles.historyEraBtn,
+            ...(activeEra === 'era-present' ? styles.historyEraBtnActive : {})
+          }}
+        >
+          21ST CENTURY
+        </button>
+      </div>
+
+      {/* Readout console screen */}
+      <div style={{ background: '#04060c', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(255,255,255,0.06)', borderRadius: '10px', padding: '14px', minHeight: '160px', display: 'flex', flexDirection: 'column', gap: '8px', justifyContent: 'center' }}>
+        <div style={{ borderBottom: '1px dashed rgba(255,255,255,0.1)', paddingBottom: '4px' }}>
+          <span style={{ fontSize: '0.5rem', fontFamily: 'monospace', color: '#ffb300', fontWeight: 'bold' }}>📡 {era.meta}</span>
+          <h4 style={{ margin: '2px 0 0 0', fontSize: '0.74rem', color: '#fff', fontFamily: 'var(--font-tech)' }}>{era.title}</h4>
+        </div>
+        <p style={{ margin: 0, fontSize: '0.7rem', color: '#8a9bb5', lineHeight: 1.45, textAlign: 'justify' }}>
+          {era.desc}
+        </p>
+        <div style={{ background: 'rgba(255,179,0,0.03)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(255,179,0,0.15)', borderRadius: '6px', padding: '8px', marginTop: '6px' }}>
+          <strong style={{ fontSize: '0.62rem', color: '#ffb300', display: 'block', marginBottom: '2px', fontFamily: 'monospace' }}>💡 SYSTEMIC OUTCOME:</strong>
+          <p style={{ margin: 0, fontSize: '0.68rem', color: '#fff', lineHeight: 1.35 }}>
+            {era.takeaway}
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 
 // ==========================================
 // 🎨 REUSABLE TACTICAL CSS CONSOLE STYLES
@@ -1514,5 +1684,28 @@ const styles = {
     color: '#00ff88',
     fontWeight: 'bold',
     boxShadow: '0 0 8px rgba(0, 255, 136, 0.15)'
+  },
+  historyEraBtn: {
+    padding: '8px 4px',
+    fontFamily: 'monospace',
+    fontSize: '0.62rem',
+    letterSpacing: '0.5px',
+    background: 'rgba(4,6,12,0.6)',
+    borderWidth: '1px',
+    borderStyle: 'solid',
+    borderColor: 'rgba(255,255,255,0.08)',
+    color: 'rgba(255,255,255,0.6)',
+    borderRadius: '6px',
+    cursor: 'pointer',
+    transition: 'all 0.25s ease',
+    textAlign: 'center',
+    outline: 'none'
+  },
+  historyEraBtnActive: {
+    borderColor: '#ffb300',
+    background: 'rgba(255, 179, 0, 0.08)',
+    color: '#ffb300',
+    boxShadow: '0 0 8px rgba(255, 179, 0, 0.15)',
+    fontWeight: 'bold'
   }
 };

@@ -9,14 +9,17 @@ import {
   MonotropicSpotlight,
   DoubleEmpathySync,
   EnvironmentalTransition,
-  BreathingRegulator
+  BreathingRegulator,
+  ExhibitPlaqueVisualization,
+  ExhibitHistoryModel
 } from '../../components/MuseumExhibits';
 
 export default function NeurodiversityTacticalMuseum() {
   const [activeSector, setActiveSector] = useState('foyer'); // 'foyer', 'corridor', 'constellation', 'sanctuary'
-  const [activeExhibitIndex, setActiveExhibitIndex] = useState(0); // 0 to 5 for Exhibits 1-6
+  const [activeExhibitIndex, setActiveExhibitIndex] = useState(0); // 0 to 4 for Exhibits 1-5
   const [activeStoryPhase, setActiveStoryPhase] = useState(0); // 0 to 4 for Memoir Phases 01-05 (Exhibit 5)
-  const [activeMatrixTrait, setActiveMatrixTrait] = useState('stimming'); // 'stimming', 'hyperfocus', 'comms', 'autonomy' (Exhibit 4)
+  const [activeMatrixTrait, setActiveMatrixTrait] = useState('stimming'); // 'stimming', 'hyperfocus', 'comms', 'autonomy' (Exhibit 2)
+  const [activeSimTab, setActiveSimTab] = useState('comms'); // 'comms', 'sensory', 'masking', 'recovery' (Exhibit 4)
   const [isMounted, setIsMounted] = useState(false);
   const [passportId, setPassportId] = useState(null);
   const [shareUrl, setShareUrl] = useState('');
@@ -167,49 +170,42 @@ export default function NeurodiversityTacticalMuseum() {
     );
   };
 
-  // 6 Refined Exhibits definitions
+  // 5 Refined Exhibits definitions
   const exhibits = [
     {
-      id: 'exhibit-comms',
-      title: 'Exhibit 1: When communication breaks down',
-      subtitle: '⚡ DOUBLE EMPATHY & SIGNAL MISMATCHES',
-      desc: 'Communication breakdowns are bidirectional, mutual mismatches in wiring (Milton\'s Double Empathy), rather than an individual defect inside one brain. Bridges are built through explicit, non-judgmental expectations.',
-      component: <DoubleEmpathySync />
+      id: 'exhibit-what-is-nd',
+      title: 'Exhibit 1: What is Neurodiversity?',
+      subtitle: '🌿 PLURAL COGNITIVISM & HUMAN VARIATION',
+      desc: 'An entry-level explanation of the neurodiversity framework. Originally coined by sociologist Judy Singer in the late 1990s, neurodiversity is the biological reality that human brains vary naturally in their wiring. Rather than classifying differences as clinical defects, it models variation as a valuable, normal aspect of human diversity that exists to enrich our collective adaptability.',
+      component: <ExhibitPlaqueVisualization />
     },
     {
-      id: 'exhibit-envs',
-      title: 'Exhibit 2: When environments overwhelm',
-      subtitle: '🚨 SENSORY FLUIDITY & MONOTROPIC FLOWS',
-      desc: 'Autistic brains process sensory data in high definition, lacking automatic background noise filters. Overstimulating environments drain social batteries at staggering metabolic rates, triggering emergency system shutdowns.',
-      component: <MonotropicSpotlight />
-    },
-    {
-      id: 'exhibit-behavior',
-      title: 'Exhibit 3: When behavior is misread',
-      subtitle: '🔋 MASKING DIAGNOSTICS & THE REACTOR CORE',
-      desc: 'Suppressing natural stims or forcing eye contact to pass as normal (masking) comes at a massive daily CPU tax. Forcing behavioral compliance lead directly to autistic burnout and systemic nervous system failure.',
-      component: <MaskingDiagnostics />
-    },
-    {
-      id: 'exhibit-reality',
-      title: 'Exhibit 4: Two ways of explaining the same reality',
-      subtitle: '📊 PARADIGM COMPARATIVE INTERACTIVE MATRIX',
-      desc: 'Every cognitive trait can be explained through two lenses. The deficit model pathologizes differences as intrinsic diseases inside the individual. The neurodiversity paradigm reframes them as biological assets disabled by exclusive environmental structures. Compare traits below.',
+      id: 'exhibit-two-ways',
+      title: 'Exhibit 2: Two Ways of Seeing the Same Person',
+      subtitle: '📊 INTERACTIVE MODEL COMPARATIVE MATRIX',
+      desc: 'These are two interpretive models that lead to different conclusions and interventions. The Pathology/Special Needs lens views atypical behaviors as intrinsic medical deficits to be treated or normalized. The Neurodiversity lens views those same behaviors as adaptations or regulatory tools disabled by standard social environments. Select traits below to compare the two models neutrally.',
       component: 'custom-matrix'
     },
     {
-      id: 'exhibit-story',
-      title: 'Exhibit 5: A lived perspective',
-      subtitle: '📖 THE CHRONOLOGICAL TRANSMISSION FILE',
-      desc: 'Weave through the emotional coordinates of my lived experiences—from compliance sessions to mainstream yeshiva classrooms, special education cells, severe burnout, and self-acceptance.',
-      component: 'custom-story'
+      id: 'exhibit-history',
+      title: 'Exhibit 3: How the Old Model Developed',
+      subtitle: '📜 HISTORICAL ROOT GEOGRAPHY & COGNITIVE STRUCTURES',
+      desc: 'Legitimacy is grounded in history. Trace how the pathology deficit model evolved over time—from 19th-century clinical classification and industrial standardization of behavior, through mid-20th-century institutionalization, educational stratification, and behavior modification DSM frameworks. Click the historical tabs to explore database logs.',
+      component: <ExhibitHistoryModel />
     },
     {
-      id: 'exhibit-lens',
-      title: 'Exhibit 6: What changes when you switch lenses',
-      subtitle: '🌿 THE ENVIRONMENTAL SHUTTLE TRANSPORTER',
-      desc: 'Biological difference is distinct from disability; disability is created when environments mismatch wiring. Switch lenses and observe how adjusting structural inputs removes the disability entirely.',
-      component: <EnvironmentalTransition />
+      id: 'exhibit-real-life',
+      title: 'Exhibit 4: What it looks like in real life',
+      subtitle: '⚙️ CHANNELS OF INTERACTIVE LIFE EXPERIENCES',
+      desc: 'To understand how atypical wiring operates daily, explore the interactive simulations. Experience how miscommunication manifests as mutual mismatches (Double Empathy), how monotropic focus creates sensory spotlights, how masking depletes nervous system reactor batteries, and how adjusting environmental coordinates unlocks recovery.',
+      component: 'custom-real-life'
+    },
+    {
+      id: 'exhibit-story',
+      title: 'Exhibit 5: Lived experience (your story)',
+      subtitle: '📖 EPHRAIM\'S SOL CHRONOLOGICAL TIMELINE MEMOIR',
+      desc: 'Having explored the conceptual framework and real-life dynamics, ground the concepts in a single lived human experience. Trace Ephraim\'s story chronologically across 5 distinct Sols—from grade school Yeshiva act-outs and compliance rooms to burnout crashes and present-day unmasking acceptance.',
+      component: 'custom-story'
     }
   ];
 
@@ -252,39 +248,55 @@ export default function NeurodiversityTacticalMuseum() {
     }
   ];
 
-  // Interactive Comparative Matrix definitions (Exhibit 4)
+  // Interactive Comparative Matrix definitions (Exhibit 2)
   const matrixTraits = {
     stimming: {
       title: 'Stimming / Self-Regulation',
-      pathologyTitle: '❌ Pathology / Deficit Model',
-      pathologyText: 'Viewed as "purposeless", "stereotypic", or "maladaptive" behavior. Diagnosed as a social disturbance that must be clinically suppressed using behavioral compliance to make the individual appear indistinguishable from peers.',
-      affirmingTitle: '✨ Neurodiversity Paradigm',
-      affirmingText: 'Reframed as a vital, biological self-regulatory tool used to soothe an overstimulated nervous system, discharge excess energy, and maintain cognitive focus. Accommodated by providing safe spaces to move.',
+      pathologyTitle: '📊 Deficit / Special Needs Lens',
+      pathologyText: 'Interpreted as purposeless, repetitive, or non-functional behaviors. Interventions typically focus on suppressing these behaviors to help the individual blend in socially and appear indistinguishable from peers.',
+      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
+      affirmingText: 'Interpreted as a natural biological tool to regulate an overstimulated nervous system, release excess motor energy, and manage focus. Accommodated by providing safe spaces to move and accepting standard self-regulation.',
       colonyRule: 'Never demand still hands or rigid postures; self-regulation is a healthy processing buffer.'
     },
     hyperfocus: {
       title: 'Hyperfocus / Special Interests',
-      pathologyTitle: '❌ Pathology / Deficit Model',
-      pathologyText: 'Classified as "restricted, repetitive patterns of interest" that are "abnormal in intensity or focus." Treated as a clinical symptom of rigidity or an obsession that should be limited or rationed.',
-      affirmingTitle: '✨ Neurodiversity Paradigm',
-      affirmingText: 'Celebrated as an elite monotropic attention flow state that generates deep expertise, meticulous pattern-matching, and creative passion. Utilized as a powerful strength-based developmental asset.',
+      pathologyTitle: '📊 Deficit / Special Needs Lens',
+      pathologyText: 'Interpreted as an abnormal intensity of interest, or highly restricted repetitive behaviors. Interventions typically aim to redirect the individual toward broader topics or ration access to interests.',
+      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
+      affirmingText: 'Interpreted as a monotropic attention flow state that fosters deep, meticulous expertise and creative focus. Accommodated by creating strengths-based pathways and respecting deep focus states.',
       colonyRule: 'Provide uninterrupted focus buffers. Hyperfocus flow is a valuable creative resource.'
     },
     comms: {
       title: 'Social Communication style',
-      pathologyTitle: '❌ Pathology / Deficit Model',
-      pathologyText: 'Labeled as a "social communication deficit," characterized by failure to read allistic social rules, lack of spontaneous sharing, and poor eye contact. Blamed entirely on the individual\'s defective brain.',
-      affirmingTitle: '✨ Neurodiversity Paradigm',
-      affirmingText: 'Understood as a valid, direct, and explicit communication style. Recognizes the Double Empathy Problem: communication breakdowns are mutual mismatches across differing neurotype hardware, not one-sided deficits.',
+      pathologyTitle: '📊 Deficit / Special Needs Lens',
+      pathologyText: 'Interpreted as a communication deficit marked by failure to follow standard eye contact, facial expressions, and unstated social rules. Blamed entirely on the individual\'s social hardware.',
+      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
+      affirmingText: 'Interpreted as a direct, literal communication style. Recognizes the Double Empathy Problem: breakdowns are mutual mismatches across differing neurotype hardware, not one-sided deficits.',
       colonyRule: 'Bridges are built through mutual, explicit verbal communication—avoid unstated social guessing.'
     },
     autonomy: {
       title: 'Autonomy / PDA Profile',
-      pathologyTitle: '❌ Pathology / Deficit Model',
-      pathologyText: 'Termed "Pathological Demand Avoidance" and diagnosed as stubbornness, oppositional defiance, or behavioral non-compliance. Managed through authoritarian reward/punishment compliance charts.',
-      affirmingTitle: '✨ Neurodiversity Paradigm',
-      affirmingText: 'Reframed as a Pervasive Drive for Autonomy. Daily external demands trigger an involuntary threat response in the autonomic nervous system. Managed through collaborative, choice-based, and non-directive coordination.',
+      pathologyTitle: '📊 Deficit / Special Needs Lens',
+      pathologyText: 'Interpreted as Pathological Demand Avoidance, characterized by irrational avoidance of everyday demands and oppositional non-compliance. Managed through reward/punishment compliance programs.',
+      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
+      affirmingText: 'Interpreted as a Pervasive Drive for Autonomy, where standard daily demands trigger an involuntary threat response in the autonomic nervous system. Managed through collaborative, non-coercive partnerships.',
       colonyRule: 'Coordinate using egalitarian, non-coercive partnerships to support the drive for autonomy.'
+    },
+    sensory: {
+      title: 'Sensory Processing',
+      pathologyTitle: '📊 Deficit / Special Needs Lens',
+      pathologyText: 'Interpreted as sensory processing dysfunction or abnormal reactivity (hypo- or hyper-sensitivity) to ambient stimuli. Managed by forcing standard tolerance or systematic desensitization.',
+      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
+      affirmingText: 'Interpreted as a high-definition sensory processing system that gathers detailed ambient data without automatic filters. Accommodated by providing environmental control options like dimmable lighting and noise-reducing gear.',
+      colonyRule: 'Respect sensory boundaries; provide dimmable spaces and quiet zones to preserve battery.'
+    },
+    attention: {
+      title: 'Attention / Focus profile',
+      pathologyTitle: '📊 Deficit / Special Needs Lens',
+      pathologyText: 'Interpreted as attention deficit hyperactivity disorder (ADHD), characterized by chronic distractibility, lack of discipline, or executive dysfunction. Managed through stimulant regulation and compliance routines.',
+      affirmingTitle: '🌿 Neurodiversity / Accommodation Lens',
+      affirmingText: 'Interpreted as a dynamic, interest-based nervous system that excels in novel, urgent, or highly engaging contexts. Accommodated by structuring flexible, self-directed timelines and goal-aligned collaboration.',
+      colonyRule: 'Structure collaboration around self-directed projects that leverage natural interest-based focus.'
     }
   };
 
@@ -564,7 +576,7 @@ export default function NeurodiversityTacticalMuseum() {
         /* Exhibit 4 Matrix specific */
         .trait-select-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
+          grid-template-columns: repeat(3, 1fr);
           gap: 8px;
           margin-bottom: 12px;
         }
@@ -661,7 +673,7 @@ export default function NeurodiversityTacticalMuseum() {
             onClick={() => changeSector('corridor')} 
             className={`museum-nav-btn ${activeSector === 'corridor' ? 'active' : ''}`}
           >
-            🖼️ 6-Exhibit Corridor
+            🖼️ Exhibit Corridor
           </button>
           <button 
             onClick={() => changeSector('constellation')} 
@@ -699,7 +711,7 @@ export default function NeurodiversityTacticalMuseum() {
                   Welcome, Citizen. This atmospheric dome houses a cybernetic, reflective exploration of the human cognitive landscape. Rather than analyzing minds through clinical pathology metrics, this museum reframes differences as natural biological variations. 
                 </p>
                 <p style={{ fontSize: '0.86rem', color: '#8a9bb5', lineHeight: '1.7', margin: '0 0 24px 0', textAlign: 'justify' }}>
-                  Explore the structured **6-Exhibit Corridor** tracing universal questions about communication, sensory processing, masking, neurotype paradigms, lived memoir narratives, and environmental transitions.
+                  Explore the structured **Exhibit Corridor** tracing universal questions about what neurodiversity means, two ways of seeing the same person, how the medical pathology model developed historically, what wiring dynamics look like in real life through simulations, and Ephraim's chronological Sol memoir.
                 </p>
 
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -708,7 +720,7 @@ export default function NeurodiversityTacticalMuseum() {
                     className="hud-btn" 
                     style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: '#00ff88', color: '#00ff88', background: 'rgba(0, 255, 136, 0.08)' }}
                   >
-                    [ 🖼️ ENTER THE 6-EXHIBIT CORRIDOR ]
+                    [ 🖼️ ENTER THE EXHIBIT CORRIDOR ]
                   </button>
                   <button onClick={() => changeSector('constellation')} className="hud-btn">
                     [ 🌌 OPEN NEURAL CONSTELLATION MAP ]
@@ -719,12 +731,16 @@ export default function NeurodiversityTacticalMuseum() {
           )}
 
           {/* ====================================
-              THE 6-EXHIBIT CORRIDOR SECTOR
+              THE EXHIBIT CORRIDOR SECTOR
+              ==================================== */}
+          {/* ====================================
+              THE 5-EXHIBIT CORRIDOR SECTOR
               ==================================== */}
           {activeSector === 'corridor' && (() => {
             const currentExhibit = exhibits[activeExhibitIndex];
-            const isCustomExhibit4 = currentExhibit.component === 'custom-matrix';
-            const isCustomExhibit5 = currentExhibit.component === 'custom-story';
+            const isCustomMatrix = currentExhibit.component === 'custom-matrix';
+            const isCustomRealLife = currentExhibit.component === 'custom-real-life';
+            const isCustomStory = currentExhibit.component === 'custom-story';
 
             return (
               <>
@@ -747,23 +763,83 @@ export default function NeurodiversityTacticalMuseum() {
                   </div>
 
                   {/* Standard exhibit text body block */}
-                  {!isCustomExhibit5 && (
+                  {!isCustomStory && !isCustomRealLife && (
                     <div className="bubbly-panel">
                       <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: '6px' }}>
                         // PARADIGM LEDGER TEXT
                       </span>
                       <p style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5, margin: 0, textAlign: 'justify' }}>
-                        {activeExhibitIndex === 0 && "In traditional systems, verbal silence is pathologized as a clinical deficit. In reality, it is a metabolic conservation response. Synchronized verbal clarity bridges boundaries."}
-                        {activeExhibitIndex === 1 && "Sensory details like ambient ticks or humming lights act as active CPU interrupts. Adjusting environments directly alleviates the disabling impact."}
-                        {activeExhibitIndex === 2 && "Masking is a cognitive tax paid to purchase immediate safety. Reclaiming autonomy requires droping behavioral compliance filters."}
-                        {activeExhibitIndex === 3 && "By shifting from deficit explanations to structural accommodations, we realize stimming, special interests, and autonomy drives are vital evolutionary assets."}
-                        {activeExhibitIndex === 5 && "switching lenses proves that disability is formed by restrictive barriers, not biological anomalies. Swapping coordinates resolves the disability entirely."}
+                        {activeExhibitIndex === 0 && "The neurodiversity framework does not deny that neurological differences cause difficulties, but it separates the intrinsic biological trait from the socially constructed barriers. Accommodating cognitive diversity strengthens civil societies."}
+                        {activeExhibitIndex === 1 && "By analyzing stimming, special interests, social communication, and autonomy drives across two lenses, we recognize how identical traits can be pathologized as defective behaviors or accommodated as regulatory assets."}
+                        {activeExhibitIndex === 2 && "The pathology model was not created in a vacuum. It was historically shaped to enforce uniformity during the industrial revolution, segregating differences into medical institutions, special education systems, and behavioral compliance criteria."}
                       </p>
                     </div>
                   )}
 
+                  {/* Exhibit 4 (Real Life Simulations) Interactive Select Tab Block */}
+                  {isCustomRealLife && (
+                    <div className="bubbly-panel" style={{ flexShrink: 0, gap: '10px' }}>
+                      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px', display: 'block' }}>
+                        // SELECT REAL-LIFE TELEMETRY SIMULATOR
+                      </span>
+                      <p style={{ fontSize: '0.72rem', color: '#8a9bb5', lineHeight: 1.4, margin: '0 0 8px 0' }}>
+                        Neurodivergent wiring manifests in specific processing dynamics. Select a simulator module below to engage the interactive coordinates in the right-hand console:
+                      </p>
+                      
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                        <button 
+                          onClick={() => setActiveSimTab('comms')} 
+                          className={`protocol-toggle-badge ${activeSimTab === 'comms' ? 'active' : ''}`}
+                          style={{ padding: '8px 12px' }}
+                        >
+                          <span style={{ fontSize: '0.85rem' }}>📡</span>
+                          <div style={{ textAlign: 'left' }}>
+                            <strong style={{ fontSize: '0.68rem', color: activeSimTab === 'comms' ? '#00ff88' : '#fff' }}>I. Communication Mismatch</strong>
+                            <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)' }}>Double Empathy & Signal Phase Mismatches</span>
+                          </div>
+                        </button>
+
+                        <button 
+                          onClick={() => setActiveSimTab('sensory')} 
+                          className={`protocol-toggle-badge ${activeSimTab === 'sensory' ? 'active' : ''}`}
+                          style={{ padding: '8px 12px' }}
+                        >
+                          <span style={{ fontSize: '0.85rem' }}>🚨</span>
+                          <div style={{ textAlign: 'left' }}>
+                            <strong style={{ fontSize: '0.68rem', color: activeSimTab === 'sensory' ? '#00ff88' : '#fff' }}>II. Sensory Spotlight</strong>
+                            <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)' }}>Monotropic Flow Channels & Overstimulation</span>
+                          </div>
+                        </button>
+
+                        <button 
+                          onClick={() => setActiveSimTab('masking')} 
+                          className={`protocol-toggle-badge ${activeSimTab === 'masking' ? 'active' : ''}`}
+                          style={{ padding: '8px 12px' }}
+                        >
+                          <span style={{ fontSize: '0.85rem' }}>🔋</span>
+                          <div style={{ textAlign: 'left' }}>
+                            <strong style={{ fontSize: '0.68rem', color: activeSimTab === 'masking' ? '#00ff88' : '#fff' }}>III. Masking & Burnout</strong>
+                            <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)' }}>Nervous System Reactor Battery & Stresses</span>
+                          </div>
+                        </button>
+
+                        <button 
+                          onClick={() => setActiveSimTab('recovery')} 
+                          className={`protocol-toggle-badge ${activeSimTab === 'recovery' ? 'active' : ''}`}
+                          style={{ padding: '8px 12px' }}
+                        >
+                          <span style={{ fontSize: '0.85rem' }}>🌿</span>
+                          <div style={{ textAlign: 'left' }}>
+                            <strong style={{ fontSize: '0.68rem', color: activeSimTab === 'recovery' ? '#00ff88' : '#fff' }}>IV. Environmental Lens Shift</strong>
+                            <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)' }}>Social Model of Disability Transition Slide</span>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Exhibit 5 dedicated Narration Control panel */}
-                  {isCustomExhibit5 && (
+                  {isCustomStory && (
                     <div className="bubbly-panel">
                       <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
                         // SUBSPACE TRANSMISSION FEED AUDIO CONTROLLER
@@ -812,7 +888,7 @@ export default function NeurodiversityTacticalMuseum() {
                       ◀ PREV HALL
                     </button>
                     <span style={{ fontSize: '0.68rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.45)' }}>
-                      [ HALL 0{activeExhibitIndex + 1} / 06 ]
+                      [ HALL 0{activeExhibitIndex + 1} / 0{exhibits.length} ]
                     </span>
                     <button 
                       onClick={() => { stopUtterance(); setActiveExhibitIndex(prev => Math.min(exhibits.length - 1, prev + 1)); }}
@@ -828,12 +904,12 @@ export default function NeurodiversityTacticalMuseum() {
                 <div className="museum-right-diagnostics custom-scroll">
                   
                   {/* Render standard visual components */}
-                  {!isCustomExhibit4 && !isCustomExhibit5 && currentExhibit.component}
+                  {!isCustomMatrix && !isCustomRealLife && !isCustomStory && currentExhibit.component}
 
                   {/* ===================================================
-                      EXHIBIT 4: Two ways of explaining the same reality (Comparative Paradigm Matrix)
+                      EXHIBIT 2: Two Ways of Seeing the Same Person (Comparative Paradigm Matrix)
                       =================================================== */}
-                  {isCustomExhibit4 && (() => {
+                  {isCustomMatrix && (() => {
                     const trait = matrixTraits[activeMatrixTrait];
                     return (
                       <div className="bubbly-panel" style={{ gap: '14px' }}>
@@ -893,9 +969,21 @@ export default function NeurodiversityTacticalMuseum() {
                   })()}
 
                   {/* ===================================================
-                      EXHIBIT 5: A lived perspective (Ephraim's Chronological Narrative walk)
+                      EXHIBIT 4: What it looks like in real life (Simulation suite dashboard)
                       =================================================== */}
-                  {isCustomExhibit5 && (() => {
+                  {isCustomRealLife && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      {activeSimTab === 'comms' && <DoubleEmpathySync />}
+                      {activeSimTab === 'sensory' && <MonotropicSpotlight />}
+                      {activeSimTab === 'masking' && <MaskingDiagnostics />}
+                      {activeSimTab === 'recovery' && <EnvironmentalTransition />}
+                    </div>
+                  )}
+
+                  {/* ===================================================
+                      EXHIBIT 5: Lived experience (Ephraim's Chronological Narrative walk)
+                      =================================================== */}
+                  {isCustomStory && (() => {
                     const phase = storyPhases[activeStoryPhase];
                     return (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
@@ -908,7 +996,7 @@ export default function NeurodiversityTacticalMuseum() {
                               onClick={() => { stopUtterance(); setActiveStoryPhase(p.id); }}
                               style={{
                                 ...styles.storyTabBtn,
-                                ...(activeStoryPhase === p.id ? styles.storyTabBtnActive : {})
+                                ...((activeStoryPhase === p.id) ? styles.storyTabBtnActive : {})
                               }}
                             >
                               <span style={{ fontSize: '0.62rem', fontWeight: 'bold', display: 'block' }}>SOL 0{p.id + 1}</span>

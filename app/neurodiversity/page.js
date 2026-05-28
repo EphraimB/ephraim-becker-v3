@@ -11,15 +11,19 @@ import {
   EnvironmentalTransition,
   BreathingRegulator,
   ExhibitPlaqueVisualization,
-  ExhibitHistoryModel
+  ExhibitHistoryModel,
+  ExhibitMatrixVisualization,
+  ExhibitMartianBiosphere,
+  ExhibitMemoirCrystalMap
 } from '../../components/MuseumExhibits';
 
 export default function NeurodiversityTacticalMuseum() {
   const [activeSector, setActiveSector] = useState('foyer'); // 'foyer', 'corridor', 'constellation', 'sanctuary'
-  const [activeExhibitIndex, setActiveExhibitIndex] = useState(0); // 0 to 4 for Exhibits 1-5
-  const [activeStoryPhase, setActiveStoryPhase] = useState(0); // 0 to 4 for Memoir Phases 01-05 (Exhibit 5)
+  const [activeExhibitIndex, setActiveExhibitIndex] = useState(0); // 0 to 6 for Exhibits 1-7
+  const [activeStoryPhase, setActiveStoryPhase] = useState(0); // 0 to 4 for Memoir Phases 01-05
   const [activeMatrixTrait, setActiveMatrixTrait] = useState('stimming'); // 'stimming', 'hyperfocus', 'comms', 'autonomy' (Exhibit 2)
-  const [activeSimTab, setActiveSimTab] = useState('comms'); // 'comms', 'sensory', 'masking', 'recovery' (Exhibit 4)
+  const [activeSimTab, setActiveSimTab] = useState('comms'); // 'comms', 'sensory', 'masking' (Exhibit 4)
+  const [analogyTheme, setAnalogyTheme] = useState('tech'); // 'tech', 'rpg', 'nature', 'sports' (Analogy Switcher)
   const [isMounted, setIsMounted] = useState(false);
   const [passportId, setPassportId] = useState(null);
   const [shareUrl, setShareUrl] = useState('');
@@ -171,40 +175,140 @@ export default function NeurodiversityTacticalMuseum() {
   };
 
   // 5 Refined Exhibits definitions
+  const getExhibitDesc = (id) => {
+    switch (id) {
+      case 'exhibit-what-is-nd':
+        if (analogyTheme === 'tech') {
+          return 'Think of human brains like different smartphone operating systems. Having iOS and Android exist together isn\'t a defect—it\'s a choice of architectures. They compile code differently, but both run powerful devices. Diversity is a feature, not a bug. Neurodiversity is the biological reality that human operating systems naturally vary in their wiring, rather than classifying differences as clinical errors.';
+        }
+        if (analogyTheme === 'rpg') {
+          return 'Think of human brains like game character classes. An RPG would be extremely boring if every player was a standard Warrior. Having Mages, Rogues, and Healers is what makes a balanced raid team. Each class has unique base stats and talent trees, not deficits. Neurodiversity is the biological reality of this character-class distribution, modeling variation as an asset that enriches collective adaptability.';
+        }
+        if (analogyTheme === 'nature') {
+          return 'Think of human brains like plant species in an ecosystem. Cacti are built to store water in deserts, while ferns thrive in deep damp swamp shades. You wouldn\'t call a cactus "broken" because it rots in a swamp. Different plants need different soil wiring. Neurodiversity is the biological reality of our cognitive biosphere, celebrating variation as normal biodiversity.';
+        }
+        if (analogyTheme === 'sports') {
+          return 'Think of human brains like athlete specializations. An Olympic sprinter has high-twitch muscle fibers for explosive speed, a powerlifter has dense fiber for lifting, and a marathon runner has massive cardiovascular endurance. You don\'t call a powerlifter "broken" because they can\'t run a 4-minute mile. Neurodiversity is the biological reality of these differing athletic profiles, which co-exist to support diverse roles.';
+        }
+        return '';
+
+      case 'exhibit-two-ways':
+        if (analogyTheme === 'tech') {
+          return 'The Pathology lens views an Android trying to run iOS apps directly as "defective" because the compile fails. The Accommodation lens says: Android just runs a different kernel—it needs an Android-native compiler. It\'s a software mismatch, not a broken chip. Select traits below to compare the two models neutrally through this system lens.';
+        }
+        if (analogyTheme === 'rpg') {
+          return 'The Pathology lens views a Mage trying to swing a giant steel claymore as "weak and defective." The Accommodation lens says: Mages are built to cast spells from a distance—give them a staff. It\'s a class mismatch, not a player failure. Select traits below to compare the two models neutrally through this character class lens.';
+        }
+        if (analogyTheme === 'nature') {
+          return 'The Pathology lens views a desert cactus rotting in a wet marsh as having a "root deficit." The Affirming lens says: The cactus is designed to conserve water—replant it in dry sand. It\'s a soil mismatch, not a sick plant. Select traits below to compare the two models neutrally through this ecological lens.';
+        }
+        if (analogyTheme === 'sports') {
+          return 'The Pathology lens views a heavy powerlifter failing to keep pace in a 100-meter sprint as having a "cardio failure." The Affirming lens says: Powerlifters are designed for explosive barbell lifts—give them heavy weights. It\'s a role mismatch, not an athletic failure. Select traits below to compare the two models neutrally through this athletic lens.';
+        }
+        return '';
+
+      case 'exhibit-real-life':
+        if (analogyTheme === 'tech') {
+          return 'Explore interactive simulations of everyday operating dynamics. Experience how cross-play desync manifests as communication lag (Double Empathy), how single-task CPU overclocking creates focus spotlights (Monotropic attention), and how runaway background tasks drain the social battery core (Masking). Select a tab below to engage the interactive simulations.';
+        }
+        if (analogyTheme === 'rpg') {
+          return 'Explore simulations of daily questing dynamics. Experience how different tick-rates create keyboard-vs-controller trading desync (Double Empathy), how channeling high-level spell casts locks attention (Monotropic focus), and how active stealth spells drain your mana bar to zero (Masking). Select a tab below to engage the interactive simulations.';
+        }
+        if (analogyTheme === 'nature') {
+          return 'Explore simulations of natural processing dynamics. Experience how different species mismatches create communication desync (Double Empathy), how deep taproot designs draw water (Monotropic spotlight), and how extreme environmental camouflage mimicry drains organic energy (Masking). Select a tab below to engage the interactive simulations.';
+        }
+        if (analogyTheme === 'sports') {
+          return 'Explore simulations of athletic processing dynamics. Experience how rule desyncs create soccer-vs-basketball playbook lag (Double Empathy), how being in-the-zone creates tunnel-vision focus (Monotropic spotlight), and how running a race in a 50lb weighted vest drains physical stamina (Masking). Select a tab below to engage the interactive simulations.';
+        }
+        return '';
+
+      case 'exhibit-accommodation':
+        if (analogyTheme === 'tech') {
+          return 'The Social Model of Disability. Disability is created when software is locked to a single proprietary OS format. Drag the transition slide handle in the right-hand panel to install explicit translation drivers, converting a rigid deficit cell into a cross-play affirming bio-dome.';
+        }
+        if (analogyTheme === 'rpg') {
+          return 'The Social Model of Disability. Disability is created when you demand Mages fight in close-quarters melee combat. Drag the slider to provide proper tank shield covers, shifting a high-risk deficit cage into an affirming, balanced guild biome.';
+        }
+        if (analogyTheme === 'nature') {
+          return 'The Social Model of Disability. Disability is created when you try to grow cacti in swamps or ferns in sand. Drag the slider to adjust soil moisture and shading coordinates, transforming a hostile pathology cell into a thriving biological terrarium.';
+        }
+        if (analogyTheme === 'sports') {
+          return 'The Social Model of Disability. Disability is created when you force sprinters, powerlifters, and high jumpers to compete solely on a swimming track. Drag the slider to build custom sports coordinates, shifting a hostile cell into an affirming athletic biome.';
+        }
+        return '';
+
+      case 'exhibit-future':
+        if (analogyTheme === 'tech') {
+          return 'Designing future operating systems designed from the ground up to support native multi-compilation cross-play APIs. Use the dials in the Martian Biosphere SVG stabilizer in the right-hand panel to balance sensory glare shields, direct instructions, and task control variables.';
+        }
+        if (analogyTheme === 'rpg') {
+          return 'Designing future game dungeons that require a diverse guild of Mages, Rogues, and Warriors working in lockstep, rather than a single uniform class. Adjust the canopy stabilizer dials in the right-hand panel to balance guild parameters.';
+        }
+        if (analogyTheme === 'nature') {
+          return 'Planting a diverse permaculture garden where multiple species share soil minerals, enriching the entire soil biome. Use the canopy stabilizer dials in the right-hand panel to balance moisture, direct light, and root autonomy variables.';
+        }
+        if (analogyTheme === 'sports') {
+          return 'Building a decathlon team that scores high by combining world-class specialists in every track and field discipline. Tune the canopy stabilizer dials in the right-hand panel to balance training parameters.';
+        }
+        return '';
+
+      case 'exhibit-history':
+        return 'History of behavior control and classification. Trace how society developed the pathology deficit model over time—from factory-school behavior standardization in the 1800s, psychiatric asylum lockups in the 1960s, special education tracking rooms in the 1980s, to self-advocacy and dome designs today. Click the pipeline nodes in the SVG above to load database history logs.';
+
+      case 'exhibit-story':
+      default:
+        return 'Ground the conceptual operating frameworks in a single lived human experience. Select Sol crystals in the interactive neural Constellation map to trace Ephraim\'s story across five checkpoints—from childhood Yeshiva compliance and para-exclusion to adult burnout and unmasked synaptic pride.';
+    }
+  };
+
   const exhibits = [
     {
       id: 'exhibit-what-is-nd',
       title: 'Exhibit 1: What is Neurodiversity?',
       subtitle: '🌿 PLURAL COGNITIVISM & HUMAN VARIATION',
-      desc: 'An entry-level explanation of the neurodiversity framework. Originally coined by sociologist Judy Singer in the late 1990s, neurodiversity is the biological reality that human brains vary naturally in their wiring. Rather than classifying differences as clinical defects, it models variation as a valuable, normal aspect of human diversity that exists to enrich our collective adaptability.',
+      desc: getExhibitDesc('exhibit-what-is-nd'),
       component: <ExhibitPlaqueVisualization />
     },
     {
       id: 'exhibit-two-ways',
       title: 'Exhibit 2: Two Ways of Seeing the Same Person',
       subtitle: '📊 INTERACTIVE MODEL COMPARATIVE MATRIX',
-      desc: 'These are two interpretive models that lead to different conclusions and interventions. The Pathology/Special Needs lens views atypical behaviors as intrinsic medical deficits to be treated or normalized. The Neurodiversity lens views those same behaviors as adaptations or regulatory tools disabled by standard social environments. Select traits below to compare the two models neutrally.',
+      desc: getExhibitDesc('exhibit-two-ways'),
       component: 'custom-matrix'
     },
     {
       id: 'exhibit-history',
       title: 'Exhibit 3: How the Old Model Developed',
       subtitle: '📜 HISTORICAL ROOT GEOGRAPHY & COGNITIVE STRUCTURES',
-      desc: 'Legitimacy is grounded in history. Trace how the pathology deficit model evolved over time—from 19th-century clinical classification and industrial standardization of behavior, through mid-20th-century institutionalization, educational stratification, and behavior modification DSM frameworks. Click the historical tabs to explore database logs.',
+      desc: getExhibitDesc('exhibit-history'),
       component: <ExhibitHistoryModel />
     },
     {
       id: 'exhibit-real-life',
       title: 'Exhibit 4: What it looks like in real life',
       subtitle: '⚙️ CHANNELS OF INTERACTIVE LIFE EXPERIENCES',
-      desc: 'To understand how atypical wiring operates daily, explore the interactive simulations. Experience how miscommunication manifests as mutual mismatches (Double Empathy), how monotropic focus creates sensory spotlights, how masking depletes nervous system reactor batteries, and how adjusting environmental coordinates unlocks recovery.',
+      desc: getExhibitDesc('exhibit-real-life'),
       component: 'custom-real-life'
     },
     {
+      id: 'exhibit-accommodation',
+      title: 'Exhibit 5: The Power of Accommodation',
+      subtitle: '🌿 SOCIAL MODEL OF DISABILITY SHUTTLE',
+      desc: getExhibitDesc('exhibit-accommodation'),
+      component: 'custom-accommodation'
+    },
+    {
+      id: 'exhibit-future',
+      title: 'Exhibit 6: Neurodiversity in the Future',
+      subtitle: '🛰️ FUTURE MARTIAN CANOPY STABILIZER',
+      desc: getExhibitDesc('exhibit-future'),
+      component: 'custom-future'
+    },
+    {
       id: 'exhibit-story',
-      title: 'Exhibit 5: Lived experience (your story)',
+      title: 'Exhibit 7: Lived experience (your story)',
       subtitle: '📖 EPHRAIM\'S SOL CHRONOLOGICAL TIMELINE MEMOIR',
-      desc: 'Having explored the conceptual framework and real-life dynamics, ground the concepts in a single lived human experience. Trace Ephraim\'s story chronologically across 5 distinct Sols—from grade school Yeshiva act-outs and compliance rooms to burnout crashes and present-day unmasking acceptance.',
+      desc: getExhibitDesc('exhibit-story'),
       component: 'custom-story'
     }
   ];
@@ -740,12 +844,52 @@ export default function NeurodiversityTacticalMuseum() {
             const currentExhibit = exhibits[activeExhibitIndex];
             const isCustomMatrix = currentExhibit.component === 'custom-matrix';
             const isCustomRealLife = currentExhibit.component === 'custom-real-life';
+            const isCustomAccommodation = currentExhibit.component === 'custom-accommodation';
+            const isCustomFuture = currentExhibit.component === 'custom-future';
             const isCustomStory = currentExhibit.component === 'custom-story';
 
             return (
               <>
                 {/* LEFT PANE: Exhibit Core Information & Details */}
                 <div className="museum-left-feed custom-scroll">
+                  
+                  {/* ANALOGY THEME SELECTOR CONSOLE */}
+                  <div className="bubbly-panel" style={{ flexShrink: 0, padding: '10px 14px', border: '1.5px solid rgba(0, 240, 255, 0.15)', background: 'rgba(0, 240, 255, 0.02)' }}>
+                    <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00f0ff', letterSpacing: '1px', display: 'block', marginBottom: '6px' }}>
+                      ⚙️ CHOOSE EXPLANATION LENS (ANALOGY SWITCHER)
+                    </span>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px' }}>
+                      {[
+                        { id: 'tech', label: '⚙️ Tech', title: 'Smartphone OS, CPU, RAM and network cross-play' },
+                        { id: 'rpg', label: '🎮 RPG', title: 'Character classes, talent trees, spell channels and lag desync' },
+                        { id: 'nature', label: '🌿 Nature', title: 'Plant adaptations, moisture settings, biomes and permacultures' },
+                        { id: 'sports', label: '🏆 Sports', title: 'Athlete body specializations, in-the-zone sprint channels and weighted vests' }
+                      ].map(theme => (
+                        <button
+                          key={theme.id}
+                          onClick={() => setAnalogyTheme(theme.id)}
+                          title={theme.title}
+                          style={{
+                            padding: '4px 2px',
+                            fontSize: '0.58rem',
+                            fontFamily: 'monospace',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            background: analogyTheme === theme.id ? 'rgba(0, 240, 255, 0.15)' : 'rgba(0,0,0,0.3)',
+                            borderWidth: '1px',
+                            borderStyle: 'solid',
+                            borderColor: analogyTheme === theme.id ? '#00f0ff' : 'rgba(255,255,255,0.08)',
+                            color: analogyTheme === theme.id ? '#00f0ff' : 'rgba(255,255,255,0.6)',
+                            outline: 'none'
+                          }}
+                        >
+                          {theme.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
                   <div className="bubbly-panel" style={{ flexShrink: 0 }}>
                     <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
                       // EXHIBITION DATA NODESEC // EX-{activeExhibitIndex + 1}
@@ -762,16 +906,20 @@ export default function NeurodiversityTacticalMuseum() {
                     </p>
                   </div>
 
-                  {/* Standard exhibit text body block */}
-                  {!isCustomStory && !isCustomRealLife && (
+                  {/* Standard exhibit text body block (adapted to selected lens) */}
+                  {!isCustomStory && !isCustomRealLife && !isCustomMatrix && !isCustomAccommodation && !isCustomFuture && (
                     <div className="bubbly-panel">
                       <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: '6px' }}>
-                        // PARADIGM LEDGER TEXT
+                        // CHOSEN LENS TELEMETRY SUMMARY
                       </span>
-                      <p style={{ fontSize: '0.76rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.5, margin: 0, textAlign: 'justify' }}>
-                        {activeExhibitIndex === 0 && "The neurodiversity framework does not deny that neurological differences cause difficulties, but it separates the intrinsic biological trait from the socially constructed barriers. Accommodating cognitive diversity strengthens civil societies."}
-                        {activeExhibitIndex === 1 && "By analyzing stimming, special interests, social communication, and autonomy drives across two lenses, we recognize how identical traits can be pathologized as defective behaviors or accommodated as regulatory assets."}
-                        {activeExhibitIndex === 2 && "The pathology model was not created in a vacuum. It was historically shaped to enforce uniformity during the industrial revolution, segregating differences into medical institutions, special education systems, and behavioral compliance criteria."}
+                      <p style={{ fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.45, margin: 0, textAlign: 'justify' }}>
+                        {activeExhibitIndex === 0 && (
+                          analogyTheme === 'tech' ? "System architecture reframed. Diversity is modeled as a functional feature of plural processors coexisting on the same server network." :
+                          analogyTheme === 'rpg' ? "Guild classes unlocked. Success is modeled as a balanced cooperative raid party utilizing diverse specialized classes." :
+                          analogyTheme === 'nature' ? "Ecosystem fitness secured. Vitality is modeled as biodiverse species adapting to custom soil micro-climates." :
+                          "Team roster optimized. Victory is modeled as sprinters, powerlifters, and marathoners training in their native domains."
+                        )}
+                        {activeExhibitIndex === 2 && "The pathology model was not created in a vacuum. It was historically shaped to enforce uniformity during the industrial revolution, segregating differences into psychiatric lockups, special education systems, and compliance checklists. Click the pipeline nodes to traverse eras."}
                       </p>
                     </div>
                   )}
@@ -822,23 +970,11 @@ export default function NeurodiversityTacticalMuseum() {
                             <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)' }}>Nervous System Reactor Battery & Stresses</span>
                           </div>
                         </button>
-
-                        <button 
-                          onClick={() => setActiveSimTab('recovery')} 
-                          className={`protocol-toggle-badge ${activeSimTab === 'recovery' ? 'active' : ''}`}
-                          style={{ padding: '8px 12px' }}
-                        >
-                          <span style={{ fontSize: '0.85rem' }}>🌿</span>
-                          <div style={{ textAlign: 'left' }}>
-                            <strong style={{ fontSize: '0.68rem', color: activeSimTab === 'recovery' ? '#00ff88' : '#fff' }}>IV. Environmental Lens Shift</strong>
-                            <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)' }}>Social Model of Disability Transition Slide</span>
-                          </div>
-                        </button>
                       </div>
                     </div>
                   )}
 
-                  {/* Exhibit 5 dedicated Narration Control panel */}
+                  {/* Exhibit 7 dedicated Narration Control panel */}
                   {isCustomStory && (
                     <div className="bubbly-panel">
                       <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
@@ -904,7 +1040,7 @@ export default function NeurodiversityTacticalMuseum() {
                 <div className="museum-right-diagnostics custom-scroll">
                   
                   {/* Render standard visual components */}
-                  {!isCustomMatrix && !isCustomRealLife && !isCustomStory && currentExhibit.component}
+                  {!isCustomMatrix && !isCustomRealLife && !isCustomAccommodation && !isCustomFuture && !isCustomStory && currentExhibit.component}
 
                   {/* ===================================================
                       EXHIBIT 2: Two Ways of Seeing the Same Person (Comparative Paradigm Matrix)
@@ -912,57 +1048,62 @@ export default function NeurodiversityTacticalMuseum() {
                   {isCustomMatrix && (() => {
                     const trait = matrixTraits[activeMatrixTrait];
                     return (
-                      <div className="bubbly-panel" style={{ gap: '14px' }}>
-                        <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px' }}>
-                          // INTERACTIVE MATRIX TERMINAL: SELECT TRAIT PARAMETER
-                        </span>
-                        
-                        {/* Selector Tabs */}
-                        <div className="trait-select-grid">
-                          {Object.keys(matrixTraits).map(key => (
-                            <button
-                              key={key}
-                              onClick={() => setActiveMatrixTrait(key)}
-                              className={`trait-select-btn ${activeMatrixTrait === key ? 'active' : ''}`}
-                            >
-                              {matrixTraits[key].title}
-                            </button>
-                          ))}
-                        </div>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        {/* Interactive Trait-responsive SVG visualizer */}
+                        <ExhibitMatrixVisualization activeTrait={activeMatrixTrait} />
 
-                        {/* Trait display details */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                        <div className="bubbly-panel" style={{ gap: '14px' }}>
+                          <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px' }}>
+                            // INTERACTIVE MATRIX TERMINAL: SELECT TRAIT PARAMETER
+                          </span>
                           
-                          {/* pathology card */}
-                          <div style={{ background: 'rgba(234, 67, 53, 0.02)', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(234, 67, 53, 0.18)', borderRadius: '8px', padding: '14px' }}>
-                            <strong style={{ display: 'block', fontFamily: 'monospace', fontSize: '0.72rem', color: '#ea4335', marginBottom: '6px' }}>
-                              {trait.pathologyTitle}
-                            </strong>
-                            <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', margin: 0, lineHeight: 1.5, textAlign: 'justify' }}>
-                              {trait.pathologyText}
-                            </p>
+                          {/* Selector Tabs */}
+                          <div className="trait-select-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '6px' }}>
+                            {Object.keys(matrixTraits).map(key => (
+                              <button
+                                key={key}
+                                onClick={() => setActiveMatrixTrait(key)}
+                                className={`trait-select-btn ${activeMatrixTrait === key ? 'active' : ''}`}
+                              >
+                                {matrixTraits[key].title}
+                              </button>
+                            ))}
                           </div>
 
-                          {/* affirming card */}
-                          <div style={{ background: 'rgba(0, 255, 136, 0.02)', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(0, 255, 136, 0.22)', borderRadius: '8px', padding: '14px' }}>
-                            <strong style={{ display: 'block', fontFamily: 'monospace', fontSize: '0.72rem', color: '#00ff88', marginBottom: '6px' }}>
-                              {trait.affirmingTitle}
-                            </strong>
-                            <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', margin: 0, lineHeight: 1.5, textAlign: 'justify' }}>
-                              {trait.affirmingText}
-                            </p>
-                          </div>
+                          {/* Trait display details */}
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            
+                            {/* pathology card */}
+                            <div style={{ background: 'rgba(234, 67, 53, 0.02)', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(234, 67, 53, 0.18)', borderRadius: '8px', padding: '14px' }}>
+                              <strong style={{ display: 'block', fontFamily: 'monospace', fontSize: '0.72rem', color: '#ea4335', marginBottom: '6px' }}>
+                                {trait.pathologyTitle}
+                              </strong>
+                              <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', margin: 0, lineHeight: 1.5, textAlign: 'justify' }}>
+                                {trait.pathologyText}
+                              </p>
+                            </div>
 
-                          {/* highlight rule */}
-                          <div style={{ background: 'rgba(0, 240, 255, 0.04)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(0, 240, 255, 0.15)', borderRadius: '8px', padding: '10px 14px' }}>
-                            <strong style={{ display: 'block', fontFamily: 'monospace', fontSize: '0.62rem', color: '#00f0ff', marginBottom: '2px', letterSpacing: '0.5px' }}>
-                              💡 DOME SYSTEM RULE FOR EXPLICIT ACCOMMODATION
-                            </strong>
-                            <span style={{ fontSize: '0.7rem', color: '#fff', lineHeight: 1.4, display: 'block' }}>
-                              {trait.colonyRule}
-                            </span>
-                          </div>
+                            {/* affirming card */}
+                            <div style={{ background: 'rgba(0, 255, 136, 0.02)', borderWidth: '1.5px', borderStyle: 'solid', borderColor: 'rgba(0, 255, 136, 0.22)', borderRadius: '8px', padding: '14px' }}>
+                              <strong style={{ display: 'block', fontFamily: 'monospace', fontSize: '0.72rem', color: '#00ff88', marginBottom: '6px' }}>
+                                {trait.affirmingTitle}
+                              </strong>
+                              <p style={{ fontSize: '0.72rem', color: 'rgba(255,255,255,0.8)', margin: 0, lineHeight: 1.5, textAlign: 'justify' }}>
+                                {trait.affirmingText}
+                              </p>
+                            </div>
 
+                            {/* highlight rule */}
+                            <div style={{ background: 'rgba(0, 240, 255, 0.04)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(0, 240, 255, 0.15)', borderRadius: '8px', padding: '10px 14px' }}>
+                              <strong style={{ display: 'block', fontFamily: 'monospace', fontSize: '0.62rem', color: '#00f0ff', marginBottom: '2px', letterSpacing: '0.5px' }}>
+                                💡 DOME SYSTEM RULE FOR EXPLICIT ACCOMMODATION
+                              </strong>
+                              <span style={{ fontSize: '0.7rem', color: '#fff', lineHeight: 1.4, display: 'block' }}>
+                                {trait.colonyRule}
+                              </span>
+                            </div>
+
+                          </div>
                         </div>
                       </div>
                     );
@@ -976,36 +1117,29 @@ export default function NeurodiversityTacticalMuseum() {
                       {activeSimTab === 'comms' && <DoubleEmpathySync />}
                       {activeSimTab === 'sensory' && <MonotropicSpotlight />}
                       {activeSimTab === 'masking' && <MaskingDiagnostics />}
-                      {activeSimTab === 'recovery' && <EnvironmentalTransition />}
                     </div>
                   )}
 
                   {/* ===================================================
-                      EXHIBIT 5: Lived experience (Ephraim's Chronological Narrative walk)
+                      EXHIBIT 5: The Power of Accommodation (Environmental Transition Slide)
+                      =================================================== */}
+                  {isCustomAccommodation && <EnvironmentalTransition />}
+
+                  {/* ===================================================
+                      EXHIBIT 6: Neurodiversity in the Future (Martian Canopy Stabilizer)
+                      =================================================== */}
+                  {isCustomFuture && <ExhibitMartianBiosphere />}
+
+                  {/* ===================================================
+                      EXHIBIT 7: Lived experience (Ephraim's Chronological Narrative walk)
                       =================================================== */}
                   {isCustomStory && (() => {
                     const phase = storyPhases[activeStoryPhase];
                     return (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                         
-                        {/* Timeline chronological tab selector */}
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '6px' }}>
-                          {storyPhases.map(p => (
-                            <button
-                              key={p.id}
-                              onClick={() => { stopUtterance(); setActiveStoryPhase(p.id); }}
-                              style={{
-                                ...styles.storyTabBtn,
-                                ...((activeStoryPhase === p.id) ? styles.storyTabBtnActive : {})
-                              }}
-                            >
-                              <span style={{ fontSize: '0.62rem', fontWeight: 'bold', display: 'block' }}>SOL 0{p.id + 1}</span>
-                              <span style={{ fontSize: '0.48rem', opacity: 0.7, letterSpacing: '0px', display: 'block', marginTop: '1px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                {p.tabTitle}
-                              </span>
-                            </button>
-                          ))}
-                        </div>
+                        {/* Neural memoir constellation map crystal selector */}
+                        <ExhibitMemoirCrystalMap activePhase={activeStoryPhase} setActivePhase={setActiveStoryPhase} />
 
                         {/* Story phase text display */}
                         <div className="bubbly-panel" style={{ gap: '12px' }}>
@@ -1014,13 +1148,16 @@ export default function NeurodiversityTacticalMuseum() {
                               {phase.phaseName}
                             </span>
                             <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)' }}>
-                              NARRATOR FEED LOCKED
+                              NARRATOR FEED LOCATED
                             </span>
                           </div>
 
                           <p className="story-text-body" style={{
                             transition: 'color 0.4s ease',
-                            textShadow: isNarrating ? '0 0 3px rgba(0,255,136,0.15)' : 'none'
+                            textShadow: isNarrating ? '0 0 3px rgba(0,255,136,0.15)' : 'none',
+                            fontSize: '0.76rem',
+                            lineHeight: '1.45',
+                            margin: 0
                           }}>
                             {phase.storyText}
                           </p>

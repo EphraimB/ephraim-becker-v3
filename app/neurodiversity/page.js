@@ -960,7 +960,6 @@ export default function NeurodiversityTacticalMuseum() {
                             </a>
                           )}
                         </div>
-
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <button
                             onClick={() => { setActiveStoryPhase(prev => Math.max(0, prev - 1)); }}
@@ -968,7 +967,7 @@ export default function NeurodiversityTacticalMuseum() {
                             className="hud-btn"
                             style={{ padding: '6px 12px', fontSize: '0.62rem', opacity: activeStoryPhase === 0 ? 0.3 : 1 }}
                           >
-                            [ ↩ PREVIOUS SOL ]
+                            [ ↩ PREVIOUS CHAPTER ]
                           </button>
                           <span style={{ fontSize: '0.6rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)' }}>
                             MEMOIR SEGMENT 0{activeStoryPhase + 1} / 05
@@ -979,21 +978,17 @@ export default function NeurodiversityTacticalMuseum() {
                             className="hud-btn"
                             style={{ padding: '6px 12px', fontSize: '0.62rem', opacity: activeStoryPhase === storyPhases.length - 1 ? 0.3 : 1 }}
                           >
-                            [ FORWARD SOL ➔ ]
+                            [ FORWARD CHAPTER ➔ ]
                           </button>
                         </div>
-
                       </div>
                     );
                   })()}
-
                 </div>
               </div>
             </div>
           );
-        })()}
-
-          {/* ====================================
+        })()}          {/* ====================================
               THE SYNAPTIC CONSTELLATION MAP
               ==================================== */}
           {activeSector === 'constellation' && (

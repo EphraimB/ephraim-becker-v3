@@ -1772,9 +1772,8 @@ export function ExhibitMemoirCrystalMap({ activePhase, setActivePhase, reduceMot
         <span style={styles.consoleTitle}>🌌 MEMOIR CHRONICLE DECK</span>
         <span style={styles.telemetryTag}>CHRONO_TABS_NOMINAL</span>
       </div>
-
       <p style={{ ...styles.exhibitDesc, marginBottom: '12px', fontSize: '0.74rem', color: '#8a9bb5', lineHeight: 1.45 }}>
-        Select a chronological Sol phase below to engage the interactive orientation visualizer:
+        Select a chronological Chapter phase below to engage the interactive orientation visualizer:
       </p>
 
       {/* Cybernetic Tabbed Memoir Slide Selector (Normal Ares City themed deck-tab-bar/btn inline) */}
@@ -1809,7 +1808,7 @@ export function ExhibitMemoirCrystalMap({ activePhase, setActivePhase, reduceMot
                 boxShadow: isActive ? '0 0 10px rgba(0, 255, 136, 0.25)' : 'inset 0 1px 3px rgba(255,255,255,0.02)'
               }}
             >
-              <span style={{ fontSize: '0.58rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>SOL {phase.num}</span>
+              <span style={{ fontSize: '0.58rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>CHAPTER {phase.num}</span>
               <span style={{ fontSize: '0.45rem', opacity: 0.7, textTransform: 'uppercase', marginTop: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%' }}>{phase.tabTitle}</span>
             </button>
           );

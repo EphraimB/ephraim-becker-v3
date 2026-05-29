@@ -1764,83 +1764,167 @@ export function ExhibitMartianBiosphere({ reduceMotion }) {
 // 📖 EXHIBIT 7: BECKER NARRATIVE MEMOIR CONSTELLATION MAP
 // ==========================================
 export function ExhibitMemoirCrystalMap({ activePhase, setActivePhase, reduceMotion }) {
-  const crystalCoordinates = exhibitData.memoirCrystalMap.coordinates;
+  const storyPhases = exhibitData.storyPhases;
 
   return (
     <div style={styles.consoleContainer}>
       <div style={styles.consoleHeader}>
-        <span style={styles.consoleTitle}>🌌 MEMOIR DOME CONSTELLATION</span>
-        <span style={styles.telemetryTag}>CHRONO_MAP_NOMINAL</span>
+        <span style={styles.consoleTitle}>🌌 MEMOIR CHRONICLE DECK</span>
+        <span style={styles.telemetryTag}>CHRONO_TABS_NOMINAL</span>
       </div>
 
-      <p style={{ ...styles.exhibitDesc, marginBottom: '10px' }}>
-        {exhibitData.memoirCrystalMap.desc}
+      <p style={{ ...styles.exhibitDesc, marginBottom: '12px', fontSize: '0.74rem', color: '#8a9bb5', lineHeight: 1.45 }}>
+        Select a chronological Sol phase below to engage the interactive orientation visualizer:
       </p>
 
-      <div style={styles.svgTelemetryBox}>
-        <svg viewBox="0 0 200 110" style={{ width: '100%', height: '100%', background: '#04060c', overflow: 'visible' }}>
-          {/* Constellation link wires */}
-          {crystalCoordinates.slice(0, -1).map((crystal, idx) => {
-            const nextCrystal = crystalCoordinates[idx + 1];
-            return (
-              <line
-                key={idx}
-                x1={crystal.x}
-                y1={crystal.y}
-                x2={nextCrystal.x}
-                y2={nextCrystal.y}
-                stroke={activePhase >= idx + 1 ? '#00ff88' : 'rgba(255,255,255,0.05)'}
-                strokeWidth={activePhase >= idx + 1 ? '1.5' : '0.5'}
-                style={{ transition: 'all 0.3s' }}
-              />
-            );
-          })}
+      {/* Cybernetic Tabbed Memoir Slide Selector (Normal Ares City themed deck-tab-bar/btn inline) */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(5, 1fr)',
+        gap: '6px',
+        marginBottom: '16px'
+      }}>
+        {storyPhases.map((phase) => {
+          const isActive = activePhase === phase.id;
+          return (
+            <button
+              key={phase.id}
+              onClick={() => setActivePhase(phase.id)}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                textAlign: 'center',
+                padding: '6px 2px',
+                fontFamily: 'monospace',
+                background: isActive ? 'rgba(0, 255, 136, 0.12)' : 'rgba(6, 9, 20, 0.65)',
+                border: isActive ? '1.5px solid #00ff88' : '1.5px solid rgba(255, 255, 255, 0.15)',
+                color: isActive ? '#00ff88' : 'rgba(255, 255, 255, 0.8)',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                outline: 'none',
+                minHeight: '48px',
+                boxShadow: isActive ? '0 0 10px rgba(0, 255, 136, 0.25)' : 'inset 0 1px 3px rgba(255,255,255,0.02)'
+              }}
+            >
+              <span style={{ fontSize: '0.58rem', fontWeight: 'bold', letterSpacing: '0.5px' }}>SOL {phase.num}</span>
+              <span style={{ fontSize: '0.45rem', opacity: 0.7, textTransform: 'uppercase', marginTop: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', width: '100%' }}>{phase.tabTitle}</span>
+            </button>
+          );
+        })}
+      </div>
 
-          {/* Interactive Memory Crystals */}
-          {crystalCoordinates.map(crystal => {
-            const isActive = activePhase === crystal.id;
-            const isVisited = activePhase >= crystal.id;
-            return (
-              <g key={crystal.id} style={{ cursor: 'pointer' }} onClick={() => setActivePhase(crystal.id)}>
-                {/* Glowing ring */}
-                <circle 
-                  cx={crystal.x} 
-                  cy={crystal.y} 
-                  r={isActive ? "10" : "6"} 
-                  fill="none" 
-                  stroke={isActive ? '#00ff88' : 'transparent'} 
-                  strokeWidth="0.8" 
-                  strokeDasharray="2 1"
-                />
-                
-                {/* Core diamond shape */}
-                <polygon 
-                  points={`${crystal.x},${crystal.y - (isActive ? 5.5 : 4)} ${crystal.x + (isActive ? 5.5 : 4)},${crystal.y} ${crystal.x},${crystal.y + (isActive ? 5.5 : 4)} ${crystal.x - (isActive ? 5.5 : 4)},${crystal.y}`}
-                  fill={isActive ? '#00ff88' : (isVisited ? '#00f0ff' : 'rgba(255,255,255,0.12)')} 
-                  style={{ transition: 'all 0.25s' }}
-                />
+      {/* Interactive Visualizer Box representing the active phase */}
+      <div style={{ ...styles.svgTelemetryBox, height: '180px' }}>
+        {activePhase === 0 && (
+          <svg viewBox="0 0 100 80" style={{ width: '100%', height: '100%', background: '#04060c' }}>
+            <rect x="18" y="15" width="18" height="18" rx="2" fill="none" stroke="#ffb300" strokeWidth="1.5">
+              {!reduceMotion && <animate attributeName="stroke" values="#ffb300;#00ff88;#ffb300" dur="2.5s" repeatCount="indefinite" />}
+              {!reduceMotion && <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" repeatCount="indefinite" />}
+            </rect>
+            <rect x="41" y="15" width="18" height="18" rx="2" fill="none" stroke="#ffb300" strokeWidth="1.5">
+              {!reduceMotion && <animate attributeName="stroke" values="#ffb300;#00ff88;#ffb300" dur="2.5s" begin="0.8s" repeatCount="indefinite" />}
+              {!reduceMotion && <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" begin="0.8s" repeatCount="indefinite" />}
+            </rect>
+            <rect x="64" y="15" width="18" height="18" rx="2" fill="none" stroke="#ffb300" strokeWidth="1.5">
+              {!reduceMotion && <animate attributeName="stroke" values="#ffb300;#00ff88;#ffb300" dur="2.5s" begin="1.6s" repeatCount="indefinite" />}
+              {!reduceMotion && <animate attributeName="opacity" values="0.4;1;0.4" dur="2.5s" begin="1.6s" repeatCount="indefinite" />}
+            </rect>
+            <line x1="20" y1="46" x2="80" y2="46" stroke="rgba(255,255,255,0.15)" strokeWidth="2" strokeLinecap="round" />
+            <line x1="20" y1="46" x2={reduceMotion ? "50" : "20"} y2="46" stroke="#ffb300" strokeWidth="2.5" strokeLinecap="round">
+              {!reduceMotion && <animate attributeName="x2" values="20;80;20" dur="4s" repeatCount="indefinite" />}
+            </line>
+            <circle cx={reduceMotion ? "50" : "20"} cy="46" r="3" fill="#ffb300" style={{ filter: 'drop-shadow(0 0 2px #ffb300)' }}>
+              {!reduceMotion && <animate attributeName="cx" values="20;80;20" dur="4s" repeatCount="indefinite" />}
+            </circle>
+            <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ ABA TRIAL METRIC ]</text>
+          </svg>
+        )}
 
-                <text 
-                  x={crystal.x} 
-                  y={crystal.y - 12} 
-                  fill={isActive ? '#00ff88' : 'rgba(255,255,255,0.4)'} 
-                  fontSize="4.5" 
-                  fontFamily="monospace" 
-                  textAnchor="middle" 
-                  fontWeight={isActive ? 'bold' : 'normal'}
-                >
-                  {crystal.label}
-                </text>
-              </g>
-            );
-          })}
+        {activePhase === 1 && (
+          <svg viewBox="0 0 100 80" style={{ width: '100%', height: '100%', background: '#04060c' }}>
+            <circle cx="20" cy="20" r="3" fill="rgba(255,255,255,0.15)" />
+            <circle cx="50" cy="15" r="3" fill="rgba(255,255,255,0.15)" />
+            <circle cx="80" cy="20" r="3" fill="rgba(255,255,255,0.15)" />
+            <circle cx="25" cy="45" r="3" fill="rgba(255,255,255,0.15)" />
+            <circle cx="75" cy="45" r="3" fill="rgba(255,255,255,0.15)" />
+            <circle cx="50" cy="42" r="5.5" fill="#00f0ff" style={{ animation: reduceMotion ? 'none' : 'shiver-node 0.4s infinite', filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
+            <path d="M 38,32 A 13,13 0 0,1 62,32" fill="none" stroke="#ffb300" strokeWidth="1.5" strokeDasharray="3 1.5">
+              {!reduceMotion && <animateTransform attributeName="transform" type="rotate" from="0 50 42" to="360 50 42" dur="10s" repeatCount="indefinite" />}
+            </path>
+            <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ FACADE CIRCLE // PARA SHIELD ]</text>
+          </svg>
+        )}
 
-          {/* Readout label inside starmap */}
-          <rect x="35" y="93" width="130" height="12" rx="3" fill="rgba(0, 240, 255, 0.03)" stroke="rgba(0,240,255,0.12)" strokeWidth="0.5" />
-          <text x="100" y="101" fill="#00f0ff" fontSize="4.5" fontFamily="monospace" textAnchor="middle">
-            {`COORDS ACTIVE: [${crystalCoordinates[activePhase].short.toUpperCase()}]`}
-          </text>
-        </svg>
+        {activePhase === 2 && (
+          <svg viewBox="0 0 100 80" style={{ width: '100%', height: '100%', background: '#04060c' }}>
+            <rect x="0" y="0" width="100" height="80" style={{ animation: reduceMotion ? 'none' : 'pulse-red-alert 3s infinite' }} />
+            <circle cx="25" cy="25" r="8" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.8" />
+            <circle cx="25" cy="25" r="2.5" fill="#ffb300" />
+            <line x1="25" y1="25" x2="48" y2="44" stroke="#ffb300" strokeWidth="0.8" strokeDasharray="1.5 1.5" />
+            <circle cx="75" cy="25" r="8" fill="none" stroke="rgba(234, 67, 53, 0.15)" strokeWidth="0.8" />
+            <circle cx="75" cy="25" r="3.5" fill="#ea4335" style={{ filter: 'drop-shadow(0 0 3px #ea4335)' }} />
+            <path d="M 70,29 Q 60,40 52,43" fill="none" stroke="#ea4335" strokeWidth="1" strokeDasharray="2 2">
+              {!reduceMotion && <animate attributeName="stroke-dashoffset" values="0;5" dur="1s" repeatCount="indefinite" />}
+            </path>
+            <circle cx="50" cy="46" r="4.5" fill="#00f0ff" style={{ animation: reduceMotion ? 'none' : 'shiver-node 0.12s infinite', filter: 'drop-shadow(0 0 2.5px #00f0ff)' }} />
+            <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ HARASSMENT VECTOR COLLISION ]</text>
+          </svg>
+        )}
+
+        {activePhase === 3 && (
+          <svg viewBox="0 0 100 80" style={{ width: '100%', height: '100%', background: '#04060c' }}>
+            <rect x="30" y="16" width="40" height="12" rx="2" fill="none" stroke="#ea4335" strokeWidth="1.5" />
+            <rect x="70" y="20" width="2" height="4" rx="0.5" fill="#ea4335" />
+            <rect x="33" y="19" width="6" height="6" rx="0.5" fill="#ea4335" style={{ animation: reduceMotion ? 'none' : 'pulse-amber-warn 1.5s infinite' }} />
+            <circle cx="30" cy="48" r="8" fill="none" stroke="#ea4335" strokeWidth="0.8" strokeDasharray="2 2" />
+            <circle cx="70" cy="48" r="8" fill="none" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="2 2" />
+            <path d="M 38,48 Q 50,38 62,48" fill="none" stroke="#ea4335" strokeWidth="1" strokeDasharray="2 1">
+              {!reduceMotion && <animate attributeName="stroke-dashoffset" values="0;6" dur="1.2s" repeatCount="indefinite" />}
+            </path>
+            <line x1="30" y1="48" x2="70" y2="48" stroke="#ea4335" strokeWidth="1" strokeDasharray="3 3" />
+            <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ BURNOUT CRASH // MISMATCH ]</text>
+          </svg>
+        )}
+
+        {activePhase === 4 && (
+          <svg viewBox="0 0 100 80" style={{ width: '100%', height: '100%', background: '#04060c' }}>
+            <circle cx="50" cy="35" r="5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 5px #00ff88)' }} />
+            <circle cx="20" cy="20" r="3" fill="#00f0ff" />
+            <circle cx="80" cy="20" r="3" fill="#00f0ff" />
+            <circle cx="25" cy="50" r="3" fill="#00f0ff" />
+            <circle cx="75" cy="50" r="3" fill="#00f0ff" />
+            <line x1="50" y1="35" x2="20" y2="20" stroke="#00ff88" strokeWidth="1" strokeDasharray="2 2">
+              {!reduceMotion && <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite" />}
+            </line>
+            <line x1="50" y1="35" x2="80" y2="20" stroke="#00ff88" strokeWidth="1" strokeDasharray="2 2">
+              {!reduceMotion && <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite" />}
+            </line>
+            <line x1="50" y1="35" x2="25" y2="50" stroke="#00ff88" strokeWidth="1" strokeDasharray="2 2">
+              {!reduceMotion && <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite" />}
+            </line>
+            <line x1="50" y1="35" x2="75" y2="50" stroke="#00ff88" strokeWidth="1" strokeDasharray="2 2">
+              {!reduceMotion && <animate attributeName="stroke-dashoffset" values="0;-10" dur="2s" repeatCount="indefinite" />}
+            </line>
+            <circle cx="50" cy="35" r="14" fill="none" stroke="#00ff88" strokeWidth="0.8" style={{ animation: reduceMotion ? 'none' : 'pulse-signal-ring 2s infinite' }} />
+            <text x="50" y="70" fill="#00ff88" fontSize="4.5" fontFamily="monospace" textAnchor="middle">[ SYNAPSE SYNC NOMINAL ]</text>
+          </svg>
+        )}
+      </div>
+
+      <div style={{
+        marginTop: '10px',
+        padding: '6px 12px',
+        background: 'rgba(0, 240, 255, 0.03)',
+        border: '0.5px solid rgba(0,240,255,0.12)',
+        borderRadius: '6px',
+        textAlign: 'center'
+      }}>
+        <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00f0ff', letterSpacing: '0.5px' }}>
+          {`COORDS ACTIVE: [${storyPhases[activePhase].tabTitle.toUpperCase()}]`}
+        </span>
       </div>
     </div>
   );

@@ -33,11 +33,8 @@ export default function NeurodiversityTacticalMuseum() {
   const [transitState, setTransitState] = useState('slide-active');
   const [activeStarNode, setActiveStarNode] = useState(null); // Selected Lexicon Term object
   
-  // Audio Narration states
-  const [isNarrating, setIsNarrating] = useState(false);
-  const [narrationProgress, setNarrationProgress] = useState(0);
-  const [narrationSpeed, setNarrationSpeed] = useState(1);
-  const speechUtteranceRef = useRef(null);
+  // Completed Mission Tasks states
+  const [completedTasks, setCompletedTasks] = useState({});
 
   // Passport Pledge States
   const [pledges, setPledges] = useState({
@@ -80,59 +77,13 @@ export default function NeurodiversityTacticalMuseum() {
     }
   };
 
-  // Web Speech Synthesis Audio Narration Controls
-  const toggleNarration = (textToSpeak) => {
-    if (typeof window === 'undefined') return;
-
-    if (isNarrating) {
-      window.speechSynthesis.cancel();
-      setIsNarrating(false);
-      return;
-    }
-
-    // Clean up HTML tags and get clean text
-    const cleanText = textToSpeak.replace(/<[^>]*>/g, '');
-    
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.rate = narrationSpeed;
-    
-    const voices = window.speechSynthesis.getVoices();
-    const synthVoice = voices.find(v => v.name.includes('Google US English') || v.name.includes('Natural') || v.lang.startsWith('en'));
-    if (synthVoice) utterance.voice = synthVoice;
-
-    utterance.onend = () => {
-      setIsNarrating(false);
-      setNarrationProgress(0);
-    };
-
-    utterance.onboundary = (event) => {
-      if (event.name === 'word') {
-        const charIndex = event.charIndex;
-        const percent = Math.min(100, Math.round((charIndex / cleanText.length) * 100));
-        setNarrationProgress(percent);
-      }
-    };
-
-    speechUtteranceRef.current = utterance;
-    setIsNarrating(true);
-    window.speechSynthesis.speak(utterance);
+  const toggleTask = (exhibitId, taskIndex) => {
+    const key = `${exhibitId}_${taskIndex}`;
+    setCompletedTasks(prev => ({
+      ...prev,
+      [key]: !prev[key]
+    }));
   };
-
-  const stopNarration = () => {
-    if (typeof window !== 'undefined') {
-      window.speechSynthesis.cancel();
-      setIsNarrating(false);
-      setNarrationProgress(0);
-    }
-  };
-
-  useEffect(() => {
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.speechSynthesis.cancel();
-      }
-    };
-  }, []);
 
   const togglePledge = (key) => {
     setPledges(prev => ({
@@ -148,34 +99,7 @@ export default function NeurodiversityTacticalMuseum() {
     setPassportGranted(true);
   };
 
-  // Dynamic SVG Waveform graphic helper
-  const renderWaveformSvg = () => {
-    if (!isNarrating) {
-      return (
-        <svg viewBox="0 0 100 20" width="100%" height="20px" opacity="0.3">
-          <line x1="5" y1="10" x2="95" y2="10" stroke="#00ff88" strokeWidth="1" strokeDasharray="3 3" />
-        </svg>
-      );
-    }
-    return (
-      <svg viewBox="0 0 100 20" width="100%" height="20px">
-        <path 
-          d="M 5,10 Q 15,2 25,10 T 45,10 T 65,10 T 85,10 T 95,10" 
-          fill="none" 
-          stroke="#00ff88" 
-          strokeWidth="1.2"
-        >
-          <animate attributeName="d" 
-            values="M 5,10 Q 15,2 25,10 T 45,10 T 65,10 T 85,10 T 95,10;
-                    M 5,10 Q 15,18 25,10 T 45,10 T 65,10 T 85,10 T 95,10;
-                    M 5,10 Q 15,2 25,10 T 45,10 T 65,10 T 85,10 T 95,10" 
-            dur="0.8s" 
-            repeatCount="indefinite" 
-          />
-        </path>
-      </svg>
-    );
-  };
+
 
   // 5 Refined Exhibits definitions
   const getExhibitDesc = (id) => {
@@ -332,81 +256,7 @@ export default function NeurodiversityTacticalMuseum() {
           min-height: 0;
           height: 100%;
         }
-        .narration-control-panel {
-          background: rgba(4, 6, 12, 0.7);
-          border-width: 1.5px;
-          border-style: solid;
-          borderColor: rgba(255,255,255,0.06);
-          border-radius: 12px;
-          padding: 12px;
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-        .audio-wave-box {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          background: rgba(0, 0, 0, 0.4);
-          border-width: 1px;
-          border-style: solid;
-          borderColor: rgba(255,255,255,0.04);
-          border-radius: 6px;
-          padding: 6px 12px;
-        }
-        .audio-wave-label {
-          font-family: monospace;
-          fontSize: 0.58rem;
-          color: rgba(255,255,255,0.45);
-          letter-spacing: 1px;
-        }
-        .narration-action-row {
-          display: flex;
-          gap: 8px;
-        }
-        .audio-deck-btn {
-          flex: 1;
-          padding: 6px 10px;
-          font-family: monospace;
-          font-size: 0.65rem;
-          background: rgba(255,255,255,0.03);
-          border-width: 1px;
-          border-style: solid;
-          borderColor: rgba(255,255,255,0.1);
-          color: #fff;
-          border-radius: 6px;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          text-align: center;
-          outline: none;
-        }
-        .audio-deck-btn:hover {
-          background: rgba(0, 255, 136, 0.08);
-          borderColor: #00ff88;
-          color: #00ff88;
-        }
-        .audio-deck-btn.active {
-          background: rgba(0, 255, 136, 0.15);
-          borderColor: #00ff88;
-          color: #00ff88;
-          font-weight: bold;
-        }
-        .speed-slider-row {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          font-family: monospace;
-          font-size: 0.58rem;
-          color: rgba(255,255,255,0.5);
-        }
-        .audio-speed-slider {
-          flex: 1;
-          max-width: 100px;
-          outline: none;
-          height: 3px;
-          cursor: pointer;
-          accent-color: #00ff88;
-        }
+
         .story-text-body {
           font-size: 0.82rem;
           color: #f2f6fc;
@@ -795,6 +645,75 @@ export default function NeurodiversityTacticalMuseum() {
                         {currentExhibit.desc}
                       </p>
 
+                      {/* Colony Orientation Mission Tasks Checklist */}
+                      {currentExhibit.missionTasks && currentExhibit.missionTasks.length > 0 && (
+                        <div style={{ 
+                          marginTop: '12px', 
+                          background: 'rgba(0, 255, 136, 0.02)', 
+                          border: '1.5px dashed rgba(0, 255, 136, 0.25)', 
+                          borderRadius: '8px', 
+                          padding: '12px',
+                          display: 'flex',
+                          flexDirection: 'column',
+                          gap: '8px',
+                          boxSizing: 'border-box'
+                        }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(0, 255, 136, 0.15)', paddingBottom: '6px', marginBottom: '4px' }}>
+                            <span style={{ fontSize: '0.6rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold', letterSpacing: '1px' }}>
+                              🛰️ CITIZEN ORIENTATION MISSION TASKS
+                            </span>
+                            <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.5)' }}>
+                              PROGRESS: {
+                                currentExhibit.missionTasks.filter((_, idx) => completedTasks[`${currentExhibit.id}_${idx}`]).length
+                              } / {currentExhibit.missionTasks.length} SECURED
+                            </span>
+                          </div>
+                          
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                            {currentExhibit.missionTasks.map((task, idx) => {
+                              const isChecked = !!completedTasks[`${currentExhibit.id}_${idx}`];
+                              return (
+                                <div 
+                                  key={idx}
+                                  onClick={() => toggleTask(currentExhibit.id, idx)}
+                                  className={`protocol-toggle-badge ${isChecked ? 'active' : ''}`}
+                                  style={{ 
+                                    padding: '8px 10px', 
+                                    display: 'flex', 
+                                    alignItems: 'center', 
+                                    gap: '10px', 
+                                    cursor: 'pointer',
+                                    transition: 'all 0.2s',
+                                    border: isChecked ? '1.5px solid #00ff88' : '1px solid rgba(255,255,255,0.06)',
+                                    background: isChecked ? 'rgba(0, 255, 136, 0.06)' : 'rgba(0,0,0,0.2)',
+                                    borderRadius: '6px'
+                                  }}
+                                >
+                                  <span style={{ 
+                                    fontSize: '0.72rem',
+                                    fontFamily: 'monospace',
+                                    color: isChecked ? '#00ff88' : 'rgba(255,255,255,0.3)',
+                                    fontWeight: 'bold'
+                                  }}>
+                                    {isChecked ? '[ ☑ ]' : '[ ☐ ]'}
+                                  </span>
+                                  <span style={{ 
+                                    fontSize: '0.68rem', 
+                                    fontFamily: 'monospace',
+                                    color: isChecked ? '#fff' : 'rgba(255,255,255,0.7)',
+                                    textDecoration: isChecked ? 'line-through' : 'none',
+                                    opacity: isChecked ? 0.75 : 1,
+                                    lineHeight: 1.3
+                                  }}>
+                                    {task}
+                                  </span>
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+
                       {/* Standard exhibit text body block (adapted to selected lens) */}
                       {!isCustomStory && !isCustomRealLife && !isCustomMatrix && !isCustomAccommodation && !isCustomFuture && (
                         <div style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px', padding: '10px', marginTop: '6px' }}>
@@ -863,54 +782,14 @@ export default function NeurodiversityTacticalMuseum() {
                         </div>
                       )}
 
-                      {/* Exhibit 7 dedicated Narration Control panel */}
-                      {isCustomStory && (
-                        <div style={{ background: 'rgba(0, 255, 136, 0.02)', border: '1px solid rgba(0, 255, 136, 0.08)', borderRadius: '8px', padding: '10px', marginTop: '6px' }}>
-                          <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.5px', display: 'block', marginBottom: '4px' }}>
-                            // SUBSPACE TRANSMISSION FEED AUDIO CONTROLLER
-                          </span>
-                          <div className="narration-control-panel" style={{ padding: '8px', background: 'rgba(0,0,0,0.3)', border: 'none' }}>
-                            <div className="audio-wave-box" style={{ padding: '4px 8px' }}>
-                              <span className="audio-wave-label" style={{ fontSize: '0.52rem' }}>TRANSMISSION FREQUENCY STATUS</span>
-                              {renderWaveformSvg()}
-                            </div>
-                            
-                            <div className="narration-action-row" style={{ marginTop: '6px' }}>
-                              <button 
-                                onClick={() => toggleNarration(storyPhases[activeStoryPhase].storyText)} 
-                                className={`audio-deck-btn ${isNarrating ? 'active' : ''}`}
-                                style={{ padding: '4px 6px', fontSize: '0.6rem' }}
-                              >
-                                {isNarrating ? '⏸ PAUSE FREQ' : '▶ TRANSMIT NARRATION'}
-                              </button>
-                              <button onClick={stopNarration} className="audio-deck-btn" style={{ padding: '4px 6px', fontSize: '0.6rem' }}>
-                                ⏹ CUT OFF
-                              </button>
-                            </div>
 
-                            <div className="speed-slider-row" style={{ marginTop: '6px' }}>
-                              <span style={{ fontSize: '0.58rem' }}>SPEED: {narrationSpeed}x</span>
-                              <input 
-                                type="range" 
-                                min="0.5" 
-                                max="2" 
-                                step="0.1" 
-                                value={narrationSpeed} 
-                                onChange={(e) => setNarrationSpeed(Number(e.target.value))} 
-                                className="audio-speed-slider"
-                                style={{ height: '3px' }}
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      )}
                     </div>
 
                     {/* Dedicated Bottom Panel for Navigation, separated by a dashed divider */}
                     <div style={{ borderTop: '1px dashed rgba(255, 255, 255, 0.08)', paddingTop: '10px', flexShrink: 0 }}>
                       <div className="gallery-nav-buttons-deck" style={{ margin: 0, background: 'transparent', border: 'none', padding: 0 }}>
                         <button 
-                          onClick={() => { stopUtterance(); setActiveExhibitIndex(prev => Math.max(0, prev - 1)); }}
+                          onClick={() => { setActiveExhibitIndex(prev => Math.max(0, prev - 1)); }}
                           disabled={activeExhibitIndex === 0}
                           className="gallery-arrow-btn"
                           style={{ padding: '4px 10px', fontSize: '0.64rem' }}
@@ -921,7 +800,7 @@ export default function NeurodiversityTacticalMuseum() {
                           [ STATION 0{activeExhibitIndex + 1} / 0{exhibits.length} ]
                         </span>
                         <button 
-                          onClick={() => { stopUtterance(); setActiveExhibitIndex(prev => Math.min(exhibits.length - 1, prev + 1)); }}
+                          onClick={() => { setActiveExhibitIndex(prev => Math.min(exhibits.length - 1, prev + 1)); }}
                           disabled={activeExhibitIndex === exhibits.length - 1}
                           className="gallery-arrow-btn"
                           style={{ padding: '4px 10px', fontSize: '0.64rem' }}
@@ -1054,8 +933,6 @@ export default function NeurodiversityTacticalMuseum() {
                           </div>
 
                           <p className="story-text-body" style={{
-                            transition: 'color 0.4s ease',
-                            textShadow: isNarrating ? '0 0 3px rgba(0,255,136,0.15)' : 'none',
                             fontSize: '0.76rem',
                             lineHeight: '1.45',
                             margin: 0
@@ -1084,10 +961,9 @@ export default function NeurodiversityTacticalMuseum() {
                           )}
                         </div>
 
-                        {/* Narrative timeline navigation */}
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                           <button
-                            onClick={() => { stopUtterance(); setActiveStoryPhase(prev => Math.max(0, prev - 1)); }}
+                            onClick={() => { setActiveStoryPhase(prev => Math.max(0, prev - 1)); }}
                             disabled={activeStoryPhase === 0}
                             className="hud-btn"
                             style={{ padding: '6px 12px', fontSize: '0.62rem', opacity: activeStoryPhase === 0 ? 0.3 : 1 }}
@@ -1098,7 +974,7 @@ export default function NeurodiversityTacticalMuseum() {
                             MEMOIR SEGMENT 0{activeStoryPhase + 1} / 05
                           </span>
                           <button
-                            onClick={() => { stopUtterance(); setActiveStoryPhase(prev => Math.min(storyPhases.length - 1, prev + 1)); }}
+                            onClick={() => { setActiveStoryPhase(prev => Math.min(storyPhases.length - 1, prev + 1)); }}
                             disabled={activeStoryPhase === storyPhases.length - 1}
                             className="hud-btn"
                             style={{ padding: '6px 12px', fontSize: '0.62rem', opacity: activeStoryPhase === storyPhases.length - 1 ? 0.3 : 1 }}
@@ -1458,12 +1334,7 @@ export default function NeurodiversityTacticalMuseum() {
   );
 }
 
-// Cancel speech helper on page index shift
-function stopUtterance() {
-  if (typeof window !== 'undefined') {
-    window.speechSynthesis.cancel();
-  }
-}
+
 
 // Dynamic styles variables specifically for Exhibit 5 story tabs
 const styles = {

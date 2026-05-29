@@ -7,11 +7,11 @@ const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
   '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
   '/park': { x: 150, y: -100, name: 'ARES CITY PARK' },
-  '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - WELCOME PLAZA' },
-  '/neurodiversity/comms-grove': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - DIALOGUE BRIDGES' },
-  '/neurodiversity/sensory-garden': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - SENSORY GARDEN' },
-  '/neurodiversity/lexicon-pavilion': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - LEXICON PAVILION' },
-  '/neurodiversity/meetup-campfire': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - COMMUNITY HEARTH' },
+  '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - WELCOME PLAZA' },
+  '/neurodiversity/comms-grove': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - DIALOGUE BRIDGES' },
+  '/neurodiversity/sensory-garden': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - SENSORY GARDEN' },
+  '/neurodiversity/lexicon-pavilion': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - LEXICON PAVILION' },
+  '/neurodiversity/meetup-campfire': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - COMMUNITY HEARTH' },
   'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }
 };
 
@@ -86,7 +86,7 @@ export default function CityGridMap({ isDrawer = false }) {
     {
       id: 'neurodiversity',
       label: 'SECTOR 02 // ADVOCACY',
-      title: pathname.startsWith('/neurodiversity') ? 'Ares City Park - Neurodiversity District' : 'Ares City Park',
+      title: pathname.startsWith('/neurodiversity') ? 'Ares City Park - Neurodiversity Lawn' : 'Ares City Park',
       route: '/park',
       color: '#00ff88',
       rgb: '0, 255, 136',
@@ -449,7 +449,7 @@ export default function CityGridMap({ isDrawer = false }) {
                     {pathname === '/park' && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
                   </div>
 
-                  {/* Item 2: Collapsible Neurodiversity District Collapsible Folder */}
+                  {/* Item 2: Collapsible Neurodiversity Lawn Collapsible Folder */}
                   <div
                     onClick={() => {
                       setIsDistrictExpanded(!isDistrictExpanded);
@@ -470,7 +470,7 @@ export default function CityGridMap({ isDrawer = false }) {
                       fontWeight: 'bold'
                     }}
                   >
-                    <span>{isDistrictExpanded ? '▼' : '▶'} ∞ Neurodiversity District</span>
+                    <span>{isDistrictExpanded ? '▼' : '▶'} ∞ Neurodiversity Lawn</span>
                     <span style={{ fontSize: '0.52rem', color: 'rgba(0, 255, 136, 0.6)' }}>[ PRIDE HUB ]</span>
                   </div>
 

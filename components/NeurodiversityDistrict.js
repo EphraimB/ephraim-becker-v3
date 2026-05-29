@@ -381,14 +381,14 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
               {/* Soft Translucent Welcome Signage Plaque */}
               <div className="bubbly-panel" style={{ textAlign: 'center', padding: '24px 30px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '3px', display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
-                  // DISTRICT WELCOME // PORTAL DIRECTORY
+                  // LAWN WELCOME // PORTAL DIRECTORY
                 </span>
                 <h1 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.4rem', fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '14px' }}>
                   Welcome Plaza
                 </h1>
                 
                 <div style={{ fontSize: '0.8rem', color: '#8a9bb5', lineHeight: '1.65', margin: '0 auto', maxWidth: '460px', textAlign: 'center', fontFamily: 'monospace' }}>
-                  Welcome to the entryway plaza of the Neurodiversity District. This park biome is designed for sensory comfort, clear communication, and community connection.
+                  Welcome to the entryway plaza of the Neurodiversity Lawn. This park biome is designed for sensory comfort, clear communication, and community connection.
                   <br/><br/>
                   Select a pathway node below to explore our shared spaces.
                 </div>

@@ -28,24 +28,24 @@ export default function ClientLayoutWrapper({ children }) {
     } else {
       if (pathname === '/neurodiversity/sensory-garden') {
         bgImage = '/assets/images/backgrounds/sensory-garden.png';
-        hudSectorName = 'Ares City Park - Neurodiversity District - Sensory Garden';
-        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - SENSORY GARDEN';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Sensory Garden';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - SENSORY GARDEN';
       } else if (pathname === '/neurodiversity/comms-grove') {
         bgImage = '/assets/images/backgrounds/communication-grove.png';
-        hudSectorName = 'Ares City Park - Neurodiversity District - Dialogue Bridges';
-        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - DIALOGUE BRIDGES';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Dialogue Bridges';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - DIALOGUE BRIDGES';
       } else if (pathname === '/neurodiversity/lexicon-pavilion') {
         bgImage = '/assets/images/backgrounds/mars-dome-park.png';
-        hudSectorName = 'Ares City Park - Neurodiversity District - Lexicon Pavilion';
-        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - LEXICON PAVILION';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Lexicon Pavilion';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - LEXICON PAVILION';
       } else if (pathname === '/neurodiversity/meetup-campfire') {
         bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
-        hudSectorName = 'Ares City Park - Neurodiversity District - Community Hearth';
-        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - COMMUNITY HEARTH';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Community Hearth';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - COMMUNITY HEARTH';
       } else {
         bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
-        hudSectorName = 'Ares City Park - Neurodiversity District - Welcome Plaza';
-        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - WELCOME PLAZA';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Welcome Plaza';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - WELCOME PLAZA';
       }
     }
   }

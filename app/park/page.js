@@ -73,7 +73,7 @@ export default function ParkPlazaLandingPage() {
     },
     {
       id: 'neurodiversity',
-      title: '🧠 Neurodiversity District',
+      title: '🧠 Neurodiversity Lawn',
       subtitle: 'Region-2 Pride Biome',
       route: '/neurodiversity',
       desc: 'A public park biome designed for sensory comfort, clear communication, and community connection.',

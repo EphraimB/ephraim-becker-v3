@@ -251,6 +251,8 @@ export default function CityGridMap({ isDrawer = false }) {
         flexDirection: 'column',
         width: '100%',
         height: '100%',
+        flex: 1,
+        minHeight: 0,
         background: '#020306',
         color: '#ffffff',
         position: 'relative',
@@ -304,7 +306,7 @@ export default function CityGridMap({ isDrawer = false }) {
         style={{ 
           flex: 1, 
           overflowY: 'auto', 
-          padding: isDrawer ? '12px 16px 20px 16px' : '16px 20px 24px 20px', 
+          padding: isDrawer ? '12px 16px 40px 16px' : '16px 20px 24px 20px', 
           display: 'flex', 
           flexDirection: 'column', 
           gap: '12px',

@@ -147,7 +147,9 @@ export default function ClientLayoutWrapper({ children }) {
         </div>
 
         {/* Modular Map Canvas */}
-        <CityGridMap isDrawer={true} />
+        <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+          <CityGridMap isDrawer={true} />
+        </div>
 
       </div>
 

@@ -19,16 +19,34 @@ export default function ClientLayoutWrapper({ children }) {
     currentTheme = 'metropolis';
     hudSectorName = 'Portfolio Archives';
     currentLocationName = 'PORTFOLIO';
-  } else if (pathname === '/park' || pathname === '/neurodiversity') {
+  } else if (pathname === '/park' || pathname.startsWith('/neurodiversity')) {
     currentTheme = 'biosphere';
-    if (pathname === '/neurodiversity') {
-      bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
-      hudSectorName = 'Ares City Park - Neurodiversity Meetup & Advocacy';
-      currentLocationName = 'ARES CITY PARK - NEURODIVERSITY MEETUP & ADVOCACY';
-    } else {
+    if (pathname === '/park') {
       bgImage = '/assets/images/backgrounds/mars-dome-park.png';
-      hudSectorName = 'Ares City Park';
-      currentLocationName = 'ARES CITY PARK';
+      hudSectorName = 'Ares City Park - Entrance';
+      currentLocationName = 'ARES CITY PARK - CENTRAL ENTRANCE';
+    } else {
+      if (pathname === '/neurodiversity/sensory-garden') {
+        bgImage = '/assets/images/backgrounds/sensory-garden.png';
+        hudSectorName = 'Ares City Park - Neurodiversity District - Sensory Garden';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - SENSORY GARDEN';
+      } else if (pathname === '/neurodiversity/communication-grove') {
+        bgImage = '/assets/images/backgrounds/communication-grove.png';
+        hudSectorName = 'Ares City Park - Neurodiversity District - Communication Grove';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - COMMUNICATION GROVE';
+      } else if (pathname === '/neurodiversity/lexicon-pavilion') {
+        bgImage = '/assets/images/backgrounds/mars-dome-park.png';
+        hudSectorName = 'Ares City Park - Neurodiversity District - Lexicon Pavilion';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - LEXICON PAVILION';
+      } else if (pathname === '/neurodiversity/meetup') {
+        bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
+        hudSectorName = 'Ares City Park - Neurodiversity District - Neurodiversity Meetup & Advocacy';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - MEETUP & ADVOCACY';
+      } else {
+        bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
+        hudSectorName = 'Ares City Park - Neurodiversity District - Entrance';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - DISTRICT PLAZA';
+      }
     }
   }
 
@@ -38,13 +56,20 @@ export default function ClientLayoutWrapper({ children }) {
     setMapDrawerOpen(false);
   }, [pathname]);
 
-  // Parse location name into primary and sub-location for stacked map styling
+  // Parse location name into primary, middle, and sub-location for stacked map styling
   let primaryLoc = currentLocationName;
+  let middleLoc = '';
   let subLoc = '';
   if (currentLocationName.includes(' - ')) {
     const parts = currentLocationName.split(' - ');
-    primaryLoc = parts[0];
-    subLoc = parts[1];
+    if (parts.length === 3) {
+      primaryLoc = parts[0];
+      middleLoc = parts[1];
+      subLoc = parts[2];
+    } else {
+      primaryLoc = parts[0];
+      subLoc = parts[1];
+    }
   }
 
   return (
@@ -78,6 +103,17 @@ export default function ClientLayoutWrapper({ children }) {
         <span className="locator-pulse-light"></span>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', flex: 1 }}>
           <span className="locator-location-name">📍 {primaryLoc}</span>
+          {middleLoc && (
+            <span className="locator-middle-name" style={{
+              fontSize: '0.52rem',
+              fontFamily: 'monospace',
+              color: '#ff9100',
+              opacity: 0.8,
+              letterSpacing: '0.5px'
+            }}>
+              ↳ {middleLoc}
+            </span>
+          )}
           {subLoc && (
             <span className="locator-sub-name">
               [ {subLoc} ]

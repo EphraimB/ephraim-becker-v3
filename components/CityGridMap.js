@@ -7,7 +7,11 @@ const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
   '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
   '/park': { x: 150, y: -100, name: 'ARES CITY PARK' },
-  '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY MEETUP & ADVOCACY' },
+  '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT' },
+  '/neurodiversity/communication-grove': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - COMMUNICATION GROVE' },
+  '/neurodiversity/sensory-garden': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - SENSORY GARDEN' },
+  '/neurodiversity/lexicon-pavilion': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - LEXICON PAVILION' },
+  '/neurodiversity/meetup': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - MEETUP & ADVOCACY' },
   'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }
 };
 
@@ -16,6 +20,7 @@ export default function CityGridMap({ isDrawer = false }) {
   const pathname = usePathname();
   const [mapHoverNode, setMapHoverNode] = useState(null);
   const [academicSyncActive, setAcademicSyncActive] = useState(false);
+  const [isDistrictExpanded, setIsDistrictExpanded] = useState(true);
 
   // Helper to check if a route is currently active
   const isRouteActive = (route) => pathname === route;
@@ -34,6 +39,10 @@ export default function CityGridMap({ isDrawer = false }) {
     const to = COORDS[toPathOrKey] || COORDS['/'];
     
     if (fromPath === toPathOrKey) {
+      return '[📍 CURRENT SECTOR / ACTIVE NEXUS]';
+    }
+    
+    if (toPathOrKey === '/park' && (fromPath === '/park' || fromPath.startsWith('/neurodiversity'))) {
       return '[📍 CURRENT SECTOR / ACTIVE NEXUS]';
     }
     
@@ -77,7 +86,7 @@ export default function CityGridMap({ isDrawer = false }) {
     {
       id: 'neurodiversity',
       label: 'SECTOR 02 // ADVOCACY',
-      title: pathname === '/neurodiversity' ? 'Ares City Park - Neurodiversity Meetup & Advocacy' : 'Ares City Park',
+      title: pathname.startsWith('/neurodiversity') ? 'Ares City Park - Neurodiversity District' : 'Ares City Park',
       route: '/park',
       color: '#00ff88',
       rgb: '0, 255, 136',
@@ -311,7 +320,7 @@ export default function CityGridMap({ isDrawer = false }) {
           const isCurrentActive = isAcad 
             ? academicSyncActive 
             : (sector.id === 'neurodiversity' 
-                ? (pathname === '/park' || pathname === '/neurodiversity') 
+                ? (pathname === '/park' || pathname.startsWith('/neurodiversity')) 
                 : isRouteActive(sector.route));
 
           return (
@@ -430,6 +439,7 @@ export default function CityGridMap({ isDrawer = false }) {
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
+                      cursor: 'pointer',
                       transition: 'all 0.2s'
                     }}
                   >
@@ -437,28 +447,70 @@ export default function CityGridMap({ isDrawer = false }) {
                     {pathname === '/park' && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
                   </div>
 
-                  {/* Item 2: Advocacy Meetup Grove */}
+                  {/* Item 2: Collapsible Neurodiversity District Collapsible Folder */}
                   <div
                     onClick={() => {
-                      handleTeleport('/neurodiversity');
+                      setIsDistrictExpanded(!isDistrictExpanded);
                     }}
                     style={{
                       padding: '4px 8px',
                       fontSize: '0.65rem',
                       fontFamily: 'monospace',
-                      background: pathname === '/neurodiversity' ? 'rgba(0, 255, 136, 0.1)' : 'rgba(0,0,0,0.3)',
-                      border: `1px solid ${pathname === '/neurodiversity' ? '#00ff88' : 'rgba(255,255,255,0.08)'}`,
+                      background: pathname.startsWith('/neurodiversity') ? 'rgba(0, 255, 136, 0.08)' : 'rgba(0,0,0,0.3)',
+                      border: `1px solid ${pathname.startsWith('/neurodiversity') ? '#00ff88' : 'rgba(255,255,255,0.08)'}`,
                       borderRadius: '4px',
-                      color: pathname === '/neurodiversity' ? '#00ff88' : 'rgba(255,255,255,0.7)',
+                      color: '#00ff88',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
-                      transition: 'all 0.2s'
+                      cursor: 'pointer',
+                      transition: 'all 0.2s',
+                      fontWeight: 'bold'
                     }}
                   >
-                    <span>📍 Neurodiversity Meetup & Advocacy</span>
-                    {pathname === '/neurodiversity' && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
+                    <span>{isDistrictExpanded ? '▼' : '▶'} ∞ Neurodiversity District</span>
+                    <span style={{ fontSize: '0.52rem', color: 'rgba(0, 255, 136, 0.6)' }}>[ PRIDE HUB ]</span>
                   </div>
+
+                  {/* Nested district subsectors */}
+                  {isDistrictExpanded && (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', paddingLeft: '12px', borderLeft: '1px dashed rgba(0, 255, 136, 0.2)' }}>
+                      {[
+                        { label: '🛰️ District Plaza Hub', route: '/neurodiversity' },
+                        { label: '📡 Communication Grove', route: '/neurodiversity/communication-grove' },
+                        { label: '🌿 Sensory Garden', route: '/neurodiversity/sensory-garden' },
+                        { label: '🌌 Lexicon Pavilion', route: '/neurodiversity/lexicon-pavilion' },
+                        { label: '👥 Meetup & Advocacy Spot', route: '/neurodiversity/meetup' }
+                      ].map((subSector) => {
+                        const isSubActive = pathname === subSector.route;
+                        return (
+                          <div
+                            key={subSector.route}
+                            onClick={() => {
+                              handleTeleport(subSector.route);
+                            }}
+                            style={{
+                              padding: '4px 8px',
+                              fontSize: '0.65rem',
+                              fontFamily: 'monospace',
+                              background: isSubActive ? 'rgba(0, 255, 136, 0.12)' : 'rgba(0,0,0,0.4)',
+                              border: `1px solid ${isSubActive ? '#00ff88' : 'rgba(255,255,255,0.06)'}`,
+                              borderRadius: '4px',
+                              color: isSubActive ? '#00ff88' : 'rgba(255,255,255,0.7)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              cursor: 'pointer',
+                              transition: 'all 0.15s'
+                            }}
+                          >
+                            <span>{subSector.label}</span>
+                            {isSubActive && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               )}
 

@@ -1,8 +1,8 @@
 {
   "exhibits": {
     "exhibit-what-is-nd": {
-      "title": "Exhibit 1: What is Neurodiversity?",
-      "subtitle": "🌿 PLURAL COGNITIVISM & HUMAN VARIATION",
+      "title": "Orientation Module 1: Collective Cognitive Architecture",
+      "subtitle": "🌿 SYSTEM SYNERGY & COGNITIVE PLURALISM",
       "analogies": {
         "tech": [
           "Different brains operate like different phone systems (iOS vs. Android).",
@@ -27,8 +27,8 @@
       }
     },
     "exhibit-two-ways": {
-      "title": "Exhibit 2: Two Ways of Seeing the Same Person",
-      "subtitle": "📊 INTERACTIVE MODEL COMPARATIVE MATRIX",
+      "title": "Orientation Module 2: Collaborative Alignment Matrix",
+      "subtitle": "📊 PARADIGM MATRIX: DEFICIT VS. SYNERGY VALUE",
       "analogies": {
         "tech": [
           "Pathology lens: Android trying to run iOS apps is labeled as defective.",
@@ -53,17 +53,17 @@
       }
     },
     "exhibit-history": {
-      "title": "Exhibit 3: How the Old Model Developed",
-      "subtitle": "📜 HISTORICAL ROOT GEOGRAPHY & COGNITIVE STRUCTURES",
+      "title": "Orientation Module 3: Legacy Systems & Uniformity Debugger",
+      "subtitle": "📜 HISTORICAL TELEMETRY LOGS ON LEGACY SEGREGATION",
       "desc": [
-        "The pathology model did not develop in a vacuum.",
-        "Industrial cogs, asylum confinement, and behavioral shocks forced uniformity.",
-        "Select timeline nodes above to explore the historical data logs."
+        "Understanding legacy social models prevents repeating them inside the colony.",
+        "Historic industrial cogs and clinical locking grids forced strict compliance.",
+        "Select timeline nodes above to debug legacy uniformity systems."
       ]
     },
     "exhibit-real-life": {
-      "title": "Exhibit 4: What it looks like in real life",
-      "subtitle": "⚙️ CHANNELS OF INTERACTIVE LIFE EXPERIENCES",
+      "title": "Orientation Module 4: Real-Time Telemetry & Live Simulators",
+      "subtitle": "⚙️ EXPERIENTIAL INTERACTIVE COORDINATES",
       "analogies": {
         "tech": [
           "Double Empathy: Multiplayer cross-play sync lag when different operating systems connect.",
@@ -88,8 +88,8 @@
       }
     },
     "exhibit-accommodation": {
-      "title": "Exhibit 5: The Power of Accommodation",
-      "subtitle": "🌿 SOCIAL MODEL OF DISABILITY SHUTTLE",
+      "title": "Orientation Module 5: Environmental Adaptation Canopy",
+      "subtitle": "🌿 THE SOCIAL MODEL & BIOSPHERE HARMONY",
       "analogies": {
         "tech": [
           "The Social Model: Disability is created when software is locked to a single proprietary OS.",
@@ -114,8 +114,8 @@
       }
     },
     "exhibit-future": {
-      "title": "Exhibit 6: Neurodiversity in the Future",
-      "subtitle": "🛰️ FUTURE MARTIAN CANOPY STABILIZER",
+      "title": "Orientation Module 6: Future-Proofing the Martian Canopy",
+      "subtitle": "🛰️ HIGH-FIDELITY TEAM SYNAPSE STABILIZER",
       "analogies": {
         "tech": [
           "Designing future operating systems designed from the ground up to support native cross-play APIs.",
@@ -140,12 +140,12 @@
       }
     },
     "exhibit-story": {
-      "title": "Exhibit 7: Lived experience (your story)",
-      "subtitle": "📖 EPHRAIM'S SOL CHRONOLOGICAL TIMELINE MEMOIR",
+      "title": "Orientation Module 7: Flight Logs of a Colony Inhabitant",
+      "subtitle": "📖 EPHRAIM'S CHRONOLOGICAL SOL TRANSCRIPT LOGS",
       "desc": [
-        "Grounding these conceptual frameworks in a single lived human experience.",
-        "Select chapters in the timeline below to trace Ephraim's chronological memoir Sols.",
-        "Review childhood Yeshiva compliance, Para isolation, early adult burnout, and pride."
+        "Grounding architectural colony theories in a single lived human transcript.",
+        "Select chronological chapters below to trace Ephraim's integration logs.",
+        "Review early Yeshiva compliance, Para separation, adult burnout, and acceptance."
       ]
     }
   },

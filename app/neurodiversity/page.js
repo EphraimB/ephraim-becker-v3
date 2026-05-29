@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, cloneElement } from 'react';
 import Link from 'next/link';
 
 // Import our custom interactive Ares City simulation exhibits
@@ -26,6 +26,7 @@ export default function NeurodiversityTacticalMuseum() {
   const [activeMatrixTrait, setActiveMatrixTrait] = useState('stimming'); // 'stimming', 'hyperfocus', 'comms', 'autonomy' (Exhibit 2)
   const [activeSimTab, setActiveSimTab] = useState('comms'); // 'comms', 'sensory', 'masking' (Exhibit 4)
   const [analogyTheme, setAnalogyTheme] = useState('tech'); // 'tech', 'rpg', 'nature', 'sports' (Analogy Switcher)
+  const [reduceMotion, setReduceMotion] = useState(false); // persistent user-controlled animation stabilizer
   const [isMounted, setIsMounted] = useState(false);
   const [passportId, setPassportId] = useState(null);
   const [shareUrl, setShareUrl] = useState('');
@@ -250,6 +251,13 @@ export default function NeurodiversityTacticalMuseum() {
       
       {/* Immersive Martian Biosphere Core CSS and Viewport Fixes */}
       <style dangerouslySetInnerHTML={{ __html: `
+        .background-canvas {
+          filter: brightness(0.62) contrast(1.02) !important;
+        }
+        .reduce-motion, .reduce-motion * {
+          animation: none !important;
+          transition: none !important;
+        }
         .neuro-page-shell {
           height: calc(100vh - 140px);
           max-height: calc(100vh - 140px);
@@ -604,7 +612,7 @@ export default function NeurodiversityTacticalMuseum() {
       <div className="walking-motion-overlay" style={{ position: 'fixed' }}></div>
 
       {/* Main OS content container */}
-      <div className={`walking-content-container ${transitState}`} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div className={`walking-content-container ${transitState} ${reduceMotion ? 'reduce-motion' : ''}`} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         
         {/* Navigation Console */}
         <div className="museum-floor-nav-deck">
@@ -612,25 +620,25 @@ export default function NeurodiversityTacticalMuseum() {
             onClick={() => changeSector('foyer')} 
             className={`museum-nav-btn ${activeSector === 'foyer' ? 'active' : ''}`}
           >
-            🛰️ Teleport Lobby
+            🛰️ Orientation Lobby
           </button>
           <button 
             onClick={() => changeSector('corridor')} 
             className={`museum-nav-btn ${activeSector === 'corridor' ? 'active' : ''}`}
           >
-            🖼️ Exhibit Corridor
+            🖼️ Habitat Synergy Corridor
           </button>
           <button 
             onClick={() => changeSector('constellation')} 
             className={`museum-nav-btn ${activeSector === 'constellation' ? 'active' : ''}`}
           >
-            🌌 Neural Constellation
+            🌌 Colony Lexicon Uplink
           </button>
           <button 
             onClick={() => changeSector('sanctuary')} 
             className={`museum-nav-btn ${activeSector === 'sanctuary' ? 'active' : ''}`}
           >
-            🌿 Sanctuary rest
+            🌿 Sanctuary Rest Area
           </button>
         </div>
 
@@ -644,19 +652,19 @@ export default function NeurodiversityTacticalMuseum() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', margin: '0 auto', maxWidth: '800px', textAlign: 'center', justifyContent: 'center' }}>
               <div className="bubbly-panel">
                 <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '2px', display: 'block', marginBottom: '8px' }}>
-                  // CORRIDOR COORDINATE: ATH-DOME-9 // TEMP NOMINAL // MARS SOL CLOCK STAMP
+                  // HABITAT ORIENTATION SYSTEM // DOME-PARK SEC-9 // UPLINK NOMINAL
                 </span>
                 <h1 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.6rem', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '12px' }}>
-                  Dome of the Cognitive Biosphere
+                  Mars-Dome Park Orientation Portal
                 </h1>
                 <h3 style={{ fontFamily: 'monospace', fontSize: '0.8rem', color: '#00ff88', fontWeight: 500, letterSpacing: '1px', marginBottom: '16px' }}>
-                  ARES CITY DIGITAL MUSEUM OF THE MIND
+                  ARES CITY ORIENTATION & COGNITIVE REFUGE
                 </h3>
                 <p style={{ fontSize: '0.88rem', color: '#8a9bb5', lineHeight: '1.7', margin: '0 0 20px 0', textAlign: 'justify' }}>
-                  Welcome, Citizen. This atmospheric dome houses a cybernetic, reflective exploration of the human cognitive landscape. Rather than analyzing minds through clinical pathology metrics, this museum reframes differences as natural biological variations. 
+                  Welcome, Citizen. This dome-enclosed sanctuary provides an orientation system designed for collective colony harmony. Rather than analyzing minds through clinical pathology metrics, this refuge reframes differences as natural biological assets that optimize our collaborative capacity.
                 </p>
                 <p style={{ fontSize: '0.86rem', color: '#8a9bb5', lineHeight: '1.7', margin: '0 0 24px 0', textAlign: 'justify' }}>
-                  Explore the structured **Exhibit Corridor** tracing universal questions about what neurodiversity means, two ways of seeing the same person, how the medical pathology model developed historically, what wiring dynamics look like in real life through simulations, and Ephraim's chronological Sol memoir.
+                  Engage the interactive **Habitat Synergy Corridor** to optimize collaborative integration. Review collective cognitive architectures, explore legacy uniformity debuggers, balance sensory and direct communication parameters, and map personal lived chronicles of colony integration.
                 </p>
 
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -665,10 +673,10 @@ export default function NeurodiversityTacticalMuseum() {
                     className="hud-btn" 
                     style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: '#00ff88', color: '#00ff88', background: 'rgba(0, 255, 136, 0.08)' }}
                   >
-                    [ 🖼️ ENTER THE EXHIBIT CORRIDOR ]
+                    [ 🖼️ ENTER THE HABITAT SYNERGY CORRIDOR ]
                   </button>
                   <button onClick={() => changeSector('constellation')} className="hud-btn">
-                    [ 🌌 OPEN NEURAL CONSTELLATION MAP ]
+                    [ 🌌 ACCESS THE COLONY LEXICON UPLINK ]
                   </button>
                 </div>
               </div>
@@ -676,10 +684,7 @@ export default function NeurodiversityTacticalMuseum() {
           )}
 
           {/* ====================================
-              THE EXHIBIT CORRIDOR SECTOR
-              ==================================== */}
-          {/* ====================================
-              THE 5-EXHIBIT CORRIDOR SECTOR
+              THE HABITAT ORIENTATION SECTOR
               ==================================== */}
           {activeSector === 'corridor' && (() => {
             const currentExhibit = exhibits[activeExhibitIndex];
@@ -690,198 +695,253 @@ export default function NeurodiversityTacticalMuseum() {
             const isCustomStory = currentExhibit.component === 'custom-story';
 
             return (
-              <>
-                {/* LEFT PANE: Exhibit Core Information & Details */}
-                <div className="museum-left-feed custom-scroll">
-                  
-                  {/* ANALOGY THEME SELECTOR CONSOLE */}
-                  <div className="bubbly-panel" style={{ flexShrink: 0, padding: '10px 14px', border: '1.5px solid rgba(0, 240, 255, 0.15)', background: 'rgba(0, 240, 255, 0.02)' }}>
-                    <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00f0ff', letterSpacing: '1px', display: 'block', marginBottom: '6px' }}>
-                      ⚙️ CHOOSE EXPLANATION LENS (ANALOGY SWITCHER)
-                    </span>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px' }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '14px', minHeight: 0, height: '100%', width: '100%' }}>
+                
+                {/* 📡 COMMUNICATION & COLLABORATION MODE SELECTOR BAR (Full-width, prominent) */}
+                <div className="bubbly-panel mode-selector-panel" style={{ flexShrink: 0, padding: '12px 18px', border: '1.5px solid rgba(0, 255, 136, 0.2)', background: 'rgba(6, 9, 20, 0.72)', borderRadius: '14px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '6px' }}>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.2px', textTransform: 'uppercase', fontWeight: 'bold' }}>
+                        📡 CHOOSE ORIENTATION COLLABORATION MODE (INFORMATION PROCESSING LENS)
+                      </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <button
+                          onClick={() => setReduceMotion(!reduceMotion)}
+                          style={{
+                            padding: '2px 8px',
+                            fontSize: '0.54rem',
+                            fontFamily: 'monospace',
+                            borderColor: reduceMotion ? '#00f0ff' : 'rgba(255, 255, 255, 0.12)',
+                            background: reduceMotion ? 'rgba(0, 240, 255, 0.1)' : 'rgba(0,0,0,0.3)',
+                            color: reduceMotion ? '#00f0ff' : 'rgba(255,255,255,0.6)',
+                            borderRadius: '4px',
+                            cursor: 'pointer',
+                            transition: 'all 0.2s',
+                            borderWidth: '1px',
+                            borderStyle: 'solid',
+                            outline: 'none'
+                          }}
+                        >
+                          {reduceMotion ? '⚡ MOTION: REDUCED' : '🏃 MOTION: FLUID'}
+                        </button>
+                        <span style={{ fontSize: '0.54rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.45)' }}>
+                          ACTIVE UPLINK: {analogyTheme.toUpperCase()} MODE
+                        </span>
+                      </div>
+                    </div>
+                    
+                    <div className="mode-btn-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px' }}>
                       {[
-                        { id: 'tech', label: '⚙️ Tech', title: 'Smartphone OS, CPU, RAM and network cross-play' },
-                        { id: 'rpg', label: '🎮 RPG', title: 'Character classes, talent trees, spell channels and lag desync' },
-                        { id: 'nature', label: '🌿 Nature', title: 'Plant adaptations, moisture settings, biomes and permacultures' },
-                        { id: 'sports', label: '🏆 Sports', title: 'Athlete body specializations, in-the-zone sprint channels and weighted vests' }
+                        { id: 'tech', label: '⚙️ Technical Kernel', desc: 'Processes as OS kernels, CPU allocation, & cross-play APIs' },
+                        { id: 'rpg', label: '🎮 Narrative RPG Spec', desc: 'Processes as character classes, talent trees, & party synergy' },
+                        { id: 'nature', label: '🌿 Spatial Ecosystem', desc: 'Processes as plant adaptations, biomes, & permacultures' },
+                        { id: 'sports', label: '🏆 Tactical Athletic', desc: 'Processes as athletic profiles, specialist roles, & field setups' }
                       ].map(theme => (
                         <button
                           key={theme.id}
                           onClick={() => setAnalogyTheme(theme.id)}
-                          title={theme.title}
+                          title={theme.desc}
                           style={{
-                            padding: '4px 2px',
-                            fontSize: '0.58rem',
-                            fontFamily: 'monospace',
-                            borderRadius: '4px',
+                            padding: '6px 4px',
+                            borderRadius: '6px',
                             cursor: 'pointer',
-                            transition: 'all 0.2s',
-                            background: analogyTheme === theme.id ? 'rgba(0, 240, 255, 0.15)' : 'rgba(0,0,0,0.3)',
+                            transition: 'all 0.2s ease',
+                            background: analogyTheme === theme.id ? 'rgba(0, 255, 136, 0.12)' : 'rgba(0,0,0,0.4)',
                             borderWidth: '1px',
                             borderStyle: 'solid',
-                            borderColor: analogyTheme === theme.id ? '#00f0ff' : 'rgba(255,255,255,0.08)',
-                            color: analogyTheme === theme.id ? '#00f0ff' : 'rgba(255,255,255,0.6)',
-                            outline: 'none'
+                            borderColor: analogyTheme === theme.id ? '#00ff88' : 'rgba(255,255,255,0.06)',
+                            color: analogyTheme === theme.id ? '#00ff88' : 'rgba(255,255,255,0.6)',
+                            outline: 'none',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '2px'
                           }}
                         >
-                          {theme.label}
+                          <strong style={{ fontSize: '0.62rem', fontFamily: 'var(--font-tech)' }}>{theme.label}</strong>
+                          <span style={{ fontSize: '0.48rem', fontFamily: 'monospace', opacity: 0.7, textAlign: 'center', display: 'block', lineHeight: '1.2' }}>{theme.desc}</span>
                         </button>
                       ))}
                     </div>
                   </div>
-
-                  <div className="bubbly-panel" style={{ flexShrink: 0 }}>
-                    <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
-                      // EXHIBITION DATA NODESEC // EX-{activeExhibitIndex + 1}
-                    </span>
-                    <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
-                      {currentExhibit.title}
-                    </h3>
-                    <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', display: 'block', marginBottom: '14px' }}>
-                      {currentExhibit.subtitle}
-                    </span>
-                    
-                    <p style={{ fontSize: '0.78rem', color: '#8a9bb5', lineHeight: 1.45, margin: 0, textAlign: 'justify' }}>
-                      {currentExhibit.desc}
-                    </p>
-                  </div>
-
-                  {/* Standard exhibit text body block (adapted to selected lens) */}
-                  {!isCustomStory && !isCustomRealLife && !isCustomMatrix && !isCustomAccommodation && !isCustomFuture && (
-                    <div className="bubbly-panel">
-                      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: '6px' }}>
-                        // CHOSEN LENS TELEMETRY SUMMARY
-                      </span>
-                      <p style={{ fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.45, margin: 0, textAlign: 'justify' }}>
-                        {activeExhibitIndex === 0 && (
-                          analogyTheme === 'tech' ? "System architecture reframed. Diversity is modeled as a functional feature of plural processors coexisting on the same server network." :
-                          analogyTheme === 'rpg' ? "Guild classes unlocked. Success is modeled as a balanced cooperative raid party utilizing diverse specialized classes." :
-                          analogyTheme === 'nature' ? "Ecosystem fitness secured. Vitality is modeled as biodiverse species adapting to custom soil micro-climates." :
-                          "Team roster optimized. Victory is modeled as sprinters, powerlifters, and marathoners training in their native domains."
-                        )}
-                        {activeExhibitIndex === 2 && "The pathology model was not created in a vacuum. It was historically shaped to enforce uniformity during the industrial revolution, segregating differences into psychiatric lockups, special education systems, and compliance checklists. Click the pipeline nodes to traverse eras."}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Exhibit 4 (Real Life Simulations) Interactive Select Tab Block */}
-                  {isCustomRealLife && (
-                    <div className="bubbly-panel" style={{ flexShrink: 0, gap: '10px' }}>
-                      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px', display: 'block' }}>
-                        // SELECT REAL-LIFE TELEMETRY SIMULATOR
-                      </span>
-                      <p style={{ fontSize: '0.72rem', color: '#8a9bb5', lineHeight: 1.4, margin: '0 0 8px 0' }}>
-                        Neurodivergent wiring manifests in specific processing dynamics. Select a simulator module below to engage the interactive coordinates in the right-hand console:
-                      </p>
-                      
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                        <button 
-                          onClick={() => setActiveSimTab('comms')} 
-                          className={`protocol-toggle-badge ${activeSimTab === 'comms' ? 'active' : ''}`}
-                          style={{ padding: '8px 12px' }}
-                        >
-                          <span style={{ fontSize: '0.85rem' }}>📡</span>
-                          <div style={{ textAlign: 'left' }}>
-                            <strong style={{ fontSize: '0.68rem', color: activeSimTab === 'comms' ? '#00ff88' : '#fff' }}>I. Communication Mismatch</strong>
-                            <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)' }}>Double Empathy & Signal Phase Mismatches</span>
-                          </div>
-                        </button>
-
-                        <button 
-                          onClick={() => setActiveSimTab('sensory')} 
-                          className={`protocol-toggle-badge ${activeSimTab === 'sensory' ? 'active' : ''}`}
-                          style={{ padding: '8px 12px' }}
-                        >
-                          <span style={{ fontSize: '0.85rem' }}>🚨</span>
-                          <div style={{ textAlign: 'left' }}>
-                            <strong style={{ fontSize: '0.68rem', color: activeSimTab === 'sensory' ? '#00ff88' : '#fff' }}>II. Sensory Spotlight</strong>
-                            <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)' }}>Monotropic Flow Channels & Overstimulation</span>
-                          </div>
-                        </button>
-
-                        <button 
-                          onClick={() => setActiveSimTab('masking')} 
-                          className={`protocol-toggle-badge ${activeSimTab === 'masking' ? 'active' : ''}`}
-                          style={{ padding: '8px 12px' }}
-                        >
-                          <span style={{ fontSize: '0.85rem' }}>🔋</span>
-                          <div style={{ textAlign: 'left' }}>
-                            <strong style={{ fontSize: '0.68rem', color: activeSimTab === 'masking' ? '#00ff88' : '#fff' }}>III. Masking & Burnout</strong>
-                            <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.45)' }}>Nervous System Reactor Battery & Stresses</span>
-                          </div>
-                        </button>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Exhibit 7 dedicated Narration Control panel */}
-                  {isCustomStory && (
-                    <div className="bubbly-panel">
-                      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.5px', display: 'block', marginBottom: '6px' }}>
-                        // SUBSPACE TRANSMISSION FEED AUDIO CONTROLLER
-                      </span>
-                      <div className="narration-control-panel">
-                        <div className="audio-wave-box">
-                          <span className="audio-wave-label">TRANSMISSION FREQUENCY STATUS</span>
-                          {renderWaveformSvg()}
-                        </div>
-                        
-                        <div className="narration-action-row">
-                          <button 
-                            onClick={() => toggleNarration(storyPhases[activeStoryPhase].storyText)} 
-                            className={`audio-deck-btn ${isNarrating ? 'active' : ''}`}
-                          >
-                            {isNarrating ? '⏸ PAUSE FREQ' : '▶ TRANSMIT NARRATION'}
-                          </button>
-                          <button onClick={stopNarration} className="audio-deck-btn">
-                            ⏹ CUT OFF
-                          </button>
-                        </div>
-
-                        <div className="speed-slider-row">
-                          <span>TRANSMISSION SPEED: {narrationSpeed}x</span>
-                          <input 
-                            type="range" 
-                            min="0.5" 
-                            max="2" 
-                            step="0.1" 
-                            value={narrationSpeed} 
-                            onChange={(e) => setNarrationSpeed(Number(e.target.value))} 
-                            className="audio-speed-slider"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Floor Map exhibits switcher */}
-                  <div className="gallery-nav-buttons-deck">
-                    <button 
-                      onClick={() => { stopUtterance(); setActiveExhibitIndex(prev => Math.max(0, prev - 1)); }}
-                      disabled={activeExhibitIndex === 0}
-                      className="gallery-arrow-btn"
-                    >
-                      ◀ PREV HALL
-                    </button>
-                    <span style={{ fontSize: '0.68rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.45)' }}>
-                      [ HALL 0{activeExhibitIndex + 1} / 0{exhibits.length} ]
-                    </span>
-                    <button 
-                      onClick={() => { stopUtterance(); setActiveExhibitIndex(prev => Math.min(exhibits.length - 1, prev + 1)); }}
-                      disabled={activeExhibitIndex === exhibits.length - 1}
-                      className="gallery-arrow-btn"
-                    >
-                      NEXT HALL ▶
-                    </button>
-                  </div>
                 </div>
+
+                {/* Left and Right Panes Row */}
+                <div style={{ flex: 1, display: 'flex', flexDirection: 'row', gap: '20px', minHeight: 0, height: '100%', width: '100%' }}>
+
+                  {/* CONSOLIDATED LEFT PANEL CARD: Habitat Orientations Console */}
+                  <div className="bubbly-panel museum-left-feed" style={{ flex: 1.1, display: 'flex', flexDirection: 'column', gap: '12px', minHeight: 0, padding: '16px' }}>
+                    
+                    {/* Status Header Bar */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(255, 255, 255, 0.08)', paddingBottom: '8px', flexShrink: 0 }}>
+                      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px' }}>
+                        // HABITAT SYNERGY CONSOLE // STATION-0{activeExhibitIndex + 1}
+                      </span>
+                      <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.45)' }}>
+                        STATUS: ACTIVE_NOMINAL
+                      </span>
+                    </div>
+
+                    {/* Scrollable Middle Frame */}
+                    <div className="custom-scroll" style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '12px', paddingRight: '4px' }}>
+                      <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '2px', marginTop: '4px' }}>
+                        {currentExhibit.title}
+                      </h3>
+                      <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', display: 'block', marginBottom: '8px' }}>
+                        {currentExhibit.subtitle}
+                      </span>
+                      
+                      <p style={{ fontSize: '0.78rem', color: '#8a9bb5', lineHeight: 1.45, margin: 0, textAlign: 'justify' }}>
+                        {currentExhibit.desc}
+                      </p>
+
+                      {/* Standard exhibit text body block (adapted to selected lens) */}
+                      {!isCustomStory && !isCustomRealLife && !isCustomMatrix && !isCustomAccommodation && !isCustomFuture && (
+                        <div style={{ background: 'rgba(255,255,255,0.015)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px', padding: '10px', marginTop: '6px' }}>
+                          <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', display: 'block', marginBottom: '4px' }}>
+                            // CHOSEN LENS TELEMETRY SUMMARY
+                          </span>
+                          <p style={{ fontSize: '0.74rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.45, margin: 0, textAlign: 'justify' }}>
+                            {activeExhibitIndex === 0 && (
+                              analogyTheme === 'tech' ? "System architecture reframed. Diversity is modeled as a functional feature of plural processors coexisting on the same server network." :
+                              analogyTheme === 'rpg' ? "Guild classes unlocked. Success is modeled as a balanced cooperative raid party utilizing diverse specialized classes." :
+                              analogyTheme === 'nature' ? "Ecosystem fitness secured. Vitality is modeled as biodiverse species adapting to custom soil micro-climates." :
+                              "Team roster optimized. Victory is modeled as sprinters, powerlifters, and marathoners training in their native domains."
+                            )}
+                            {activeExhibitIndex === 2 && "The legacy pathology model did not develop in a vacuum. It was historically shaped to enforce uniformity during the industrial revolution, segregating differences into psychiatry locking boxes, tracked rooms, and behavior modifiers."}
+                          </p>
+                        </div>
+                      )}
+
+                      {/* Exhibit 4 (Real Life Simulations) Interactive Select Tab Block */}
+                      {isCustomRealLife && (
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', background: 'rgba(0, 255, 136, 0.02)', border: '1px solid rgba(0, 255, 136, 0.08)', borderRadius: '8px', padding: '10px', marginTop: '6px' }}>
+                          <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px', display: 'block' }}>
+                            // SELECT REAL-LIFE TELEMETRY SIMULATOR
+                          </span>
+                          <p style={{ fontSize: '0.72rem', color: '#8a9bb5', lineHeight: 1.4, margin: '0 0 6px 0' }}>
+                            Neurodivergent wiring manifests in specific processing dynamics. Select a simulator module below to engage the interactive coordinates in the right-hand console:
+                          </p>
+                          
+                          <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                            <button 
+                              onClick={() => setActiveSimTab('comms')} 
+                              className={`protocol-toggle-badge ${activeSimTab === 'comms' ? 'active' : ''}`}
+                              style={{ padding: '6px 10px' }}
+                            >
+                              <span style={{ fontSize: '0.75rem' }}>📡</span>
+                              <div style={{ textAlign: 'left' }}>
+                                <strong style={{ fontSize: '0.64rem', color: activeSimTab === 'comms' ? '#00ff88' : '#fff' }}>I. Communication Mismatch</strong>
+                                <span style={{ display: 'block', fontSize: '0.54rem', color: 'rgba(255,255,255,0.45)' }}>Double Empathy & Signal Phase Mismatches</span>
+                              </div>
+                            </button>
+
+                            <button 
+                              onClick={() => setActiveSimTab('sensory')} 
+                              className={`protocol-toggle-badge ${activeSimTab === 'sensory' ? 'active' : ''}`}
+                              style={{ padding: '6px 10px' }}
+                            >
+                              <span style={{ fontSize: '0.75rem' }}>🚨</span>
+                              <div style={{ textAlign: 'left' }}>
+                                <strong style={{ fontSize: '0.64rem', color: activeSimTab === 'sensory' ? '#00ff88' : '#fff' }}>II. Sensory Spotlight</strong>
+                                <span style={{ display: 'block', fontSize: '0.54rem', color: 'rgba(255,255,255,0.45)' }}>Monotropic Flow Channels & Overstimulation</span>
+                              </div>
+                            </button>
+
+                            <button 
+                              onClick={() => setActiveSimTab('masking')} 
+                              className={`protocol-toggle-badge ${activeSimTab === 'masking' ? 'active' : ''}`}
+                              style={{ padding: '6px 10px' }}
+                            >
+                              <span style={{ fontSize: '0.75rem' }}>🔋</span>
+                              <div style={{ textAlign: 'left' }}>
+                                <strong style={{ fontSize: '0.64rem', color: activeSimTab === 'masking' ? '#00ff88' : '#fff' }}>III. Masking & Burnout</strong>
+                                <span style={{ display: 'block', fontSize: '0.54rem', color: 'rgba(255,255,255,0.45)' }}>Nervous System Reactor Battery & Stresses</span>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Exhibit 7 dedicated Narration Control panel */}
+                      {isCustomStory && (
+                        <div style={{ background: 'rgba(0, 255, 136, 0.02)', border: '1px solid rgba(0, 255, 136, 0.08)', borderRadius: '8px', padding: '10px', marginTop: '6px' }}>
+                          <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1.5px', display: 'block', marginBottom: '4px' }}>
+                            // SUBSPACE TRANSMISSION FEED AUDIO CONTROLLER
+                          </span>
+                          <div className="narration-control-panel" style={{ padding: '8px', background: 'rgba(0,0,0,0.3)', border: 'none' }}>
+                            <div className="audio-wave-box" style={{ padding: '4px 8px' }}>
+                              <span className="audio-wave-label" style={{ fontSize: '0.52rem' }}>TRANSMISSION FREQUENCY STATUS</span>
+                              {renderWaveformSvg()}
+                            </div>
+                            
+                            <div className="narration-action-row" style={{ marginTop: '6px' }}>
+                              <button 
+                                onClick={() => toggleNarration(storyPhases[activeStoryPhase].storyText)} 
+                                className={`audio-deck-btn ${isNarrating ? 'active' : ''}`}
+                                style={{ padding: '4px 6px', fontSize: '0.6rem' }}
+                              >
+                                {isNarrating ? '⏸ PAUSE FREQ' : '▶ TRANSMIT NARRATION'}
+                              </button>
+                              <button onClick={stopNarration} className="audio-deck-btn" style={{ padding: '4px 6px', fontSize: '0.6rem' }}>
+                                ⏹ CUT OFF
+                              </button>
+                            </div>
+
+                            <div className="speed-slider-row" style={{ marginTop: '6px' }}>
+                              <span style={{ fontSize: '0.58rem' }}>SPEED: {narrationSpeed}x</span>
+                              <input 
+                                type="range" 
+                                min="0.5" 
+                                max="2" 
+                                step="0.1" 
+                                value={narrationSpeed} 
+                                onChange={(e) => setNarrationSpeed(Number(e.target.value))} 
+                                className="audio-speed-slider"
+                                style={{ height: '3px' }}
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Dedicated Bottom Panel for Navigation, separated by a dashed divider */}
+                    <div style={{ borderTop: '1px dashed rgba(255, 255, 255, 0.08)', paddingTop: '10px', flexShrink: 0 }}>
+                      <div className="gallery-nav-buttons-deck" style={{ margin: 0, background: 'transparent', border: 'none', padding: 0 }}>
+                        <button 
+                          onClick={() => { stopUtterance(); setActiveExhibitIndex(prev => Math.max(0, prev - 1)); }}
+                          disabled={activeExhibitIndex === 0}
+                          className="gallery-arrow-btn"
+                          style={{ padding: '4px 10px', fontSize: '0.64rem' }}
+                        >
+                          ◀ PREV STATION
+                        </button>
+                        <span style={{ fontSize: '0.64rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.45)', fontWeight: 'bold' }}>
+                          [ STATION 0{activeExhibitIndex + 1} / 0{exhibits.length} ]
+                        </span>
+                        <button 
+                          onClick={() => { stopUtterance(); setActiveExhibitIndex(prev => Math.min(exhibits.length - 1, prev + 1)); }}
+                          disabled={activeExhibitIndex === exhibits.length - 1}
+                          className="gallery-arrow-btn"
+                          style={{ padding: '4px 10px', fontSize: '0.64rem' }}
+                        >
+                          NEXT STATION ▶
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
 
                 {/* RIGHT PANE: Interactive Simulation Panel */}
                 <div className="museum-right-diagnostics custom-scroll">
                   
                   {/* Render standard visual components */}
-                  {!isCustomMatrix && !isCustomRealLife && !isCustomAccommodation && !isCustomFuture && !isCustomStory && currentExhibit.component}
+                  {!isCustomMatrix && !isCustomRealLife && !isCustomAccommodation && !isCustomFuture && !isCustomStory && (
+                    typeof currentExhibit.component === 'object' 
+                      ? cloneElement(currentExhibit.component, { reduceMotion }) 
+                      : currentExhibit.component
+                  )}
 
                   {/* ===================================================
                       EXHIBIT 2: Two Ways of Seeing the Same Person (Comparative Paradigm Matrix)
@@ -891,7 +951,7 @@ export default function NeurodiversityTacticalMuseum() {
                     return (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                         {/* Interactive Trait-responsive SVG visualizer */}
-                        <ExhibitMatrixVisualization activeTrait={activeMatrixTrait} />
+                        <ExhibitMatrixVisualization activeTrait={activeMatrixTrait} reduceMotion={reduceMotion} />
 
                         <div className="bubbly-panel" style={{ gap: '14px' }}>
                           <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px' }}>
@@ -955,21 +1015,21 @@ export default function NeurodiversityTacticalMuseum() {
                       =================================================== */}
                   {isCustomRealLife && (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                      {activeSimTab === 'comms' && <DoubleEmpathySync />}
-                      {activeSimTab === 'sensory' && <MonotropicSpotlight />}
-                      {activeSimTab === 'masking' && <MaskingDiagnostics />}
+                      {activeSimTab === 'comms' && <DoubleEmpathySync reduceMotion={reduceMotion} />}
+                      {activeSimTab === 'sensory' && <MonotropicSpotlight reduceMotion={reduceMotion} />}
+                      {activeSimTab === 'masking' && <MaskingDiagnostics reduceMotion={reduceMotion} />}
                     </div>
                   )}
 
                   {/* ===================================================
                       EXHIBIT 5: The Power of Accommodation (Environmental Transition Slide)
                       =================================================== */}
-                  {isCustomAccommodation && <EnvironmentalTransition />}
+                  {isCustomAccommodation && <EnvironmentalTransition reduceMotion={reduceMotion} />}
 
                   {/* ===================================================
                       EXHIBIT 6: Neurodiversity in the Future (Martian Canopy Stabilizer)
                       =================================================== */}
-                  {isCustomFuture && <ExhibitMartianBiosphere />}
+                  {isCustomFuture && <ExhibitMartianBiosphere reduceMotion={reduceMotion} />}
 
                   {/* ===================================================
                       EXHIBIT 7: Lived experience (Ephraim's Chronological Narrative walk)
@@ -980,7 +1040,7 @@ export default function NeurodiversityTacticalMuseum() {
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                         
                         {/* Neural memoir constellation map crystal selector */}
-                        <ExhibitMemoirCrystalMap activePhase={activeStoryPhase} setActivePhase={setActiveStoryPhase} />
+                        <ExhibitMemoirCrystalMap activePhase={activeStoryPhase} setActivePhase={setActiveStoryPhase} reduceMotion={reduceMotion} />
 
                         {/* Story phase text display */}
                         <div className="bubbly-panel" style={{ gap: '12px' }}>
@@ -1052,9 +1112,10 @@ export default function NeurodiversityTacticalMuseum() {
                   })()}
 
                 </div>
-              </>
-            );
-          })()}
+              </div>
+            </div>
+          );
+        })()}
 
           {/* ====================================
               THE SYNAPTIC CONSTELLATION MAP

@@ -6,7 +6,7 @@ import exhibitData from '../data/neurodiversity-exhibit.json';
 // ==========================================
 // 🛠️ EXHIBIT 1: MASKING CPU & BATTERY DIAGNOSTICS
 // ==========================================
-export function MaskingDiagnostics() {
+export function MaskingDiagnostics({ reduceMotion }) {
   const [activeToggles, setActiveToggles] = useState({
     eyeContact: false,
     suppressStims: false,
@@ -189,7 +189,7 @@ export function MaskingDiagnostics() {
                   stroke="#ffb300" 
                   strokeWidth="1"
                   opacity={0.8}
-                  style={{ animation: 'shiver-node 0.15s infinite' }}
+                  style={{ animation: reduceMotion ? 'none' : 'shiver-node 0.15s infinite' }}
                 />
               )}
 
@@ -267,7 +267,7 @@ export function MaskingDiagnostics() {
 // ==========================================
 // 🎯 EXHIBIT 2: MONOTROPIC ATTENTION SPOTLIGHT & TRANSITION SHOCKWAVE
 // ==========================================
-export function MonotropicSpotlight() {
+export function MonotropicSpotlight({ reduceMotion }) {
   const [isMonotropic, setIsMonotropic] = useState(true);
   const [highlightedNode, setHighlightedNode] = useState('hyperfocus');
   const [shockwaveActive, setShockwaveActive] = useState(false);
@@ -276,6 +276,7 @@ export function MonotropicSpotlight() {
   const nodes = exhibitData.monotropicNodes;
 
   const handleTriggerInterrupt = () => {
+    if (reduceMotion) return; // Do not trigger shakes/shockwaves
     setShockwaveActive(true);
     if (isMonotropic) {
       setShakeActive(true);
@@ -287,7 +288,7 @@ export function MonotropicSpotlight() {
   return (
     <div style={{
       ...styles.consoleContainer,
-      ...(shakeActive ? styles.shakeAnimation : {})
+      ...(shakeActive && !reduceMotion ? styles.shakeAnimation : {})
     }}>
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes shockwave-pulse {
@@ -501,7 +502,7 @@ export function MonotropicSpotlight() {
 // ==========================================
 // 🤝 EXHIBIT 3: DOUBLE EMPATHY SYNC & WAVE ALIGNMENT
 // ==========================================
-export function DoubleEmpathySync() {
+export function DoubleEmpathySync({ reduceMotion }) {
   const [dialoguePath, setDialoguePath] = useState(null); // 'deficit' or 'affirming'
   const [dialogueStep, setDialogueStep] = useState(0);
   const [explicitness, setExplicitness] = useState(2);
@@ -509,12 +510,13 @@ export function DoubleEmpathySync() {
 
   // Animate the wave moving
   useEffect(() => {
+    if (reduceMotion) return; // Halt JS wave animation
     const handle = requestAnimationFrame(function animate() {
       setWaveOffset(prev => (prev + 1.2) % 360);
       requestAnimationFrame(animate);
     });
     return () => cancelAnimationFrame(handle);
-  }, []);
+  }, [reduceMotion]);
 
   // Determine wave synchronization alignment percentage
   const getSyncPercent = () => {
@@ -733,7 +735,7 @@ export function DoubleEmpathySync() {
 // ==========================================
 // 🌿 EXHIBIT 4: ENVIRONMENTAL TRANSITION SLIDER
 // ==========================================
-export function EnvironmentalTransition() {
+export function EnvironmentalTransition({ reduceMotion }) {
   const [sliderVal, setSliderVal] = useState(50);
   const containerRef = useRef(null);
 
@@ -939,7 +941,7 @@ export function BreathingRegulator() {
 // ==========================================
 // 🌿 EXHIBIT 1: WHAT IS NEURODIVERSITY CLICKABLE COGNITIVE ORBITALS
 // ==========================================
-export function ExhibitPlaqueVisualization() {
+export function ExhibitPlaqueVisualization({ reduceMotion }) {
   const [selectedNode, setSelectedNode] = useState('none');
 
   const nodeDetails = exhibitData.exhibit1Orbitals;
@@ -970,6 +972,15 @@ export function ExhibitPlaqueVisualization() {
           <circle cx="50" cy="50" r="3.5" fill="#fff" opacity="0.3" />
 
           {/* Clickable Orbit 1: Monotropic (Outer) */}
+          {/* Underneath transparent stroke orbit to expand clickable zone */}
+          <circle 
+            cx="50" cy="50" r="42" 
+            fill="none" 
+            stroke="transparent" 
+            strokeWidth="10" 
+            style={{ cursor: 'pointer' }}
+            onClick={() => setSelectedNode('monotropic')}
+          />
           <circle 
             cx="50" cy="50" r="42" 
             fill="none" 
@@ -979,11 +990,24 @@ export function ExhibitPlaqueVisualization() {
             style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
             onClick={() => setSelectedNode('monotropic')}
           />
-          <circle cx="50" cy="8" r="3.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 4px #00ff88)', cursor: 'pointer' }} onClick={() => setSelectedNode('monotropic')}>
-            <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="9s" repeatCount="indefinite" />
-          </circle>
+          <g>
+            {!reduceMotion && <animateTransform attributeName="transform" type="rotate" from="0 50 50" to="360 50 50" dur="9s" repeatCount="indefinite" />}
+            {/* Expanded Hitbox */}
+            <circle cx="50" cy="8" r="10" fill="transparent" style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setSelectedNode('monotropic'); }} />
+            {/* Visual Node */}
+            <circle cx="50" cy="8" r="3.5" fill="#00ff88" style={{ filter: 'drop-shadow(0 0 4px #00ff88)', cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setSelectedNode('monotropic'); }} />
+          </g>
 
           {/* Clickable Orbit 2: Polytropic (Middle) */}
+          {/* Underneath transparent stroke orbit to expand clickable zone */}
+          <circle 
+            cx="50" cy="50" r="30" 
+            fill="none" 
+            stroke="transparent" 
+            strokeWidth="10" 
+            style={{ cursor: 'pointer' }}
+            onClick={() => setSelectedNode('polytropic')}
+          />
           <circle 
             cx="50" cy="50" r="30" 
             fill="none" 
@@ -993,11 +1017,24 @@ export function ExhibitPlaqueVisualization() {
             style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
             onClick={() => setSelectedNode('polytropic')}
           />
-          <circle cx="50" cy="20" r="3" fill="#00f0ff" style={{ filter: 'drop-shadow(0 0 4px #00f0ff)', cursor: 'pointer' }} onClick={() => setSelectedNode('polytropic')}>
-            <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="14s" repeatCount="indefinite" />
-          </circle>
+          <g>
+            {!reduceMotion && <animateTransform attributeName="transform" type="rotate" from="360 50 50" to="0 50 50" dur="14s" repeatCount="indefinite" />}
+            {/* Expanded Hitbox */}
+            <circle cx="50" cy="20" r="10" fill="transparent" style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setSelectedNode('polytropic'); }} />
+            {/* Visual Node */}
+            <circle cx="50" cy="20" r="3" fill="#00f0ff" style={{ filter: 'drop-shadow(0 0 4px #00f0ff)', cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setSelectedNode('polytropic'); }} />
+          </g>
 
           {/* Clickable Orbit 3: ADHD / Interest (Inner) */}
+          {/* Underneath transparent stroke orbit to expand clickable zone */}
+          <circle 
+            cx="50" cy="50" r="18" 
+            fill="none" 
+            stroke="transparent" 
+            strokeWidth="8" 
+            style={{ cursor: 'pointer' }}
+            onClick={() => setSelectedNode('adhd')}
+          />
           <circle 
             cx="50" cy="50" r="18" 
             fill="none" 
@@ -1006,9 +1043,13 @@ export function ExhibitPlaqueVisualization() {
             style={{ cursor: 'pointer', transition: 'all 0.3s ease' }}
             onClick={() => setSelectedNode('adhd')}
           />
-          <circle cx="50" cy="32" r="2.5" fill="#ffb300" style={{ filter: 'drop-shadow(0 0 4px #ffb300)', cursor: 'pointer' }} onClick={() => setSelectedNode('adhd')}>
-            <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="540 50 50" dur="7s" repeatCount="indefinite" />
-          </circle>
+          <g>
+            {!reduceMotion && <animateTransform attributeName="transform" type="rotate" from="180 50 50" to="540 50 50" dur="7s" repeatCount="indefinite" />}
+            {/* Expanded Hitbox */}
+            <circle cx="50" cy="32" r="10" fill="transparent" style={{ cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setSelectedNode('adhd'); }} />
+            {/* Visual Node */}
+            <circle cx="50" cy="32" r="2.5" fill="#ffb300" style={{ filter: 'drop-shadow(0 0 4px #ffb300)', cursor: 'pointer' }} onClick={(e) => { e.stopPropagation(); setSelectedNode('adhd'); }} />
+          </g>
         </svg>
       </div>
 
@@ -1029,7 +1070,7 @@ export function ExhibitPlaqueVisualization() {
 // ==========================================
 // 📊 EXHIBIT 2: TRAIT-RESPONSIVE RADAR MATRIX
 // ==========================================
-export function ExhibitMatrixVisualization({ activeTrait }) {
+export function ExhibitMatrixVisualization({ activeTrait, reduceMotion }) {
   const [lens, setLens] = useState('affirming'); // 'pathology' or 'affirming'
 
   // Render responsive graphic patterns representing each trait + selected lens
@@ -1043,12 +1084,12 @@ export function ExhibitMatrixVisualization({ activeTrait }) {
         return (
           <g>
             <circle cx="100" cy="60" r="10" fill="none" stroke={mainColor} strokeWidth="1" opacity="0.3">
-              <animate attributeName="r" values={isAffirm ? "5;45" : "5;12"} dur={isAffirm ? "3s" : "0.8s"} repeatCount="indefinite" />
-              <animate attributeName="opacity" values="0.8;0" dur={isAffirm ? "3s" : "0.8s"} repeatCount="indefinite" />
+              {!reduceMotion && <animate attributeName="r" values={isAffirm ? "5;45" : "5;12"} dur={isAffirm ? "3s" : "0.8s"} repeatCount="indefinite" />}
+              {!reduceMotion && <animate attributeName="opacity" values="0.8;0" dur={isAffirm ? "3s" : "0.8s"} repeatCount="indefinite" />}
             </circle>
             <circle cx="100" cy="60" r="10" fill="none" stroke={mainColor} strokeWidth="1.5" opacity="0.2">
-              <animate attributeName="r" values={isAffirm ? "15;55" : "10;15"} dur={isAffirm ? "3s" : "0.8s"} repeatCount="indefinite" begin="1s" />
-              <animate attributeName="opacity" values="0.6;0" dur={isAffirm ? "3s" : "0.8s"} repeatCount="indefinite" begin="1s" />
+              {!reduceMotion && <animate attributeName="r" values={isAffirm ? "15;55" : "10;15"} dur={isAffirm ? "3s" : "0.8s"} repeatCount="indefinite" begin="1s" />}
+              {!reduceMotion && <animate attributeName="opacity" values="0.6;0" dur={isAffirm ? "3s" : "0.8s"} repeatCount="indefinite" begin="1s" />}
             </circle>
             <circle cx="100" cy="60" r="4" fill={mainColor} style={{ filter: `drop-shadow(0 0 5px ${mainColor})` }} />
             {/* Pathology locks or Affirming rings */}
@@ -1267,7 +1308,7 @@ export function ExhibitMatrixVisualization({ activeTrait }) {
 // ==========================================
 // 📜 EXHIBIT 3: 7-NODE GLOWING DECADAL TIMELINE CONSOLE
 // ==========================================
-export function ExhibitHistoryModel() {
+export function ExhibitHistoryModel({ reduceMotion }) {
   const [activeEra, setActiveEra] = useState('era-1800s');
 
   const eras = exhibitData.historyEras;
@@ -1279,14 +1320,14 @@ export function ExhibitHistoryModel() {
         return (
           <g>
             {/* Rotating Cog 1 */}
-            <g style={{ transformOrigin: '30px 40px', animation: 'spin-turntable 8s infinite linear' }}>
+            <g style={{ transformOrigin: '30px 40px', animation: reduceMotion ? 'none' : 'spin-turntable 8s infinite linear' }}>
               <circle cx="30" cy="40" r="10" fill="none" stroke="#ffb300" strokeWidth="1" strokeDasharray="3 2" />
               <circle cx="30" cy="40" r="14" fill="none" stroke="#ffb300" strokeWidth="1.2" />
               <path d="M 30,22 L 30,26 M 30,54 L 30,58 M 12,40 L 16,40 M 44,40 L 48,40 M 17,27 L 21,31 M 39,49 L 43,53 M 17,53 L 21,49 M 39,27 L 43,31" stroke="#ffb300" strokeWidth="2.5" strokeLinecap="round" />
             </g>
 
             {/* Rotating Cog 2 (Interlocking and reversed) */}
-            <g style={{ transformOrigin: '55px 30px', animation: 'spin-turntable-reverse 6s infinite linear' }}>
+            <g style={{ transformOrigin: '55px 30px', animation: reduceMotion ? 'none' : 'spin-turntable-reverse 6s infinite linear' }}>
               <circle cx="55" cy="30" r="7" fill="none" stroke="#ffb300" strokeWidth="1" strokeDasharray="2 2" opacity="0.8" />
               <circle cx="55" cy="30" r="10" fill="none" stroke="#ffb300" strokeWidth="1.2" />
               <path d="M 55,17 L 55,20 M 55,40 L 55,43 M 42,30 L 45,30 M 65,30 L 68,30 M 46,21 L 48,24 M 62,36 L 64,39 M 46,39 L 48,36 M 62,21 L 64,24" stroke="#ffb300" strokeWidth="2" strokeLinecap="round" />
@@ -1298,12 +1339,12 @@ export function ExhibitHistoryModel() {
               <rect x="85" y="15" width="6" height="50" rx="1" />
               
               <rect x="76" y="25" width="4" height="39" fill="#ffb300" opacity="0.6">
-                <animate attributeName="height" values="0;39;0" dur="4s" repeatCount="indefinite" />
-                <animate attributeName="y" values="64;25;64" dur="4s" repeatCount="indefinite" />
+                {!reduceMotion && <animate attributeName="height" values="0;39;0" dur="4s" repeatCount="indefinite" />}
+                {!reduceMotion && <animate attributeName="y" values="64;25;64" dur="4s" repeatCount="indefinite" />}
               </rect>
               <rect x="86" y="25" width="4" height="39" fill="#ffb300" opacity="0.8">
-                <animate attributeName="height" values="0;39;0" dur="3s" repeatCount="indefinite" />
-                <animate attributeName="y" values="64;25;64" dur="3s" repeatCount="indefinite" />
+                {!reduceMotion && <animate attributeName="height" values="0;39;0" dur="3s" repeatCount="indefinite" />}
+                {!reduceMotion && <animate attributeName="y" values="64;25;64" dur="3s" repeatCount="indefinite" />}
               </rect>
 
               <line x1="30" y1="40" x2="55" y2="30" stroke="rgba(255, 179, 0, 0.25)" strokeWidth="0.8" strokeDasharray="2 2" />
@@ -1318,7 +1359,7 @@ export function ExhibitHistoryModel() {
           <g>
             <circle cx="50" cy="35" r="16" fill="none" stroke="rgba(0, 240, 255, 0.15)" strokeWidth="0.8" strokeDasharray="3 3" />
             <circle cx="50" cy="35" r="12" fill="none" stroke="rgba(0, 240, 255, 0.3)" strokeWidth="0.5" />
-            <circle cx="50" cy="35" r="4.5" fill="#00f0ff" style={{ animation: 'shiver-node 0.18s infinite linear', filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
+            <circle cx="50" cy="35" r="4.5" fill="#00f0ff" style={{ animation: reduceMotion ? 'none' : 'shiver-node 0.18s infinite linear', filter: 'drop-shadow(0 0 3px #00f0ff)' }} />
             <circle cx="15" cy="65" r="3" fill="rgba(255,255,255,0.25)" />
             <line x1="50" y1="35" x2="15" y2="65" stroke="rgba(255,255,255,0.1)" strokeWidth="0.8" strokeDasharray="2 2" />
             <text x="50" y="70" fill="rgba(255,255,255,0.4)" fontSize="4.5" fontFamily="monospace" textAnchor="middle">ISOLATION</text>
@@ -1328,7 +1369,7 @@ export function ExhibitHistoryModel() {
       case 'era-1940s':
         return (
           <g>
-            <rect x="0" y="0" width="100" height="80" rx="4" style={{ animation: 'pulse-red-alert 3s infinite' }} />
+            <rect x="0" y="0" width="100" height="80" rx="4" style={{ animation: reduceMotion ? 'none' : 'pulse-red-alert 3s infinite' }} />
             <line x1="20" y1="5" x2="20" y2="75" stroke="#333" strokeWidth="1.5" />
             <line x1="35" y1="5" x2="35" y2="75" stroke="#333" strokeWidth="1.5" />
             <line x1="50" y1="5" x2="50" y2="75" stroke="#333" strokeWidth="1.5" />
@@ -1336,7 +1377,7 @@ export function ExhibitHistoryModel() {
             <line x1="80" y1="5" x2="80" y2="75" stroke="#333" strokeWidth="1.5" />
             <line x1="5" y1="25" x2="95" y2="25" stroke="#222" strokeWidth="2.5" />
             <line x1="5" y1="55" x2="95" y2="55" stroke="#222" strokeWidth="2.5" />
-            <g style={{ animation: 'sweep-spotlight 4s infinite ease-in-out', transformOrigin: '50px 0px' }}>
+            <g style={{ animation: reduceMotion ? 'none' : 'sweep-spotlight 4s infinite ease-in-out', transformOrigin: '50px 0px' }}>
               <polygon points="50,0 20,80 80,80" fill="rgba(234,67,53,0.18)" stroke="rgba(234,67,53,0.08)" strokeWidth="0.5" />
             </g>
             <text x="50" y="73" fill="#ea4335" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">CONFINED</text>
@@ -1354,8 +1395,8 @@ export function ExhibitHistoryModel() {
               <line x1="50" y1="0" x2="50" y2="80" />
               <line x1="75" y1="0" x2="75" y2="80" />
             </g>
-            <path d="M 50,5 L 45,30 L 60,35 L 50,70" fill="none" stroke="#ff7522" strokeWidth="1.8" strokeDasharray="30" strokeDashoffset="0" style={{ animation: 'electrical-discharge 0.6s infinite steps(4)', filter: 'drop-shadow(0 0 3px #ff7522)' }} />
-            <circle cx="50" cy="70" r="3" fill="#ffb300" style={{ animation: 'shiver-node 0.1s infinite' }} />
+            <path d="M 50,5 L 45,30 L 60,35 L 50,70" fill="none" stroke="#ff7522" strokeWidth="1.8" strokeDasharray="30" strokeDashoffset="0" style={{ animation: reduceMotion ? 'none' : 'electrical-discharge 0.6s infinite steps(4)', filter: 'drop-shadow(0 0 3px #ff7522)' }} />
+            <circle cx="50" cy="70" r="3" fill="#ffb300" style={{ animation: reduceMotion ? 'none' : 'shiver-node 0.1s infinite' }} />
             <text x="50" y="74" fill="#ff7522" fontSize="4.5" fontFamily="monospace" textAnchor="middle" fontWeight="bold">AVERSIVE_DISCHARGE</text>
           </g>
         );
@@ -1403,8 +1444,8 @@ export function ExhibitHistoryModel() {
             <line x1="50" y1="40" x2="80" y2="20" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.8" />
             <line x1="50" y1="40" x2="30" y2="60" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.8" />
             <line x1="50" y1="40" x2="70" y2="60" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.8" />
-            <circle cx="50" cy="40" r="10" fill="none" stroke="#00ff88" strokeWidth="0.8" style={{ animation: 'pulse-signal-ring 1.8s infinite' }} />
-            <circle cx="50" cy="40" r="20" fill="none" stroke="#00f0ff" strokeWidth="0.8" style={{ animation: 'pulse-signal-ring 1.8s infinite 0.9s' }} />
+            <circle cx="50" cy="40" r="10" fill="none" stroke="#00ff88" strokeWidth="0.8" style={{ animation: reduceMotion ? 'none' : 'pulse-signal-ring 1.8s infinite' }} />
+            <circle cx="50" cy="40" r="20" fill="none" stroke="#00f0ff" strokeWidth="0.8" style={{ animation: reduceMotion ? 'none' : 'pulse-signal-ring 1.8s infinite 0.9s' }} />
             <text x="50" y="73" fill="#00ff88" fontSize="4.5" fontFamily="monospace" textAnchor="middle">ADVOCACY_NET</text>
           </g>
         );
@@ -1413,8 +1454,8 @@ export function ExhibitHistoryModel() {
       default:
         return (
           <g>
-            <path d="M 5,30 Q 20,10 35,30 T 65,30 T 95,30" fill="none" stroke="#00ff88" strokeWidth="1.5" strokeDasharray="40" strokeDashoffset="0" style={{ animation: 'phase-wave-emerald 1.5s infinite linear' }} />
-            <path d="M 5,50 Q 20,70 35,50 T 65,50 T 95,50" fill="none" stroke="#ff007f" strokeWidth="1.5" strokeDasharray="40" strokeDashoffset="0" style={{ animation: 'phase-wave-emerald 1.5s infinite linear reverse' }} />
+            <path d="M 5,30 Q 20,10 35,30 T 65,30 T 95,30" fill="none" stroke="#00ff88" strokeWidth="1.5" strokeDasharray="40" strokeDashoffset="0" style={{ animation: reduceMotion ? 'none' : 'phase-wave-emerald 1.5s infinite linear' }} />
+            <path d="M 5,50 Q 20,70 35,50 T 65,50 T 95,50" fill="none" stroke="#ff007f" strokeWidth="1.5" strokeDasharray="40" strokeDashoffset="0" style={{ animation: reduceMotion ? 'none' : 'phase-wave-emerald 1.5s infinite linear reverse' }} />
             <line x1="35" y1="30" x2="35" y2="50" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" strokeDasharray="2 2" />
             <line x1="65" y1="30" x2="65" y2="50" stroke="rgba(255,255,255,0.25)" strokeWidth="0.8" strokeDasharray="2 2" />
             <circle cx="35" cy="40" r="1.5" fill="#fff" />
@@ -1585,7 +1626,7 @@ export function ExhibitHistoryModel() {
 // ==========================================
 // 🚀 EXHIBIT 6: FUTURE MARTIAN BIOSPHERE CANOPY STABILIZER
 // ==========================================
-export function ExhibitMartianBiosphere() {
+export function ExhibitMartianBiosphere({ reduceMotion }) {
   const [sensoryDamping, setSensoryDamping] = useState(50);
   const [taskAutonomy, setTaskAutonomy] = useState(50);
   const [directComms, setDirectComms] = useState(50);
@@ -1722,7 +1763,7 @@ export function ExhibitMartianBiosphere() {
 // ==========================================
 // 📖 EXHIBIT 7: BECKER NARRATIVE MEMOIR CONSTELLATION MAP
 // ==========================================
-export function ExhibitMemoirCrystalMap({ activePhase, setActivePhase }) {
+export function ExhibitMemoirCrystalMap({ activePhase, setActivePhase, reduceMotion }) {
   const crystalCoordinates = exhibitData.memoirCrystalMap.coordinates;
 
   return (

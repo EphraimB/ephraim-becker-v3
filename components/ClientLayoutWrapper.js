@@ -20,10 +20,10 @@ export default function ClientLayoutWrapper({ children }) {
     hudSectorName = 'Portfolio Archives';
     currentLocationName = 'PORTFOLIO';
   } else if (pathname === '/neurodiversity') {
-    bgImage = '/assets/images/backgrounds/atmosphere-dome.png';
+    bgImage = '/assets/images/backgrounds/mars-dome-park.png';
     currentTheme = 'biosphere';
-    hudSectorName = 'Neurodiversity Deck';
-    currentLocationName = 'ADVOCACY HUB';
+    hudSectorName = 'Mars-Dome Orientation';
+    currentLocationName = 'PSYCHOLOGICAL REFUGE';
   }
 
 

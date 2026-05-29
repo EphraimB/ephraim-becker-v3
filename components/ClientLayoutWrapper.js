@@ -19,11 +19,16 @@ export default function ClientLayoutWrapper({ children }) {
     currentTheme = 'metropolis';
     hudSectorName = 'Portfolio Archives';
     currentLocationName = 'PORTFOLIO';
-  } else if (pathname === '/neurodiversity') {
+  } else if (pathname === '/park' || pathname === '/park/neurodiversity') {
     bgImage = '/assets/images/backgrounds/mars-dome-park.png';
     currentTheme = 'biosphere';
-    hudSectorName = 'Mars-Dome Orientation';
-    currentLocationName = 'PSYCHOLOGICAL REFUGE';
+    if (pathname === '/park/neurodiversity') {
+      hudSectorName = 'Ares City Park - Meetup Grove';
+      currentLocationName = 'ARES CITY PARK - MEETUP GROVE';
+    } else {
+      hudSectorName = 'Ares City Park';
+      currentLocationName = 'ARES CITY PARK';
+    }
   }
 
 
@@ -99,7 +104,7 @@ export default function ClientLayoutWrapper({ children }) {
         
         <div className="workspace-deck">
           {/* Natural standing roomscale profile figure */}
-          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/neurodiversity' && (
+          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/park/neurodiversity' && (
             <div className={`roomscale-natural-body page-${currentTheme}`}>
               <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
             </div>

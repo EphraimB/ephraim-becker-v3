@@ -6,7 +6,8 @@ import { useRouter, usePathname } from 'next/navigation';
 const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
   '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
-  '/neurodiversity': { x: 150, y: -100, name: 'NEURODIVERSITY DECK' },
+  '/park': { x: 150, y: -100, name: 'ARES CITY PARK' },
+  '/park/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - MEETUP GROVE' },
   'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }
 };
 
@@ -76,8 +77,8 @@ export default function CityGridMap({ isDrawer = false }) {
     {
       id: 'neurodiversity',
       label: 'SECTOR 02 // ADVOCACY',
-      title: 'NEURODIVERSITY DECK',
-      route: '/neurodiversity',
+      title: pathname === '/park/neurodiversity' ? 'Ares City Park - Meetup Grove' : 'Ares City Park',
+      route: '/park',
       color: '#00ff88',
       rgb: '0, 255, 136',
       icon: '🧠',
@@ -307,7 +308,11 @@ export default function CityGridMap({ isDrawer = false }) {
 
         {sectors.map((sector) => {
           const isAcad = sector.id === 'academics';
-          const isCurrentActive = isAcad ? academicSyncActive : isRouteActive(sector.route);
+          const isCurrentActive = isAcad 
+            ? academicSyncActive 
+            : (sector.id === 'neurodiversity' 
+                ? (pathname === '/park' || pathname === '/park/neurodiversity') 
+                : isRouteActive(sector.route));
 
           return (
             <div 
@@ -388,6 +393,74 @@ export default function CityGridMap({ isDrawer = false }) {
               <div style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.35)', fontFamily: 'monospace', textAlign: 'left', marginTop: '2px', borderTop: '1px dashed rgba(255,255,255,0.06)', paddingTop: '4px' }}>
                 {sector.desc}
               </div>
+
+              {/* Tactical area sublist for Ares City Park */}
+              {sector.id === 'neurodiversity' && (
+                <div 
+                  style={{ 
+                    marginTop: '8px', 
+                    paddingTop: '8px', 
+                    borderTop: '1px solid rgba(0, 255, 136, 0.15)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '6px'
+                  }}
+                  onClick={(e) => {
+                    // Prevent parent card-level click if clicking inside sublist
+                    e.stopPropagation();
+                  }}
+                >
+                  <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(0, 255, 136, 0.6)', letterSpacing: '0.5px', textTransform: 'uppercase', fontWeight: 'bold' }}>
+                    [ PARK SECTORS ]
+                  </span>
+                  
+                  {/* Item 1: Habitat Entrance Plaza & Gardens */}
+                  <div
+                    onClick={() => {
+                      handleTeleport('/park');
+                    }}
+                    style={{
+                      padding: '4px 8px',
+                      fontSize: '0.65rem',
+                      fontFamily: 'monospace',
+                      background: pathname === '/park' ? 'rgba(0, 255, 136, 0.1)' : 'rgba(0,0,0,0.3)',
+                      border: `1px solid ${pathname === '/park' ? '#00ff88' : 'rgba(255,255,255,0.08)'}`,
+                      borderRadius: '4px',
+                      color: pathname === '/park' ? '#00ff88' : 'rgba(255,255,255,0.7)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    <span>📍 Park Entrance Plaza</span>
+                    {pathname === '/park' && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
+                  </div>
+
+                  {/* Item 2: Advocacy Meetup Grove */}
+                  <div
+                    onClick={() => {
+                      handleTeleport('/park/neurodiversity');
+                    }}
+                    style={{
+                      padding: '4px 8px',
+                      fontSize: '0.65rem',
+                      fontFamily: 'monospace',
+                      background: pathname === '/park/neurodiversity' ? 'rgba(0, 255, 136, 0.1)' : 'rgba(0,0,0,0.3)',
+                      border: `1px solid ${pathname === '/park/neurodiversity' ? '#00ff88' : 'rgba(255,255,255,0.08)'}`,
+                      borderRadius: '4px',
+                      color: pathname === '/park/neurodiversity' ? '#00ff88' : 'rgba(255,255,255,0.7)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      transition: 'all 0.2s'
+                    }}
+                  >
+                    <span>📍 Meetup Grove & Campfire</span>
+                    {pathname === '/park/neurodiversity' && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
+                  </div>
+                </div>
+              )}
 
               {/* Inline Academics Sync expansion */}
               {isAcad && academicSyncActive && renderAcademicTelemetryContent(true)}

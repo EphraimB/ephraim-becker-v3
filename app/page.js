@@ -622,7 +622,7 @@ export default function AresDashboard() {
                          {activeInterest.id === 'neurodiversity' && (
                            <div style={{ marginTop: '12px', marginBottom: '8px' }}>
                              <a
-                               href="/neurodiversity"
+                               href="/park"
                                className="hud-btn"
                                style={{
                                  display: 'inline-block',

@@ -89,7 +89,7 @@ export default function NeurodiversityParkMuseum({ defaultSector = 'foyer' }) {
     
     // Perform soft router URL change
     if (sector === 'meetup') {
-      router.push('/park/neurodiversity');
+      router.push('/neurodiversity');
     } else {
       router.push('/park');
     }
@@ -618,7 +618,7 @@ export default function NeurodiversityParkMuseum({ defaultSector = 'foyer' }) {
             onClick={() => changeSector('meetup')} 
             className={`museum-nav-btn ${activeSector === 'meetup' ? 'active-blue' : ''}`}
           >
-            👥 Meetup Grove
+            👥 Meetup & Advocacy
           </button>
         </div>
 
@@ -644,7 +644,7 @@ export default function NeurodiversityParkMuseum({ defaultSector = 'foyer' }) {
                   Welcome, Citizen. Ares City Park is our premier outdoor biodome sanctuary. Under this soaring synthetic sky-canopy, colony inhabitants hang out, relax on grass lawns, play low-gravity dome-sports, and build deep social bonds. Rather than medicalizing differences, this park celebrates diverse cognitive wiring as natural, vital variations that strengthen our collective colony's survival and happiness.
                 </p>
                 <p style={{ fontSize: '0.86rem', color: '#8a9bb5', lineHeight: '1.7', margin: '0 0 24px 0', textAlign: 'justify' }}>
-                  Stroll the **Community Synergy Boardwalk** to explore plural minds, or head directly to the **Advocacy Meetup Grove & Campfire Circle** to hang out with fellow advocates, play outdoor sports, and sync mutual communication bridges!
+                  Stroll the **Community Synergy Boardwalk** to explore plural minds, or head directly to the **Neurodiversity Meetup & Advocacy Spot** to hang out with fellow advocates, play outdoor sports, and sync mutual communication bridges!
                 </p>
 
                 <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
@@ -653,7 +653,7 @@ export default function NeurodiversityParkMuseum({ defaultSector = 'foyer' }) {
                     className="hud-btn" 
                     style={{ borderWidth: '1px', borderStyle: 'solid', borderColor: '#00f0ff', color: '#00f0ff', background: 'rgba(0, 240, 255, 0.08)' }}
                   >
-                    [ 👥 JOIN THE ADVOCACY MEETUP GROVE & CAMPFIRE ]
+                    [ 👥 JOIN THE NEURODIVERSITY MEETUP & ADVOCACY ]
                   </button>
                   <button 
                     onClick={() => changeSector('corridor')} 
@@ -1438,7 +1438,7 @@ export default function NeurodiversityParkMuseum({ defaultSector = 'foyer' }) {
           )}
 
           {/* ====================================
-              MEETUP GROVE SECTOR (Campfire Circle & Double Empathy Tuner)
+              NEURODIVERSITY MEETUP & ADVOCACY SECTOR
               ==================================== */}
           {activeSector === 'meetup' && (
             <div className="museum-view-corridor" style={{ width: '100%', gap: '20px' }}>
@@ -1449,20 +1449,20 @@ export default function NeurodiversityParkMuseum({ defaultSector = 'foyer' }) {
                 {/* Grove Info */}
                 <div className="bubbly-panel" style={{ padding: '16px' }}>
                   <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00f0ff', letterSpacing: '1px', display: 'block', marginBottom: '4px' }}>
-                    // MEETUP GROVE // CAMPFIRE CIRCLE // ACTIVE OUTDOOR HUB
+                    // NEURODIVERSITY MEETUP & ADVOCACY // ACTIVE OUTDOOR HUB
                   </span>
                   <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.92rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '8px' }}>
-                    Advocacy Meetup Grove & Campfire
+                    Neurodiversity Meetup & Advocacy
                   </h3>
                   <p style={{ fontSize: '0.74rem', color: '#8a9bb5', lineHeight: 1.45, margin: 0, textAlign: 'justify' }}>
-                    Welcome to the campfire circle at the Advocacy Meetup Grove! Colony citizens hang out here to socialize, play low-gravity sports, share coffee, form mutual support groups, and establish explicit communication channels under the synthetic dome sky.
+                    Welcome to the Neurodiversity Meetup & Advocacy Spot! Colony citizens hang out here to socialize, play low-gravity sports, share coffee, form mutual support groups, and establish explicit communication channels under the synthetic dome sky.
                   </p>
                 </div>
 
                 {/* Scheduling Board */}
                 <div className="bubbly-panel" style={{ padding: '14px', border: '1.5px solid rgba(0, 240, 255, 0.2)', background: 'rgba(6, 9, 20, 0.8)' }}>
                   <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: '#00f0ff', fontWeight: 'bold', display: 'block', borderBottom: '1px dashed rgba(0, 240, 255, 0.15)', paddingBottom: '6px', marginBottom: '8px' }}>
-                    📅 ACTIVE MEETUP GROVE BULLETIN BOARD
+                    📅 ACTIVE MEETUP BULLETIN BOARD
                   </span>
                   
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

@@ -1,4 +1,4 @@
-import NeurodiversityParkMuseum from '../../../components/NeurodiversityParkMuseum';
+import NeurodiversityParkMuseum from '../../components/NeurodiversityParkMuseum';
 
 export const metadata = {
   title: 'Ares City Park - Advocacy Meetup Grove',

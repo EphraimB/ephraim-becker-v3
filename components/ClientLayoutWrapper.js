@@ -19,12 +19,12 @@ export default function ClientLayoutWrapper({ children }) {
     currentTheme = 'metropolis';
     hudSectorName = 'Portfolio Archives';
     currentLocationName = 'PORTFOLIO';
-  } else if (pathname === '/park' || pathname === '/park/neurodiversity') {
+  } else if (pathname === '/park' || pathname === '/neurodiversity') {
     bgImage = '/assets/images/backgrounds/mars-dome-park.png';
     currentTheme = 'biosphere';
-    if (pathname === '/park/neurodiversity') {
-      hudSectorName = 'Ares City Park - Meetup Grove';
-      currentLocationName = 'ARES CITY PARK - MEETUP GROVE';
+    if (pathname === '/neurodiversity') {
+      hudSectorName = 'Ares City Park - Neurodiversity Meetup & Advocacy';
+      currentLocationName = 'ARES CITY PARK - NEURODIVERSITY MEETUP & ADVOCACY';
     } else {
       hudSectorName = 'Ares City Park';
       currentLocationName = 'ARES CITY PARK';
@@ -36,6 +36,15 @@ export default function ClientLayoutWrapper({ children }) {
   useEffect(() => {
     setMapDrawerOpen(false);
   }, [pathname]);
+
+  // Parse location name into primary and sub-location for stacked map styling
+  let primaryLoc = currentLocationName;
+  let subLoc = '';
+  if (currentLocationName.includes(' - ')) {
+    const parts = currentLocationName.split(' - ');
+    primaryLoc = parts[0];
+    subLoc = parts[1];
+  }
 
   return (
     <>
@@ -66,7 +75,14 @@ export default function ClientLayoutWrapper({ children }) {
         }}
       >
         <span className="locator-pulse-light"></span>
-        <span className="locator-location-name">📍 {currentLocationName}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', flex: 1 }}>
+          <span className="locator-location-name">📍 {primaryLoc}</span>
+          {subLoc && (
+            <span className="locator-sub-name">
+              [ {subLoc} ]
+            </span>
+          )}
+        </div>
         <span className="locator-hint-arrow">➔</span>
       </button>
 
@@ -104,7 +120,7 @@ export default function ClientLayoutWrapper({ children }) {
         
         <div className="workspace-deck">
           {/* Natural standing roomscale profile figure */}
-          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/park/neurodiversity' && (
+          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/neurodiversity' && (
             <div className={`roomscale-natural-body page-${currentTheme}`}>
               <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
             </div>

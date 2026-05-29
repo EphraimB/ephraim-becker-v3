@@ -7,7 +7,7 @@ const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
   '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
   '/park': { x: 150, y: -100, name: 'ARES CITY PARK' },
-  '/park/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - MEETUP GROVE' },
+  '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY MEETUP & ADVOCACY' },
   'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }
 };
 
@@ -77,7 +77,7 @@ export default function CityGridMap({ isDrawer = false }) {
     {
       id: 'neurodiversity',
       label: 'SECTOR 02 // ADVOCACY',
-      title: pathname === '/park/neurodiversity' ? 'Ares City Park - Meetup Grove' : 'Ares City Park',
+      title: pathname === '/neurodiversity' ? 'Ares City Park - Neurodiversity Meetup & Advocacy' : 'Ares City Park',
       route: '/park',
       color: '#00ff88',
       rgb: '0, 255, 136',
@@ -311,7 +311,7 @@ export default function CityGridMap({ isDrawer = false }) {
           const isCurrentActive = isAcad 
             ? academicSyncActive 
             : (sector.id === 'neurodiversity' 
-                ? (pathname === '/park' || pathname === '/park/neurodiversity') 
+                ? (pathname === '/park' || pathname === '/neurodiversity') 
                 : isRouteActive(sector.route));
 
           return (
@@ -440,24 +440,24 @@ export default function CityGridMap({ isDrawer = false }) {
                   {/* Item 2: Advocacy Meetup Grove */}
                   <div
                     onClick={() => {
-                      handleTeleport('/park/neurodiversity');
+                      handleTeleport('/neurodiversity');
                     }}
                     style={{
                       padding: '4px 8px',
                       fontSize: '0.65rem',
                       fontFamily: 'monospace',
-                      background: pathname === '/park/neurodiversity' ? 'rgba(0, 255, 136, 0.1)' : 'rgba(0,0,0,0.3)',
-                      border: `1px solid ${pathname === '/park/neurodiversity' ? '#00ff88' : 'rgba(255,255,255,0.08)'}`,
+                      background: pathname === '/neurodiversity' ? 'rgba(0, 255, 136, 0.1)' : 'rgba(0,0,0,0.3)',
+                      border: `1px solid ${pathname === '/neurodiversity' ? '#00ff88' : 'rgba(255,255,255,0.08)'}`,
                       borderRadius: '4px',
-                      color: pathname === '/park/neurodiversity' ? '#00ff88' : 'rgba(255,255,255,0.7)',
+                      color: pathname === '/neurodiversity' ? '#00ff88' : 'rgba(255,255,255,0.7)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       transition: 'all 0.2s'
                     }}
                   >
-                    <span>📍 Meetup Grove & Campfire</span>
-                    {pathname === '/park/neurodiversity' && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
+                    <span>📍 Neurodiversity Meetup & Advocacy</span>
+                    {pathname === '/neurodiversity' && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
                   </div>
                 </div>
               )}

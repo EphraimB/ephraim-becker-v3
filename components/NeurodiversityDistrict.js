@@ -378,17 +378,20 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
           {activeSector === 'plaza' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%', margin: '0 auto', maxWidth: '900px', padding: '10px 0 20px 0' }}>
               
-              {/* Soft Translucent Welcome Plaque */}
-              <div className="bubbly-panel" style={{ textAlign: 'center', padding: '24px 30px' }}>
+              {/* Soft Translucent Welcome Signage Plaque */}
+              <div className="bubbly-panel" style={{ textAlign: 'center', padding: '24px 30px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                 <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '3px', display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
-                  // ARES CITY PARK // NEURODIVERSITY DISTRICT PLAZA
+                  // DISTRICT WELCOME // PORTAL DIRECTORY
                 </span>
-                <h1 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.75rem', fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '14px' }}>
-                  Welcome to the Plaza
+                <h1 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.4rem', fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '14px' }}>
+                  Welcome Plaza
                 </h1>
-                <p style={{ fontSize: '0.88rem', color: 'rgba(255, 255, 255, 0.78)', lineHeight: '1.75', margin: '0 auto', maxWidth: '780px', textAlign: 'justify' }}>
-                  Welcome to the **Neurodiversity District**, a calm public plaza nestled inside the lush botanical dome of Ares City Park. This space was designed as an eco-habitat for human well-being, where cognitive diversity, sensory flexibility, explicit communication, and community care are woven directly into the physical design of society itself. Rather than enforcing compliance, we invite you to experience how architecture and social infrastructure can adapt to support every human mind.
-                </p>
+                
+                <div style={{ fontSize: '0.8rem', color: '#8a9bb5', lineHeight: '1.65', margin: '0 auto', maxWidth: '460px', textAlign: 'center', fontFamily: 'monospace' }}>
+                  Welcome to the entryway plaza of the Neurodiversity District. This park biome is designed for sensory comfort, clear communication, and community connection.
+                  <br/><br/>
+                  Select a pathway node below to explore our shared spaces.
+                </div>
               </div>
 
               {/* Spatial Destination Pathways Grid */}

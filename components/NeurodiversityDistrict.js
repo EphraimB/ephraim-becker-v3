@@ -1,56 +1,20 @@
 'use client';
 
-import { useState, useEffect, cloneElement } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
-
-// Import our custom interactive Ares City simulation exhibits
-import {
-  MaskingDiagnostics,
-  MonotropicSpotlight,
-  DoubleEmpathySync,
-  EnvironmentalTransition,
-  BreathingRegulator,
-  ExhibitPlaqueVisualization,
-  ExhibitHistoryModel,
-  ExhibitMatrixVisualization,
-  ExhibitMartianBiosphere,
-  ExhibitMemoirCrystalMap
-} from './MuseumExhibits';
-
 import exhibitData from '../data/neurodiversity-exhibit.json';
 
 export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
   const router = useRouter();
   const pathname = usePathname();
 
-  const [activeExhibitIndex, setActiveExhibitIndex] = useState(0); // 0 to 6 for Trail Stations
-  const [activeStoryPhase, setActiveStoryPhase] = useState(0); // 0 to 4 for Memoir Sols Sols 1-5
-  const [activeMatrixTrait, setActiveMatrixTrait] = useState('stimming'); // 'stimming', 'hyperfocus', 'comms', 'autonomy'
-  const [activeSimTab, setActiveSimTab] = useState('comms'); // 'comms', 'sensory', 'masking'
-  const [analogyTheme, setAnalogyTheme] = useState('tech'); // 'tech', 'rpg', 'nature', 'sports'
   const [reduceMotion, setReduceMotion] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
-  const [passportId, setPassportId] = useState(null);
-  const [shareUrl, setShareUrl] = useState('');
-  const [transitState, setTransitState] = useState('slide-active');
-  const [activeStarNode, setActiveStarNode] = useState(null); // Selected Lexicon Term object
-
-  // Completed Trail Mission Directives states
-  const [completedTasks, setCompletedTasks] = useState({});
-
-  // Passport Pledge States
-  const [pledges, setPledges] = useState({
-    destigmatize: false,
-    accommodate: false,
-    explicitComms: false
-  });
-  const [citizenName, setCitizenName] = useState('');
-  const [passportGranted, setPassportGranted] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  // Meetup Registration States
+  // Meetup Hearth check-in states
   const [meetupName, setMeetupName] = useState('');
-  const [specialtyBadge, setSpecialtyBadge] = useState('architect');
+  const [specialtyBadge, setSpecialtyBadge] = useState('communicator');
   const [registeredCitizens, setRegisteredCitizens] = useState([
     { name: 'Ephraim Becker', badge: 'architect' },
     { name: 'Sarah K.', badge: 'guard' },
@@ -58,73 +22,32 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
   ]);
   const [registrationMessage, setRegistrationMessage] = useState('');
 
-  // Dialogue Perspective Switcher States (Communication Grove)
-  const [commsFilter, setCommsFilter] = useState('nt'); // 'nt' (implicit) | 'nd' (direct)
+  // Dialogue Switcher states (Comms Grove)
+  const [commsFilter, setCommsFilter] = useState('nd'); // Default to ND Explicit
 
-  // Double Empathy Tuner States (Communication Grove)
+  // Dialogue Connection Tuner states (Comms Grove)
   const [signalNT, setSignalNT] = useState(40);
   const [signalND, setSignalND] = useState(80);
   const [isSyncLocked, setIsSyncLocked] = useState(false);
 
-  // Sensory Adaptation Sliders (Sensory Garden)
-  const [lightingLvl, setLightingLvl] = useState(80); // 0% to 100%
-  const [crowdLvl, setCrowdLvl] = useState(30); // 0 to 50
-  const [soundLvl, setSoundLvl] = useState(60); // 0 to 100 dB
-  const [notifLvl, setNotifLvl] = useState(10); // 0 to 20 per Sol
-  const [speedLvl, setSpeedLvl] = useState(1.0); // 0.2s to 4.0s (CSS transition speed)
+  // Sensory Attunement Sliders (Sensory Garden)
+  const [lightingLvl, setLightingLvl] = useState(30); // Dim/Soothing preset by default
+  const [crowdLvl, setCrowdLvl] = useState(4); // Low density
+  const [soundLvl, setSoundLvl] = useState(25); // Quiet decibels
+  const [notifLvl, setNotifLvl] = useState(1); // Relaxed alert rate
+  const [speedLvl, setSpeedLvl] = useState(2.5); // Soft/slow motion sweep
 
-  const shareText = "Gather around the campfire circle at the Ares City Park - Neurodiversity District. Let's socialize, hang out, and adapt mutual neurotype communication bridges: ";
+  // Selected Lexicon Term object (Lexicon Pavilion)
+  const [activeStarNode, setActiveStarNode] = useState(null);
 
   useEffect(() => {
     setIsMounted(true);
-    setPassportId(Math.round(Math.random() * 90000) + 10000);
-    if (typeof window !== 'undefined') {
-      setShareUrl(window.location.href);
-    }
   }, []);
 
-  // Soft transition handler utilizing Next.js paths
+  // Soft transition handler utilizing Next.js path routing
   const changeRoute = (route) => {
     if (pathname === route) return;
-    setTransitState('slide-left');
-    
-    setTimeout(() => {
-      router.push(route);
-      setTransitState('slide-right');
-      setTimeout(() => {
-        setTransitState('slide-active');
-      }, 50);
-    }, 200);
-  };
-
-  const handleCopyLink = () => {
-    if (typeof window !== 'undefined') {
-      navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 3000);
-    }
-  };
-
-  const toggleTask = (exhibitId, taskIndex) => {
-    const key = `${exhibitId}_${taskIndex}`;
-    setCompletedTasks(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
-  };
-
-  const togglePledge = (key) => {
-    setPledges(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
-  };
-
-  const allPledgesChecked = pledges.destigmatize && pledges.accommodate && pledges.explicitComms;
-
-  const handleGeneratePassport = () => {
-    if (!citizenName.trim() || !allPledgesChecked) return;
-    setPassportGranted(true);
+    router.push(route);
   };
 
   const handleRegisterMeetup = (e) => {
@@ -137,11 +60,11 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
     ]);
     
     const badgeLabel = 
-      specialtyBadge === 'architect' ? 'Systems Architect' :
-      specialtyBadge === 'guard' ? 'Sensory Guard' :
-      specialtyBadge === 'communicator' ? 'Explicit Communicator' : 'Sports Organizer';
+      specialtyBadge === 'architect' ? 'Habitat Architect' :
+      specialtyBadge === 'guard' ? 'Sensory Supporter' :
+      specialtyBadge === 'communicator' ? 'Clear Communicator' : 'Sports Coordinator';
 
-    setRegistrationMessage(`✅ Registered! Badge [${badgeLabel}] mapped to Citizen [${meetupName.trim()}].`);
+    setRegistrationMessage(`✅ Welcomed! Checked in as Citizen [${meetupName.trim()}] with [${badgeLabel}] badge.`);
     setMeetupName('');
     setTimeout(() => setRegistrationMessage(''), 5000);
   };
@@ -161,7 +84,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
     }
   }, [signalNT, signalND]);
 
-  // Set predefined sensory conform/deficit presets
+  // Set predefined sensory presets
   const applyDeficitPreset = () => {
     setLightingLvl(100);
     setCrowdLvl(50);
@@ -178,78 +101,6 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
     setSpeedLvl(2.5);
   };
 
-  const getExhibitDesc = (id) => {
-    const exh = exhibitData.exhibits[id];
-    if (!exh) return '';
-    if (exh.desc) return Array.isArray(exh.desc) ? exh.desc.join(' ') : exh.desc;
-    if (exh.analogies && exh.analogies[analogyTheme]) {
-      return Array.isArray(exh.analogies[analogyTheme]) ? exh.analogies[analogyTheme].join(' ') : exh.analogies[analogyTheme];
-    }
-    return '';
-  };
-
-  const exhibits = [
-    {
-      id: 'exhibit-what-is-nd',
-      title: exhibitData.exhibits['exhibit-what-is-nd'].title,
-      subtitle: exhibitData.exhibits['exhibit-what-is-nd'].subtitle,
-      desc: getExhibitDesc('exhibit-what-is-nd'),
-      missionTasks: exhibitData.exhibits['exhibit-what-is-nd'].missionTasks || [],
-      component: <ExhibitPlaqueVisualization />
-    },
-    {
-      id: 'exhibit-two-ways',
-      title: exhibitData.exhibits['exhibit-two-ways'].title,
-      subtitle: exhibitData.exhibits['exhibit-two-ways'].subtitle,
-      desc: getExhibitDesc('exhibit-two-ways'),
-      missionTasks: exhibitData.exhibits['exhibit-two-ways'].missionTasks || [],
-      component: 'custom-matrix'
-    },
-    {
-      id: 'exhibit-history',
-      title: exhibitData.exhibits['exhibit-history'].title,
-      subtitle: exhibitData.exhibits['exhibit-history'].subtitle,
-      desc: getExhibitDesc('exhibit-history'),
-      missionTasks: exhibitData.exhibits['exhibit-history'].missionTasks || [],
-      component: <ExhibitHistoryModel />
-    },
-    {
-      id: 'exhibit-real-life',
-      title: exhibitData.exhibits['exhibit-real-life'].title,
-      subtitle: exhibitData.exhibits['exhibit-real-life'].subtitle,
-      desc: getExhibitDesc('exhibit-real-life'),
-      missionTasks: exhibitData.exhibits['exhibit-real-life'].missionTasks || [],
-      component: 'custom-real-life'
-    },
-    {
-      id: 'exhibit-accommodation',
-      title: exhibitData.exhibits['exhibit-accommodation'].title,
-      subtitle: exhibitData.exhibits['exhibit-accommodation'].subtitle,
-      desc: getExhibitDesc('exhibit-accommodation'),
-      missionTasks: exhibitData.exhibits['exhibit-accommodation'].missionTasks || [],
-      component: 'custom-accommodation'
-    },
-    {
-      id: 'exhibit-future',
-      title: exhibitData.exhibits['exhibit-future'].title,
-      subtitle: exhibitData.exhibits['exhibit-future'].subtitle,
-      desc: getExhibitDesc('exhibit-future'),
-      missionTasks: exhibitData.exhibits['exhibit-future'].missionTasks || [],
-      component: 'custom-future'
-    },
-    {
-      id: 'exhibit-story',
-      title: exhibitData.exhibits['exhibit-story'].title,
-      subtitle: exhibitData.exhibits['exhibit-story'].subtitle,
-      desc: getExhibitDesc('exhibit-story'),
-      missionTasks: exhibitData.exhibits['exhibit-story'].missionTasks || [],
-      component: 'custom-story'
-    }
-  ];
-
-  const storyPhases = exhibitData.storyPhases;
-  const matrixTraits = exhibitData.matrixTraits;
-
   // Render Sensory Garden Dynamic Visual Overlay styling
   const sensoryOverlayStyle = {
     position: 'absolute',
@@ -258,9 +109,9 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
     zIndex: 5,
     borderRadius: '16px',
     transition: `all ${speedLvl}s ease`,
-    background: `rgba(10, 14, 30, ${crowdLvl * 0.01})`,
-    filter: `brightness(${1.3 - lightingLvl * 0.008}) blur(${crowdLvl * 0.05}px) contrast(${1 + (soundLvl - 40) * 0.005})`,
-    boxShadow: notifLvl > 12 ? 'inset 0 0 20px rgba(255, 87, 34, 0.2)' : 'none'
+    background: `rgba(10, 14, 30, ${crowdLvl * 0.008})`,
+    filter: `brightness(${1.2 - lightingLvl * 0.007}) blur(${crowdLvl * 0.03}px) contrast(${1 + (soundLvl - 30) * 0.004})`,
+    boxShadow: notifLvl > 12 ? 'inset 0 0 20px rgba(255, 87, 34, 0.15)' : 'none'
   };
 
   return (
@@ -269,7 +120,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
       {/* Immersive Martian Biosphere Core CSS and Viewport Fixes */}
       <style dangerouslySetInnerHTML={{ __html: `
         .background-canvas {
-          filter: brightness(0.62) contrast(1.02) !important;
+          filter: brightness(0.68) contrast(1.01) !important;
         }
         .reduce-motion, .reduce-motion * {
           animation: none !important;
@@ -286,40 +137,40 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
         .museum-floor-nav-deck {
           display: grid;
           grid-template-columns: repeat(5, 1fr);
-          gap: 8px;
-          margin-bottom: 14px;
+          gap: 12px;
+          margin-bottom: 16px;
           flex-shrink: 0;
           z-index: 10;
         }
         .museum-nav-btn {
           padding: 10px 4px;
           font-family: var(--font-tech);
-          font-size: 0.65rem;
-          letter-spacing: 0.5px;
+          font-size: 0.68rem;
+          letter-spacing: 1px;
           text-transform: uppercase;
-          background: rgba(6, 9, 20, 0.7);
-          border-width: 1.5px;
-          border-style: solid;
-          borderColor: rgba(255, 255, 255, 0.08);
-          color: rgba(255, 255, 255, 0.6);
-          border-radius: 10px;
+          background: rgba(10, 14, 30, 0.4);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          color: rgba(255, 255, 255, 0.65);
+          border-radius: 12px;
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
           text-align: center;
           outline: none;
           box-shadow: inset 0 1px 2px rgba(255,255,255,0.02);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
         }
         .museum-nav-btn:hover {
-          borderColor: rgba(0, 240, 255, 0.4);
-          color: #00f0ff;
-          background: rgba(0, 240, 255, 0.04);
+          border-color: rgba(0, 255, 136, 0.3);
+          color: #00ff88;
+          background: rgba(0, 255, 136, 0.04);
         }
         .museum-nav-btn.active {
-          borderColor: #00f0ff;
-          color: #00f0ff;
-          background: rgba(0, 240, 255, 0.12);
-          box-shadow: 0 0 15px rgba(0, 240, 255, 0.2), inset 0 1px 3px rgba(0, 240, 255, 0.1);
-          text-shadow: 0 0 6px rgba(0, 240, 255, 0.5);
+          border-color: #00ff88;
+          color: #00ff88;
+          background: rgba(0, 255, 136, 0.08);
+          box-shadow: 0 4px 15px rgba(0, 255, 136, 0.12), inset 0 1px 3px rgba(0, 255, 136, 0.04);
+          text-shadow: 0 0 4px rgba(0, 255, 136, 0.3);
         }
         .museum-view-corridor {
           flex: 1;
@@ -350,56 +201,23 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
           height: 100%;
         }
 
-        .story-text-body {
-          font-size: 0.82rem;
-          color: #f2f6fc;
-          line-height: 1.6;
-          text-align: justify;
-          margin: 0;
-          font-weight: 300;
+        .bubbly-panel {
+          background: rgba(6, 9, 20, 0.3) !important;
+          border: 1px solid rgba(255, 255, 255, 0.08) !important;
+          border-radius: 16px !important;
+          padding: 20px !important;
+          backdrop-filter: blur(12px) !important;
+          -webkit-backdrop-filter: blur(12px) !important;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
         }
-        .gallery-nav-buttons-deck {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          flex-shrink: 0;
-          background: rgba(6, 9, 20, 0.6);
-          border-width: 1px;
-          border-style: solid;
-          borderColor: rgba(255,255,255,0.06);
-          border-radius: 12px;
-          padding: 8px 16px;
-          margin-top: auto;
-        }
-        .gallery-arrow-btn {
-          background: transparent;
-          border: none;
-          color: #00ff88;
-          font-family: var(--font-tech);
-          font-size: 0.7rem;
-          cursor: pointer;
-          outline: none;
-          transition: all 0.2s ease;
-          letter-spacing: 0.5px;
-        }
-        .gallery-arrow-btn:hover {
-          text-shadow: 0 0 8px #00ff88;
-          transform: scale(1.03);
-        }
-        .gallery-arrow-btn:disabled {
-          color: rgba(255,255,255,0.25);
-          cursor: not-allowed;
-          text-shadow: none;
-        }
+
         .starmap-canvas-box {
-          background: #04060c;
-          border-width: 1.5px;
-          border-style: solid;
-          borderColor: rgba(255, 255, 255, 0.08);
+          background: rgba(4, 6, 12, 0.4);
+          border: 1px solid rgba(255, 255, 255, 0.08);
           border-radius: 16px;
           overflow: hidden;
           position: relative;
-          box-shadow: inset 0 0 25px rgba(0,0,0,0.9);
+          box-shadow: inset 0 0 25px rgba(0,0,0,0.8);
           flex: 1;
           min-height: 250px;
         }
@@ -418,7 +236,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
           right: 0;
           width: 320px;
           height: 100%;
-          background: rgba(10, 14, 30, 0.96);
+          background: rgba(10, 14, 30, 0.94);
           border-left: 2px solid #00ff88;
           box-shadow: -10px 0 30px rgba(0, 0, 0, 0.7);
           z-index: 50;
@@ -429,78 +247,6 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
         @keyframes slide-drawer {
           from { transform: translateX(100%); }
           to { transform: translateX(0); }
-        }
-        .protocol-toggle-badge {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 12px;
-          border-radius: 8px;
-          background: rgba(255, 255, 255, 0.02);
-          border-width: 1px;
-          border-style: dashed;
-          borderColor: rgba(255,255,255,0.08);
-          cursor: pointer;
-          transition: all 0.25s ease;
-        }
-        .protocol-toggle-badge:hover {
-          borderColor: rgba(0,255,136,0.3);
-          background: rgba(255,255,255,0.03);
-        }
-        .protocol-toggle-badge.active {
-          background: rgba(0, 255, 136, 0.06);
-          border-width: 1.5px;
-          border-style: solid;
-          borderColor: #00ff88;
-          box-shadow: 0 0 10px rgba(0, 255, 136, 0.1);
-        }
-        .colony-passport-print-card {
-          background: linear-gradient(135deg, rgba(6, 9, 20, 0.94) 0%, rgba(10, 14, 30, 0.98) 100%);
-          border-width: 2px;
-          border-style: solid;
-          borderColor: #00ff88;
-          border-radius: 16px;
-          padding: 20px;
-          position: relative;
-          box-shadow: 0 0 25px rgba(0, 255, 136, 0.15);
-          overflow: hidden;
-          width: 100%;
-          max-width: 380px;
-          margin: 10px auto 0 auto;
-        }
-
-        .trait-select-grid {
-          display: grid;
-          grid-template-columns: repeat(3, 1fr);
-          gap: 8px;
-          margin-bottom: 12px;
-        }
-        .trait-select-btn {
-          padding: 8px 4px;
-          font-family: var(--font-tech);
-          font-size: 0.64rem;
-          letter-spacing: 0.5px;
-          background: rgba(4,6,12,0.6);
-          border-width: 1px;
-          border-style: solid;
-          borderColor: rgba(255,255,255,0.08);
-          color: rgba(255,255,255,0.6);
-          border-radius: 6px;
-          cursor: pointer;
-          transition: all 0.25s ease;
-          text-align: center;
-          outline: none;
-        }
-        .trait-select-btn:hover {
-          borderColor: rgba(0, 255, 136, 0.4);
-          color: #00ff88;
-        }
-        .trait-select-btn.active {
-          borderColor: #00ff88;
-          background: rgba(0, 255, 136, 0.08);
-          color: #00ff88;
-          box-shadow: 0 0 8px rgba(0, 255, 136, 0.15);
-          font-weight: bold;
         }
         
         .custom-scroll {
@@ -514,12 +260,12 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
           border-radius: 4px;
         }
         .custom-scroll::-webkit-scrollbar-thumb {
-          background: rgba(0, 240, 255, 0.15);
+          background: rgba(0, 240, 255, 0.1);
           border-radius: 4px;
           transition: background 0.2s ease;
         }
         .custom-scroll::-webkit-scrollbar-thumb:hover {
-          background: rgba(0, 240, 255, 0.4);
+          background: rgba(0, 240, 255, 0.3);
         }
 
         .signup-grid {
@@ -541,15 +287,24 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
           outline: none;
         }
         .badge-btn:hover {
-          border-color: rgba(0, 240, 255, 0.4);
+          border-color: rgba(0, 240, 255, 0.3);
           color: #00f0ff;
         }
         .badge-btn.active {
-          background: rgba(0, 240, 255, 0.08);
-          border-color: #00f0ff;
-          color: #00f0ff;
-          box-shadow: 0 0 8px rgba(0, 240, 255, 0.15);
+          background: rgba(0, 255, 136, 0.08);
+          border-color: #00ff88;
+          color: #00ff88;
+          box-shadow: 0 0 8px rgba(0, 255, 136, 0.15);
           font-weight: bold;
+        }
+
+        .attunement-slider {
+          flex: 1;
+          accent-color: #00ff88;
+          cursor: pointer;
+          height: 4px;
+          border-radius: 2px;
+          background: rgba(255,255,255,0.1);
         }
 
         @media (max-width: 900px) {
@@ -574,49 +329,43 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
             flex: none !important;
             width: 100% !important;
           }
-          .trait-select-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
         }
       `}} />
 
-      {/* Corridor sweep overlay */}
-      <div className="walking-motion-overlay" style={{ position: 'fixed' }}></div>
-
       {/* Main OS content container */}
-      <div className={`walking-content-container ${transitState} ${reduceMotion ? 'reduce-motion' : ''}`} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+      <div className={`walking-content-container slide-active`} style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         
-        {/* Navigation Console */}
+        {/* Architectural Signage Navigation Deck */}
         <div className="museum-floor-nav-deck">
           <button 
             onClick={() => changeRoute('/neurodiversity')} 
             className={`museum-nav-btn ${activeSector === 'plaza' ? 'active' : ''}`}
           >
-            🛰️ District Plaza
+            🏛️ Welcome Plaza
           </button>
           <button 
-            onClick={() => changeRoute('/neurodiversity/communication-grove')} 
+            onClick={() => changeRoute('/neurodiversity/comms-grove')} 
             className={`museum-nav-btn ${activeSector === 'communication' ? 'active' : ''}`}
           >
-            📡 Comms Grove
+            📡 Dialogue Bridges
           </button>
           <button 
             onClick={() => changeRoute('/neurodiversity/sensory-garden')} 
             className={`museum-nav-btn ${activeSector === 'sensory' ? 'active' : ''}`}
           >
-            🌿 Sensory Garden
+            🌿 Sensory Biome
           </button>
           <button 
             onClick={() => changeRoute('/neurodiversity/lexicon-pavilion')} 
             className={`museum-nav-btn ${activeSector === 'lexicon' ? 'active' : ''}`}
           >
-            🌌 Lexicon Pavilion
+            🌌 Synaptic Map
           </button>
           <button 
-            onClick={() => changeRoute('/neurodiversity/meetup')} 
+            onClick={() => changeRoute('/neurodiversity/meetup-campfire')} 
             className={`museum-nav-btn ${activeSector === 'meetup' ? 'active' : ''}`}
           >
-            👥 Meetup & Advocacy
+            👥 Cozy Hearth
           </button>
         </div>
 
@@ -624,130 +373,194 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
         <div className="museum-view-corridor">
           
           {/* ====================================
-              1. DISTRICT ENTRANCE PLAZA SECTOR
+              1. DISTRICT WELCOME PLAZA SECTOR (DRAMATIC SIMPLIFICATION)
               ==================================== */}
           {activeSector === 'plaza' && (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', margin: '0 auto', maxWidth: '800px', textAlign: 'center', justifyContent: 'center' }}>
-              <div className="bubbly-panel" style={{ border: '1.5px solid rgba(0, 240, 255, 0.25)' }}>
-                <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00f0ff', letterSpacing: '2px', display: 'block', marginBottom: '8px' }}>
-                  // ARES CITY PARK // NEURODIVERSITY DISTRICT HUB // INCLUSION NOMINAL
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', width: '100%', margin: '0 auto', maxWidth: '900px', padding: '10px 0 20px 0' }}>
+              
+              {/* Soft Translucent Welcome Plaque */}
+              <div className="bubbly-panel" style={{ textAlign: 'center', padding: '24px 30px' }}>
+                <span style={{ fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '3px', display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>
+                  // ARES CITY PARK // NEURODIVERSITY DISTRICT PLAZA
                 </span>
-                <h1 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.5rem', fontWeight: 900, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '12px' }}>
-                  Neurodiversity District Entrance Hub
+                <h1 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.75rem', fontWeight: 800, color: '#fff', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '14px' }}>
+                  Welcome to the Plaza
                 </h1>
-                <p style={{ fontSize: '0.86rem', color: '#8a9bb5', lineHeight: '1.7', margin: '0 0 20px 0', textAlign: 'justify' }}>
-                  Welcome to the **Neurodiversity District**, a dedicated, fully functioning district nestled inside the biodome of Ares City Park. This area is designed as a living showcase of cognitive diversity, sensory flexibility, and mutual understanding. Rather than trying to conform divergent minds to clinical "deficit" templates, this district represents a futuristic social ecosystem where everyone's unique neurological software is fully integrated, accommodated, and celebrated.
+                <p style={{ fontSize: '0.88rem', color: 'rgba(255, 255, 255, 0.78)', lineHeight: '1.75', margin: '0 auto', maxWidth: '780px', textAlign: 'justify' }}>
+                  Welcome to the **Neurodiversity District**, a calm public plaza nestled inside the lush botanical dome of Ares City Park. This space was designed as an eco-habitat for human well-being, where cognitive diversity, sensory flexibility, explicit communication, and community care are woven directly into the physical design of society itself. Rather than enforcing compliance, we invite you to experience how architecture and social infrastructure can adapt to support every human mind.
                 </p>
-                <p style={{ fontSize: '0.86rem', color: '#8a9bb5', lineHeight: '1.7', margin: '0 0 24px 0', textAlign: 'justify' }}>
-                  Explore our district destinations: customize sensory variables in the **Sensory Garden**, tune dialogue bridges in the **Communication Grove**, map interconnected cognitive relationships inside the **Lexicon Pavilion**, and hang out with citizen advocates at the cozy **Meetup & Advocacy campfire**.
-                </p>
+              </div>
 
-                <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  <button 
-                    onClick={() => changeRoute('/neurodiversity/sensory-garden')} 
-                    className="hud-btn" 
-                    style={{ borderColor: '#00f0ff', color: '#00f0ff', background: 'rgba(0, 240, 255, 0.08)' }}
+              {/* Spatial Destination Pathways Grid */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+                {[
+                  {
+                    title: '📡 Dialogue Bridges',
+                    subtitle: 'Comms Grove',
+                    route: '/neurodiversity/comms-grove',
+                    desc: 'Explore dual communication styles, unmasking dynamics, and the double empathy problem through interactive bridges and wave-phase alignment tuners.',
+                    color: '#ffb300',
+                    rgb: '255, 179, 0'
+                  },
+                  {
+                    title: '🌿 Sensory Garden Biome',
+                    subtitle: 'Adaptive Biome',
+                    route: '/neurodiversity/sensory-garden',
+                    desc: 'Interact with dome lighting, sound decibels, citizens density, and sweep speeds to experience how custom environmental adjustments restore nervous system energy reserves.',
+                    color: '#00f0ff',
+                    rgb: '0, 240, 255'
+                  },
+                  {
+                    title: '🌌 Synaptic Map Pavilion',
+                    subtitle: 'Lexicon Vaults',
+                    route: '/neurodiversity/lexicon-pavilion',
+                    desc: 'Wander through a three-dimensional open-air starmap connecting key terminology, monotropic cognitive focus, and systemic adult burnout cascades.',
+                    color: '#c259ff',
+                    rgb: '194, 89, 255'
+                  },
+                  {
+                    title: '👥 Community Hearth Campfire',
+                    subtitle: 'Support Hearth',
+                    route: '/neurodiversity/meetup-campfire',
+                    desc: 'Gather around the glowing hearth under the evening sky-canopy to check-in, share supportive advocate log entries, and read active community events.',
+                    color: '#00ff88',
+                    rgb: '0, 255, 136'
+                  }
+                ].map((dest) => (
+                  <div
+                    key={dest.route}
+                    onClick={() => changeRoute(dest.route)}
+                    style={{
+                      background: 'rgba(6, 9, 20, 0.35)',
+                      border: '1px solid rgba(255, 255, 255, 0.08)',
+                      borderRadius: '16px',
+                      padding: '20px 24px',
+                      cursor: 'pointer',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25)',
+                      transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      gap: '8px',
+                      textAlign: 'left'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-3px)';
+                      e.currentTarget.style.borderColor = dest.color;
+                      e.currentTarget.style.boxShadow = `0 8px 30px rgba(${dest.rgb}, 0.12)`;
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.08)';
+                      e.currentTarget.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.25)';
+                    }}
                   >
-                    [ 🌿 SENSORY GARDEN SIMULATOR ]
-                  </button>
-                  <button onClick={() => changeRoute('/neurodiversity/communication-grove')} className="hud-btn">
-                    [ 📡 DIALOGUE TUNER GROVE ]
-                  </button>
-                  <button onClick={() => changeRoute('/neurodiversity/meetup')} className="hud-btn">
-                    [ 👥 ADVOCACY CAMPFIRE ]
-                  </button>
-                </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: dest.color, letterSpacing: '1px', fontWeight: 'bold', textTransform: 'uppercase' }}>
+                        {dest.subtitle}
+                      </span>
+                      <span style={{ fontSize: '0.62rem', color: dest.color, fontFamily: 'monospace' }}>[ PATHWAY ➔ ]</span>
+                    </div>
+                    <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.05rem', color: '#fff', margin: 0, fontWeight: 700 }}>
+                      {dest.title}
+                    </h3>
+                    <p style={{ fontSize: '0.74rem', color: 'rgba(255, 255, 255, 0.65)', lineHeight: '1.5', margin: 0, textAlign: 'justify' }}>
+                      {dest.desc}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           )}
-
+ 
           {/* ====================================
-              2. COMMUNICATION GROVE SECTOR ( TUNE DOUBLE EMPATHY & DIALOGUE SWITCHER )
+              2. COMMUNICATION GROVE SECTOR ( DIALOGUE BRIDGES )
               ==================================== */}
           {activeSector === 'communication' && (
             <div className="museum-view-corridor" style={{ width: '100%', gap: '20px' }}>
               
-              {/* Left Panel: Dialogue Perspective Switcher */}
-              <div className="museum-left-feed" style={{ flex: 1.1, display: 'flex', flexDirection: 'column', gap: '12px', padding: '16px' }}>
+              {/* Left Panel: Dialogue Bridges Switcher */}
+              <div className="museum-left-feed" style={{ flex: 1.1, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 <div className="bubbly-panel" style={{ flexShrink: 0 }}>
-                  <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00f0ff', letterSpacing: '1px', display: 'block', marginBottom: '4px' }}>
-                    // COMMUNICATION GROVE // DIALOGUE SWITCHER TERMINAL
+                  <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px', display: 'block', marginBottom: '4px' }}>
+                    // COMMS GROVE // DIALOGUE BRIDGES
                   </span>
-                  <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.9rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
-                    Dialogue Perspective Switcher
+                  <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.92rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
+                    Dialogue Bridges
                   </h3>
                   <p style={{ fontSize: '0.72rem', color: '#8a9bb5', lineHeight: 1.4, margin: '0 0 10px 0' }}>
-                    Divergent neurotypes process expectations differently. Switch below to see conversation subtexts under the **Implicit Pathology** model vs the **Explicit Synergy** model.
+                    Different minds process conversation subtexts differently. Toggle below to compare standard **Subtextual (Implicit)** expectations with clear **Coordinated (Explicit)** interaction rules.
                   </p>
 
                   {/* Filter selector */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '10px' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '4px' }}>
                     <button
                       onClick={() => setCommsFilter('nt')}
                       className={`badge-btn ${commsFilter === 'nt' ? 'active' : ''}`}
                       style={{ borderColor: commsFilter === 'nt' ? '#ff5722' : 'rgba(255,255,255,0.08)', color: commsFilter === 'nt' ? '#ff5722' : '#8a9bb5', background: commsFilter === 'nt' ? 'rgba(255,87,34,0.08)' : 'rgba(0,0,0,0.3)' }}
                     >
-                      [ ❌ NT IMPLICIT FILTER ]
+                      [ ❌ SUBTEXTUAL / IMPLICIT ]
                     </button>
                     <button
                       onClick={() => setCommsFilter('nd')}
                       className={`badge-btn ${commsFilter === 'nd' ? 'active' : ''}`}
                       style={{ borderColor: commsFilter === 'nd' ? '#00ff88' : 'rgba(255,255,255,0.08)', color: commsFilter === 'nd' ? '#00ff88' : '#8a9bb5', background: commsFilter === 'nd' ? 'rgba(0,255,136,0.08)' : 'rgba(0,0,0,0.3)' }}
                     >
-                      [ ✅ ND EXPLICIT FILTER ]
+                      [ ✅ COORDINATED / EXPLICIT ]
                     </button>
                   </div>
                 </div>
 
-                {/* Main conversation box */}
+                {/* Chat Feed Panel */}
                 <div className="bubbly-panel" style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.4)', display: 'block' }}>
-                    ACTIVE CHAT INHABITANT FEED:
+                    ACTIVE COMMUNITY BRIDGE CHAT:
                   </span>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                     {commsFilter === 'nt' ? (
                       <>
                         <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', borderLeft: '3px solid #ff5722' }}>
-                          <strong style={{ display: 'block', fontSize: '0.66rem', color: '#ff5722', fontFamily: 'monospace' }}>Inhabitant A (Subtextual Request):</strong>
+                          <strong style={{ display: 'block', fontSize: '0.66rem', color: '#ff5722', fontFamily: 'monospace' }}>Citizen A (Subtextual Request):</strong>
                           <p style={{ fontSize: '0.74rem', color: '#fff', margin: '4px 0 0 0', fontStyle: 'italic' }}>
                             "Wow, the air filters in this segment are getting really loud today, don't you think?"
                           </p>
                         </div>
 
                         <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', borderLeft: '3px solid #8a9bb5' }}>
-                          <strong style={{ display: 'block', fontSize: '0.66rem', color: '#8a9bb5', fontFamily: 'monospace' }}>Inhabitant B (Direct Interpretation):</strong>
+                          <strong style={{ display: 'block', fontSize: '0.66rem', color: '#8a9bb5', fontFamily: 'monospace' }}>Citizen B (Direct Interpretation):</strong>
                           <p style={{ fontSize: '0.74rem', color: '#fff', margin: '4px 0 0 0' }}>
                             "Yes, they are indeed. The decibel monitors show they are operating at 65 dB." *(B continues working, unaware A wanted them to turn down or adjust the dials)*
                           </p>
                         </div>
 
-                        <div style={{ background: 'rgba(255, 87, 34, 0.05)', border: '1px solid rgba(255, 87, 34, 0.2)', padding: '10px', borderRadius: '8px', marginTop: '6px' }}>
+                        <div style={{ background: 'rgba(255, 87, 34, 0.05)', border: '1px solid rgba(255, 87, 34, 0.2)', padding: '10px', borderRadius: '8px', marginTop: '4px' }}>
                           <strong style={{ display: 'block', fontSize: '0.6rem', color: '#ff5722', fontFamily: 'monospace', marginBottom: '2px' }}>
                             📡 SYSTEM DIAGNOSTIC ANALYSIS:
                           </strong>
                           <p style={{ margin: 0, fontSize: '0.66rem', color: 'rgba(255,255,255,0.85)', lineHeight: 1.35 }}>
-                            *❌ IMPLICIT PROTOCOL DESYNC. Inhabitant A expected A's comment to act as a direct request for adjustment. Inhabitant B processed only the literal data query. Core CPU overhead drained by 20% due to cognitive guessing overlays.*
+                            *❌ PROTOCOL MISMATCH. Citizen A expected a subtle request for support. Citizen B processed only the literal data query. Core battery overhead drained by cognitive guessing overlays.*
                           </p>
                         </div>
                       </>
                     ) : (
                       <>
                         <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', borderLeft: '3px solid #00ff88' }}>
-                          <strong style={{ display: 'block', fontSize: '0.66rem', color: '#00ff88', fontFamily: 'monospace' }}>Inhabitant A (Explicit Direct Request):</strong>
+                          <strong style={{ display: 'block', fontSize: '0.66rem', color: '#00ff88', fontFamily: 'monospace' }}>Citizen A (Explicit Direct Request):</strong>
                           <p style={{ fontSize: '0.74rem', color: '#fff', margin: '4px 0 0 0' }}>
                             "I am experiencing sensory overstimulation from the air filter hum. Could you help me lower the speed toggle to 30% for the next hour?"
                           </p>
                         </div>
 
                         <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', borderLeft: '3px solid #00f0ff' }}>
-                          <strong style={{ display: 'block', fontSize: '0.66rem', color: '#00f0ff', fontFamily: 'monospace' }}>Inhabitant B (Direct Execution):</strong>
+                          <strong style={{ display: 'block', fontSize: '0.66rem', color: '#00f0ff', fontFamily: 'monospace' }}>Citizen B (Direct Execution):</strong>
                           <p style={{ fontSize: '0.74rem', color: '#fff', margin: '4px 0 0 0' }}>
                             "Understood. Lowering speed toggle to 30% now. Speed synchronized. Does this level feel comfortable for you?"
                           </p>
                         </div>
 
-                        <div style={{ background: 'rgba(0, 255, 136, 0.05)', border: '1px solid rgba(0, 255, 136, 0.2)', padding: '10px', borderRadius: '8px', marginTop: '6px' }}>
+                        <div style={{ background: 'rgba(0, 255, 136, 0.05)', border: '1px solid rgba(0, 255, 136, 0.2)', padding: '10px', borderRadius: '8px', marginTop: '4px' }}>
                           <strong style={{ display: 'block', fontSize: '0.6rem', color: '#00ff88', fontFamily: 'monospace', marginBottom: '2px' }}>
                             📡 SYSTEM DIAGNOSTIC ANALYSIS:
                           </strong>
@@ -761,12 +574,12 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                 </div>
               </div>
 
-              {/* Right Panel: Double Empathy Signal Sync Tuner */}
+              {/* Right Panel: Cooperative Connection Tuner */}
               <div className="museum-right-diagnostics custom-scroll" style={{ flex: 1.9, display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div className="bubbly-panel" style={{ padding: '16px', border: '1.5px solid rgba(0, 240, 255, 0.25)', boxShadow: '0 0 20px rgba(0, 240, 255, 0.08)' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px dashed rgba(0, 240, 255, 0.2)', paddingBottom: '6px', marginBottom: '10px' }}>
                     <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00f0ff', fontWeight: 'bold', letterSpacing: '1px' }}>
-                      📡 INTERACTIVE DOUBLE EMPATHY SIGNAL SYNCHRONIZER
+                      📡 COOPERATIVE CONNECTION TUNER (DOUBLE EMPATHY METHOD)
                     </span>
                     <span style={{ 
                       fontSize: '0.54rem', 
@@ -827,8 +640,8 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                   {/* Sliders Grid */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '12px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ff5722', width: '90px', flexShrink: 0 }}>
-                        NEUROTYPE A EXPECTATIONS:
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ff5722', width: '130px', flexShrink: 0 }}>
+                        INHABITANT A EXPECTATIONS:
                       </span>
                       <input 
                         type="range" 
@@ -837,7 +650,8 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                         value={signalNT}
                         onChange={(e) => setSignalNT(Number(e.target.value))}
                         disabled={isSyncLocked}
-                        style={{ flex: 1, accentColor: '#ff5722', cursor: isSyncLocked ? 'not-allowed' : 'pointer' }}
+                        className="attunement-slider"
+                        style={{ accentColor: '#ff5722', cursor: isSyncLocked ? 'not-allowed' : 'pointer' }}
                       />
                       <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#fff', width: '30px', textAlign: 'right', flexShrink: 0 }}>
                         {signalNT}%
@@ -845,8 +659,8 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', width: '90px', flexShrink: 0 }}>
-                        NEUROTYPE B EXPECTATIONS:
+                      <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#ffb300', width: '130px', flexShrink: 0 }}>
+                        INHABITANT B EXPECTATIONS:
                       </span>
                       <input 
                         type="range" 
@@ -855,7 +669,8 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                         value={signalND}
                         onChange={(e) => setSignalND(Number(e.target.value))}
                         disabled={isSyncLocked}
-                        style={{ flex: 1, accentColor: '#ffb300', cursor: isSyncLocked ? 'not-allowed' : 'pointer' }}
+                        className="attunement-slider"
+                        style={{ accentColor: '#ffb300', cursor: isSyncLocked ? 'not-allowed' : 'pointer' }}
                       />
                       <span style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#fff', width: '30px', textAlign: 'right', flexShrink: 0 }}>
                         {signalND}%
@@ -869,9 +684,9 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                       <button
                         onClick={handleAutoSync}
                         className="hud-btn"
-                        style={{ borderColor: '#00f0ff', color: '#00f0ff', background: 'rgba(0, 240, 255, 0.06)', fontSize: '0.62rem', padding: '4px 12px' }}
+                        style={{ borderColor: '#00ff88', color: '#00ff88', background: 'rgba(0, 255, 136, 0.06)', fontSize: '0.62rem', padding: '4px 12px' }}
                       >
-                        [ 📡 FORCE AUTO-SYNC CHANNELS ]
+                        [ 📡 SYNCHRONIZE SIGNALS ]
                       </button>
                     ) : (
                       <button
@@ -879,7 +694,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                         className="hud-btn"
                         style={{ borderColor: '#ff5722', color: '#ff5722', background: 'rgba(255, 87, 34, 0.05)', fontSize: '0.62rem', padding: '4px 12px' }}
                       >
-                        [ ✕ BREAK SIGNAL SYNC ]
+                        [ ✕ DETACH SIGNALS ]
                       </button>
                     )}
                   </div>
@@ -889,7 +704,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
           )}
 
           {/* ====================================
-              3. SENSORY GARDEN SECTOR ( INTERACTIVE SOOTHING ADJUSTMENT SLIDERS )
+              3. SENSORY GARDEN SECTOR ( SENSORY ATTUNEMENT BIOME )
               ==================================== */}
           {activeSector === 'sensory' && (
             <div className="museum-view-corridor" style={{ width: '100%', gap: '20px', position: 'relative' }}>
@@ -897,14 +712,14 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
               {/* Dynamic Glassmorphic filter overlay */}
               <div style={sensoryOverlayStyle}></div>
 
-              {/* Left Column: Interactive Sensory Adjustment Panel */}
+              {/* Left Column: Interactive Sensory Adaptation Panel */}
               <div className="museum-left-feed" style={{ flex: 1.1, display: 'flex', flexDirection: 'column', gap: '14px', zIndex: 10 }}>
                 <div className="bubbly-panel">
                   <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00f0ff', letterSpacing: '1px', display: 'block', marginBottom: '4px' }}>
                     // SENSORY GARDEN // BIOME ADAPTATION INTERACTIVE DIALS
                   </span>
                   <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.92rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '6px' }}>
-                    Sensory Adaptation Panel
+                    Sensory Adaptation Biome
                   </h3>
                   <p style={{ fontSize: '0.72rem', color: '#8a9bb5', lineHeight: 1.4, margin: '0 0 12px 0' }}>
                     Divergent minds process sensory telemetry with different thresholds. Customize the botanical dome's variables below to experience how accommodations restore peace, or apply direct presets.
@@ -916,14 +731,14 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                       className="badge-btn"
                       style={{ borderColor: '#ff5722', color: '#ff5722', background: 'rgba(255,87,34,0.06)' }}
                     >
-                      ⚠️ PATHOLOGY / GLARE PRESET
+                      ⚠️ SENSORY GLARE PRESET
                     </button>
                     <button
                       onClick={applyInclusivePreset}
                       className="badge-btn"
                       style={{ borderColor: '#00ff88', color: '#00ff88', background: 'rgba(0,255,136,0.06)' }}
                     >
-                      🌿 ADAPTIVE RESTORE PRESET
+                      🌿 LOUNGE QUIET PRESET
                     </button>
                   </div>
 
@@ -939,20 +754,20 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                       <input 
                         type="range" min="10" max="100" value={lightingLvl}
                         onChange={(e) => setLightingLvl(Number(e.target.value))}
-                        style={{ accentColor: '#00f0ff' }}
+                        className="attunement-slider"
                       />
                     </div>
 
                     {/* Crowd */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '3px' }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.58rem', fontFamily: 'monospace', color: '#fff' }}>
-                        <span>👥 CITIZEN DENSITY (CROWD):</span>
+                        <span>👥 SOCIAL DENSITY (CROWD):</span>
                         <strong style={{ color: crowdLvl > 35 ? '#ff5722' : '#00ff88' }}>{crowdLvl} ACTIVE DONS</strong>
                       </div>
                       <input 
                         type="range" min="0" max="50" value={crowdLvl}
                         onChange={(e) => setCrowdLvl(Number(e.target.value))}
-                        style={{ accentColor: '#00f0ff' }}
+                        className="attunement-slider"
                       />
                     </div>
 
@@ -965,7 +780,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                       <input 
                         type="range" min="10" max="100" value={soundLvl}
                         onChange={(e) => setSoundLvl(Number(e.target.value))}
-                        style={{ accentColor: '#00f0ff' }}
+                        className="attunement-slider"
                       />
                     </div>
 
@@ -978,7 +793,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                       <input 
                         type="range" min="0" max="20" value={notifLvl}
                         onChange={(e) => setNotifLvl(Number(e.target.value))}
-                        style={{ accentColor: '#00f0ff' }}
+                        className="attunement-slider"
                       />
                     </div>
 
@@ -991,7 +806,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                       <input 
                         type="range" min="2" max="40" value={speedLvl * 10}
                         onChange={(e) => setSpeedLvl(Number(e.target.value) / 10)}
-                        style={{ accentColor: '#00f0ff' }}
+                        className="attunement-slider"
                       />
                     </div>
 
@@ -1005,42 +820,42 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                 {/* Simulated telemetry HUD display */}
                 <div className="bubbly-panel" style={{ border: '1.5px solid rgba(0, 240, 255, 0.2)', padding: '16px' }}>
                   <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: '#00f0ff', fontWeight: 'bold', display: 'block', borderBottom: '1px dashed rgba(255,255,255,0.08)', paddingBottom: '6px', marginBottom: '8px' }}>
-                    📡 REALTIME SENSORY BIOSPHERE TELEMETRY
+                    📡 ACTIVE BIOME COMFORT METRICS
                   </span>
 
                   {/* Metrics grid */}
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', fontFamily: 'monospace' }}>
                     <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 12px', borderRadius: '6px' }}>
-                      <span style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.4)', display: 'block' }}>LUMINOSITY DRAIN</span>
+                      <span style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.4)', display: 'block' }}>ILLUMINATION LEVEL</span>
                       <strong style={{ fontSize: '0.8rem', color: lightingLvl > 75 ? '#ff5722' : '#00ff88' }}>
-                        {lightingLvl > 75 ? '⚠️ DRAIN DANGEROUS' : '✓ NOMINAL'}
+                        {lightingLvl > 75 ? '⚠️ HIGH GLARE' : '✓ NOMINAL'}
                       </strong>
                     </div>
 
                     <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 12px', borderRadius: '6px' }}>
-                      <span style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.4)', display: 'block' }}>CROWD LOAD OVERHEAD</span>
+                      <span style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.4)', display: 'block' }}>SOCIAL DENSITY</span>
                       <strong style={{ fontSize: '0.8rem', color: crowdLvl > 35 ? '#ff5722' : '#00ff88' }}>
-                        {crowdLvl > 35 ? '⚠️ UNMANAGEABLE' : '✓ ENERGETIC NOMINAL'}
+                        {crowdLvl > 35 ? '⚠️ HIGH COMPRESSION' : '✓ ENERGETIC NOMINAL'}
                       </strong>
                     </div>
 
                     <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 12px', borderRadius: '6px' }}>
-                      <span style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.4)', display: 'block' }}>DECIBEL OVERLOAD THRESHOLD</span>
+                      <span style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.4)', display: 'block' }}>AMBIENT SOUND</span>
                       <strong style={{ fontSize: '0.8rem', color: soundLvl > 70 ? '#ff5722' : '#00ff88' }}>
-                        {soundLvl > 70 ? '⚠️ THREAT REGISTERED' : '✓ RECOVERY ACTIVE'}
+                        {soundLvl > 70 ? '⚠️ LOUD DECIBELS' : '✓ RECOVERY ACTIVE'}
                       </strong>
                     </div>
 
                     <div style={{ background: 'rgba(0,0,0,0.3)', padding: '8px 12px', borderRadius: '6px' }}>
-                      <span style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.4)', display: 'block' }}>NERVOUS SYSTEM REACTOR BATTERY</span>
+                      <span style={{ fontSize: '0.5rem', color: 'rgba(255,255,255,0.4)', display: 'block' }}>NERVOUS SYSTEM COMFORT BUFFER</span>
                       <strong style={{ fontSize: '0.8rem', color: (lightingLvl > 75 || crowdLvl > 35 || soundLvl > 70 || notifLvl > 12) ? '#ff5722' : '#00ff88' }}>
-                        {(lightingLvl > 75 || crowdLvl > 35 || soundLvl > 70 || notifLvl > 12) ? '🔋 DRAINING CRITICAL (3.2x)' : '🔋 CHARGING STABLE (+8.5)'}
+                        {(lightingLvl > 75 || crowdLvl > 35 || soundLvl > 70 || notifLvl > 12) ? '🔋 EXPEDITE DRAIN (3.2x)' : '🔋 STABLE RESTORE (+8.5)'}
                       </strong>
                     </div>
                   </div>
 
                   <p style={{ margin: '14px 0 0 0', fontSize: '0.72rem', color: '#8a9bb5', lineHeight: 1.4, textAlign: 'justify' }}>
-                    <strong>Experiential Summary:</strong> In a sensory-unaware society (Conformity Glare Preset), environments are locked to an average standard. This forces autistic individuals to continuously filter high sound, lighting glare, and alerts, running background processors that drain nervous system battery levels to zero. In an **inclusive society** (Soothing Adaptive Preset), spaces are customizable: dimming glare, organizing quiet zones, and slowing transition speeds immediately restores cognitive recovery buffers.
+                    <strong>Adaptive Environment Reflection:</strong> In standard public infrastructure, environments are locked to rigid, unalterable variables. This forces neurodivergent people to continually mask overstimulation, draining their buffer reserves. In an **inclusive society**, architecture is adaptive: adjustable dimming, quiet pockets, and flexible sensory attunement dials give individuals the control needed to protect their wellbeing.
                   </p>
                 </div>
               </div>
@@ -1048,26 +863,26 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
           )}
 
           {/* ====================================
-              4. LEXICON PAVILION SECTOR ( Connected relationship grid starmap )
+              4. LEXICON PAVILION SECTOR ( SYNAPTIC MAP PAVILION )
               ==================================== */}
           {activeSector === 'lexicon' && (
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%', minHeight: 0, height: '100%', position: 'relative' }}>
               <div className="bubbly-panel" style={{ flexShrink: 0 }}>
                 <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.85rem', color: '#00f0ff', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '4px' }}>
-                  🌌 Connected Lexicon Pavilion & Constellation Map
+                  🌌 Synaptic Map Pavilion
                 </h3>
                 <p style={{ fontSize: '0.74rem', color: '#8a9bb5', lineHeight: 1.5, margin: 0 }}>
-                  Concepts in neurodiversity do not exist in isolation. Click on the glowing starmap constellation nodes to display definitions, or use the **Connected Spatial Relationship Grid** below to see how monotropic deep-focus, unmasking filters, adult burnout cycles, and query timeouts physically link together as a living knowledge system.
+                  Concepts in neurodiversity do not exist in isolation. Click on the glowing starmap constellation nodes to display definitions, or use the **Connected Spatial Relationship Grid** below to see how monotropic deep-focus, unmasking filters, and cognitive recharge dynamics physically link together as a living knowledge system.
                 </p>
               </div>
 
               {/* Connected Spatial Grid */}
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', background: 'rgba(4,6,12,0.6)', border: '1.5px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '12px', boxSizing: 'border-box' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '10px', background: 'rgba(4,6,12,0.3)', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '10px', padding: '12px', boxSizing: 'border-box' }}>
                 {[
-                  { id: 'monotropism', title: 'I. Monotropism', link: 'leads to continuous stealth masking', desc: 'Single-channel CPU focus overclocking', color: '#ffb300' },
-                  { id: 'masking', title: 'II. Masking', link: 'causes ongoing RAM battery drain', desc: 'Stealth compliance overhead overlays', color: '#00f0ff' },
-                  { id: 'burnout', title: 'III. Burnout', link: 'triggers core query timeout loops', desc: 'System battery crash & exhaustion', color: '#ff5722' },
-                  { id: 'executive', title: 'IV. PDA Profile', link: 'demands absolute citizen autonomy', desc: 'Core request query timeout locks', color: '#00ff88' }
+                  { id: 'monotropism', title: 'I. Monotropism', link: 'leads to continuous stealth masking', desc: 'Single-channel deep cognitive focus', color: '#ffb300' },
+                  { id: 'masking', title: 'II. Masking', link: 'causes ongoing energy battery drain', desc: 'Stealth social compliance overlays', color: '#00f0ff' },
+                  { id: 'burnout', title: 'III. Burnout', link: 'triggers system timeout loops', desc: 'Nervous system battery crash & fatigue', color: '#ff5722' },
+                  { id: 'executive', title: 'IV. PDA Profile', link: 'demands absolute citizen autonomy', desc: 'Need for high autonomy & request balance', color: '#00ff88' }
                 ].map((node, idx) => (
                   <div 
                     key={node.id}
@@ -1081,7 +896,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                       borderRadius: '8px',
                       padding: '10px',
                       cursor: 'pointer',
-                      boxShadow: `0 0 10px rgba(${node.color === '#00ff88' ? '0,255,136' : (node.color === '#ffb300' ? '255,179,0' : (node.color === '#ff5722' ? '255,87,34' : '0,240,255'))}, 0.1)`,
+                      boxShadow: `0 0 10px rgba(${node.color === '#00ff88' ? '0,255,136' : (node.color === '#ffb300' ? '255,179,0' : (node.color === '#ff5722' ? '255,87,34' : '0,240,255'))}, 0.05)`,
                       display: 'flex',
                       flexDirection: 'column',
                       gap: '4px',
@@ -1172,12 +987,12 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                   })}
                 </svg>
 
-                {/* Sliding Telemetry Drawer Overlay */}
+                {/* Concept definition drawer overlay */}
                 {activeStarNode && (
                   <div className="constellation-drawer-overlay" style={{ borderLeftColor: activeStarNode.category === 'energy' ? '#ffb300' : (activeStarNode.category === 'cognitive' ? '#00f0ff' : '#00ff88') }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px', borderBottom: '1px solid rgba(255,255,255,0.08)', background: 'rgba(0,0,0,0.2)' }}>
                       <span style={{ fontFamily: 'monospace', fontSize: '0.62rem', color: '#00f0ff', fontWeight: 'bold' }}>
-                        // LEXICON LOG DATA DECK
+                        // SYNAPTIC MAP DEF DECK
                       </span>
                       <button 
                         onClick={() => setActiveStarNode(null)} 
@@ -1208,18 +1023,18 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                         <strong>Diagnostic analysis:</strong> {activeStarNode.longDef}
                       </p>
 
-                      <div style={{ background: 'rgba(0,0,0,0.3)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(255,255,255,0.05)', borderRadius: '8px', padding: '10px' }}>
+                      <div style={{ background: 'rgba(0,0,0,0.3)', border: '1px solid rgba(255,255,255,0.05)', borderRadius: '8px', padding: '10px' }}>
                         <strong style={{ display: 'block', fontSize: '0.62rem', fontFamily: 'monospace', color: '#00f0ff', marginBottom: '2px' }}>
-                          📡 BECKERMEMOIR_LOGENTRY.DAT:
+                          📡 MEMOIR_LOGENTRY.DAT:
                         </strong>
                         <p style={{ margin: 0, fontSize: '0.7rem', color: '#8a9bb5', lineHeight: 1.4, textAlign: 'justify' }}>
                           {activeStarNode.storyReflection}
                         </p>
                       </div>
 
-                      <div style={{ background: 'rgba(0, 255, 136, 0.02)', borderWidth: '1px', borderStyle: 'solid', borderColor: 'rgba(0, 255, 136, 0.1)', borderRadius: '8px', padding: '10px' }}>
+                      <div style={{ background: 'rgba(0, 255, 136, 0.02)', border: '1px solid rgba(0, 255, 136, 0.1)', borderRadius: '8px', padding: '10px' }}>
                         <strong style={{ display: 'block', fontSize: '0.62rem', fontFamily: 'monospace', color: '#00ff88', marginBottom: '2px' }}>
-                          💡 COLONY ACCOMMODATION RULE:
+                          💡 INCLUSIVE PRACTICE:
                         </strong>
                         <p style={{ margin: 0, fontSize: '0.7rem', color: '#fff', lineHeight: 1.4 }}>
                           {activeStarNode.takeaway}
@@ -1233,7 +1048,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
           )}
 
           {/* ====================================
-              5. MEETUP & ADVOCACY CAMPFIRE SECTOR
+              5. MEETUP & ADVOCACY CAMPFIRE SECTOR ( COMMUNITY HEARTH CIRCLE )
               ==================================== */}
           {activeSector === 'meetup' && (
             <div className="museum-view-corridor" style={{ width: '100%', gap: '20px' }}>
@@ -1241,11 +1056,11 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
               {/* Left Column: Campfire Schedule Bulletin */}
               <div className="museum-left-feed" style={{ flex: 1.1, display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div className="bubbly-panel" style={{ padding: '16px' }}>
-                  <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00f0ff', letterSpacing: '1px', display: 'block', marginBottom: '4px' }}>
-                    // NEURODIVERSITY MEETUP & ADVOCACY // ACTIVE CAMPFIRE GROVE
+                  <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: '#00ff88', letterSpacing: '1px', display: 'block', marginBottom: '4px' }}>
+                    // COMMUNITY HEARTH // ACTIVE CAMPFIRE GROVE
                   </span>
                   <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.92rem', color: '#fff', textTransform: 'uppercase', letterSpacing: '0.5px', marginBottom: '8px' }}>
-                    Meetup Grove & Campfire
+                    Community Hearth Campfire
                   </h3>
                   <p style={{ fontSize: '0.74rem', color: '#8a9bb5', lineHeight: 1.45, margin: 0, textAlign: 'justify' }}>
                     Welcome to the campfire circle at the Advocacy Meetup Grove! Colony citizens hang out here under the synthetic dome sky to socialize, play low-gravity dome-sports, share coffee, form mutual support groups, and establish explicit communication bridges.
@@ -1253,9 +1068,9 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                 </div>
 
                 {/* Bulletin Board */}
-                <div className="bubbly-panel" style={{ padding: '14px', border: '1.5px solid rgba(0, 240, 255, 0.2)', background: 'rgba(6, 9, 20, 0.8)' }}>
-                  <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: '#00f0ff', fontWeight: 'bold', display: 'block', borderBottom: '1px dashed rgba(0, 240, 255, 0.15)', paddingBottom: '6px', marginBottom: '8px' }}>
-                    📅 ACTIVE MEETUP BULLETIN BOARD
+                <div className="bubbly-panel" style={{ padding: '14px', border: '1px solid rgba(0, 240, 255, 0.2)', background: 'rgba(6, 9, 20, 0.8)' }}>
+                  <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold', display: 'block', borderBottom: '1px dashed rgba(0, 240, 255, 0.15)', paddingBottom: '6px', marginBottom: '8px' }}>
+                    📅 COMMUNITY CALENDAR
                   </span>
                   
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -1275,8 +1090,8 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
 
                 {/* Citizen check-in */}
                 <div className="bubbly-panel" style={{ padding: '14px' }}>
-                  <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: '#00f0ff', fontWeight: 'bold', display: 'block', borderBottom: '1px dashed rgba(255, 255, 255, 0.08)', paddingBottom: '6px', marginBottom: '8px' }}>
-                    👥 REGISTER PRESENCE IN THE GROVE
+                  <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold', display: 'block', borderBottom: '1px dashed rgba(255, 255, 255, 0.08)', paddingBottom: '6px', marginBottom: '8px' }}>
+                    👥 REGISTER YOUR PRESENCE
                   </span>
 
                   <form onSubmit={handleRegisterMeetup} style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
@@ -1303,10 +1118,10 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
 
                     <div className="signup-grid">
                       {[
-                        { id: 'architect', label: '🛠️ Systems Architect' },
-                        { id: 'guard', label: '🌿 Sensory Guard' },
-                        { id: 'communicator', label: '📡 Explicit Comms' },
-                        { id: 'sports', label: '🏃 Sports Org' }
+                        { id: 'architect', label: '🛠️ Habitat Architect' },
+                        { id: 'guard', label: '🌿 Sensory Supporter' },
+                        { id: 'communicator', label: '📡 Clear Comms' },
+                        { id: 'sports', label: '🏃 Sports Coord' }
                       ].map(badge => (
                         <button
                           key={badge.id}
@@ -1326,19 +1141,19 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                       style={{
                         padding: '6px',
                         fontSize: '0.62rem',
-                        borderColor: '#00f0ff',
-                        color: '#00f0ff',
-                        background: 'rgba(0, 240, 255, 0.05)',
+                        borderColor: '#00ff88',
+                        color: '#00ff88',
+                        background: 'rgba(0, 255, 136, 0.05)',
                         opacity: meetupName.trim() ? 1 : 0.4,
                         cursor: meetupName.trim() ? 'pointer' : 'not-allowed'
                       }}
                     >
-                      [ ➕ CHECK-IN TO CAMPFIRE ]
+                      [ ➕ JOIN COZY HEARTH ]
                     </button>
                   </form>
 
                   {registrationMessage && (
-                    <div style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00f0ff', textAlign: 'center', marginTop: '8px' }}>
+                    <div style={{ fontSize: '0.58rem', fontFamily: 'monospace', color: '#00ff88', textAlign: 'center', marginTop: '8px' }}>
                       {registrationMessage}
                     </div>
                   )}
@@ -1348,8 +1163,8 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
               {/* Right Column: Dynamic Logbook Feed & Pledging */}
               <div className="museum-right-diagnostics custom-scroll" style={{ flex: 1.9, display: 'flex', flexDirection: 'column', gap: '14px' }}>
                 <div className="bubbly-panel" style={{ flex: 1, padding: '14px', display: 'flex', flexDirection: 'column', gap: '10px', minHeight: '200px' }}>
-                  <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: '#00f0ff', fontWeight: 'bold', borderBottom: '1px dashed rgba(255,255,255,0.08)', paddingBottom: '6px' }}>
-                    📡 COMMUNITY LOGBOOK & CHAT TRANSCRIPT
+                  <span style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: '#00ff88', fontWeight: 'bold', borderBottom: '1px dashed rgba(255,255,255,0.08)', paddingBottom: '6px' }}>
+                    📡 COMMUNITY LOGBOOK & HEARTH FEEDS
                   </span>
 
                   <div className="custom-scroll" style={{ flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px', paddingRight: '4px' }}>
@@ -1359,9 +1174,9 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                       { name: 'Marcus V.', msg: 'I really appreciate the explicit verbal check-in sheets we established for the engineering core. It cut double-empathy desync in half!', sol: 'Sol 13' },
                       ...registeredCitizens.slice(3).map(cit => {
                         const badgeLabel = 
-                          cit.badge === 'architect' ? 'Systems Architect' :
-                          cit.badge === 'guard' ? 'Sensory Guard' :
-                          cit.badge === 'communicator' ? 'Explicit Communicator' : 'Sports Organizer';
+                          cit.badge === 'architect' ? 'Habitat Architect' :
+                          cit.badge === 'guard' ? 'Sensory Supporter' :
+                          cit.badge === 'communicator' ? 'Clear Communicator' : 'Sports Coordinator';
                         return {
                           name: cit.name,
                           msg: `Just checked in as a ${badgeLabel}! Let's build explicit bridges! 👥`,
@@ -1371,7 +1186,7 @@ export default function NeurodiversityDistrict({ activeSector = 'plaza' }) {
                     ].map((chat, idx) => (
                       <div key={idx} style={{ fontSize: '0.68rem', borderBottom: '1px dashed rgba(255,255,255,0.03)', paddingBottom: '6px' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '2px' }}>
-                          <strong style={{ color: '#00f0ff', fontFamily: 'monospace' }}>{chat.name}</strong>
+                          <strong style={{ color: '#00ff88', fontFamily: 'monospace' }}>{chat.name}</strong>
                           <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255,255,255,0.35)' }}>{chat.sol}</span>
                         </div>
                         <p style={{ margin: 0, color: 'rgba(255,255,255,0.78)', lineHeight: 1.35 }}>{chat.msg}</p>

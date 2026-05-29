@@ -30,22 +30,22 @@ export default function ClientLayoutWrapper({ children }) {
         bgImage = '/assets/images/backgrounds/sensory-garden.png';
         hudSectorName = 'Ares City Park - Neurodiversity District - Sensory Garden';
         currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - SENSORY GARDEN';
-      } else if (pathname === '/neurodiversity/communication-grove') {
+      } else if (pathname === '/neurodiversity/comms-grove') {
         bgImage = '/assets/images/backgrounds/communication-grove.png';
-        hudSectorName = 'Ares City Park - Neurodiversity District - Communication Grove';
-        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - COMMUNICATION GROVE';
+        hudSectorName = 'Ares City Park - Neurodiversity District - Dialogue Bridges';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - DIALOGUE BRIDGES';
       } else if (pathname === '/neurodiversity/lexicon-pavilion') {
         bgImage = '/assets/images/backgrounds/mars-dome-park.png';
         hudSectorName = 'Ares City Park - Neurodiversity District - Lexicon Pavilion';
         currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - LEXICON PAVILION';
-      } else if (pathname === '/neurodiversity/meetup') {
+      } else if (pathname === '/neurodiversity/meetup-campfire') {
         bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
-        hudSectorName = 'Ares City Park - Neurodiversity District - Neurodiversity Meetup & Advocacy';
-        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - MEETUP & ADVOCACY';
+        hudSectorName = 'Ares City Park - Neurodiversity District - Community Hearth';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - COMMUNITY HEARTH';
       } else {
         bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
-        hudSectorName = 'Ares City Park - Neurodiversity District - Entrance';
-        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - DISTRICT PLAZA';
+        hudSectorName = 'Ares City Park - Neurodiversity District - Welcome Plaza';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY DISTRICT - WELCOME PLAZA';
       }
     }
   }

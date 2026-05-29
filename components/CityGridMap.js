@@ -7,11 +7,11 @@ const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
   '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
   '/park': { x: 150, y: -100, name: 'ARES CITY PARK' },
-  '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT' },
-  '/neurodiversity/communication-grove': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - COMMUNICATION GROVE' },
+  '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - WELCOME PLAZA' },
+  '/neurodiversity/comms-grove': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - DIALOGUE BRIDGES' },
   '/neurodiversity/sensory-garden': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - SENSORY GARDEN' },
   '/neurodiversity/lexicon-pavilion': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - LEXICON PAVILION' },
-  '/neurodiversity/meetup': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - MEETUP & ADVOCACY' },
+  '/neurodiversity/meetup-campfire': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY DISTRICT - COMMUNITY HEARTH' },
   'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }
 };
 
@@ -478,11 +478,11 @@ export default function CityGridMap({ isDrawer = false }) {
                   {isDistrictExpanded && (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', paddingLeft: '12px', borderLeft: '1px dashed rgba(0, 255, 136, 0.2)' }}>
                       {[
-                        { label: '🛰️ District Plaza Hub', route: '/neurodiversity' },
-                        { label: '📡 Communication Grove', route: '/neurodiversity/communication-grove' },
-                        { label: '🌿 Sensory Garden', route: '/neurodiversity/sensory-garden' },
-                        { label: '🌌 Lexicon Pavilion', route: '/neurodiversity/lexicon-pavilion' },
-                        { label: '👥 Meetup & Advocacy Spot', route: '/neurodiversity/meetup' }
+                        { label: '🛰️ District Welcome Hub', route: '/neurodiversity' },
+                        { label: '📡 Comms Grove & Bridges', route: '/neurodiversity/comms-grove' },
+                        { label: '🌿 Sensory Garden Biome', route: '/neurodiversity/sensory-garden' },
+                        { label: '🌌 Synaptic Map Pavilion', route: '/neurodiversity/lexicon-pavilion' },
+                        { label: '👥 Community Hearth Campfire', route: '/neurodiversity/meetup-campfire' }
                       ].map((subSector) => {
                         const isSubActive = pathname === subSector.route;
                         return (

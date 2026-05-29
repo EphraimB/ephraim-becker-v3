@@ -20,12 +20,13 @@ export default function ClientLayoutWrapper({ children }) {
     hudSectorName = 'Portfolio Archives';
     currentLocationName = 'PORTFOLIO';
   } else if (pathname === '/park' || pathname === '/neurodiversity') {
-    bgImage = '/assets/images/backgrounds/mars-dome-park.png';
     currentTheme = 'biosphere';
     if (pathname === '/neurodiversity') {
+      bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
       hudSectorName = 'Ares City Park - Neurodiversity Meetup & Advocacy';
       currentLocationName = 'ARES CITY PARK - NEURODIVERSITY MEETUP & ADVOCACY';
     } else {
+      bgImage = '/assets/images/backgrounds/mars-dome-park.png';
       hudSectorName = 'Ares City Park';
       currentLocationName = 'ARES CITY PARK';
     }

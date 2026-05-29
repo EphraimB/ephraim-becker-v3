@@ -1364,6 +1364,8 @@ body {
     -webkit-overflow-scrolling: touch !important;
     flex: 1 !important;
     min-height: 0 !important;
+    max-height: calc(100vh - 130px) !important;
+    max-height: calc(100dvh - 130px) !important;
   }
 
   /* Keep closed locator button fixed exactly 10px below the HUD bar, staying stuck to the top while content scrolls under the header mask */

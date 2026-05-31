@@ -48,7 +48,7 @@ export default function PortfolioDome() {
         setTransitState('slide-left');
       }
       window.sessionStorage.removeItem('walk-direction');
-      
+
       const timer = setTimeout(() => {
         setTransitState('slide-active');
       }, 50);
@@ -97,7 +97,7 @@ export default function PortfolioDome() {
   const sortedProjects = [...filteredProjects].sort((a, b) => {
     const timeA = a.finished ? Date.parse(a.finished) : Date.now();
     const timeB = b.finished ? Date.parse(b.finished) : Date.now();
-    
+
     // Handle invalid/custom date strings like "Concept Design" by falling back to May 2026
     const valA = isNaN(timeA) ? (a.finished === "Concept Design" ? Date.parse("2026-05-25") : Date.now()) : timeA;
     const valB = isNaN(timeB) ? (b.finished === "Concept Design" ? Date.parse("2026-05-25") : Date.now()) : timeB;
@@ -112,29 +112,29 @@ export default function PortfolioDome() {
 
       {/* Bubbly floating content area */}
       <div className={`walking-content-container ${transitState} portfolio-content-container`}>
-        
+
         {/* Upper Information Panel */}
         <div className="bubbly-panel portfolio-info-panel">
           <h3 className="portfolio-info-heading">
             Holographic Project Archives
           </h3>
           <p className="portfolio-info-text">
-            Browse the engineering software systems, predictive engines, and physical configurations developed by Ephraim Becker. Filter projects instantly by category tag, keywords, or completed year, and click any card to open a conversational hologram details bubble!
+            Browse the engineering software systems, predictive engines, and physical configurations developed by Ephraim Becker. Filter projects instantly by category tag, keywords, or completed year, and click any card to open a hologram details bubble!
           </p>
         </div>
 
         {/* Advanced Holographic Filter Deck */}
         <div className="bubbly-panel portfolio-filter-panel">
-          
+
           <div className="filter-deck-layout">
-            
+
             {/* Search Input Box */}
             <div className="filter-search-col">
               <label className="filter-col-label">
                 SECTOR ARCHIVE KEYWORD SEARCH
               </label>
               <div className="filter-input-wrap">
-                <input 
+                <input
                   type="text"
                   placeholder="🔍 Search titles, descriptions, technologies..."
                   value={searchQuery}
@@ -143,7 +143,7 @@ export default function PortfolioDome() {
                   suppressHydrationWarning
                 />
                 {searchQuery && (
-                  <button 
+                  <button
                     onClick={() => setSearchQuery('')}
                     className="filter-clear-btn"
                   >
@@ -181,7 +181,7 @@ export default function PortfolioDome() {
                   <span className="range-slider-label">MIN COMPLETED YEAR</span>
                   <span className="filter-year-value">{minYear}</span>
                 </div>
-                <input 
+                <input
                   type="range"
                   min="2014"
                   max="2026"
@@ -200,7 +200,7 @@ export default function PortfolioDome() {
                   <span className="range-slider-label">MAX COMPLETED YEAR</span>
                   <span className="filter-year-value">{maxYear}</span>
                 </div>
-                <input 
+                <input
                   type="range"
                   min="2014"
                   max="2026"
@@ -239,7 +239,7 @@ export default function PortfolioDome() {
 
         {/* Scrollable Project Cards Grid */}
         <div className="custom-scroll portfolio-scroll-area">
-          
+
           <div className="portfolio-grid-deck">
             {sortedProjects.length === 0 ? (
               <div className="portfolio-empty-state">
@@ -251,7 +251,7 @@ export default function PortfolioDome() {
               </div>
             ) : (
               sortedProjects.map((project) => (
-                <div 
+                <div
                   key={project.id}
                   onClick={() => setActiveProject(project)}
                   className="project-card"
@@ -262,11 +262,11 @@ export default function PortfolioDome() {
                         {project.category.toUpperCase()}
                       </span>
                     </div>
-                    
+
                     <h4 className="project-card-title">
                       {project.title}
                     </h4>
-                    
+
                     <p className="project-card-desc">
                       {project.description}
                     </p>
@@ -300,11 +300,11 @@ export default function PortfolioDome() {
 
       {/* FULL-SCREEN IMMERSIVE HOLOGRAPHIC MODAL OVERLAY */}
       {activeProject && (
-        <div 
+        <div
           className="portfolio-modal-overlay"
           onClick={() => { setActiveProject(null); setLightboxIndex(null); setDownloadDropdownOpen(false); }}
         >
-          <div 
+          <div
             className="portfolio-modal-content"
             onClick={(e) => e.stopPropagation()} // Prevent closing on click inside content
           >
@@ -315,7 +315,7 @@ export default function PortfolioDome() {
                   // HOLOGRAM_SECTOR: {activeProject.category.toUpperCase()}
                 </span>
               </div>
-              <button 
+              <button
                 onClick={() => { setActiveProject(null); setLightboxIndex(null); setDownloadDropdownOpen(false); }}
                 className="hud-btn portfolio-modal-close"
               >
@@ -326,21 +326,21 @@ export default function PortfolioDome() {
             {/* Modal Scrollable Body */}
             <div className="custom-scroll portfolio-modal-scroll">
               <div className="modal-columns-grid">
-                
+
                 {/* Left Column: Embed Media & Visual Canvas */}
                 <div className="modal-left-col">
                   <h4 className="modal-left-heading">
                     VISUAL MEDIA COMPONENT
                   </h4>
-                  
+
                   {/* YouTube Embed Player */}
                   {activeProject.video ? (
                     <div className="modal-video-wrapper">
-                      <iframe 
+                      <iframe
                         src={activeProject.video}
                         title={activeProject.title}
-                        frameBorder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                         allowFullScreen
                         className="modal-video-frame"
                       />
@@ -351,14 +351,14 @@ export default function PortfolioDome() {
                       <div className="modal-gallery-grid" style={{ gridTemplateColumns: activeProject.images ? 'repeat(2, 1fr)' : '1fr' }}>
                         {activeProject.images ? (
                           activeProject.images.map((img, idx) => (
-                            <div 
-                              key={idx} 
+                            <div
+                              key={idx}
                               onClick={() => setLightboxIndex(idx)}
                               className="gallery-thumbnail"
                             >
-                              <img 
-                                src={img} 
-                                alt={`${activeProject.title} screenshot ${idx + 1}`} 
+                              <img
+                                src={img}
+                                alt={`${activeProject.title} screenshot ${idx + 1}`}
                                 className="gallery-thumb-img"
                               />
                               <div className="gallery-thumb-label">
@@ -367,13 +367,13 @@ export default function PortfolioDome() {
                             </div>
                           ))
                         ) : activeProject.image ? (
-                          <div 
+                          <div
                             onClick={() => setLightboxIndex(0)}
                             className="gallery-thumbnail gallery-thumbnail--single"
                           >
-                            <img 
-                              src={activeProject.image} 
-                              alt={activeProject.title} 
+                            <img
+                              src={activeProject.image}
+                              alt={activeProject.title}
                               className="gallery-single-img"
                             />
                             <div className="gallery-thumb-label">
@@ -469,7 +469,7 @@ export default function PortfolioDome() {
                     <div className="modal-actions-row">
                       {/* Non-download direct links (GitHub, YouTube) */}
                       {otherLinks.map((link, idx) => (
-                        <a 
+                        <a
                           key={idx}
                           href={link.src}
                           target="_blank"
@@ -483,7 +483,7 @@ export default function PortfolioDome() {
 
                       {/* Download link handling */}
                       {downloadLinks.length === 1 && (
-                        <a 
+                        <a
                           href={downloadLinks[0].src}
                           download
                           className="hud-btn modal-link-btn modal-link-btn--green"
@@ -500,7 +500,7 @@ export default function PortfolioDome() {
                           >
                             📥 DOWNLOAD CONCEPT DECK {downloadDropdownOpen ? '▲' : '▼'}
                           </button>
-                          
+
                           {downloadDropdownOpen && (
                             <div className="modal-download-dropdown">
                               {downloadLinks.map((link, idx) => (
@@ -541,7 +541,7 @@ export default function PortfolioDome() {
 
       {/* IMMERSIVE HOLOGRAPHIC LIGHTBOX DECK */}
       {lightboxIndex !== null && lightboxImages.length > 0 && (
-        <div 
+        <div
           className="lightbox-overlay"
           onClick={() => setLightboxIndex(null)}
         >
@@ -550,7 +550,7 @@ export default function PortfolioDome() {
             <span className="lightbox-label">
               // UPLINK_SCREEN_VIEW: IMAGE {lightboxIndex + 1} / {lightboxImages.length}
             </span>
-            <button 
+            <button
               onClick={() => setLightboxIndex(null)}
               className="hud-btn lightbox-close-btn"
             >
@@ -559,7 +559,7 @@ export default function PortfolioDome() {
           </div>
 
           {/* Lightbox Stage (Image & Slide Arrows) */}
-          <div 
+          <div
             onClick={(e) => e.stopPropagation()}
             className="lightbox-stage"
           >
@@ -575,9 +575,9 @@ export default function PortfolioDome() {
 
             {/* Central Expanded Image Box */}
             <div className="lightbox-image-box">
-              <img 
-                src={lightboxImages[lightboxIndex]} 
-                alt={`${activeProject.title} expanded view`} 
+              <img
+                src={lightboxImages[lightboxIndex]}
+                alt={`${activeProject.title} expanded view`}
                 className="lightbox-image"
               />
             </div>

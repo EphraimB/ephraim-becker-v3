@@ -37,27 +37,27 @@ export default function CityGridMap({ isDrawer = false }) {
     const fromPath = pathname || '/';
     const from = COORDS[fromPath] || COORDS['/'];
     const to = COORDS[toPathOrKey] || COORDS['/'];
-    
+
     if (fromPath === toPathOrKey) {
       return '[📍 CURRENT SECTOR / ACTIVE NEXUS]';
     }
-    
+
     if (toPathOrKey === '/park' && (fromPath === '/park' || fromPath.startsWith('/neurodiversity'))) {
       return '[📍 CURRENT SECTOR / ACTIVE NEXUS]';
     }
-    
+
     const dx = to.x - from.x;
     const dy = to.y - from.y;
     const distance = Math.round(Math.sqrt(dx * dx + dy * dy));
-    
+
     const speed = 1.2; // meters per second walking speed
     const timeSeconds = Math.round(distance / speed);
     const mins = Math.floor(timeSeconds / 60);
     const secs = timeSeconds % 60;
-    
+
     const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
     const fromName = from.name || 'ACTIVE BASE';
-    
+
     return `🏃 ${distance}m walk from ${fromName} (${timeStr} corridor transit)`;
   };
 
@@ -83,22 +83,12 @@ export default function CityGridMap({ isDrawer = false }) {
       icon: '📂',
       desc: 'Retrospective engineering files'
     },
-    {
-      id: 'neurodiversity',
-      label: 'SECTOR 02 // ADVOCACY',
-      title: pathname.startsWith('/neurodiversity') ? 'Ares City Park - Neurodiversity Lawn' : 'Ares City Park',
-      route: '/park',
-      color: '#00ff88',
-      rgb: '0, 255, 136',
-      icon: '🧠',
-      desc: 'Ares colony neuro-advocacy portal'
-    }
   ];
 
   // ================= RENDER INTERACTIVE ACADEMIC TELEMETRY EXPANSION =================
   const renderAcademicTelemetryContent = (isInline) => {
     return (
-      <div 
+      <div
         style={{
           marginTop: isInline ? '10px' : '0',
           borderTop: isInline ? '1.5px solid rgba(0, 240, 255, 0.25)' : 'none',
@@ -112,7 +102,7 @@ export default function CityGridMap({ isDrawer = false }) {
             📡 SYSTEM_SYNC // ACADEMIC_LOG
           </span>
           {!isInline && (
-            <button 
+            <button
               onClick={() => setAcademicSyncActive(false)}
               style={{
                 background: 'none',
@@ -144,15 +134,15 @@ export default function CityGridMap({ isDrawer = false }) {
           </div>
 
           {/* Integral SVG graph */}
-          <div 
-            style={{ 
-              width: isInline ? '100%' : '160px', 
-              background: '#04060c', 
-              borderRadius: '6px', 
-              border: '1.5px solid rgba(0, 240, 255, 0.15)', 
-              padding: '8px', 
-              display: 'flex', 
-              flexDirection: 'column', 
+          <div
+            style={{
+              width: isInline ? '100%' : '160px',
+              background: '#04060c',
+              borderRadius: '6px',
+              border: '1.5px solid rgba(0, 240, 255, 0.15)',
+              padding: '8px',
+              display: 'flex',
+              flexDirection: 'column',
               justifyContent: 'space-between',
               boxSizing: 'border-box'
             }}
@@ -179,22 +169,22 @@ export default function CityGridMap({ isDrawer = false }) {
   // ================= BLUEPRINT HOLOGRAPHIC BACKGROUND SVG =================
   const renderBlueprintBackgroundMap = () => {
     return (
-      <div 
+      <div
         className="blueprint-map-backdrop"
-        style={{ 
-          position: 'absolute', 
-          inset: 0, 
-          opacity: 0.08, 
-          pointerEvents: 'none', 
-          zIndex: 0, 
+        style={{
+          position: 'absolute',
+          inset: 0,
+          opacity: 0.08,
+          pointerEvents: 'none',
+          zIndex: 0,
           overflow: 'hidden',
           transition: 'all 0.3s ease'
         }}
       >
-        <svg 
-          width="100%" 
-          height="100%" 
-          viewBox="0 0 400 400" 
+        <svg
+          width="100%"
+          height="100%"
+          viewBox="0 0 400 400"
           preserveAspectRatio="xMidYMid slice"
           style={{ display: 'block' }}
         >
@@ -203,13 +193,13 @@ export default function CityGridMap({ isDrawer = false }) {
           <circle cx="200" cy="200" r="130" fill="none" stroke="#00f0ff" strokeWidth="0.8" />
           <circle cx="200" cy="200" r="80" fill="none" stroke="#00f0ff" strokeWidth="1" strokeDasharray="5 5" />
           <circle cx="200" cy="200" r="30" fill="none" stroke="#00f0ff" strokeWidth="0.8" />
-          
+
           {/* Main coordinate crosshairs */}
           <line x1="10" y1="200" x2="390" y2="200" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="4 4" />
           <line x1="200" y1="10" x2="200" y2="390" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="4 4" />
-          
+
           {/* Airtight containment perimeter wall boundary polygon */}
-          <polygon 
+          <polygon
             points="80,260 40,180 80,100 180,40 320,40 360,110 360,200 320,280 200,320"
             fill="none"
             stroke="#00f0ff"
@@ -217,21 +207,21 @@ export default function CityGridMap({ isDrawer = false }) {
             strokeDasharray="6 3"
             style={{ filter: 'drop-shadow(0 0 3px #00f0ff)' }}
           />
-          
+
           {/* Maglev transit track pathway at base */}
-          <path 
-            d="M 65,260 C 120,310 280,310 335,260" 
-            fill="none" 
-            stroke="#00f0ff" 
-            strokeWidth="2" 
-            strokeDasharray="3 5" 
+          <path
+            d="M 65,260 C 120,310 280,310 335,260"
+            fill="none"
+            stroke="#00f0ff"
+            strokeWidth="2"
+            strokeDasharray="3 5"
           />
-          
+
           {/* Atmospheric Generator Nodes */}
           <circle cx="80" cy="100" r="4" fill="#00ff88" opacity="0.5" />
           <circle cx="320" cy="40" r="4" fill="#00ff88" opacity="0.5" />
           <circle cx="360" cy="200" r="4" fill="#00ff88" opacity="0.5" />
-          
+
           {/* Interconnecting cyber pressurized tubes */}
           <line x1="200" y1="120" x2="200" y2="280" stroke="#c259ff" strokeWidth="0.8" strokeDasharray="2 4" />
           <line x1="100" y1="200" x2="300" y2="200" stroke="#c259ff" strokeWidth="0.8" strokeDasharray="2 4" />
@@ -244,7 +234,7 @@ export default function CityGridMap({ isDrawer = false }) {
   // ================= MAIN LAYOUT =================
 
   return (
-    <div 
+    <div
       className="drawer-hud-console"
       style={{
         display: 'flex',
@@ -264,7 +254,7 @@ export default function CityGridMap({ isDrawer = false }) {
       {renderBlueprintBackgroundMap()}
 
       {/* 2. Top Status HUD Bar */}
-      <div 
+      <div
         className="map-coordinate-overlay"
         style={{
           padding: isDrawer ? '8px 12px' : '12px 20px',
@@ -287,8 +277,8 @@ export default function CityGridMap({ isDrawer = false }) {
         <span style={{ whiteSpace: 'nowrap', flexShrink: 0 }}>
           {isDrawer ? 'NAV_CONSOLE' : 'ARES_HABITAT // REALTIME_NAV_CONSOLE'}
         </span>
-        <span style={{ 
-          color: mapHoverNode ? '#00f0ff' : 'rgba(255, 255, 255, 0.25)', 
+        <span style={{
+          color: mapHoverNode ? '#00f0ff' : 'rgba(255, 255, 255, 0.25)',
           whiteSpace: 'nowrap',
           textOverflow: 'ellipsis',
           overflow: 'hidden',
@@ -301,14 +291,14 @@ export default function CityGridMap({ isDrawer = false }) {
       </div>
 
       {/* 3. Scrollable list of highly-tactile HUD cards */}
-      <div 
-        className="custom-scroll" 
-        style={{ 
-          flex: 1, 
-          overflowY: 'auto', 
-          padding: isDrawer ? '12px 16px 40px 16px' : '16px 20px 24px 20px', 
-          display: 'flex', 
-          flexDirection: 'column', 
+      <div
+        className="custom-scroll"
+        style={{
+          flex: 1,
+          overflowY: 'auto',
+          padding: isDrawer ? '12px 16px 40px 16px' : '16px 20px 24px 20px',
+          display: 'flex',
+          flexDirection: 'column',
           gap: '12px',
           zIndex: 1
         }}
@@ -319,14 +309,14 @@ export default function CityGridMap({ isDrawer = false }) {
 
         {sectors.map((sector) => {
           const isAcad = sector.id === 'academics';
-          const isCurrentActive = isAcad 
-            ? academicSyncActive 
-            : (sector.id === 'neurodiversity' 
-                ? (pathname === '/park' || pathname.startsWith('/neurodiversity')) 
-                : isRouteActive(sector.route));
+          const isCurrentActive = isAcad
+            ? academicSyncActive
+            : (sector.id === 'neurodiversity'
+              ? (pathname === '/park' || pathname.startsWith('/neurodiversity'))
+              : isRouteActive(sector.route));
 
           return (
-            <div 
+            <div
               key={sector.id}
               onClick={() => {
                 if (isAcad) {
@@ -359,13 +349,13 @@ export default function CityGridMap({ isDrawer = false }) {
                   {sector.label}
                 </span>
                 {isCurrentActive && (
-                  <span 
-                    className="active-pulse-dot" 
-                    style={{ 
-                      width: '6px', 
-                      height: '6px', 
-                      borderRadius: '50%', 
-                      background: sector.color, 
+                  <span
+                    className="active-pulse-dot"
+                    style={{
+                      width: '6px',
+                      height: '6px',
+                      borderRadius: '50%',
+                      background: sector.color,
                       boxShadow: `0 0 8px ${sector.color}`,
                       animation: 'pulse-dot 1.2s infinite alternate'
                     }}
@@ -384,12 +374,12 @@ export default function CityGridMap({ isDrawer = false }) {
               </div>
 
               {/* Dynamic walking distance metrics or inline details */}
-              <div 
-                style={{ 
-                  fontSize: '0.65rem', 
-                  color: isCurrentActive ? '#ffffff' : 'rgba(255,255,255,0.5)', 
-                  fontFamily: 'monospace', 
-                  textAlign: 'left', 
+              <div
+                style={{
+                  fontSize: '0.65rem',
+                  color: isCurrentActive ? '#ffffff' : 'rgba(255,255,255,0.5)',
+                  fontFamily: 'monospace',
+                  textAlign: 'left',
                   marginTop: '2px',
                   display: 'flex',
                   alignItems: 'center',
@@ -407,10 +397,10 @@ export default function CityGridMap({ isDrawer = false }) {
 
               {/* Tactical area sublist for Ares City Park */}
               {sector.id === 'neurodiversity' && (
-                <div 
-                  style={{ 
-                    marginTop: '8px', 
-                    paddingTop: '8px', 
+                <div
+                  style={{
+                    marginTop: '8px',
+                    paddingTop: '8px',
                     borderTop: '1px solid rgba(0, 255, 136, 0.15)',
                     display: 'flex',
                     flexDirection: 'column',
@@ -424,7 +414,7 @@ export default function CityGridMap({ isDrawer = false }) {
                   <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(0, 255, 136, 0.6)', letterSpacing: '0.5px', textTransform: 'uppercase', fontWeight: 'bold' }}>
                     [ PARK SECTORS ]
                   </span>
-                  
+
                   {/* Item 1: Habitat Entrance Plaza & Gardens */}
                   <div
                     onClick={() => {
@@ -526,7 +516,7 @@ export default function CityGridMap({ isDrawer = false }) {
 
       {/* 4. Absolute Academic overlay for desktop dashboard homepage when toggled */}
       {!isDrawer && academicSyncActive && (
-        <div 
+        <div
           style={{
             position: 'absolute',
             bottom: '16px',

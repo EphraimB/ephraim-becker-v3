@@ -150,12 +150,13 @@ export default function CityGridMap({ isDrawer = false }) {
             <span style={{ fontSize: '0.52rem', color: '#00f0ff', fontFamily: 'monospace', display: 'block', textAlign: 'center', marginBottom: '4px' }}>
               CALCULUS_SLOPE (dy/dx)
             </span>
-            <svg viewBox="0 0 100 45" width="100%" height="34px">
-              <line x1="5" y1="38" x2="95" y2="38" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
-              <line x1="20" y1="5" x2="20" y2="40" stroke="rgba(255,255,255,0.15)" strokeWidth="0.5" />
-              <path d="M 20,38 Q 45,5 75,20 T 95,5" fill="none" stroke="#00f0ff" strokeWidth="1.5" />
-              <circle cx="75" cy="20" r="2.5" fill="#ffb300" />
-            </svg>
+            <img
+              src="/assets/svgs/citygrid_calculus.svg"
+              alt="Calculus slope graph"
+              width="100%"
+              height="34px"
+              style={{ display: 'block' }}
+            />
             <span style={{ fontSize: '0.48rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', textAlign: 'center', marginTop: '4px' }}>
               INTEGRAL LIMIT: NOMINAL
             </span>
@@ -181,51 +182,13 @@ export default function CityGridMap({ isDrawer = false }) {
           transition: 'all 0.3s ease'
         }}
       >
-        <svg
+        <img
+          src="/assets/svgs/citygrid_blueprint.svg"
+          alt=""
           width="100%"
           height="100%"
-          viewBox="0 0 400 400"
-          preserveAspectRatio="xMidYMid slice"
-          style={{ display: 'block' }}
-        >
-          {/* Concentric scanning coordinates (Vatican organic top-down cue) */}
-          <circle cx="200" cy="200" r="180" fill="none" stroke="#00f0ff" strokeWidth="1" strokeDasharray="3 6" />
-          <circle cx="200" cy="200" r="130" fill="none" stroke="#00f0ff" strokeWidth="0.8" />
-          <circle cx="200" cy="200" r="80" fill="none" stroke="#00f0ff" strokeWidth="1" strokeDasharray="5 5" />
-          <circle cx="200" cy="200" r="30" fill="none" stroke="#00f0ff" strokeWidth="0.8" />
-
-          {/* Main coordinate crosshairs */}
-          <line x1="10" y1="200" x2="390" y2="200" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="4 4" />
-          <line x1="200" y1="10" x2="200" y2="390" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="4 4" />
-
-          {/* Airtight containment perimeter wall boundary polygon */}
-          <polygon
-            points="80,260 40,180 80,100 180,40 320,40 360,110 360,200 320,280 200,320"
-            fill="none"
-            stroke="#00f0ff"
-            strokeWidth="1.5"
-            strokeDasharray="6 3"
-            style={{ filter: 'drop-shadow(0 0 3px #00f0ff)' }}
-          />
-
-          {/* Maglev transit track pathway at base */}
-          <path
-            d="M 65,260 C 120,310 280,310 335,260"
-            fill="none"
-            stroke="#00f0ff"
-            strokeWidth="2"
-            strokeDasharray="3 5"
-          />
-
-          {/* Atmospheric Generator Nodes */}
-          <circle cx="80" cy="100" r="4" fill="#00ff88" opacity="0.5" />
-          <circle cx="320" cy="40" r="4" fill="#00ff88" opacity="0.5" />
-          <circle cx="360" cy="200" r="4" fill="#00ff88" opacity="0.5" />
-
-          {/* Interconnecting cyber pressurized tubes */}
-          <line x1="200" y1="120" x2="200" y2="280" stroke="#c259ff" strokeWidth="0.8" strokeDasharray="2 4" />
-          <line x1="100" y1="200" x2="300" y2="200" stroke="#c259ff" strokeWidth="0.8" strokeDasharray="2 4" />
-        </svg>
+          style={{ display: 'block', objectFit: 'cover', position: 'absolute', inset: 0 }}
+        />
       </div>
     );
   };

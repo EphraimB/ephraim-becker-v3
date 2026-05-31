@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" width="100%" height="90px" style="background:#0a0d17;border-radius:8px;border:1px solid rgba(0,255,136,0.15);box-shadow:inset 0 0 8px rgba(0,0,0,0.4)">
+  <rect x="0" y="0" width="320" height="15" fill="#081c13"/>
+  <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" font-size="6" font-family="monospace" text-anchor="middle">ARES_OS // ENDURANCE_WEATHER_GRID</text>
+  <g stroke="rgba(0,240,255,0.3)" stroke-width="0.8" stroke-linecap="round">
+    <line x1="20" y1="20" x2="10" y2="40"/>
+    <line x1="60" y1="20" x2="50" y2="40"/>
+    <line x1="100" y1="20" x2="90" y2="40"/>
+    <line x1="140" y1="20" x2="130" y2="40"/>
+    <line x1="180" y1="20" x2="170" y2="40"/>
+    <line x1="220" y1="20" x2="210" y2="40"/>
+    <line x1="260" y1="20" x2="250" y2="40"/>
+    <line x1="300" y1="20" x2="290" y2="40"/>
+    <line x1="40" y1="40" x2="30" y2="60"/>
+    <line x1="80" y1="40" x2="70" y2="60"/>
+    <line x1="120" y1="40" x2="110" y2="60"/>
+    <line x1="160" y1="40" x2="150" y2="60"/>
+    <line x1="200" y1="40" x2="190" y2="60"/>
+    <line x1="240" y1="40" x2="230" y2="60"/>
+    <line x1="280" y1="40" x2="270" y2="60"/>
+    <line x1="30" y1="60" x2="20" y2="80"/>
+    <line x1="70" y1="60" x2="60" y2="80"/>
+    <line x1="110" y1="60" x2="100" y2="80"/>
+    <line x1="150" y1="60" x2="140" y2="80"/>
+    <line x1="190" y1="60" x2="180" y2="80"/>
+    <line x1="230" y1="60" x2="220" y2="80"/>
+    <line x1="270" y1="60" x2="260" y2="80"/>
+  </g>
+  <g stroke="#00ff88" stroke-width="1.2" stroke-linecap="round" opacity="0.75">
+    <path d="M 120,32 L 95,32 M 100,28 L 95,32 L 100,36" fill="none"/>
+    <path d="M 175,55 L 150,55 M 155,51 L 150,55 L 155,59" fill="none"/>
+    <text x="145" y="27" fill="#00ff88" font-size="4.5" font-family="monospace">HEADWIND CURRENT</text>
+  </g>
+  <g transform="translate(45, 50)">
+    <circle cx="0" cy="0" r="18" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="3"/>
+    <circle cx="0" cy="0" r="18" fill="none" stroke="#00ff88" stroke-width="3" stroke-dasharray="80 30" stroke-dashoffset="15"/>
+    <text x="0" y="2.5" fill="#fff" font-size="7" font-family="monospace" text-anchor="middle" font-weight="bold">92%</text>
+    <text x="0" y="26" fill="rgba(255,255,255,0.6)" font-size="5" font-family="monospace" text-anchor="middle">GRIT RATIO</text>
+  </g>
+  <g transform="translate(205, 22)">
+    <rect x="0" y="0" width="105" height="52" rx="4" fill="rgba(0,0,0,0.6)" stroke="rgba(0,255,136,0.2)" stroke-width="1"/>
+    <text x="8" y="12" fill="#00ff88" font-size="6.5" font-family="monospace" font-weight="bold">DAILY GOAL: ACTIVE</text>
+    <text x="8" y="22" fill="#fff" font-size="5.5" font-family="monospace">ALL-WEATHER ENVIRO</text>
+    <text x="8" y="32" fill="rgba(255,255,255,0.7)" font-size="5" font-family="monospace">INSPIRING COMPANION</text>
+    <text x="8" y="42" fill="#00f0ff" font-size="5" font-family="monospace" font-weight="bold">LIMITS: EXPANDED</text>
+  </g>
+  <text x="10" y="84" fill="rgba(255,255,255,0.4)" font-size="5.5" font-family="monospace" text-anchor="start">ATMOSPHERE: PRECIPITATION_RAIN</text>
+  <text x="310" y="84" fill="#00ff88" font-size="5.5" font-family="monospace" text-anchor="end">ENDURANCE: MAX_LEVEL</text>
+</svg>

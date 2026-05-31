@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" width="100%" height="90px" style="background:#0a0d17;border-radius:8px;border:1px solid rgba(255,179,0,0.2);box-shadow:inset 0 0 8px rgba(0,0,0,0.4)">
+  <style>
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .spin-disc { animation: spin 10s linear infinite; transform-origin: 150px 45px; }
+  </style>
+  <rect x="90" y="10" width="140" height="70" rx="6" fill="#141a29" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+  <g class="spin-disc">
+    <circle cx="150" cy="45" r="28" fill="#0c0d12" stroke="#222" stroke-width="1"/>
+    <circle cx="150" cy="45" r="24" fill="none" stroke="#242630" stroke-width="0.8"/>
+    <circle cx="150" cy="45" r="18" fill="none" stroke="#242630" stroke-width="0.8"/>
+    <circle cx="150" cy="45" r="8" fill="#ffb300"/>
+    <circle cx="150" cy="45" r="1.5" fill="#000"/>
+  </g>
+  <path d="M 215,28 L 195,28 L 172,40" fill="none" stroke="#cfd8dc" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="215" cy="28" r="4.5" fill="#455a64"/>
+  <text x="160" y="85" fill="rgba(255,255,255,0.4)" font-size="5.5" font-family="monospace" text-anchor="middle" font-weight="bold">FAVORITES: TAYLOR SWIFT // NOAH KAHAN // PIPE ORGAN</text>
+</svg>

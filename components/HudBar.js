@@ -10,12 +10,12 @@ export default function HudBar({ sectorName = 'METROPOLIS CORE' }) {
 
   return (
     <header className="system-hud-bar">
-      <div className="hud-citizen-info" style={{ display: 'flex', gap: '5px', alignItems: 'center' }}>
-        CREDENTIALS: <span style={{ fontWeight: 500 }}>EPHRAIM BECKER (MY23)</span> | <span style={{ color: 'var(--color-accent)', fontWeight: 500 }}>CLASS-A CITIZEN</span>
+      <div className="hud-citizen-info">
+        CREDENTIALS: <span className="hud-credential-name">EPHRAIM BECKER (MY23)</span> | <span className="hud-credential-class">CLASS-A CITIZEN</span>
       </div>
 
       <div className="hud-sector-indicator">
-        ACTIVE SECTOR: <span style={{ color: 'var(--color-accent)', fontWeight: 700, textShadow: '0 0 5px rgba(var(--color-accent-rgb), 0.3)' }}>{sectorName.toUpperCase()}</span>
+        ACTIVE SECTOR: <span className="hud-sector-name">{sectorName.toUpperCase()}</span>
       </div>
       
       <div className="hud-clock-info">

@@ -106,71 +106,46 @@ export default function PortfolioDome() {
   });
 
   return (
-    <div className="citizen-card-shell" style={{ flexDirection: 'column' }}>
+    <div className="citizen-card-shell portfolio-shell">
       {/* Walking Transit Sweeper Overlays */}
-      <div className="walking-motion-overlay" style={{ position: 'fixed' }}></div>
+      <div className="walking-motion-overlay portfolio-walking-overlay"></div>
 
       {/* Bubbly floating content area */}
-      <div className={`walking-content-container ${transitState}`} style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+      <div className={`walking-content-container ${transitState} portfolio-content-container`}>
         
         {/* Upper Information Panel */}
-        <div className="bubbly-panel" style={{ marginBottom: '20px' }}>
-          <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.85rem', color: 'var(--color-accent)', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '6px' }}>
+        <div className="bubbly-panel portfolio-info-panel">
+          <h3 className="portfolio-info-heading">
             Holographic Project Archives
           </h3>
-          <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
+          <p className="portfolio-info-text">
             Browse the engineering software systems, predictive engines, and physical configurations developed by Ephraim Becker. Filter projects instantly by category tag, keywords, or completed year, and click any card to open a conversational hologram details bubble!
           </p>
         </div>
 
         {/* Advanced Holographic Filter Deck */}
-        <div className="bubbly-panel" style={{ padding: '20px 24px', marginBottom: '20px', background: 'rgba(6,9,20,0.85)' }}>
+        <div className="bubbly-panel portfolio-filter-panel">
           
-          <div className="filter-deck-layout" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr 1fr', gap: '20px', marginBottom: '16px' }}>
+          <div className="filter-deck-layout">
             
             {/* Search Input Box */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
-              <label style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1.5px', fontWeight: 700 }}>
+            <div className="filter-search-col">
+              <label className="filter-col-label">
                 SECTOR ARCHIVE KEYWORD SEARCH
               </label>
-              <div style={{ position: 'relative' }}>
+              <div className="filter-input-wrap">
                 <input 
                   type="text"
                   placeholder="🔍 Search titles, descriptions, technologies..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="net-input"
+                  className="net-input filter-search-input"
                   suppressHydrationWarning
-                  style={{
-                    width: '100%',
-                    background: '#04060c',
-                    border: '1.5px solid var(--color-accent)',
-                    borderRadius: '8px',
-                    padding: '10px 14px 10px 36px',
-                    color: 'var(--text-primary)',
-                    fontFamily: 'var(--font-tech)',
-                    fontSize: '0.75rem',
-                    outline: 'none',
-                    transition: 'all 0.25s ease',
-                    boxShadow: '0 0 10px rgba(var(--color-accent-rgb), 0.1)'
-                  }}
                 />
                 {searchQuery && (
                   <button 
                     onClick={() => setSearchQuery('')}
-                    style={{
-                      position: 'absolute',
-                      right: '12px',
-                      top: '50%',
-                      transform: 'translateY(-50%)',
-                      background: 'none',
-                      border: 'none',
-                      color: 'var(--color-accent)',
-                      cursor: 'pointer',
-                      fontSize: '0.8rem',
-                      fontFamily: 'var(--font-tech)',
-                      fontWeight: 'bold'
-                    }}
+                    className="filter-clear-btn"
                   >
                     [✕]
                   </button>
@@ -179,22 +154,20 @@ export default function PortfolioDome() {
             </div>
 
             {/* Sort Order Selector */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', textAlign: 'left' }}>
-              <label style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255, 255, 255, 0.4)', letterSpacing: '1.5px', fontWeight: 700 }}>
+            <div className="filter-sort-col">
+              <label className="filter-col-label">
                 ARCHIVE CHRONO SORT ORDER
               </label>
-              <div style={{ display: 'flex', gap: '8px' }}>
+              <div className="filter-sort-row">
                 <button
                   onClick={() => setSortOrder('desc')}
-                  className={`category-pill ${sortOrder === 'desc' ? 'active' : ''}`}
-                  style={{ flex: 1, padding: '10px 5px', fontSize: '0.68rem', margin: 0, height: '38px', whiteSpace: 'nowrap' }}
+                  className={`category-pill filter-sort-btn ${sortOrder === 'desc' ? 'active' : ''}`}
                 >
                   ⏳ RECENTS
                 </button>
                 <button
                   onClick={() => setSortOrder('asc')}
-                  className={`category-pill ${sortOrder === 'asc' ? 'active' : ''}`}
-                  style={{ flex: 1, padding: '10px 5px', fontSize: '0.68rem', margin: 0, height: '38px', whiteSpace: 'nowrap' }}
+                  className={`category-pill filter-sort-btn ${sortOrder === 'asc' ? 'active' : ''}`}
                 >
                   ⌛ OLDEST
                 </button>
@@ -202,11 +175,11 @@ export default function PortfolioDome() {
             </div>
 
             {/* Date Range Control (Sliders side-by-side) */}
-            <div className="filter-sliders-container" style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-              <div className="range-slider-group" style={{ textAlign: 'left' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div className="filter-sliders-container">
+              <div className="range-slider-group">
+                <div className="filter-year-header">
                   <span className="range-slider-label">MIN COMPLETED YEAR</span>
-                  <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', color: 'var(--color-accent)', fontWeight: 700 }}>{minYear}</span>
+                  <span className="filter-year-value">{minYear}</span>
                 </div>
                 <input 
                   type="range"
@@ -222,10 +195,10 @@ export default function PortfolioDome() {
                 />
               </div>
 
-              <div className="range-slider-group" style={{ textAlign: 'left' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div className="range-slider-group">
+                <div className="filter-year-header">
                   <span className="range-slider-label">MAX COMPLETED YEAR</span>
-                  <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', color: 'var(--color-accent)', fontWeight: 700 }}>{maxYear}</span>
+                  <span className="filter-year-value">{maxYear}</span>
                 </div>
                 <input 
                   type="range"
@@ -245,8 +218,8 @@ export default function PortfolioDome() {
           </div>
 
           {/* Category Tag Pills Row */}
-          <div style={{ borderTop: '1px solid rgba(255, 255, 255, 0.08)', paddingTop: '14px' }}>
-            <span style={{ display: 'block', fontFamily: 'var(--font-tech)', fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', letterSpacing: '1.5px', marginBottom: '8px', textAlign: 'center', fontWeight: 700 }}>
+          <div className="filter-category-section">
+            <span className="filter-category-label">
               SECTOR CLASSIFICATION TAGS
             </span>
             <div className="category-pills-row">
@@ -265,14 +238,14 @@ export default function PortfolioDome() {
         </div>
 
         {/* Scrollable Project Cards Grid */}
-        <div className="custom-scroll" style={{ flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
+        <div className="custom-scroll portfolio-scroll-area">
           
-          <div className="portfolio-grid-deck" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '20px', paddingBottom: '10px' }}>
+          <div className="portfolio-grid-deck">
             {sortedProjects.length === 0 ? (
-              <div style={{ gridColumn: '1 / -1', padding: '48px 24px', background: 'rgba(6, 9, 20, 0.5)', border: '1.5px dashed rgba(var(--color-accent-rgb), 0.25)', borderRadius: '14px', textAlign: 'center', boxShadow: 'inset 0 0 20px rgba(0,0,0,0.4)' }}>
-                <span style={{ fontSize: '2.5rem', display: 'block', marginBottom: '12px' }}>🛰️</span>
-                <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: 'var(--color-accent)', marginBottom: '8px', letterSpacing: '1px' }}>NO PROJECTS MATCHED SECTOR QUERY</h4>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', maxWidth: '420px', margin: '0 auto', lineHeight: 1.4 }}>
+              <div className="portfolio-empty-state">
+                <span className="portfolio-empty-icon">🛰️</span>
+                <h4 className="portfolio-empty-title">NO PROJECTS MATCHED SECTOR QUERY</h4>
+                <p className="portfolio-empty-desc">
                   Try broadening your keyword search parameters or adjusting the completed year range sliders.
                 </p>
               </div>
@@ -282,50 +255,36 @@ export default function PortfolioDome() {
                   key={project.id}
                   onClick={() => setActiveProject(project)}
                   className="project-card"
-                  style={{ 
-                    display: 'flex', 
-                    flexDirection: 'column', 
-                    justifyContent: 'space-between', 
-                    padding: '18px', 
-                    borderRadius: '14px', 
-                    background: 'rgba(6, 9, 20, 0.72)', 
-                    border: '1.5px solid rgba(255,255,255,0.06)', 
-                    boxShadow: '0 10px 30px rgba(0,0,0,0.35)',
-                    cursor: 'pointer',
-                    height: '280px',
-                    transition: 'all 0.3s ease'
-                  }}
                 >
                   <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '8px' }}>
-                      <span style={{ fontSize: '0.55rem', border: '1px solid rgba(255,255,255,0.15)', color: 'var(--text-secondary)', padding: '1px 6px', borderRadius: '4px', fontFamily: 'var(--font-tech)' }}>
+                    <div className="project-card-header">
+                      <span className="project-card-category">
                         {project.category.toUpperCase()}
                       </span>
-                      {/* Finished Green Stamp removed */}
                     </div>
                     
-                    <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.88rem', color: 'var(--text-primary)', textAlign: 'left', marginBottom: '8px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px' }}>
+                    <h4 className="project-card-title">
                       {project.title}
                     </h4>
                     
-                    <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: '1.45', textAlign: 'left', display: '-webkit-box', WebkitLineClamp: 4, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>
+                    <p className="project-card-desc">
                       {project.description}
                     </p>
                   </div>
 
                   <div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '10px' }}>
+                    <div className="project-card-techs">
                       {project.technologies.slice(0, 3).map((tech, idx) => (
-                        <span key={idx} style={{ fontSize: '0.58rem', background: 'rgba(255,255,255,0.03)', padding: '2px 6px', borderRadius: '3px', border: '1px solid var(--glass-border)', color: 'var(--text-secondary)' }}>
+                        <span key={idx} className="project-tech-chip">
                           {tech}
                         </span>
                       ))}
                     </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.06)', paddingTop: '8px' }}>
-                      <span style={{ fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)' }}>
+                    <div className="project-card-meta">
+                      <span className="project-card-date">
                         {project.finished || "Active"}
                       </span>
-                      <span style={{ fontSize: '0.58rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', fontWeight: 700 }}>
+                      <span className="project-card-cta">
                         [ ACTIVATE HOLOGRAM ⚡ ]
                       </span>
                     </div>
@@ -344,116 +303,65 @@ export default function PortfolioDome() {
         <div 
           className="portfolio-modal-overlay"
           onClick={() => { setActiveProject(null); setLightboxIndex(null); setDownloadDropdownOpen(false); }}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(4, 6, 12, 0.85)',
-            backdropFilter: 'blur(20px)',
-            zIndex: 3000,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            padding: '20px',
-            animation: 'modal-fade-in 0.25s ease-out forwards'
-          }}
         >
           <div 
             className="portfolio-modal-content"
             onClick={(e) => e.stopPropagation()} // Prevent closing on click inside content
-            style={{
-              width: '100%',
-              maxWidth: '960px',
-              maxHeight: '90vh',
-              background: 'rgba(10, 14, 30, 0.94)',
-              border: '2px solid var(--color-accent)',
-              borderRadius: '16px',
-              boxShadow: '0 0 40px rgba(var(--color-accent-rgb), 0.35)',
-              display: 'flex',
-              flexDirection: 'column',
-              overflow: 'hidden',
-              animation: 'modal-scale-up 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) forwards'
-            }}
           >
             {/* Modal Header */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 24px', borderBottom: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', background: 'rgba(6, 9, 20, 0.4)' }}>
+            <div className="portfolio-modal-header">
               <div>
-                <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px', marginRight: '10px' }}>
+                <span className="portfolio-modal-title">
                   // HOLOGRAM_SECTOR: {activeProject.category.toUpperCase()}
                 </span>
-                {/* Finished Green Stamp badge removed */}
               </div>
               <button 
                 onClick={() => { setActiveProject(null); setLightboxIndex(null); setDownloadDropdownOpen(false); }}
-                className="hud-btn"
-                style={{
-                  padding: '4px 12px',
-                  fontSize: '0.65rem',
-                  borderColor: 'rgba(255,255,255,0.2)',
-                  borderRadius: '8px',
-                  background: 'rgba(255,255,255,0.05)',
-                  cursor: 'pointer',
-                  color: '#fff'
-                }}
+                className="hud-btn portfolio-modal-close"
               >
                 [ ✕ CLOSE ARCHIVE ]
               </button>
             </div>
 
             {/* Modal Scrollable Body */}
-            <div className="custom-scroll" style={{ flex: 1, padding: '24px', overflowY: 'auto' }}>
-              <div className="modal-columns-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
+            <div className="custom-scroll portfolio-modal-scroll">
+              <div className="modal-columns-grid">
                 
                 {/* Left Column: Embed Media & Visual Canvas */}
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.75rem', color: 'var(--color-accent)', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '6px', textAlign: 'left' }}>
+                <div className="modal-left-col">
+                  <h4 className="modal-left-heading">
                     VISUAL MEDIA COMPONENT
                   </h4>
                   
                   {/* YouTube Embed Player */}
                   {activeProject.video ? (
-                    <div style={{ width: '100%', position: 'relative', paddingBottom: '56.25%', height: 0, borderRadius: '10px', overflow: 'hidden', border: '1.5px solid var(--color-accent)', boxShadow: '0 0 15px rgba(var(--color-accent-rgb), 0.2)' }}>
+                    <div className="modal-video-wrapper">
                       <iframe 
                         src={activeProject.video}
                         title={activeProject.title}
                         frameBorder="0" 
                         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                         allowFullScreen
-                        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+                        className="modal-video-frame"
                       />
                     </div>
                   ) : (
                     /* Holographic Media Gallery Grid */
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                      <div style={{ 
-                        display: 'grid', 
-                        gridTemplateColumns: activeProject.images ? 'repeat(2, 1fr)' : '1fr', 
-                        gap: '12px' 
-                      }}>
+                    <div className="modal-gallery-wrapper">
+                      <div className="modal-gallery-grid" style={{ gridTemplateColumns: activeProject.images ? 'repeat(2, 1fr)' : '1fr' }}>
                         {activeProject.images ? (
                           activeProject.images.map((img, idx) => (
                             <div 
                               key={idx} 
                               onClick={() => setLightboxIndex(idx)}
                               className="gallery-thumbnail"
-                              style={{ 
-                                borderRadius: '10px', 
-                                overflow: 'hidden', 
-                                border: '1.5px solid rgba(255,255,255,0.08)', 
-                                background: 'rgba(0,0,0,0.3)', 
-                                padding: '6px', 
-                                cursor: 'pointer',
-                                transition: 'all 0.25s ease'
-                              }}
                             >
                               <img 
                                 src={img} 
                                 alt={`${activeProject.title} screenshot ${idx + 1}`} 
-                                style={{ width: '100%', height: '120px', display: 'block', borderRadius: '6px', objectFit: 'cover' }} 
+                                className="gallery-thumb-img"
                               />
-                              <div style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', marginTop: '4px', textAlign: 'center', fontFamily: 'var(--font-tech)' }}>
+                              <div className="gallery-thumb-label">
                                 [ EXPAND SCREENSHOT {idx + 1} 🔍 ]
                               </div>
                             </div>
@@ -461,32 +369,22 @@ export default function PortfolioDome() {
                         ) : activeProject.image ? (
                           <div 
                             onClick={() => setLightboxIndex(0)}
-                            className="gallery-thumbnail"
-                            style={{ 
-                              borderRadius: '10px', 
-                              overflow: 'hidden', 
-                              border: '1.5px solid rgba(255,255,255,0.08)', 
-                              background: 'rgba(0,0,0,0.3)', 
-                              padding: '8px', 
-                              cursor: 'pointer',
-                              transition: 'all 0.25s ease',
-                              textAlign: 'center'
-                            }}
+                            className="gallery-thumbnail gallery-thumbnail--single"
                           >
                             <img 
                               src={activeProject.image} 
                               alt={activeProject.title} 
-                              style={{ width: '100%', height: 'auto', display: 'block', borderRadius: '6px', maxHeight: '320px', objectFit: 'contain', margin: '0 auto' }} 
+                              className="gallery-single-img"
                             />
-                            <div style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.4)', marginTop: '6px', textAlign: 'center', fontFamily: 'var(--font-tech)' }}>
+                            <div className="gallery-thumb-label">
                               [ EXPAND SCREENSHOT 🔍 ]
                             </div>
                           </div>
                         ) : (
                           /* Default Visual placeholder if zero media */
-                          <div style={{ height: '220px', borderRadius: '10px', background: 'radial-gradient(circle, rgba(var(--color-accent-rgb), 0.05) 0%, rgba(4,6,12,0.8) 100%)', border: '1.5px dashed rgba(var(--color-accent-rgb), 0.25)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
-                            <span style={{ fontSize: '2.5rem' }}>🗃️</span>
-                            <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.62rem', color: 'rgba(255,255,255,0.3)' }}>HOLOGRAPHIC COMPONENT LOCALIZED</span>
+                          <div className="modal-media-placeholder">
+                            <span className="modal-placeholder-icon">🗃️</span>
+                            <span className="modal-placeholder-label">HOLOGRAPHIC COMPONENT LOCALIZED</span>
                           </div>
                         )}
                       </div>
@@ -494,55 +392,55 @@ export default function PortfolioDome() {
                   )}
 
                   {/* Metadata Timelines */}
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginTop: '10px' }}>
-                    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'left' }}>
-                      <span style={{ display: 'block', fontSize: '0.52rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)' }}>COMMENCED</span>
-                      <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#fff', fontFamily: 'var(--font-tech)' }}>{activeProject.started || "--"}</span>
+                  <div className="modal-meta-grid">
+                    <div className="modal-meta-item">
+                      <span className="modal-meta-label">COMMENCED</span>
+                      <span className="modal-meta-value">{activeProject.started || "--"}</span>
                     </div>
-                    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '10px', borderRadius: '8px', border: '1px solid rgba(255,255,255,0.05)', textAlign: 'left' }}>
-                      <span style={{ display: 'block', fontSize: '0.52rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)' }}>COMPLETED</span>
-                      <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#fff', fontFamily: 'var(--font-tech)' }}>{activeProject.finished || "ACTIVE"}</span>
+                    <div className="modal-meta-item">
+                      <span className="modal-meta-label">COMPLETED</span>
+                      <span className="modal-meta-value">{activeProject.finished || "ACTIVE"}</span>
                     </div>
                   </div>
 
                 </div>
 
-                {/* Right Column: Holographic Details & Telemetry - Reverted to clean standard columns */}
-                <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', textAlign: 'left' }}>
+                {/* Right Column: Holographic Details & Telemetry */}
+                <div className="modal-right-col">
                   <div>
-                    <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.25rem', color: 'var(--text-primary)', marginBottom: '4px', letterSpacing: '0.5px', fontWeight: 700 }}>
+                    <h3 className="modal-project-title">
                       {activeProject.title}
                     </h3>
-                    <span style={{ fontSize: '0.65rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', fontWeight: 700, display: 'block', marginBottom: '14px' }}>
+                    <span className="modal-project-category">
                       CATEGORY // {activeProject.category.toUpperCase()}
                     </span>
 
                     {/* Quick Tech Summary Panel */}
-                    <div style={{ background: 'rgba(255,255,255,0.02)', padding: '12px 16px', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.05)', marginBottom: '16px' }}>
-                      <span style={{ display: 'block', fontSize: '0.55rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', letterSpacing: '1px', marginBottom: '4px', fontWeight: 700 }}>
+                    <div className="modal-desc-panel">
+                      <span className="modal-desc-label">
                         SYSTEM DESCRIPTION
                       </span>
-                      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: '1.5', margin: 0 }}>
+                      <p className="modal-desc-text">
                         {activeProject.description}
                       </p>
                     </div>
 
-                    {/* High-Tech Details Panel (Standard professional view, not direct dialogue bubble) */}
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', marginBottom: '16px' }}>
+                    {/* High-Tech Details Panel */}
+                    <div className="modal-details-stack">
                       <div>
-                        <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: 'var(--color-accent)', marginBottom: '6px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '4px' }}>
-                          DEVELOPMENT DETAILS & CHALLENGES
+                        <h4 className="modal-section-heading">
+                          DEVELOPMENT DETAILS &amp; CHALLENGES
                         </h4>
-                        <p style={{ fontSize: '0.76rem', color: 'var(--text-primary)', lineHeight: '1.45', margin: 0 }}>
+                        <p className="modal-section-text">
                           {activeProject.details}
                         </p>
                       </div>
 
                       <div>
-                        <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: 'var(--neon-emerald)', marginBottom: '6px', borderBottom: '1px solid rgba(255,255,255,0.06)', paddingBottom: '4px' }}>
+                        <h4 className="modal-section-heading modal-section-heading--emerald">
                           CORE RETROSPECTIVE TAKEAWAYS
                         </h4>
-                        <p style={{ fontSize: '0.74rem', color: 'var(--text-secondary)', lineHeight: '1.45', margin: 0 }}>
+                        <p className="modal-section-text modal-section-text--secondary">
                           {activeProject.takeaways}
                         </p>
                       </div>
@@ -553,13 +451,13 @@ export default function PortfolioDome() {
                   <div>
                     {/* Tech Stack Chips */}
                     {activeProject.technologies && activeProject.technologies.length > 0 && (
-                      <div style={{ marginBottom: '16px' }}>
-                        <span style={{ display: 'block', fontSize: '0.58rem', color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font-tech)', marginBottom: '6px' }}>
+                      <div className="modal-tech-row">
+                        <span className="modal-tech-label">
                           TECHNOLOGICAL STACK UTILIZED:
                         </span>
-                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                        <div className="modal-tech-chips">
                           {activeProject.technologies.map((tech, idx) => (
-                            <span key={idx} style={{ fontSize: '0.6rem', background: 'rgba(var(--color-accent-rgb), 0.08)', padding: '3px 8px', borderRadius: '4px', border: '1.5px solid rgba(var(--color-accent-rgb), 0.25)', color: 'var(--text-primary)', fontWeight: 500 }}>
+                            <span key={idx} className="modal-tech-chip">
                               {tech}
                             </span>
                           ))}
@@ -568,7 +466,7 @@ export default function PortfolioDome() {
                     )}
 
                     {/* Operational Action Buttons */}
-                    <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', borderTop: '1.5px solid rgba(255,255,255,0.06)', paddingTop: '14px', position: 'relative' }}>
+                    <div className="modal-actions-row">
                       {/* Non-download direct links (GitHub, YouTube) */}
                       {otherLinks.map((link, idx) => (
                         <a 
@@ -576,21 +474,7 @@ export default function PortfolioDome() {
                           href={link.src}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="hud-btn"
-                          style={{
-                            padding: '10px 20px',
-                            fontSize: '0.72rem',
-                            fontWeight: 700,
-                            borderRadius: '8px',
-                            borderColor: 'var(--neon-cyan)',
-                            background: 'rgba(0, 240, 255, 0.08)',
-                            color: '#fff',
-                            textDecoration: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            boxShadow: '0 0 10px rgba(0, 240, 255, 0.15)'
-                          }}
+                          className="hud-btn modal-link-btn modal-link-btn--cyan"
                         >
                           {link.type === 'youtube' ? '🎬 ' : '📂 '}
                           {link.description.toUpperCase()}
@@ -602,83 +486,31 @@ export default function PortfolioDome() {
                         <a 
                           href={downloadLinks[0].src}
                           download
-                          className="hud-btn"
-                          style={{
-                            padding: '10px 20px',
-                            fontSize: '0.72rem',
-                            fontWeight: 700,
-                            borderRadius: '8px',
-                            borderColor: 'var(--neon-emerald)',
-                            background: 'rgba(0, 255, 136, 0.08)',
-                            color: '#fff',
-                            textDecoration: 'none',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            boxShadow: '0 0 10px rgba(0, 255, 136, 0.15)'
-                          }}
+                          className="hud-btn modal-link-btn modal-link-btn--green"
                         >
                           📥 {downloadLinks[0].description.toUpperCase()}
                         </a>
                       )}
 
                       {downloadLinks.length > 1 && (
-                        <div style={{ position: 'relative' }}>
+                        <div className="modal-download-wrapper">
                           <button
                             onClick={() => setDownloadDropdownOpen(!downloadDropdownOpen)}
-                            className="hud-btn"
-                            style={{
-                              padding: '10px 20px',
-                              fontSize: '0.72rem',
-                              fontWeight: 700,
-                              borderRadius: '8px',
-                              borderColor: 'var(--neon-emerald)',
-                              background: 'rgba(0, 255, 136, 0.08)',
-                              color: '#fff',
-                              cursor: 'pointer',
-                              display: 'flex',
-                              alignItems: 'center',
-                              gap: '8px',
-                              boxShadow: '0 0 10px rgba(0, 255, 136, 0.15)'
-                            }}
+                            className="hud-btn modal-link-btn modal-link-btn--green"
                           >
                             📥 DOWNLOAD CONCEPT DECK {downloadDropdownOpen ? '▲' : '▼'}
                           </button>
                           
                           {downloadDropdownOpen && (
-                            <div style={{
-                              position: 'absolute',
-                              bottom: 'calc(100% + 8px)',
-                              left: 0,
-                              background: 'rgba(6, 9, 20, 0.96)',
-                              border: '1.5px solid var(--neon-emerald)',
-                              borderRadius: '8px',
-                              boxShadow: '0 0 20px rgba(0, 255, 136, 0.25)',
-                              zIndex: 100,
-                              minWidth: '220px',
-                              overflow: 'hidden',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              animation: 'modal-scale-up 0.2s ease-out forwards'
-                            }}>
+                            <div className="modal-download-dropdown">
                               {downloadLinks.map((link, idx) => (
                                 <a
                                   key={idx}
                                   href={link.src}
                                   download
                                   onClick={() => setDownloadDropdownOpen(false)}
-                                  style={{
-                                    padding: '12px 16px',
-                                    fontSize: '0.72rem',
-                                    color: '#fff',
-                                    textDecoration: 'none',
-                                    textAlign: 'left',
-                                    fontFamily: 'var(--font-tech)',
-                                    borderBottom: idx < downloadLinks.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none',
-                                    transition: 'all 0.2s ease',
-                                    background: 'rgba(0,0,0,0.2)'
-                                  }}
-                                  className="dropdown-item-hover"
+                                  className="modal-download-item dropdown-item-hover"
+                                  style={{ borderBottom: idx < downloadLinks.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}
                                 >
                                   📄 {link.description}
                                 </a>
@@ -689,7 +521,7 @@ export default function PortfolioDome() {
                       )}
 
                       {(!activeProject.links || activeProject.links.length === 0) && (
-                        <span style={{ fontSize: '0.62rem', color: 'rgba(255,255,255,0.3)', fontFamily: 'var(--font-tech)', fontStyle: 'italic' }}>
+                        <span className="modal-no-links">
                           NO OUTBOUND EXTERNAL DATA PORT DETECTED.
                         </span>
                       )}
@@ -707,178 +539,20 @@ export default function PortfolioDome() {
 
 
 
-      <style jsx global>{`
-        /* Immersive Holographic Modal Overlay Animations */
-        @keyframes modal-fade-in {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-
-        @keyframes modal-scale-up {
-          from { transform: scale(0.95); opacity: 0; }
-          to { transform: scale(1); opacity: 1; }
-        }
-
-        /* Hover animations for standard cards */
-        .project-card:hover {
-          border-color: rgba(var(--color-accent-rgb), 0.4) !important;
-          box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 15px rgba(var(--color-accent-rgb), 0.18) !important;
-          transform: translateY(-3px);
-        }
-
-        /* Responsive Modal & Filters Rules */
-        @media (max-width: 900px) {
-          .filter-deck-layout {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 15px !important;
-          }
-          .filter-sliders-container {
-            flex-direction: column !important;
-            gap: 12px !important;
-            width: 100% !important;
-          }
-          .range-slider-group {
-            width: 100% !important;
-          }
-          .dialogue-novel-row {
-            flex-direction: column !important;
-            gap: 15px !important;
-          }
-          .novel-avatar-container {
-            width: 100% !important;
-          }
-        }
-
-        @media (max-width: 900px) {
-          .portfolio-modal-overlay {
-            align-items: flex-start !important;
-            padding: 108px 10px 20px 10px !important; /* Pushes content below the 98px sticky mobile header mask */
-            overflow-y: auto !important;
-          }
-          .portfolio-modal-content {
-            max-height: none !important;
-            height: auto !important;
-          }
-        }
-
-        @media (max-width: 800px) {
-          .modal-columns-grid {
-            display: flex !important;
-            flex-direction: column !important;
-            gap: 20px !important;
-          }
-        }
-
-        .gallery-thumbnail {
-          transition: all 0.25s ease !important;
-        }
-        .gallery-thumbnail:hover {
-          border-color: var(--color-accent) !important;
-          box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.25) !important;
-          transform: translateY(-2px);
-        }
-
-        .dropdown-item-hover:hover {
-          background: rgba(0, 255, 136, 0.15) !important;
-          color: var(--neon-emerald) !important;
-          text-shadow: 0 0 5px rgba(0, 255, 136, 0.5) !important;
-        }
-
-        .lightbox-arrow-btn {
-          position: absolute !important;
-          top: 50% !important;
-          transform: translateY(-50%) !important;
-          width: 50px !important;
-          height: 50px !important;
-          border-radius: 50% !important;
-          display: flex !important;
-          align-items: center !important;
-          justify-content: center !important;
-          font-size: 1.25rem !important;
-          border: 2px solid rgba(var(--color-accent-rgb), 0.5) !important;
-          background: rgba(4, 6, 12, 0.75) !important;
-          color: #fff !important;
-          cursor: pointer !important;
-          z-index: 4200 !important;
-          transition: all 0.25s ease !important;
-          box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) !important;
-          outline: none !important;
-          padding: 0 !important;
-        }
-        .lightbox-arrow-btn:hover {
-          background: rgba(var(--color-accent-rgb), 0.15) !important;
-          border-color: var(--color-accent) !important;
-          box-shadow: 0 0 15px rgba(var(--color-accent-rgb), 0.4) !important;
-          transform: translateY(-50%) scale(1.05) !important;
-        }
-        .lightbox-arrow-btn:active {
-          transform: translateY(-50%) scale(0.95) !important;
-        }
-        .lightbox-arrow-left {
-          left: -65px !important;
-        }
-        .lightbox-arrow-right {
-          right: -65px !important;
-        }
-
-        /* Responsive Lightbox Arrows for tablets and mobile devices */
-        @media (max-width: 1160px) {
-          .lightbox-arrow-left {
-            left: 20px !important;
-          }
-          .lightbox-arrow-right {
-            right: 20px !important;
-          }
-          .lightbox-arrow-btn {
-            background: rgba(4, 6, 12, 0.85) !important; /* Higher contrast inside the image area */
-            width: 45px !important;
-            height: 45px !important;
-            font-size: 1.1rem !important;
-            border-color: var(--color-accent) !important; /* Always glowing on mobile for clear affordance */
-            box-shadow: 0 0 10px rgba(var(--color-accent-rgb), 0.3) !important;
-          }
-        }
-      `}</style>
-
       {/* IMMERSIVE HOLOGRAPHIC LIGHTBOX DECK */}
       {lightboxIndex !== null && lightboxImages.length > 0 && (
         <div 
           className="lightbox-overlay"
           onClick={() => setLightboxIndex(null)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            background: 'rgba(2, 3, 6, 0.95)',
-            backdropFilter: 'blur(25px)',
-            zIndex: 4000,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            animation: 'modal-fade-in 0.25s ease-out forwards'
-          }}
         >
           {/* Lightbox Controls HUD */}
-          <div style={{ width: '90%', maxWidth: '1000px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
-            <span style={{ fontFamily: 'var(--font-tech)', fontSize: '0.68rem', color: 'var(--color-accent)', fontWeight: 700, letterSpacing: '1px' }}>
+          <div className="lightbox-hud">
+            <span className="lightbox-label">
               // UPLINK_SCREEN_VIEW: IMAGE {lightboxIndex + 1} / {lightboxImages.length}
             </span>
             <button 
               onClick={() => setLightboxIndex(null)}
-              className="hud-btn"
-              style={{
-                padding: '6px 16px',
-                fontSize: '0.65rem',
-                borderColor: 'var(--color-accent)',
-                borderRadius: '8px',
-                background: 'rgba(var(--color-accent-rgb), 0.05)',
-                cursor: 'pointer',
-                color: '#fff'
-              }}
+              className="hud-btn lightbox-close-btn"
             >
               [ ✕ CLOSE SCREEN ]
             </button>
@@ -887,14 +561,7 @@ export default function PortfolioDome() {
           {/* Lightbox Stage (Image & Slide Arrows) */}
           <div 
             onClick={(e) => e.stopPropagation()}
-            style={{ 
-              position: 'relative', 
-              width: '90%', 
-              maxWidth: '1000px', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center' 
-            }}
+            className="lightbox-stage"
           >
             {/* Left Slide Arrow */}
             {lightboxImages.length > 1 && (
@@ -907,11 +574,11 @@ export default function PortfolioDome() {
             )}
 
             {/* Central Expanded Image Box */}
-            <div style={{ borderRadius: '12px', border: '2px solid var(--color-accent)', padding: '10px', background: 'rgba(0,0,0,0.5)', boxShadow: '0 0 30px rgba(var(--color-accent-rgb), 0.2)', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="lightbox-image-box">
               <img 
                 src={lightboxImages[lightboxIndex]} 
                 alt={`${activeProject.title} expanded view`} 
-                style={{ maxWidth: '100%', maxHeight: '75vh', borderRadius: '6px', objectFit: 'contain', display: 'block' }} 
+                className="lightbox-image"
               />
             </div>
 
@@ -928,7 +595,7 @@ export default function PortfolioDome() {
 
           {/* Floating Slide Index Indicator */}
           {lightboxImages.length > 1 && (
-            <div style={{ display: 'flex', gap: '8px', marginTop: '20px' }}>
+            <div className="lightbox-dots">
               {lightboxImages.map((_, idx) => (
                 <button
                   key={idx}
@@ -936,17 +603,7 @@ export default function PortfolioDome() {
                     e.stopPropagation();
                     setLightboxIndex(idx);
                   }}
-                  style={{
-                    width: '8px',
-                    height: '8px',
-                    borderRadius: '50%',
-                    background: lightboxIndex === idx ? 'var(--color-accent)' : 'rgba(255,255,255,0.2)',
-                    border: 'none',
-                    padding: 0,
-                    cursor: 'pointer',
-                    boxShadow: lightboxIndex === idx ? '0 0 8px var(--color-accent)' : 'none',
-                    transition: 'all 0.25s ease'
-                  }}
+                  className={`lightbox-dot ${lightboxIndex === idx ? 'lightbox-dot--active' : ''}`}
                 />
               ))}
             </div>

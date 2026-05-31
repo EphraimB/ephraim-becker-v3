@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 110" width="100%" height="110px" style="background:#0a0d17;border-radius:8px;border:1px solid rgba(0,255,136,0.22);box-shadow:inset 0 0 10px rgba(0,255,255,0.1)">
+  <rect x="0" y="0" width="320" height="15" fill="#001a08"/>
+  <text x="160" y="10.5" fill="rgba(255,255,255,0.4)" font-size="6" font-family="monospace" text-anchor="middle">ARES_OS // SENSORY_LOAD_ANALYTICS</text>
+  <g transform="translate(95, 25)">
+    <text x="35" y="8" fill="rgba(255,255,255,0.7)" font-size="5.5" font-family="monospace" text-anchor="middle">SENSORY_LOAD_FACTOR</text>
+    <path d="M 10,40 A 25,25 0 0,1 60,40" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 15,40 A 20,20 0 0,1 55,40" fill="none" stroke="#00f0ff" stroke-width="3" stroke-linecap="round" stroke-dasharray="15 5"/>
+    <path d="M 20,40 A 15,15 0 0,1 50,40" fill="none" stroke="#00ff88" stroke-width="3" stroke-linecap="round"/>
+    <path d="M 25,40 A 10,10 0 0,1 45,40" fill="none" stroke="#ff007f" stroke-width="3" stroke-linecap="round" opacity="0.8"/>
+    <line x1="35" y1="40" x2="48" y2="22" stroke="#ff007f" stroke-width="1.5" stroke-linecap="round"/>
+    <circle cx="35" cy="40" r="2" fill="#fff"/>
+    <text x="35" y="47" fill="#ff007f" font-size="5" font-family="monospace" text-anchor="middle" font-weight="bold">OVERLOAD ALERT</text>
+  </g>
+  <g transform="translate(195, 22)">
+    <rect x="0" y="0" width="110" height="52" rx="4" fill="rgba(0,0,0,0.6)" stroke="rgba(0,255,136,0.2)" stroke-width="1"/>
+    <text x="8" y="12" fill="#00ff88" font-size="6" font-family="monospace" font-weight="bold">INPUT RATE: HIGH</text>
+    <text x="8" y="22" fill="#fff" font-size="5.5" font-family="monospace">BATTERY: 38% CAPACITY</text>
+    <text x="8" y="32" fill="rgba(255,255,255,0.7)" font-size="5" font-family="monospace">RECOVERY: 4.2h REST REQ</text>
+    <text x="8" y="42" fill="#00f0ff" font-size="5" font-family="monospace" font-weight="bold">SENSORY CHANNELS: MAX</text>
+  </g>
+  <text x="10" y="102" fill="rgba(255,255,255,0.4)" font-size="5.5" font-family="monospace" text-anchor="start">BATTERY: lithium_social_v4.5</text>
+  <text x="310" y="102" fill="#00ff88" font-size="5.5" font-family="monospace" text-anchor="end">ALERT_LEVEL: MODERATE</text>
+</svg>

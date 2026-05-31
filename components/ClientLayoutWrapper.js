@@ -101,16 +101,10 @@ export default function ClientLayoutWrapper({ children }) {
         }}
       >
         <span className="locator-pulse-light"></span>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', flex: 1 }}>
+        <div className="layout-name-stack">
           <span className="locator-location-name">📍 {primaryLoc}</span>
           {middleLoc && (
-            <span className="locator-middle-name" style={{
-              fontSize: '0.52rem',
-              fontFamily: 'monospace',
-              color: '#ff9100',
-              opacity: 0.8,
-              letterSpacing: '0.5px'
-            }}>
+            <span className="locator-middle-name locator-middle-name--override">
               ↳ {middleLoc}
             </span>
           )}
@@ -130,24 +124,14 @@ export default function ClientLayoutWrapper({ children }) {
         <div className="global-map-drawer-close-bar">
           <button 
             onClick={() => setMapDrawerOpen(false)}
-            className="hud-btn custom-close-btn"
-            style={{
-              width: '100%',
-              padding: '10px',
-              fontSize: '0.72rem',
-              borderColor: 'rgba(0, 240, 255, 0.3)',
-              background: 'rgba(0, 240, 255, 0.05)',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              color: '#00f0ff'
-            }}
+            className="hud-btn custom-close-btn drawer-close-btn"
           >
             [ ✕ CLOSE TACTICAL MAP ]
           </button>
         </div>
 
         {/* Modular Map Canvas */}
-        <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+        <div className="layout-map-canvas">
           <CityGridMap isDrawer={true} />
         </div>
 

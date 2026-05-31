@@ -1,0 +1,37 @@
+<svg width="1000" height="200" viewBox="0 0 1000 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1000" height="200" fill="#0b1016"/>
+  
+  <!-- Header -->
+  <text x="500" y="30" font-family="monospace" font-size="14" fill="#00ff41" text-anchor="middle" letter-spacing="1">ARES_OS // SOCIAL_BATTERY_HUD</text>
+
+  <!-- Social Battery Group -->
+  <text x="70" y="70" font-family="monospace" font-size="12" fill="#aaaaaa">SOCIAL_BATTERY</text>
+  <rect x="70" y="85" width="80" height="40" rx="4" ry="4" fill="none" stroke="#00ff41" stroke-width="2"/>
+  <rect x="75" y="90" width="15" height="30" fill="#00ff41"/>
+  <rect x="95" y="90" width="15" height="30" fill="#00ff41"/>
+  <rect x="115" y="90" width="15" height="30" fill="#1e3a24"/>
+  <rect x="135" y="90" width="15" height="30" fill="#05120a"/>
+  <rect x="150" y="95" width="5" height="20" fill="#00ff41"/>
+  <text x="70" y="145" font-family="monospace" font-size="12" fill="#ff0066" font-weight="bold">STATUS: DRAINING</text>
+
+  <!-- Sensory Load Gauge Group -->
+  <text x="270" y="70" font-family="monospace" font-size="12" fill="#aaaaaa">SENSORY_LOAD_FACTOR</text>
+  <path d="M 240 130 A 40 40 0 0 1 320 130" fill="none" stroke="#333" stroke-width="8"/>
+  <path d="M 240 130 A 40 40 0 0 1 290 95" fill="none" stroke="#00ffff" stroke-width="8"/>
+  <path d="M 290 95 A 40 40 0 0 1 320 130" fill="none" stroke="#ff0066" stroke-width="8"/>
+  <line x1="280" y1="130" x2="310" y2="100" stroke="white" stroke-width="2"/>
+  <circle cx="280" cy="130" r="4" fill="white"/>
+  <text x="265" y="145" font-family="monospace" font-size="12" fill="#ff0066" font-weight="bold">OVERLOAD ALERT</text>
+
+  <!-- Right-Aligned Status Panel -->
+  <rect x="680" y="60" width="280" height="100" rx="8" ry="8" fill="none" stroke="#00ff41" stroke-width="1"/>
+  <text x="700" y="85" font-family="monospace" font-size="12" fill="#00ff41">INPUT RATE: HIGH</text>
+  <text x="700" y="105" font-family="monospace" font-size="12" fill="white">BATTERY: 38% CAPACITY</text>
+  <text x="700" y="125" font-family="monospace" font-size="12" fill="#aaaaaa">RECOVERY: 4.2h REST REQ</text>
+  <text x="700" y="145" font-family="monospace" font-size="12" fill="#00ffff">SENSORY CHANNELS: MAX</text>
+
+  <!-- Footer Info -->
+  <text x="70" y="180" font-family="monospace" font-size="10" fill="#aaaaaa">BATTERY: lithium_social_v4.5</text>
+  <text x="930" y="180" font-family="monospace" font-size="10" fill="#00ff41" text-anchor="end">ALERT_LEVEL: MODERATE</text>
+</svg>

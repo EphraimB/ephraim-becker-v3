@@ -19,11 +19,35 @@ export default function ClientLayoutWrapper({ children }) {
     currentTheme = 'metropolis';
     hudSectorName = 'Portfolio Archives';
     currentLocationName = 'PORTFOLIO';
-  } else if (pathname === '/neurodiversity') {
-    bgImage = '/assets/images/backgrounds/atmosphere-dome.png';
+  } else if (pathname === '/park' || pathname.startsWith('/neurodiversity')) {
     currentTheme = 'biosphere';
-    hudSectorName = 'Neurodiversity Deck';
-    currentLocationName = 'ADVOCACY HUB';
+    if (pathname === '/park') {
+      bgImage = '/assets/images/backgrounds/mars-dome-park.png';
+      hudSectorName = 'Ares City Park - Entrance';
+      currentLocationName = 'ARES CITY PARK - CENTRAL ENTRANCE';
+    } else {
+      if (pathname === '/neurodiversity/sensory-garden') {
+        bgImage = '/assets/images/backgrounds/sensory-garden.png';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Sensory Garden';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - SENSORY GARDEN';
+      } else if (pathname === '/neurodiversity/comms-grove') {
+        bgImage = '/assets/images/backgrounds/communication-grove.png';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Dialogue Bridges';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - DIALOGUE BRIDGES';
+      } else if (pathname === '/neurodiversity/lexicon-pavilion') {
+        bgImage = '/assets/images/backgrounds/mars-dome-park.png';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Lexicon Pavilion';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - LEXICON PAVILION';
+      } else if (pathname === '/neurodiversity/meetup-campfire') {
+        bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Community Hearth';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - COMMUNITY HEARTH';
+      } else {
+        bgImage = '/assets/images/backgrounds/neurodiversity-meetup.png';
+        hudSectorName = 'Ares City Park - Neurodiversity Lawn - Welcome Plaza';
+        currentLocationName = 'ARES CITY PARK - NEURODIVERSITY LAWN - WELCOME PLAZA';
+      }
+    }
   }
 
 
@@ -31,6 +55,22 @@ export default function ClientLayoutWrapper({ children }) {
   useEffect(() => {
     setMapDrawerOpen(false);
   }, [pathname]);
+
+  // Parse location name into primary, middle, and sub-location for stacked map styling
+  let primaryLoc = currentLocationName;
+  let middleLoc = '';
+  let subLoc = '';
+  if (currentLocationName.includes(' - ')) {
+    const parts = currentLocationName.split(' - ');
+    if (parts.length === 3) {
+      primaryLoc = parts[0];
+      middleLoc = parts[1];
+      subLoc = parts[2];
+    } else {
+      primaryLoc = parts[0];
+      subLoc = parts[1];
+    }
+  }
 
   return (
     <>
@@ -61,7 +101,25 @@ export default function ClientLayoutWrapper({ children }) {
         }}
       >
         <span className="locator-pulse-light"></span>
-        <span className="locator-location-name">📍 {currentLocationName}</span>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '1px', flex: 1 }}>
+          <span className="locator-location-name">📍 {primaryLoc}</span>
+          {middleLoc && (
+            <span className="locator-middle-name" style={{
+              fontSize: '0.52rem',
+              fontFamily: 'monospace',
+              color: '#ff9100',
+              opacity: 0.8,
+              letterSpacing: '0.5px'
+            }}>
+              ↳ {middleLoc}
+            </span>
+          )}
+          {subLoc && (
+            <span className="locator-sub-name">
+              [ {subLoc} ]
+            </span>
+          )}
+        </div>
         <span className="locator-hint-arrow">➔</span>
       </button>
 
@@ -89,7 +147,9 @@ export default function ClientLayoutWrapper({ children }) {
         </div>
 
         {/* Modular Map Canvas */}
-        <CityGridMap isDrawer={true} />
+        <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+          <CityGridMap isDrawer={true} />
+        </div>
 
       </div>
 
@@ -99,7 +159,7 @@ export default function ClientLayoutWrapper({ children }) {
         
         <div className="workspace-deck">
           {/* Natural standing roomscale profile figure */}
-          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/neurodiversity' && (
+          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/neurodiversity' && (
             <div className={`roomscale-natural-body page-${currentTheme}`}>
               <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
             </div>

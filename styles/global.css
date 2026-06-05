@@ -2961,14 +2961,20 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 95vw;
+  width: auto;
 }
 
 .lightbox-image {
   max-width: 100%;
-  max-height: 75vh;
+  max-height: 80vh;
+  width: auto;
+  height: auto;
   border-radius: 6px;
   object-fit: contain;
   display: block;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
 }
 
 .lightbox-dots {

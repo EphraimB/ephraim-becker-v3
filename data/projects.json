@@ -134,7 +134,7 @@
     "category": "Web development",
     "title": "Galaxy Life",
     "vibeCoded": true,
-    "description": "An immersive 3D space travel and planetary survival simulator featuring webcam-based face-tracking parallax controls and real-time physical calculations, vibe coded with AI in a 3-hour hackathon.",
+    "description": "An immersive 3D space travel and planetary survival simulator featuring webcam-based face-tracking parallax controls and real-time physical calculations, vibe coded with AI in a 2-hour hackathon.",
     "technologies": ["NextJS", "React Three Fiber", "MediaPipe", "Three.js", "TypeScript", "TailwindCSS"],
     "details": "Developed as part of the Adelphi University AI Society Hackathon, Galaxy Life is an interactive 3D space travel simulator. Vibe coded in collaboration with AI models under strict time limits, the app integrates MediaPipe face tracking to dynamically pan/tilt the cockpit, and runs real-time biological conversions across simulated planets. I designed a highly intuitive, futuristic cockpit UI that won 1st Place for UI Design.",
     "takeaways": "Demonstrated the power of AI co-piloting/vibe coding to rapidly build complex 3D graphics systems and computer vision workflows solo in a single weekend. Overhauling the cockpit in a later branch taught me lessons in scope management and modular refactoring.",

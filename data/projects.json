@@ -178,5 +178,38 @@
         "type": "download"
       }
     ]
+  },
+  {
+    "id": 10,
+    "category": "Web development",
+    "title": "Biking Forecast & Planner",
+    "description": "A weather-aware, real-time cycling commute planner built with Next.js, Leaflet, and React. Calculates route suitability scores and estimated travel times by dynamically evaluating headwinds, tailwinds, precipitation, and temperature along the exact path.",
+    "technologies": ["NextJS", "React", "Leaflet", "Open-Meteo API", "Valhalla Routing"],
+    "details": "Developed a dynamic weather-aware routing application for cyclists. By integrating Valhalla's routing engine and sampling meteorological data from the Open-Meteo API at multiple coordinates along the route, the system calculates segment-level aerodynamic drag (headwind/tailwind/crosswind) and temperature comfort penalties. It includes a custom smart departure convergence loop to adjust departure times based on wind vectors and travel speeds, commute profile management, weekly planners, and a weather-aware trip-packing gear list.",
+    "takeaways": "Gained deep experience in geospatial mapping, custom polyline decoding, processing meteorological vectors, and caching API responses locally to survive rate-limits with mathematical fallback mock engines.",
+    "started": "2026-05-25",
+    "finished": "2026-06-03",
+    "status": "Finished",
+    "images": [
+      "/projects/biking-forecast-1.png",
+      "/projects/biking-forecast-2.png",
+      "/projects/biking-forecast-3.png",
+      "/projects/biking-forecast-4.png",
+      "/projects/biking-forecast-5.png",
+      "/projects/biking-forecast-6.png",
+      "/projects/biking-forecast-7.png",
+      "/projects/biking-forecast-8.png",
+      "/projects/biking-forecast-9.png",
+      "/projects/biking-forecast-10.png",
+      "/projects/biking-forecast-11.png",
+      "/projects/biking-forecast-12.png"
+    ],
+    "links": [
+      {
+        "src": "https://github.com/EphraimB/biking-forecast",
+        "description": "GitHub Repository",
+        "type": "github"
+      }
+    ]
   }
 ]

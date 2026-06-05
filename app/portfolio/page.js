@@ -261,6 +261,11 @@ export default function PortfolioDome() {
                       <span className="project-card-category">
                         {project.category.toUpperCase()}
                       </span>
+                      {project.vibeCoded && (
+                        <span className="badge-vibe-coded">
+                          🤖 VIBE CODED WITH AI
+                        </span>
+                      )}
                     </div>
 
                     <h4 className="project-card-title">
@@ -310,10 +315,15 @@ export default function PortfolioDome() {
           >
             {/* Modal Header */}
             <div className="portfolio-modal-header">
-              <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <span className="portfolio-modal-title">
                   // HOLOGRAM_SECTOR: {activeProject.category.toUpperCase()}
                 </span>
+                {activeProject.vibeCoded && (
+                  <span className="badge-vibe-coded" style={{ verticalAlign: 'middle' }}>
+                    🤖 VIBE CODED WITH AI
+                  </span>
+                )}
               </div>
               <button
                 onClick={() => { setActiveProject(null); setLightboxIndex(null); setDownloadDropdownOpen(false); }}

@@ -2396,6 +2396,20 @@ body {
   font-family: var(--font-tech);
 }
 
+.badge-vibe-coded {
+  font-size: 0.55rem;
+  border: 1px solid #c77dff;
+  background: rgba(199, 125, 255, 0.08);
+  color: #d6b4fc;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-family: var(--font-tech);
+  box-shadow: 0 0 8px rgba(199, 125, 255, 0.25);
+  letter-spacing: 0.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
 .project-card-title {
   font-family: var(--font-tech);
   font-size: 0.88rem;

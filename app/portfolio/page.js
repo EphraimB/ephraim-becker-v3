@@ -261,6 +261,11 @@ export default function PortfolioDome() {
                       <span className="project-card-category">
                         {project.category.toUpperCase()}
                       </span>
+                      {project.vibeCoded && (
+                        <span className="badge-vibe-coded">
+                          🤖 VIBE CODED WITH AI
+                        </span>
+                      )}
                     </div>
 
                     <h4 className="project-card-title">
@@ -310,10 +315,15 @@ export default function PortfolioDome() {
           >
             {/* Modal Header */}
             <div className="portfolio-modal-header">
-              <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <span className="portfolio-modal-title">
                   // HOLOGRAM_SECTOR: {activeProject.category.toUpperCase()}
                 </span>
+                {activeProject.vibeCoded && (
+                  <span className="badge-vibe-coded" style={{ verticalAlign: 'middle' }}>
+                    🤖 VIBE CODED WITH AI
+                  </span>
+                )}
               </div>
               <button
                 onClick={() => { setActiveProject(null); setLightboxIndex(null); setDownloadDropdownOpen(false); }}
@@ -350,22 +360,35 @@ export default function PortfolioDome() {
                     <div className="modal-gallery-wrapper">
                       <div className="modal-gallery-grid" style={{ gridTemplateColumns: activeProject.images ? 'repeat(2, 1fr)' : '1fr' }}>
                         {activeProject.images ? (
-                          activeProject.images.map((img, idx) => (
-                            <div
-                              key={idx}
-                              onClick={() => setLightboxIndex(idx)}
-                              className="gallery-thumbnail"
-                            >
-                              <img
-                                src={img}
-                                alt={`${activeProject.title} screenshot ${idx + 1}`}
-                                className="gallery-thumb-img"
-                              />
-                              <div className="gallery-thumb-label">
-                                [ EXPAND SCREENSHOT {idx + 1} 🔍 ]
+                          activeProject.images.slice(0, 4).map((img, idx) => {
+                            const isLastVisible = idx === 3;
+                            const hasMore = activeProject.images.length > 4;
+                            const remainingCount = activeProject.images.length - 4;
+
+                            return (
+                              <div
+                                key={idx}
+                                onClick={() => setLightboxIndex(idx)}
+                                className="gallery-thumbnail"
+                              >
+                                <img
+                                  src={img}
+                                  alt={`${activeProject.title} screenshot ${idx + 1}`}
+                                  className="gallery-thumb-img"
+                                />
+                                {isLastVisible && hasMore ? (
+                                  <div className="gallery-thumbnail-overlay">
+                                    <span className="gallery-overlay-count">+{remainingCount}</span>
+                                    <span className="gallery-overlay-text">more screenshots</span>
+                                  </div>
+                                ) : (
+                                  <div className="gallery-thumb-label">
+                                    [ EXPAND SCREENSHOT {idx + 1} 🔍 ]
+                                  </div>
+                                )}
                               </div>
-                            </div>
-                          ))
+                            );
+                          })
                         ) : activeProject.image ? (
                           <div
                             onClick={() => setLightboxIndex(0)}

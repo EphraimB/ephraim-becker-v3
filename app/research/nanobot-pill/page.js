@@ -15,10 +15,26 @@ export default function NanobotPillDetails() {
   const [selectedApp, setSelectedApp] = useState(null);
   const [hoveredWaypoint, setHoveredWaypoint] = useState(null);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
-  const [cursorPos, setCursorPos] = useState({ x: 150, y: 110 });
+  const [cursorPos, setCursorPos] = useState({ x: 180, y: 120 });
+  
+  // Active Scenario inside Phase 4
+  const [activeScenario, setActiveScenario] = useState('productivity');
+  const [isPlayingMedia, setIsPlayingMedia] = useState(true);
+  const [timeString, setTimeString] = useState('');
 
   const scrollRef = useRef(null);
   const viewportRef = useRef(null);
+
+  // Live ticking clock for spatial anchors
+  useEffect(() => {
+    const updateTime = () => {
+      const d = new Date();
+      setTimeString(d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }));
+    };
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Handle slide entrance transition
   useEffect(() => {
@@ -50,7 +66,6 @@ export default function NanobotPillDetails() {
         const rect = el.getBoundingClientRect();
         const containerRect = container.getBoundingClientRect();
         
-        // Check if element is scrolling past the midpoint of the container viewport
         if (rect.top - containerRect.top <= containerRect.height / 2) {
           currentActive = id;
         }
@@ -76,15 +91,14 @@ export default function NanobotPillDetails() {
     const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
     
-    // Position simulated gaze cursor
     setCursorPos({
       x: e.clientX - rect.left,
       y: e.clientY - rect.top
     });
 
     setParallax({
-      x: x * 10, // Max offset 10px
-      y: y * 10
+      x: x * 8, // Max offset 8px
+      y: y * 8
     });
   };
 
@@ -100,14 +114,14 @@ export default function NanobotPillDetails() {
     }
 
     const phrases = [
-      { text: '> [SYNAPSE LINK] INTENT RETRIEVED: /query_colony_feed', delay: 1000 },
-      { text: '> [BCI OS] ACQUIRING MESH MATRIX STATIONS...', delay: 800 },
-      { text: '> [DOWNLINK] MATRIX SECTOR 02 SYNCED [99.2%]', delay: 1200 },
-      { text: '> [SYNAPSE LINK] INTENT RETRIEVED: /check_life_support', delay: 1400 },
-      { text: '> [BCI OS] O2 OUTFLOW STATUS: 100% NOMINAL', delay: 1000 },
-      { text: '> [BCI OS] SOLAR GLUCOSE CONSUMPTION: 0.42mg/min', delay: 1500 },
-      { text: '> [SYNAPSE LINK] INTENT RETRIEVED: /activate_waypoint_marker', delay: 1200 },
-      { text: '> [BCI OS] SCANNING LOCAL SECTORS...', delay: 600 }
+      { text: '> [SYNAPSE LINK] USER INTENT: /query_colony_feed', delay: 1000 },
+      { text: '> [BCI OS] CONNECTING TO MESON NET...', delay: 800 },
+      { text: '> [DOWNLINK] QUANTUM RELAY SECTOR 02 SYNCED [0.4ms]', delay: 1200 },
+      { text: '> [SYNAPSE LINK] USER INTENT: /spawn_wall_clock', delay: 1400 },
+      { text: '> [BCI OS] SNAP LOG: Clock anchor locked on Living Room Wall', delay: 1000 },
+      { text: '> [SYNAPSE LINK] USER INTENT: /project_wristwatch', delay: 1500 },
+      { text: '> [BCI OS] HUD LOG: Arm wrist watch vector calibrated', delay: 1200 },
+      { text: '> [BCI OS] COGNITIVE BATTERY POWER DRAW: 0.35mg/min', delay: 600 }
     ];
 
     let currentPhraseIndex = 0;
@@ -128,7 +142,7 @@ export default function NanobotPillDetails() {
             return lines.join('\n');
           });
           currentCharIndex++;
-          timer = setTimeout(runTypewriter, 30);
+          timer = setTimeout(runTypewriter, 25);
         } else {
           isTyping = false;
           timer = setTimeout(runTypewriter, currentPhrase.delay);
@@ -142,7 +156,7 @@ export default function NanobotPillDetails() {
         currentCharIndex = 0;
         isTyping = true;
         textBuffer.push('');
-        timer = setTimeout(runTypewriter, 200);
+        timer = setTimeout(runTypewriter, 150);
       }
     };
 
@@ -218,6 +232,27 @@ export default function NanobotPillDetails() {
     { id: 'eclipse', label: '4. Retina OS' }
   ];
 
+  const scenarios = [
+    {
+      id: 'productivity',
+      icon: '💼',
+      title: 'Spatial Productivity',
+      description: 'Snap functional widgets to physical walls. Keep a ticking clock on the wall and calendars floating above your desk.'
+    },
+    {
+      id: 'entertainment',
+      icon: '🍿',
+      title: 'Infinite Entertainment',
+      description: 'Project giant glassmorphic media screens in mid-air. Stream video layers and coordinate spatial audio waves.'
+    },
+    {
+      id: 'traverse',
+      icon: '🏃',
+      title: 'Active Traverse',
+      description: 'Navigate the Martian terrain. Project navigation guides on the floor and a biometric wristwatch onto your wrist.'
+    }
+  ];
+
   const appList = [
     { id: 'map', label: 'Colony Map', icon: '🗺️' },
     { id: 'comms', label: 'Quantum Net', icon: '📡' },
@@ -227,13 +262,12 @@ export default function NanobotPillDetails() {
 
   const waypoints = [
     { id: 'dome', name: 'RESEARCH LAB DOME', x: '55%', y: '35%', desc: 'Ares Tech Hub // Dist: 140m // Temp: 21.0°C' },
-    { id: 'relay', name: 'QUANTUM COMMS TOWER', x: '82%', y: '50%', desc: 'Matrix Relay // Latency: 0.12ms // Signal: 100%' },
-    { id: 'outpost', name: 'OUTPOST HUB SECTOR 08', x: '22%', y: '65%', desc: 'Colony Boundary // Status: RESTRICTED' }
+    { id: 'relay', name: 'QUANTUM COMMS TOWER', x: '82%', y: '50%', desc: 'Matrix Relay // Latency: 0.12ms // Signal: 100%' }
   ];
 
   return (
     <div className="citizen-card-shell nanobot-pill-shell">
-      {/* Local keyframes and HUD overrides */}
+      {/* Local keyframes and style overrides */}
       <style dangerouslySetInnerHTML={{ __html: `
         @keyframes scanline-sweep {
           0% { transform: translateY(-100%); }
@@ -251,12 +285,43 @@ export default function NanobotPillDetails() {
           0%, 100% { opacity: 0.2; }
           50% { opacity: 0.6; }
         }
+        @keyframes snap-scale {
+          0% { transform: scale(0.7); opacity: 0; filter: blur(4px); }
+          100% { transform: scale(1); opacity: 1; filter: blur(0); }
+        }
+        @keyframes wave-pulse {
+          0%, 100% { height: 10px; }
+          50% { height: 35px; }
+        }
         .gaze-ring-overlay {
           pointer-events: none;
           position: absolute;
           border: 1.5px solid var(--color-accent);
           border-radius: 50%;
           animation: pulse-ring 1.8s infinite linear;
+        }
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+        .apple-headline {
+          font-family: var(--font-sans);
+          font-weight: 700;
+          letter-spacing: -0.8px;
+          line-height: 1.15;
+          background: linear-gradient(180deg, #ffffff 30%, #888888 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .apple-sub {
+          font-family: var(--font-sans);
+          font-size: 0.95rem;
+          color: var(--text-secondary);
+          line-height: 1.6;
+          font-weight: 400;
         }
       `}} />
 
@@ -265,7 +330,7 @@ export default function NanobotPillDetails() {
 
       <div 
         className={`walking-content-container ${transitState} nanobot-pill-content-container`} 
-        style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: '15px', maxWidth: '1050px', margin: '0 auto', minHeight: 0, height: '100%' }}
+        style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: '15px', maxWidth: '1080px', margin: '0 auto', minHeight: 0, height: '100%' }}
       >
         
         {/* Back navigation & Header Area */}
@@ -283,12 +348,12 @@ export default function NanobotPillDetails() {
             [ ↩ BACK TO LAB DECK ]
           </Link>
           <span style={{ fontSize: '0.62rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', fontWeight: 'bold', letterSpacing: '1px' }}>
-            ARES LABS // PROJECT NO-DEVICE
+            ARES LABS // RETINA BCI OS
           </span>
         </div>
 
         {/* Tab navigation - Quick Scroll Jumps */}
-        <div className="bubbly-panel" style={{ padding: '10px 15px' }}>
+        <div className="bubbly-panel" style={{ padding: '8px 12px', background: 'rgba(6, 9, 20, 0.45)' }}>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {tabs.map(tab => (
               <button
@@ -310,7 +375,7 @@ export default function NanobotPillDetails() {
         </div>
 
         {/* Main Content Layout Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.3fr', gap: '15px', flex: 1, minHeight: 0, height: '100%' }} className="research-grid-deck">
+        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.3fr', gap: '20px', flex: 1, minHeight: 0, height: '100%' }} className="research-grid-deck">
           
           {/* LEFT: Scrollable story container */}
           <div 
@@ -320,105 +385,124 @@ export default function NanobotPillDetails() {
             style={{ 
               display: 'flex', 
               flexDirection: 'column', 
-              gap: '20px', 
+              gap: '24px', 
               height: '100%', 
               overflowY: 'auto' 
             }}
           >
             
             {/* Story Card 1 */}
-            <div id="overview" className="bubbly-panel" style={{ minHeight: '340px', justifyContent: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <span className="net-label" style={{ fontSize: '0.65rem', border: '1px solid var(--color-accent)', padding: '2px 8px', borderRadius: '4px' }}>
-                  PHASE 01
-                </span>
-                <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1rem', color: '#ffffff', margin: 0 }}>
-                  Oral Ingestion & Shell Dissolution
-                </h3>
-              </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '12px' }}>
-                The BCI Pill is an organic, plant-based capsule that feels exactly like a standard daily multivitamin. Made from customized biocompatible cellulose, it is swallowed with a sip of water at the research station.
+            <div id="overview" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                STAGE 01 // CELLULOSE DELIVERY
+              </span>
+              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                Organic Ingestion.
+              </h2>
+              <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                The BCI Pill is an organic, biocompatible capsule swallowed at the research station. It replaces the weight of screens, keyboards, and processors with a microscopic, physiological link directly inside you.
               </p>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Within 4 minutes of entering the stomach, acid catalysts trigger the structural breakdown of the outer coating. The capsule dissolves cleanly, releasing a localized, bio-magnetic suspension fluid containing exactly 12.4 million micro-node builders directly into the gastric lining capillaries.
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                Within 4 minutes of swallowing, the outer plant-based capsule degrades safely in the stomach, releasing exactly 12.4 million micro-node builders directly into the local capillaries.
               </p>
               
-              <div style={{ marginTop: '15px', display: 'flex', gap: '15px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>⏱️ TIME: ~4 Minutes</div>
-                <div>🧪 SHELL: Plant Cellulose</div>
-                <div>🔋 POWER: Latent Gastric Currents</div>
+              <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                <div>⏱️ TIME: ~4 Min</div>
+                <div>🧪 SHELL: Cellulose</div>
+                <div>🔋 POWER: Gastric Current</div>
               </div>
             </div>
 
             {/* Story Card 2 */}
-            <div id="payload" className="bubbly-panel" style={{ minHeight: '340px', justifyContent: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <span className="net-label" style={{ fontSize: '0.65rem', border: '1px solid var(--color-accent)', padding: '2px 8px', borderRadius: '4px' }}>
-                  PHASE 02
-                </span>
-                <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1rem', color: '#ffffff', margin: 0 }}>
-                  Bloodstream Uptake & BBB Crossing
-                </h3>
-              </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '12px' }}>
-                Once inside the bloodstream, the microscopic nodes do not float aimlessly. Embedded with chemical markers matching the specific blood-brain barrier receptor keys, they navigate safely towards the cerebral vascular tree.
+            <div id="payload" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                STAGE 02 // NEURAL CROSSING
+              </span>
+              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                Smart Uptake.
+              </h2>
+              <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                Guided by target bio-magnetic markers, the released nodes flow safely through the cardiovascular tree, navigating towards the cerebral vasculature.
               </p>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Harnessing the body's natural cardiovascular velocity, they anchor at the tight junctions of brain capillaries. Using localized ionic gradients, the nodes slide smoothly through the blood-brain barrier (BBB) over a 20-minute cycle, completely bypassing mechanical tissue intrusion.
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                Over a 20-minute cycle, the nodes glide through the blood-brain barrier (BBB) utilizing localized ionic gradients. This process provides hardware integration completely free of invasive physical procedures.
               </p>
               
-              <div style={{ marginTop: '15px', display: 'flex', gap: '15px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>⏱️ TIME: ~20 Minutes</div>
-                <div>📍 TARGET: Cerebral Vascular Bed</div>
-                <div>🩹 INTRUSION: 0.0% (Cellular Slip)</div>
+              <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                <div>⏱️ TIME: ~20 Min</div>
+                <div>📍 TARGET: Occipital Cortex</div>
+                <div>🩹 INTRUSION: 0.0%</div>
               </div>
             </div>
 
             {/* Story Card 3 */}
-            <div id="assembly" className="bubbly-panel" style={{ minHeight: '340px', justifyContent: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <span className="net-label" style={{ fontSize: '0.65rem', border: '1px solid var(--color-accent)', padding: '2px 8px', borderRadius: '4px' }}>
-                  PHASE 03
-                </span>
-                <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1rem', color: '#ffffff', margin: 0 }}>
-                  Synaptic Cleft Alignment & Mapping
-                </h3>
-              </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '12px' }}>
-                Inside the brain parenchyma, the micro-nodes distribute themselves into synaptic junctions. They attach to astrocytes and dendrites, forming a network grid over the occipital, parietal, and frontal lobes.
+            <div id="assembly" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                STAGE 03 // CLEFTS INTEGRATION
+              </span>
+              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                Cortical Mapping.
+              </h2>
+              <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                Arriving in the cerebral cortex, the micro-nodes distribute themselves into synaptic junctions, anchoring to glial nodes and dendrites.
               </p>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Powered entirely by ambient cellular glucose, they listen to neural action potentials. They map your synapses without altering or interrupting biological thought pathways. The nodes form a carbon-graphene interface that translates electrical signals into high-frequency binary data packages.
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                Powered by ambient blood glucose, they establish a secure carbon-graphene grid. This interface reads and maps existing synaptic impulses, translating thought intentions into digital packets in under 45 minutes.
               </p>
               
-              <div style={{ marginTop: '15px', display: 'flex', gap: '15px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>⏱️ TIME: ~45 Minutes</div>
-                <div>🔋 FUEL: Blood Glucose (0.8mg/m)</div>
-                <div>⚡ CONNECTIONS: 12.4M Nodes</div>
+              <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                <div>⏱️ TIME: ~45 Min</div>
+                <div>🔋 FUEL: Glucose Gradients</div>
+                <div>⚡ SYNC: 12.4M Nodes</div>
               </div>
             </div>
 
             {/* Story Card 4 */}
-            <div id="eclipse" className="bubbly-panel" style={{ minHeight: '340px', justifyContent: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
-                <span className="net-label" style={{ fontSize: '0.65rem', border: '1px solid var(--color-accent)', padding: '2px 8px', borderRadius: '4px' }}>
-                  PHASE 04
-                </span>
-                <h3 style={{ fontFamily: 'var(--font-tech)', fontSize: '1rem', color: '#ffffff', margin: 0 }}>
-                  Retina BCI OS Active
-                </h3>
-              </div>
-              <p style={{ fontSize: '0.85rem', color: 'var(--text-primary)', lineHeight: 1.5, marginBottom: '12px' }}>
-                The alignment sequence is complete. A localized bio-magnetic frequency creates a secure link between the node mesh and your visual cortex, booting the "Retina BCI OS."
-              </p>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                You now possess a completely internal, hardware-free spatial computing system. Digital elements render dynamically in your visual field, aligning to real physical objects. Tap, control, and communicate through mental vocalizations—completely invisible to anyone else.
+            <div id="eclipse" className="bubbly-panel" style={{ minHeight: '380px', padding: '24px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                STAGE 04 // SPATIAL INTERFACES
+              </span>
+              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                Retina BCI OS.
+              </h2>
+              <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
+                The boot sequence is complete. A secure link with the visual cortex launches the BCI OS. Scroll horizontally below to choose consumer scenarios and experience how it anchors virtual widgets to the physical world.
               </p>
               
-              <div style={{ marginTop: '15px', display: 'flex', flexWrap: 'wrap', gap: '10px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--color-accent)' }}>
-                <div>👁️ INTERFACE: Visual Cortex Projection</div>
-                <div>🧠 CONTROL: Sub-Vocal Thought Sync</div>
+              {/* Horizontal scroll selector deck */}
+              <div 
+                className="hide-scrollbar" 
+                style={{ 
+                  display: 'flex', 
+                  gap: '10px', 
+                  overflowX: 'auto', 
+                  paddingBottom: '5px',
+                  scrollSnapType: 'x mandatory',
+                  width: '100%'
+                }}
+              >
+                {scenarios.map(sc => (
+                  <div 
+                    key={sc.id} 
+                    onClick={() => setActiveScenario(sc.id)}
+                    style={{
+                      flex: '0 0 190px',
+                      scrollSnapAlign: 'start',
+                      background: activeScenario === sc.id ? 'rgba(var(--color-accent-rgb), 0.12)' : 'rgba(255,255,255,0.02)',
+                      border: `1px solid ${activeScenario === sc.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.06)'}`,
+                      borderRadius: '12px',
+                      padding: '12px',
+                      cursor: 'pointer',
+                      transition: 'all 0.25s ease'
+                    }}
+                  >
+                    <span style={{ fontSize: '1.2rem', display: 'block', marginBottom: '6px' }}>{sc.icon}</span>
+                    <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: '#ffffff', margin: '0 0 4px 0' }}>{sc.title}</h4>
+                    <p style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.3 }}>{sc.description}</p>
+                  </div>
+                ))}
               </div>
+
             </div>
 
           </div>
@@ -426,7 +510,7 @@ export default function NanobotPillDetails() {
           {/* RIGHT: Telemetry Dashboard & Active XR HUD */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', height: '100%', minHeight: 0 }}>
             
-            {/* Immersive Viewport / Static Telemetry Screen */}
+            {/* Viewport Box */}
             <div 
               className="bubbly-panel" 
               style={{ 
@@ -437,15 +521,16 @@ export default function NanobotPillDetails() {
                 justifyContent: 'space-between',
                 minHeight: '380px',
                 position: 'relative',
-                overflow: 'hidden'
+                overflow: 'hidden',
+                background: 'rgba(6, 9, 20, 0.75)'
               }}
             >
               
               <span className="net-label" style={{ display: 'block', fontSize: '0.6rem', color: 'var(--color-accent)', marginBottom: '5px' }}>
-                // CORTICAL SCHEMATIC VIEWPORT
+                // SPATIAL CORE VIEWPORT
               </span>
 
-              {/* Conditional Rendering: Phases 1-3 Show SVGs; Phase 4 Shows interactive HUD */}
+              {/* Conditional Display: Phases 1-3 Show SVGs; Phase 4 Shows interactive HUD */}
               <div 
                 ref={viewportRef}
                 onMouseMove={handleMouseMove}
@@ -453,7 +538,7 @@ export default function NanobotPillDetails() {
                 style={{ 
                   flex: 1, 
                   background: 'rgba(2, 3, 6, 0.98)', 
-                  border: '1px solid rgba(var(--color-accent-rgb), 0.25)', 
+                  border: '1px solid rgba(var(--color-accent-rgb), 0.2)', 
                   borderRadius: '12px', 
                   position: 'relative', 
                   display: 'flex', 
@@ -471,26 +556,25 @@ export default function NanobotPillDetails() {
                       <img 
                         src="/assets/svgs/bci_payload.svg" 
                         alt="BCI Capsule Payload" 
-                        style={{ width: '85%', height: '85%', objectFit: 'contain', transition: 'all 0.5s ease' }} 
+                        style={{ width: '80%', height: '80%', objectFit: 'contain', transition: 'all 0.5s ease' }} 
                       />
                     )}
                     {activeTab === 'payload' && (
                       <img 
                         src="/assets/svgs/bci_overview.svg" 
                         alt="BCI Overview Schematic" 
-                        style={{ width: '85%', height: '85%', objectFit: 'contain', transition: 'all 0.5s ease' }} 
+                        style={{ width: '80%', height: '80%', objectFit: 'contain', transition: 'all 0.5s ease' }} 
                       />
                     )}
                     {activeTab === 'assembly' && (
                       <img 
                         src="/assets/svgs/bci_assembly.svg" 
                         alt="BCI Synaptic Assembly" 
-                        style={{ width: '85%', height: '85%', objectFit: 'contain', transition: 'all 0.5s ease' }} 
+                        style={{ width: '80%', height: '80%', objectFit: 'contain', transition: 'all 0.5s ease' }} 
                       />
                     )}
                     
-                    {/* Diagnostic Matrix lines overlay */}
-                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, border: '1px dashed rgba(255, 179, 0, 0.05)', pointerEvents: 'none' }}></div>
+                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, border: '1px dashed rgba(255, 179, 0, 0.04)', pointerEvents: 'none' }}></div>
                   </div>
                 )}
 
@@ -509,7 +593,7 @@ export default function NanobotPillDetails() {
                     }}
                   >
                     
-                    {/* Simulated Passthrough environment with Parallax */}
+                    {/* Simulated Scenario Environment Background with Parallax */}
                     <div 
                       style={{ 
                         position: 'absolute',
@@ -518,39 +602,47 @@ export default function NanobotPillDetails() {
                         right: '-15px',
                         bottom: '-15px',
                         zIndex: 1,
-                        background: 'radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.4) 0%, rgba(4, 6, 12, 1) 90%)',
-                        transform: `translate3d(${parallax.x * -0.6}px, ${parallax.y * -0.6}px, 0)`,
-                        transition: 'transform 0.1s ease-out',
+                        background: activeScenario === 'productivity' 
+                          ? 'radial-gradient(circle at 50% 50%, rgba(10, 25, 47, 0.45) 0%, rgba(4, 6, 12, 1) 90%)'
+                          : activeScenario === 'entertainment'
+                          ? 'radial-gradient(circle at 50% 50%, rgba(30, 10, 50, 0.45) 0%, rgba(4, 6, 12, 1) 90%)'
+                          : 'radial-gradient(circle at 50% 50%, rgba(50, 25, 10, 0.4) 0%, rgba(4, 6, 12, 1) 90%)',
+                        transform: `translate3d(${parallax.x * -0.5}px, ${parallax.y * -0.5}px, 0)`,
+                        transition: 'transform 0.1s ease-out, background 0.5s ease',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}
                     >
-                      {/* Stylized Vector Grid of Ares City dome interior */}
-                      <svg width="110%" height="110%" viewBox="0 0 400 300" style={{ opacity: 0.15, pointerEvents: 'none' }}>
-                        <defs>
-                          <radialGradient id="netGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stopColor="var(--color-accent)" stopOpacity="0.4" />
-                            <stop offset="100%" stopColor="#000000" stopOpacity="0" />
-                          </radialGradient>
-                        </defs>
-                        <rect x="0" y="0" width="400" height="300" fill="url(#netGlow)" />
-                        
-                        {/* Horizon Mountains */}
-                        <path d="M 0,260 L 50,220 L 120,250 L 180,210 L 250,260 L 310,230 L 400,270 L 400,300 L 0,300 Z" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
-                        
-                        {/* Curved Dome Ribs */}
-                        <path d="M 0,300 Q 200,-50 400,300" fill="none" stroke="rgba(255,179,0,0.12)" strokeWidth="0.8" />
-                        <path d="M 50,300 Q 200,20 350,300" fill="none" stroke="rgba(255,179,0,0.08)" strokeWidth="0.8" />
-                        <path d="M -50,300 Q 200,-120 450,300" fill="none" stroke="rgba(255,179,0,0.05)" strokeWidth="0.8" />
-                        
-                        {/* Ground Grid perspective lines */}
-                        <line x1="200" y1="260" x2="0" y2="300" stroke="rgba(255,255,255,0.08)" strokeWidth="0.6" />
-                        <line x1="200" y1="260" x2="80" y2="300" stroke="rgba(255,255,255,0.08)" strokeWidth="0.6" />
-                        <line x1="200" y1="260" x2="160" y2="300" stroke="rgba(255,255,255,0.08)" strokeWidth="0.6" />
-                        <line x1="200" y1="260" x2="240" y2="300" stroke="rgba(255,255,255,0.08)" strokeWidth="0.6" />
-                        <line x1="200" y1="260" x2="320" y2="300" stroke="rgba(255,255,255,0.08)" strokeWidth="0.6" />
-                        <line x1="200" y1="260" x2="400" y2="300" stroke="rgba(255,255,255,0.08)" strokeWidth="0.6" />
+                      {/* Vector lines of the environment */}
+                      <svg width="100%" height="100%" viewBox="0 0 400 300" style={{ opacity: 0.12, pointerEvents: 'none' }}>
+                        {activeScenario === 'productivity' && (
+                          <g stroke="rgba(255,255,255,0.4)" strokeWidth="0.8" fill="none">
+                            {/* Office room lines */}
+                            <line x1="0" y1="220" x2="400" y2="220" />
+                            <line x1="80" y1="220" x2="80" y2="0" />
+                            <line x1="320" y1="220" x2="320" y2="0" />
+                            <rect x="120" y="140" width="160" height="80" strokeDasharray="3,3" /> {/* Desktop */}
+                          </g>
+                        )}
+                        {activeScenario === 'entertainment' && (
+                          <g stroke="var(--color-accent)" strokeWidth="0.6" fill="none">
+                            {/* Concentric theater circles */}
+                            <circle cx="200" cy="150" r="130" opacity="0.3" />
+                            <circle cx="200" cy="150" r="90" opacity="0.5" />
+                            <circle cx="200" cy="150" r="50" opacity="0.7" />
+                          </g>
+                        )}
+                        {activeScenario === 'traverse' && (
+                          <g stroke="rgba(255,179,0,0.5)" strokeWidth="0.8" fill="none">
+                            {/* Mars terrain ribs */}
+                            <path d="M 0,260 Q 200,180 400,260" />
+                            <path d="M 0,220 Q 200,130 400,220" />
+                            {/* Perspective floor lines */}
+                            <line x1="200" y1="130" x2="0" y2="300" />
+                            <line x1="200" y1="130" x2="400" y2="300" />
+                          </g>
+                        )}
                       </svg>
                     </div>
 
@@ -570,7 +662,6 @@ export default function NanobotPillDetails() {
                           pointerEvents: 'none'
                         }}
                       >
-                        {/* Scanline sweeping down */}
                         <div 
                           style={{
                             width: '100%',
@@ -582,8 +673,6 @@ export default function NanobotPillDetails() {
                             animation: 'scanline-sweep 2.5s infinite linear'
                           }}
                         ></div>
-                        
-                        {/* Alert banner */}
                         <div 
                           style={{
                             position: 'absolute',
@@ -604,12 +693,193 @@ export default function NanobotPillDetails() {
                             animation: 'alert-flash 1s infinite ease-in-out'
                           }}
                         >
-                          ⚠️ RADIATION OUTPOST WARNING GRID ENGAGED // STORM PROTOCOL ACTIVE
+                          ⚠️ DUST STORM WARNING ON-GRID INTERFACE ENGAGED
                         </div>
                       </div>
                     )}
 
-                    {/* Spatial Scanning Waypoints with Parallax */}
+                    {/* Spatial widgets based on scenario */}
+                    <div 
+                      style={{ 
+                        position: 'absolute', 
+                        top: 0, 
+                        left: 0, 
+                        right: 0, 
+                        bottom: 0, 
+                        zIndex: 3,
+                        transform: `translate3d(${parallax.x * 0.5}px, ${parallax.y * 0.5}px, 0)`,
+                        transition: 'transform 0.1s ease-out',
+                        pointerEvents: 'none'
+                      }}
+                    >
+                      {/* Productivity Mode elements */}
+                      {activeScenario === 'productivity' && (
+                        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                          
+                          {/* Snapped wall clock widget */}
+                          <div 
+                            className="bubbly-panel"
+                            style={{ 
+                              position: 'absolute', 
+                              left: '65%', 
+                              top: '20%', 
+                              padding: '10px 14px', 
+                              background: 'rgba(6,9,20,0.85)',
+                              border: '1.5px solid var(--color-accent)',
+                              boxShadow: '0 0 15px var(--glass-glow)',
+                              borderRadius: '12px',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              alignItems: 'center',
+                              width: '100px',
+                              animation: 'snap-scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
+                              pointerEvents: 'auto'
+                            }}
+                          >
+                            <span style={{ fontSize: '0.5rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-tech)' }}>
+                              WALL ANCHOR
+                            </span>
+                            <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: 'bold', fontFamily: 'monospace', marginTop: '3px', animation: 'text-shadow-glow 2s infinite' }}>
+                              {timeString || '10:42:00'}
+                            </span>
+                          </div>
+
+                          {/* Floating Calendar task widget */}
+                          <div 
+                            className="bubbly-panel"
+                            style={{ 
+                              position: 'absolute', 
+                              left: '12%', 
+                              top: '35%', 
+                              padding: '10px', 
+                              background: 'rgba(6,9,20,0.8)',
+                              border: '1px solid rgba(255,255,255,0.08)',
+                              borderRadius: '12px',
+                              width: '130px',
+                              fontSize: '0.55rem',
+                              animation: 'snap-scale 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
+                              pointerEvents: 'auto'
+                            }}
+                          >
+                            <div style={{ color: 'var(--color-accent)', fontWeight: 'bold', fontFamily: 'var(--font-tech)', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '3px', marginBottom: '5px' }}>
+                              SOL SCHEDULE
+                            </div>
+                            <div style={{ color: '#ffffff' }}>🗓️ SOL 14: Lab Sync</div>
+                            <div style={{ color: 'var(--text-secondary)', marginTop: '2px' }}>⚙️ Syncing OS anchors</div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Entertainment Mode elements */}
+                      {activeScenario === 'entertainment' && (
+                        <div style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          
+                          {/* Floating Media Screen */}
+                          <div 
+                            className="bubbly-panel"
+                            style={{ 
+                              width: '240px', 
+                              height: '130px', 
+                              background: 'rgba(6,9,20,0.9)', 
+                              border: '1.5px solid var(--color-accent)',
+                              boxShadow: '0 0 20px var(--glass-glow)',
+                              borderRadius: '14px',
+                              padding: '10px',
+                              display: 'flex',
+                              flexDirection: 'column',
+                              justifyContent: 'space-between',
+                              animation: 'snap-scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
+                              pointerEvents: 'auto'
+                            }}
+                          >
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.52rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-tech)' }}>
+                              <span>📽️ COLONY CORE FEED</span>
+                              <span style={{ color: isPlayingMedia ? '#00ff88' : '#ff4400' }}>{isPlayingMedia ? 'STREAMING' : 'PAUSED'}</span>
+                            </div>
+
+                            {/* Simulated Video Waves */}
+                            <div style={{ flex: 1, display: 'flex', gap: '4px', alignItems: 'center', justifyContent: 'center', margin: '8px 0' }}>
+                              {[...Array(10)].map((_, i) => (
+                                <div 
+                                  key={i} 
+                                  style={{
+                                    width: '6px',
+                                    height: isPlayingMedia ? '20px' : '5px',
+                                    background: 'var(--color-accent)',
+                                    borderRadius: '3px',
+                                    animation: isPlayingMedia ? `wave-pulse ${0.6 + i * 0.08}s infinite ease-in-out` : 'none',
+                                    transition: 'all 0.3s ease'
+                                  }}
+                                ></div>
+                              ))}
+                            </div>
+
+                            {/* Widescreen controls */}
+                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', fontSize: '0.55rem' }}>
+                              <button 
+                                onClick={() => setIsPlayingMedia(!isPlayingMedia)} 
+                                style={{ border: 'none', background: 'rgba(255,255,255,0.08)', color: '#ffffff', borderRadius: '4px', padding: '2px 8px', cursor: 'none' }}
+                              >
+                                {isPlayingMedia ? 'PAUSE' : 'PLAY'}
+                              </button>
+                              <div style={{ flex: 1, height: '3px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
+                                <div style={{ width: isPlayingMedia ? '65%' : '25%', height: '100%', background: 'var(--color-accent)', transition: 'width 2s linear' }}></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Traverse Active Mode elements */}
+                      {activeScenario === 'traverse' && (
+                        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                          
+                          {/* Wristwatch anchor layout */}
+                          <div 
+                            className="bubbly-panel"
+                            style={{ 
+                              position: 'absolute', 
+                              left: '10%', 
+                              bottom: '12%', 
+                              padding: '8px 12px', 
+                              background: 'rgba(6,9,20,0.92)',
+                              border: '1.5px solid var(--color-accent)',
+                              boxShadow: '0 0 15px var(--glass-glow)',
+                              borderRadius: '12px',
+                              width: '125px',
+                              animation: 'snap-scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
+                              pointerEvents: 'auto'
+                            }}
+                          >
+                            <span style={{ fontSize: '0.48rem', color: 'var(--text-secondary)', display: 'block', fontFamily: 'var(--font-tech)' }}>
+                              WRIST WATCH PROJECTION
+                            </span>
+                            <div style={{ fontSize: '0.75rem', fontWeight: 'bold', color: '#ffffff', margin: '2px 0 4px 0', fontFamily: 'monospace' }}>
+                              💓 74 BPM
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', fontSize: '0.5rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                              <div>O₂ FLOW: 14.1%</div>
+                              <div>SYS LATENCY: 0.1ms</div>
+                            </div>
+                          </div>
+
+                          {/* Navigation path line in passthrough */}
+                          <svg width="100%" height="100%" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}>
+                            <path 
+                              d="M 300,140 Q 220,180 150,220" 
+                              fill="none" 
+                              stroke="var(--color-accent)" 
+                              strokeWidth="2" 
+                              strokeDasharray="4,4" 
+                              style={{ animation: 'scanline-sweep 3s infinite linear' }}
+                            />
+                            <circle cx="150" cy="220" r="5" fill="var(--color-accent)" />
+                          </svg>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Interactive Waypoints */}
                     <div 
                       style={{ 
                         position: 'absolute', 
@@ -636,49 +906,46 @@ export default function NanobotPillDetails() {
                           onMouseEnter={() => setHoveredWaypoint(point.id)}
                           onMouseLeave={() => setHoveredWaypoint(null)}
                         >
-                          {/* Pin dot */}
                           <div 
                             style={{ 
-                              width: '10px', 
-                              height: '10px', 
+                              width: '8px', 
+                              height: '8px', 
                               background: hoveredWaypoint === point.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.4)', 
-                              border: '1.5px solid #ffffff',
+                              border: '1px solid #ffffff',
                               borderRadius: '50%',
                               cursor: 'crosshair',
-                              boxShadow: '0 0 10px var(--color-accent)',
+                              boxShadow: '0 0 8px var(--color-accent)',
                               transition: 'all 0.2s ease',
                               position: 'relative'
                             }}
                           >
-                            {/* Hover expanding ring */}
                             {hoveredWaypoint === point.id && (
-                              <div className="gaze-ring-overlay" style={{ width: '30px', height: '30px', left: '-11.5px', top: '-11.5px' }}></div>
+                              <div className="gaze-ring-overlay" style={{ width: '26px', height: '26px', left: '-10px', top: '-10px' }}></div>
                             )}
                           </div>
 
-                          {/* Pin info panel callout */}
                           {hoveredWaypoint === point.id && (
                             <div 
                               style={{ 
                                 position: 'absolute', 
-                                left: '16px', 
+                                left: '14px', 
                                 top: '-20px', 
                                 background: 'rgba(6, 9, 20, 0.95)', 
                                 border: '1px solid var(--color-accent)', 
                                 borderRadius: '6px', 
                                 padding: '6px 10px', 
-                                width: '190px', 
+                                width: '180px', 
                                 zIndex: 10,
                                 backdropFilter: 'blur(8px)',
-                                boxShadow: '0 5px 15px rgba(0,0,0,0.5), 0 0 10px rgba(var(--color-accent-rgb), 0.2)',
+                                boxShadow: '0 5px 15px rgba(0,0,0,0.5)',
                                 pointerEvents: 'none',
                                 animation: 'slide-in-fast 0.2s ease-out'
                               }}
                             >
-                              <div style={{ fontSize: '0.62rem', fontWeight: 'bold', color: '#ffffff', fontFamily: 'var(--font-tech)' }}>
+                              <div style={{ fontSize: '0.6rem', fontWeight: 'bold', color: '#ffffff', fontFamily: 'var(--font-tech)' }}>
                                 {point.name}
                               </div>
-                              <div style={{ fontSize: '0.52rem', color: 'var(--text-secondary)', fontFamily: 'monospace', marginTop: '3px', lineHeight: '1.2' }}>
+                              <div style={{ fontSize: '0.5rem', color: 'var(--text-secondary)', fontFamily: 'monospace', marginTop: '3px', lineHeight: '1.2' }}>
                                 {point.desc}
                               </div>
                             </div>
@@ -687,7 +954,7 @@ export default function NanobotPillDetails() {
                       ))}
                     </div>
 
-                    {/* HUD CONTROL PANEL (Quick Actions) */}
+                    {/* HUD CONTROL PANEL */}
                     <div 
                       style={{ 
                         zIndex: 4, 
@@ -698,7 +965,7 @@ export default function NanobotPillDetails() {
                         transition: 'transform 0.1s ease-out'
                       }}
                     >
-                      {/* Left: Atmospheric specs glass board */}
+                      {/* Left biometrics specs board */}
                       <div 
                         className="bubbly-panel" 
                         style={{ 
@@ -711,11 +978,11 @@ export default function NanobotPillDetails() {
                           fontFamily: 'monospace' 
                         }}
                       >
-                        <div style={{ color: '#00ff88' }}>● O₂ OUTFLOW: 14.1%</div>
-                        <div style={{ color: 'var(--text-secondary)', marginTop: '2px' }}>⚡ POWER DRAW: 0.15W</div>
+                        <div style={{ color: '#00ff88' }}>● LINK ACTIVE [99.8%]</div>
+                        <div style={{ color: 'var(--text-secondary)', marginTop: '2px' }}>🔋 GLUCOSE DRAW: 0.42mg/m</div>
                       </div>
 
-                      {/* Right: Quick toggles */}
+                      {/* Right action toggles */}
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
                         <button 
                           onClick={() => setHudFilterActive(!hudFilterActive)}
@@ -727,7 +994,7 @@ export default function NanobotPillDetails() {
                             borderColor: hudFilterActive ? 'var(--color-accent)' : 'rgba(255,255,255,0.1)'
                           }}
                         >
-                          {hudFilterActive ? '[ DISENGAGE GRID ]' : '[ ENGAGE HAZARD GRID ]'}
+                          {hudFilterActive ? '[ STOP WARNING ]' : '[ ENGAGE WARN GRID ]'}
                         </button>
                         <button 
                           onClick={() => setThoughtSyncActive(!thoughtSyncActive)}
@@ -739,12 +1006,12 @@ export default function NanobotPillDetails() {
                             borderColor: thoughtSyncActive ? 'var(--color-accent)' : 'rgba(255,255,255,0.1)'
                           }}
                         >
-                          {thoughtSyncActive ? '[ STOP THOUGHT SYNC ]' : '[ START THOUGHT SYNC ]'}
+                          {thoughtSyncActive ? '[ TERMINAL STOP ]' : '[ THINK COMMANDS ]'}
                         </button>
                       </div>
                     </div>
 
-                    {/* Middle: Floating glass command terminal & gaze tracker */}
+                    {/* Middle thought terminal logs */}
                     <div 
                       style={{ 
                         zIndex: 4, 
@@ -755,54 +1022,53 @@ export default function NanobotPillDetails() {
                         position: 'relative' 
                       }}
                     >
-                      {/* Thought-Sync Terminal Display */}
                       {thoughtSyncActive ? (
                         <div 
                           className="bubbly-panel" 
                           style={{ 
                             width: '260px', 
-                            maxHeight: '110px', 
+                            maxHeight: '100px', 
                             padding: '10px', 
                             background: 'rgba(6, 9, 20, 0.85)', 
-                            border: '1.5px solid var(--color-accent)', 
+                            border: '1px solid var(--color-accent)', 
                             borderRadius: '10px',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.6), 0 0 15px var(--glass-glow)',
+                            boxShadow: '0 4px 20px rgba(0,0,0,0.6)',
                             transform: `translate3d(${parallax.x * 1.1}px, ${parallax.y * 1.1}px, 0)`,
                             transition: 'transform 0.1s ease-out'
                           }}
                         >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '3px', marginBottom: '5px', fontSize: '0.52rem', fontFamily: 'var(--font-tech)', color: 'var(--color-accent)' }}>
-                            <span>🧠 CORTICAL COMMAND INTENT FEED</span>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '3px', marginBottom: '5px', fontSize: '0.5rem', fontFamily: 'var(--font-tech)', color: 'var(--color-accent)' }}>
+                            <span>🧠 CORTICAL SYNAPSE STREAM</span>
                             <span>LIVE SYNC</span>
                           </div>
                           <pre 
                             style={{ 
                               margin: 0, 
-                              fontSize: '0.52rem', 
+                              fontSize: '0.5rem', 
                               fontFamily: 'monospace', 
                               color: 'var(--text-primary)', 
-                              lineHeight: '1.4', 
+                              lineHeight: '1.3', 
                               whiteSpace: 'pre-wrap', 
                               textAlign: 'left'
                             }}
                           >
                             {typedText}
-                            <span style={{ animation: 'cursor-blink 1s infinite', color: 'var(--color-accent)', fontWeight: 'bold' }}>_</span>
+                            <span style={{ animation: 'cursor-blink 1s infinite', color: 'var(--color-accent)' }}>_</span>
                           </pre>
                         </div>
                       ) : (
                         <div 
                           style={{ 
-                            color: 'rgba(255,255,255,0.2)', 
+                            color: 'rgba(255,255,255,0.15)', 
                             fontFamily: 'var(--font-tech)', 
-                            fontSize: '0.62rem', 
+                            fontSize: '0.58rem', 
                             textAlign: 'center',
                             pointerEvents: 'none',
-                            transform: `translate3d(${parallax.x * 0.5}px, ${parallax.y * 0.5}px, 0)`,
+                            transform: `translate3d(${parallax.x * 0.4}px, ${parallax.y * 0.4}px, 0)`,
                             transition: 'transform 0.1s ease-out'
                           }}
                         >
-                          [ ACTIVATE THOUGHT SYNC IN QUICK ACTIONS ]
+                          [ THOUGHT COMMAND FEED READY ]
                         </div>
                       )}
                     </div>
@@ -815,12 +1081,10 @@ export default function NanobotPillDetails() {
                         flexDirection: 'column', 
                         alignItems: 'center', 
                         gap: '6px',
-                        transform: `translate3d(${parallax.x * 1.3}px, ${parallax.y * 1.3}px, 0)`,
+                        transform: `translate3d(${parallax.x * 1.2}px, ${parallax.y * 1.2}px, 0)`,
                         transition: 'transform 0.1s ease-out'
                       }}
                     >
-                      
-                      {/* Apps Row */}
                       <div 
                         style={{ 
                           display: 'flex', 
@@ -843,12 +1107,12 @@ export default function NanobotPillDetails() {
                           >
                             <button 
                               style={{ 
-                                width: '30px', 
-                                height: '30px', 
+                                width: '28px', 
+                                height: '28px', 
                                 borderRadius: '50%', 
                                 border: '1px solid rgba(255,255,255,0.1)', 
                                 background: selectedApp === app.id ? 'rgba(var(--color-accent-rgb), 0.25)' : hoveredApp === app.id ? 'rgba(255,255,255,0.08)' : 'transparent',
-                                fontSize: '1rem',
+                                fontSize: '0.9rem',
                                 cursor: 'none',
                                 display: 'flex',
                                 alignItems: 'center',
@@ -859,13 +1123,12 @@ export default function NanobotPillDetails() {
                               {app.icon}
                             </button>
 
-                            {/* Collapsing calibration ring on hover */}
                             {hoveredApp === app.id && (
                               <div 
                                 className="gaze-ring-overlay" 
                                 style={{ 
-                                  width: '44px', 
-                                  height: '44px', 
+                                  width: '40px', 
+                                  height: '40px', 
                                   left: '-7px', 
                                   top: '-7px' 
                                 }}
@@ -875,16 +1138,16 @@ export default function NanobotPillDetails() {
                         ))}
                       </div>
 
-                      {/* Info label display for hovered/active apps */}
+                      {/* Info label display */}
                       <div style={{ height: '10px', display: 'flex', justifyContent: 'center' }}>
                         {hoveredApp && (
-                          <span style={{ fontSize: '0.52rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', letterSpacing: '0.5px', animation: 'slide-in-fast 0.15s ease-out' }}>
-                            GAZE LOCKED ON: {appList.find(a => a.id === hoveredApp)?.label}
+                          <span style={{ fontSize: '0.5rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', letterSpacing: '0.5px' }}>
+                            GAZE FOCUS: {appList.find(a => a.id === hoveredApp)?.label}
                           </span>
                         )}
                         {!hoveredApp && selectedApp && (
-                          <span style={{ fontSize: '0.52rem', color: '#00ff88', fontFamily: 'monospace' }}>
-                            [ACTIVE COMPONENT]: {appList.find(a => a.id === selectedApp)?.label}
+                          <span style={{ fontSize: '0.5rem', color: '#00ff88', fontFamily: 'monospace' }}>
+                            [ACTIVE APP]: {appList.find(a => a.id === selectedApp)?.label}
                           </span>
                         )}
                       </div>
@@ -904,7 +1167,7 @@ export default function NanobotPillDetails() {
                         zIndex: 100, 
                         pointerEvents: 'none',
                         transform: 'translate(-50%, -50%)',
-                        transition: 'width 0.1s, height 0.1s, background-color 0.1s'
+                        transition: 'width 0.1s, height 0.1s'
                       }}
                     ></div>
 
@@ -926,7 +1189,7 @@ export default function NanobotPillDetails() {
                       color: 'var(--text-secondary)'
                     }}
                   >
-                    <span>CORTEX MAPPED SYNC</span>
+                    <span>SYSTEM CALIBRATION</span>
                     <span style={{ color: activeTab === 'assembly' ? '#ffb300' : activeTab === 'payload' ? '#ff4400' : '#00ff88' }}>
                       {activeTab === 'overview' ? 'INGESTION STAGE' : activeTab === 'payload' ? 'BBB TRANSIT' : 'ALIGNMENT SEQUENCE'}
                     </span>

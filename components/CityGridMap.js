@@ -7,6 +7,7 @@ const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
   '/portfolio': { x: -450, y: 0, name: 'PORTFOLIO ARCHIVES' },
   '/research': { x: -450, y: 60, name: 'RESEARCH LAB' },
+  '/research/nanobot-pill': { x: -450, y: 60, name: 'RESEARCH LAB - BCI PILL' },
   '/park': { x: 150, y: -100, name: 'ARES CITY PARK' },
   '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - WELCOME PLAZA' },
   '/neurodiversity/comms-grove': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - DIALOGUE BRIDGES' },

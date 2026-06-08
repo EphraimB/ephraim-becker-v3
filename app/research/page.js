@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 
 export default function ResearchLab() {
   const [transitState, setTransitState] = useState('slide-active');
@@ -45,7 +46,7 @@ export default function ResearchLab() {
         </div>
 
         {/* Featured Project Showcase: BCI Nanobot Pill */}
-        <div className="bubbly-panel" style={{ padding: '30px', position: 'relative', overflow: 'hidden' }}>
+        <Link href="/research/nanobot-pill" className="bubbly-panel" style={{ padding: '30px', position: 'relative', overflow: 'hidden', display: 'block', cursor: 'pointer', textDecoration: 'none' }}>
           
           {/* Subtle grid pattern background to enhance premium feeling */}
           <div style={{ position: 'absolute', inset: 0, opacity: 0.03, pointerEvents: 'none', background: 'radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px)', backgroundSize: '15px 15px' }}></div>
@@ -138,7 +139,7 @@ export default function ResearchLab() {
             </div>
           </div>
 
-        </div>
+        </Link>
 
       </div>
     </div>

@@ -7,50 +7,5 @@
     "description": "A swallowable bio-compatible capsule that releases localized neural nanobots into the brain. These nanobots assemble a fully integrated bio-computer inside the neural cortex, rendering all physical devices, screens, and terminals completely redundant.",
     "complexity": 99,
     "status": "DEVELOPMENTAL UNDER PROPOSAL"
-  },
-  {
-    "id": "neural_sync",
-    "name": "Neural-Sync Telepathic Grid",
-    "category": "Biotech & Comms",
-    "year": "MY45",
-    "description": "Sub-dermal neural implants that sync with the colony's quantum mesh networks, allowing silent, high-bandwidth thought transmission across domes, bypassing audio clutter.",
-    "complexity": 92,
-    "status": "SPECULATIVE / SIMULATION"
-  },
-  {
-    "id": "deuterium_fusion",
-    "name": "Helios-IV Deuterium Fusion Reactor",
-    "category": "Energy Systems",
-    "year": "MY52",
-    "description": "Miniature clean-fusion pods localized in each sector core, utilizing deuterium harvested from Martian polar ice. Provides 100% self-sufficiency to all auxiliary domes.",
-    "complexity": 85,
-    "status": "UNDER PROPOSAL"
-  },
-  {
-    "id": "geodesic_ionizer",
-    "name": "Geodesic Atmospheric Ionizer",
-    "category": "Planetary Infrastructure",
-    "year": "MY60",
-    "description": "High-altitude atmospheric ionization grids designed to generate localized magnetic micro-fields above Ares City, redirecting cosmic solar radiation away from structural glass domes.",
-    "complexity": 98,
-    "status": "BLUEPRINT STAGE"
-  },
-  {
-    "id": "algae_filters",
-    "name": "Bio-Synthetic Oxygen Filters",
-    "category": "Bio-dome Automation",
-    "year": "MY40",
-    "description": "Symbiotic cascade systems using genetically modified bioluminescent algae. Doubles the dome's botanical filtration capacity while providing warm, soft ambient lighting.",
-    "complexity": 65,
-    "status": "LABORATORY MODELING"
-  },
-  {
-    "id": "quantum_warp",
-    "name": "Quantum Warp Transit Pods",
-    "category": "Spatial Transit",
-    "year": "MY100",
-    "description": "Sub-atomic teleportation pods utilizing quantum entanglement gates to warp small cargo and personnel between Ares City and deep space habitats instantly.",
-    "complexity": 99,
-    "status": "SPECULATIVE"
   }
 ]

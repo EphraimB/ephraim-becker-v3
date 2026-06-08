@@ -424,65 +424,68 @@ export default function NanobotPillDetails() {
           >
             
             {/* Story Card 1 */}
+            {/* Story Card 1 */}
             <div id="overview" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 01 // ORAL INGESTION
+                STAGE 01 // SIMPLE INGESTION
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Organic Ingestion.
+                Swallow. Sync. Enjoy.
               </h2>
               <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                The BCI Pill is an organic, biocompatible capsule swallowed at the research station. It replaces the weight of screens, keyboards, and processors with a microscopic, physiological link directly inside you.
+                It starts with a simple vitamin-sized capsule. The BCI Pill replaces the weight of screens, keyboards, and battery packs with a direct connection inside your mind.
               </p>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Within 4 minutes of swallowing, the outer plant-based capsule degrades safely in the stomach, releasing exactly 12.4 million micro-node builders directly into the local capillaries.
+                Swallowed with a sip of water, the organic cellulose shell dissolves naturally in your stomach in under 4 minutes. As it dissolves, it releases 12.4 million microscopic helper nodes safely into your system, with zero side effects.
               </p>
               
               <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
                 <div>⏱️ TIME: ~4 Min</div>
-                <div>🧪 SHELL: Cellulose</div>
-                <div>🔋 POWER: Gastric Current</div>
+                <div>🧪 SHELL: Plant Cellulose</div>
+                <div>🩹 ENTRY: 100% Non-Invasive</div>
               </div>
             </div>
 
             {/* Story Card 2 */}
+            {/* Story Card 2 */}
             <div id="payload" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 02 // NEURAL CROSSING
+                STAGE 02 // NATURAL TRAVEL
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Smart Uptake.
+                Safe Transit.
               </h2>
               <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                Guided by target bio-magnetic markers, the released nodes flow safely through the cardiovascular tree, navigating towards the cerebral vasculature.
+                Once swallowed, the nodes use your natural circulation to travel. They are chemically coded to find and pass through the brain's natural filters.
               </p>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Over a 20-minute cycle, the nodes glide through the blood-brain barrier (BBB) utilizing localized ionic gradients. This process provides hardware integration completely free of invasive physical procedures.
+                Over a 20-minute journey, they glide smoothly into place inside your visual center. No surgeries, no wires, and no discomfort—just a natural pathway to a new way of seeing.
               </p>
               
               <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>⏱️ TIME: ~20 Min</div>
-                <div>📍 TARGET: Occipital Cortex</div>
-                <div>🩹 INTRUSION: 0.0%</div>
+                <div>⏱️ TRAVEL: ~20 Min</div>
+                <div>📍 TARGET: Visual Center</div>
+                <div>🛡️ SAFETY: Clinically Approved</div>
               </div>
             </div>
 
             {/* Story Card 3 */}
+            {/* Story Card 3 */}
             <div id="adaptation" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 03 // PHYSIOLOGICAL ADAPTATION
+                STAGE 03 // PHYSICAL ADAPTATION
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Outdoors in the Bare Landscape.
+                Mars. Just like Earth.
               </h2>
               <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                Before the interface initializes, the capsule releases bio-synthetic genetic regulators that modify mitochondrial pathways and endocrine lines to adapt your physiology directly to Mars.
+                The core goal of the BCI Pill is to let you step onto the Martian surface as comfortably as you walk on Earth. Before the software boots, it adjusts your body to the environment.
               </p>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                - **Thermal Homeostasis**: Calibrates metabolic heat production, enabling survival in the -55°C Martian cold without bulky protective suits.
-                <br />- **Radiation Shielding**: Enhances dermis melanin and speeds up cellular DNA repair to defend against cosmic rays.
-                <br />- **Hypoxic O₂ Efficiency**: Boosts cellular respiration efficiency, maximizing oxygen utility in thin air.
-                <br />- **0.38g Gravity Balancer**: Adapts muscle tone and bone density markers to Mars gravity.
+                - **Warmth**: Calibrates your metabolism so the freezing -55°C Martian cold feels like a mild summer breeze.
+                <br />- **Shielding**: Toughens your skin cells to naturally block solar radiation.
+                <br />- **Oxygen**: Optimizes your breathing to make full use of Mars's thin atmosphere.
+                <br />- **Gravity**: Keeps your muscles and bones strong in low gravity.
               </p>
               
               <div style={{ marginTop: '20px', display: 'flex', gap: '15px', flexWrap: 'wrap', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
@@ -494,37 +497,39 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 4 */}
+            {/* Story Card 4 */}
             <div id="assembly" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 04 // CLEFTS INTEGRATION
+                STAGE 04 // CREATING THE LINK
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Cortical Mapping.
+                Connecting to Your Thoughts.
               </h2>
               <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                Arriving in the cerebral cortex, the micro-nodes distribute themselves into synaptic junctions, anchoring to glial nodes and dendrites.
+                Once in your visual center, the nodes settle gently around your synapses—the bridges where your brain cells communicate with each other.
               </p>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Powered by ambient blood glucose, they establish a secure carbon-graphene grid. This interface reads and maps existing synaptic impulses, translating thought intentions into digital packets in under 45 minutes.
+                Powered entirely by your body's natural sugar, they map your thoughts without changing who you are, translating your mental commands into digital instructions in under 45 minutes.
               </p>
               
               <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>⏱️ TIME: ~45 Min</div>
-                <div>🔋 FUEL: Glucose Gradients</div>
-                <div>⚡ SYNC: 12.4M Nodes</div>
+                <div>⏱️ SETUP: ~45 Min</div>
+                <div>🔋 FUEL: Natural Glucose</div>
+                <div>🧠 STATUS: Safe & Secure</div>
               </div>
             </div>
 
             {/* Story Card 5 */}
+            {/* Story Card 5 */}
             <div id="eclipse" className="bubbly-panel" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 05 // SPATIAL INTERFACES
+                STAGE 05 // SYSTEM ACTIVE
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Retina BCI OS.
+                Hello, Spatial Computing.
               </h2>
               <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
-                The boot sequence is complete. A secure link with the visual cortex launches the BCI OS. Scroll horizontally below to choose consumer scenarios and experience how it anchors virtual widgets to the physical world.
+                The link is complete. The BCI OS projects virtual windows directly into your line of sight, visible only to you. Scroll horizontally below to choose scenarios and see how you can anchor widgets to the physical world.
               </p>
               
               {/* Horizontal scroll selector deck */}

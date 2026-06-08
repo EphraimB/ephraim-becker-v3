@@ -5,8 +5,8 @@ import { useRouter, usePathname } from 'next/navigation';
 
 const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
-  '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
-  '/research': { x: -180, y: 150, name: 'RESEARCH LAB' },
+  '/portfolio': { x: -450, y: 0, name: 'PORTFOLIO ARCHIVES' },
+  '/research': { x: -450, y: 60, name: 'RESEARCH LAB' },
   '/park': { x: 150, y: -100, name: 'ARES CITY PARK' },
   '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - WELCOME PLAZA' },
   '/neurodiversity/comms-grove': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - DIALOGUE BRIDGES' },
@@ -33,8 +33,8 @@ export default function CityGridMap({ isDrawer = false }) {
     }
   };
 
-  // 2. Real-Time Spatial Walking Distance & Time Calculator (Corridor walk at 1.2 m/s)
-  const getWalkingDetails = (toPathOrKey) => {
+  // 2. Real-Time Spatial Biking Distance & Time Calculator (Cycle at 5.0 m/s with 10x spatial coordinate scale for realism)
+  const getBikingDetails = (toPathOrKey) => {
     const fromPath = pathname || '/';
     const from = COORDS[fromPath] || COORDS['/'];
     const to = COORDS[toPathOrKey] || COORDS['/'];
@@ -49,9 +49,10 @@ export default function CityGridMap({ isDrawer = false }) {
 
     const dx = to.x - from.x;
     const dy = to.y - from.y;
-    const distance = Math.round(Math.sqrt(dx * dx + dy * dy));
+    // Scale coordinate units by 10 to represent realistic dome-to-dome distances in meters
+    const distance = Math.round(Math.sqrt(dx * dx + dy * dy)) * 10;
 
-    const speed = 1.2; // meters per second walking speed
+    const speed = 5.0; // meters per second cycling speed (18 km/h or 11.2 mph)
     const timeSeconds = Math.round(distance / speed);
     const mins = Math.floor(timeSeconds / 60);
     const secs = timeSeconds % 60;
@@ -59,7 +60,7 @@ export default function CityGridMap({ isDrawer = false }) {
     const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
     const fromName = from.name || 'ACTIVE BASE';
 
-    return `🏃 ${distance}m walk from ${fromName} (${timeStr} corridor transit)`;
+    return `🚲 ${distance}m cycle from ${fromName} (${timeStr} bike lane transit)`;
   };
 
   // Sector Themes for HUD Stack
@@ -278,7 +279,7 @@ export default function CityGridMap({ isDrawer = false }) {
         }}
       >
         <div style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.35)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '2px', textAlign: 'center', fontWeight: 'bold' }}>
-          Pressurized Corridor Route Configurator
+          Pressurized Bike Lane Route Configurator
         </div>
 
         {sectors.map((sector) => {
@@ -360,8 +361,8 @@ export default function CityGridMap({ isDrawer = false }) {
                   gap: '4px'
                 }}
               >
-                {/* Dynamically calculated pressurized walks */}
-                {getWalkingDetails(sector.route || 'academics')}
+                {/* Dynamically calculated pressurized bike commutes */}
+                {getBikingDetails(sector.route || 'academics')}
               </div>
 
               {/* Sector Description */}

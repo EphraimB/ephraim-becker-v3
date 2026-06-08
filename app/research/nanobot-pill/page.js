@@ -57,6 +57,14 @@ export default function NanobotPillDetails() {
   // Sync scroll positioning to activeTab
   const handleScroll = (e) => {
     const container = e.currentTarget;
+    
+    // Check if scrolled to the bottom
+    const isAtBottom = Math.abs(container.scrollHeight - container.clientHeight - container.scrollTop) < 15;
+    if (isAtBottom) {
+      setActiveTab('eclipse');
+      return;
+    }
+
     const sections = ['overview', 'payload', 'adaptation', 'assembly', 'eclipse'];
     let currentActive = 'overview';
 
@@ -79,6 +87,7 @@ export default function NanobotPillDetails() {
     const el = document.getElementById(id);
     if (el && scrollRef.current) {
       el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setActiveTab(id);
     }
   };
 

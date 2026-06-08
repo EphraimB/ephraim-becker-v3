@@ -302,9 +302,10 @@ export default function NanobotPillDetails() {
   ];
 
   const waypoints = [
-    { id: 'dome', name: 'RESEARCH LAB DOME', x: '55%', y: '35%', desc: 'Ares Tech Hub // Dist: 140m // Temp: 21.0°C' },
-    { id: 'relay', name: 'QUANTUM COMMS TOWER', x: '82%', y: '50%', desc: 'Matrix Relay // Latency: 0.12ms // Signal: 100%' }
+    { id: 'dome', name: 'RESEARCH LAB DOME', x: '75%', y: '35%', desc: 'Destination // Dist: 140m // Time: 2 mins // Oxygen Sync: 98.6%' },
+    { id: 'waypoint_alpha', name: 'WAYPOINT ALPHA (RIDGE BEACON)', x: '45%', y: '52%', desc: 'Path Guide // Dist: 60m // Time: 45s // Oxygen Sync: 98.5%' }
   ];
+
 
   return (
     <div className="citizen-card-shell nanobot-pill-shell">
@@ -482,26 +483,26 @@ export default function NanobotPillDetails() {
             {/* Story Card 3 */}
             <div id="adaptation" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 03 // PHYSICAL ADAPTATION
+                STAGE 03 // PHYSIOLOGICAL ADAPTATION
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
                 Mars. Just like Earth.
               </h2>
               <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                The core goal of the BCI Pill is to let you step onto the Martian surface as comfortably as you walk on Earth. Before the software boots, it adjusts your body to the environment.
+                Powered by a living Genetic AI compiled directly from your DNA, the pill silently adapts your biological markers so you can step onto the Martian surface suitless and helmetless.
               </p>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                - **Warmth**: Calibrates your metabolism so the freezing -55°C Martian cold feels like a mild summer breeze.
-                <br />- **Shielding**: Toughens your skin cells to naturally block solar radiation.
-                <br />- **Oxygen**: Optimizes your breathing to make full use of Mars's thin atmosphere.
-                <br />- **Gravity**: Keeps your muscles and bones strong in low gravity.
+                - **Metabolic Warmth**: Automatically regulates core heat so freezing -55°C Martian winds feel like a mild summer breeze.
+                <br />- **DNA-Level Shielding**: Activates cellular melanin/protein coatings to deflect solar radiation.
+                <br />- **Respiration Tuning**: Optimizes hemoglobin oxygen binding, allowing comfortable respiration in the thin atmosphere.
+                <br />- **0.38g Gravity Sync**: Dynamically maintains muscle tone and bone density markers.
               </p>
               
               <div style={{ marginTop: '20px', display: 'flex', gap: '15px', flexWrap: 'wrap', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>🌡️ SKIN: 18.5°C</div>
-                <div>🧬 RAD COAT: 99.4% REJECT</div>
+                <div>🧬 GENETIC AI: ACTIVE</div>
+                <div>🌡️ SKIN TEMP: 18.5°C</div>
+                <div>🛡️ RAD REJECT: 99.4%</div>
                 <div>🫁 O2 SAT: 98.6%</div>
-                <div>🛰️ GRAVITY: 0.38g</div>
               </div>
             </div>
 
@@ -509,22 +510,22 @@ export default function NanobotPillDetails() {
             {/* Story Card 4 */}
             <div id="assembly" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 04 // CREATING THE LINK
+                STAGE 04 // CORTICAL MAPPING
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
                 Connecting to Your Thoughts.
               </h2>
               <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                Once in your visual center, the nodes settle gently around your synapses—the bridges where your brain cells communicate with each other.
+                The nodes settle gently around your synapses, forming an interface that respects your neural privacy. It maps your intent without changing who you are.
               </p>
               <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Powered entirely by your body's natural sugar, they map your thoughts without changing who you are, translating your mental commands into digital instructions in under 45 minutes.
+                Powered entirely by body glucose, the Genetic AI integrates with your visual cortex in under 45 minutes, ready to translate subconscious intent into natural spatial anchors.
               </p>
               
               <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
                 <div>⏱️ SETUP: ~45 Min</div>
-                <div>🔋 FUEL: Natural Glucose</div>
-                <div>🧠 STATUS: Safe & Secure</div>
+                <div>🔋 FUEL: Glucose-Powered</div>
+                <div>🧠 SYNAPSE LINK: 64.5%</div>
               </div>
             </div>
 
@@ -532,13 +533,13 @@ export default function NanobotPillDetails() {
             {/* Story Card 5 */}
             <div id="eclipse" className="bubbly-panel" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 05 // SYSTEM ACTIVE
+                STAGE 05 // RETINA BCI OS
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Hello, Spatial Computing.
+                HUD-Free. Screen-Free.
               </h2>
               <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
-                The link is complete. The BCI OS projects virtual windows directly into your line of sight, visible only to you. Scroll horizontally below to choose scenarios and see how you can anchor widgets to the physical world.
+                The visual field is completely clean. Virtual screens, clocks, maps, and guides anchor to the physical environment only when you need them. Select a scenario below to experience it.
               </p>
               
               {/* Horizontal scroll selector deck */}
@@ -715,7 +716,7 @@ export default function NanobotPillDetails() {
                     }}
                   >
                     
-                    {/* Simulated Scenario Environment Background with Parallax */}
+                    {/* Simulated XR BCI HUD viewport (Phase 5) */}
                     <div 
                       style={{ 
                         position: 'absolute',
@@ -732,463 +733,99 @@ export default function NanobotPillDetails() {
                         justifyContent: 'center'
                       }}
                     >
-                      {/* High-fidelity Dome passthrough background */}
+                      {/* High-fidelity Scenario Background */}
                       <img 
-                        src="/assets/images/backgrounds/atmosphere-dome.png" 
-                        alt="Martian Dome Interior" 
-                        style={{ width: '110%', height: '110%', objectFit: 'cover', opacity: 0.45 }}
+                        src={
+                          activeScenario === 'productivity' 
+                            ? '/assets/images/bci/bci_productivity.png' 
+                            : activeScenario === 'entertainment' 
+                            ? '/assets/images/bci/bci_entertainment.png' 
+                            : '/assets/images/bci/bci_traverse.png'
+                        } 
+                        alt={`Martian BCI OS - ${activeScenario}`} 
+                        style={{ width: '110%', height: '110%', objectFit: 'cover', opacity: 0.85 }}
                       />
-
-                      {/* Vector lines of the environment */}
-                      <svg width="100%" height="100%" viewBox="0 0 400 300" style={{ position: 'absolute', top: 0, left: 0, opacity: 0.12, pointerEvents: 'none', zIndex: 2 }}>
-                        {activeScenario === 'productivity' && (
-                          <g stroke="rgba(255,255,255,0.4)" strokeWidth="0.8" fill="none">
-                            <line x1="0" y1="220" x2="400" y2="220" />
-                            <line x1="80" y1="220" x2="80" y2="0" />
-                            <line x1="320" y1="220" x2="320" y2="0" />
-                          </g>
-                        )}
-                        {activeScenario === 'entertainment' && (
-                          <g stroke="var(--color-accent)" strokeWidth="0.6" fill="none">
-                            <circle cx="200" cy="150" r="130" opacity="0.3" />
-                            <circle cx="200" cy="150" r="90" opacity="0.5" />
-                          </g>
-                        )}
-                        {activeScenario === 'traverse' && (
-                          <g stroke="rgba(255,179,0,0.5)" strokeWidth="0.8" fill="none">
-                            <path d="M 0,260 Q 200,180 400,260" />
-                            <path d="M 0,220 Q 200,130 400,220" />
-                          </g>
-                        )}
-                      </svg>
                     </div>
 
-                    {/* Martian Hazard warning grid overlay */}
-                    {hudFilterActive && (
+                    {/* Interactive Waypoints - Only visible in Traverse scenario */}
+                    {activeScenario === 'traverse' && (
                       <div 
                         style={{ 
-                          position: 'absolute',
-                          top: 0,
-                          left: 0,
-                          right: 0,
-                          bottom: 0,
-                          zIndex: 2,
-                          border: '2px solid rgba(255, 120, 0, 0.4)',
-                          background: 'repeating-linear-gradient(0deg, rgba(255, 100, 0, 0.02) 0px, rgba(255, 100, 0, 0.02) 2px, transparent 2px, transparent 8px)',
-                          animation: 'hazard-pulse 3s infinite ease-in-out',
+                          position: 'absolute', 
+                          top: 0, 
+                          left: 0, 
+                          right: 0, 
+                          bottom: 0, 
+                          zIndex: 3,
+                          transform: `translate3d(${parallax.x * 0.4}px, ${parallax.y * 0.4}px, 0)`,
+                          transition: 'transform 0.1s ease-out',
                           pointerEvents: 'none'
                         }}
                       >
-                        <div 
-                          style={{
-                            width: '100%',
-                            height: '20px',
-                            background: 'linear-gradient(rgba(255, 120, 0, 0), rgba(255, 120, 0, 0.25), rgba(255, 120, 0, 0))',
-                            position: 'absolute',
-                            top: 0,
-                            left: 0,
-                            animation: 'scanline-sweep 2.5s infinite linear'
-                          }}
-                        ></div>
-                        <div 
-                          style={{
-                            position: 'absolute',
-                            top: '40px',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            background: 'rgba(255, 70, 0, 0.85)',
-                            border: '1px solid #ff7700',
-                            borderRadius: '4px',
-                            padding: '3px 10px',
-                            color: '#ffffff',
-                            fontFamily: 'var(--font-tech)',
-                            fontSize: '0.55rem',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '5px',
-                            letterSpacing: '1px',
-                            animation: 'alert-flash 1s infinite ease-in-out'
-                          }}
-                        >
-                          ⚠️ DUST STORM WARNING ON-GRID INTERFACE ENGAGED
-                        </div>
+                        {waypoints.map(point => (
+                          <div 
+                            key={point.id} 
+                            style={{ 
+                              position: 'absolute', 
+                              left: point.x, 
+                              top: point.y, 
+                              pointerEvents: 'auto',
+                              transform: 'translate(-50%, -50%)'
+                            }}
+                            onMouseEnter={() => setHoveredWaypoint(point.id)}
+                            onMouseLeave={() => setHoveredWaypoint(null)}
+                          >
+                            <div 
+                              style={{ 
+                                width: '10px', 
+                                height: '10px', 
+                                background: hoveredWaypoint === point.id ? 'var(--color-accent)' : 'rgba(255,179,0,0.6)', 
+                                border: '1.5px solid #ffffff',
+                                borderRadius: '50%',
+                                cursor: 'crosshair',
+                                boxShadow: '0 0 10px var(--color-accent)',
+                                transition: 'all 0.2s ease',
+                                position: 'relative'
+                              }}
+                            >
+                              {hoveredWaypoint === point.id && (
+                                <div className="gaze-ring-overlay" style={{ width: '28px', height: '28px', left: '-10px', top: '-10px' }}></div>
+                              )}
+                            </div>
+
+                            {hoveredWaypoint === point.id && (
+                              <div 
+                                style={{ 
+                                  position: 'absolute', 
+                                  left: '16px', 
+                                  top: '-20px', 
+                                  background: 'rgba(6, 9, 20, 0.95)', 
+                                  border: '1px solid var(--color-accent)', 
+                                  borderRadius: '6px', 
+                                  padding: '6px 10px', 
+                                  width: '210px', 
+                                  zIndex: 10,
+                                  backdropFilter: 'blur(8px)',
+                                  boxShadow: '0 5px 15px rgba(0,0,0,0.5)',
+                                  pointerEvents: 'none',
+                                  animation: 'slide-in-fast 0.2s ease-out'
+                                }}
+                              >
+                                <div style={{ fontSize: '0.6rem', fontWeight: 'bold', color: '#ffffff', fontFamily: 'var(--font-tech)' }}>
+                                  {point.name}
+                                </div>
+                                <div style={{ fontSize: '0.5rem', color: 'var(--text-secondary)', fontFamily: 'monospace', marginTop: '3px', lineHeight: '1.2' }}>
+                                  {point.desc}
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        ))}
                       </div>
                     )}
 
-                    {/* Spatial widgets based on scenario */}
-                    <div 
-                      style={{ 
-                        position: 'absolute', 
-                        top: 0, 
-                        left: 0, 
-                        right: 0, 
-                        bottom: 0, 
-                        zIndex: 3,
-                        transform: `translate3d(${parallax.x * 0.5}px, ${parallax.y * 0.5}px, 0)`,
-                        transition: 'transform 0.1s ease-out',
-                        pointerEvents: 'none'
-                      }}
-                    >
-                      {/* Productivity Mode elements */}
-                      {activeScenario === 'productivity' && (
-                        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                          
-                          {/* Snapped wall clock widget */}
-                          <div 
-                            className="bubbly-panel"
-                            style={{ 
-                              position: 'absolute', 
-                              left: '65%', 
-                              top: '20%', 
-                              padding: '10px 14px', 
-                              background: 'rgba(6,9,20,0.85)',
-                              border: '1.5px solid var(--color-accent)',
-                              boxShadow: '0 0 15px var(--glass-glow)',
-                              borderRadius: '12px',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              alignItems: 'center',
-                              width: '100px',
-                              animation: 'snap-scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
-                              pointerEvents: 'auto'
-                            }}
-                          >
-                            <span style={{ fontSize: '0.5rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-tech)' }}>
-                              WALL ANCHOR
-                            </span>
-                            <span style={{ fontSize: '0.85rem', color: '#ffffff', fontWeight: 'bold', fontFamily: 'monospace', marginTop: '3px', animation: 'text-shadow-glow 2s infinite' }}>
-                              {timeString || '10:42:00'}
-                            </span>
-                          </div>
-
-                          {/* Floating Calendar task widget */}
-                          <div 
-                            className="bubbly-panel"
-                            style={{ 
-                              position: 'absolute', 
-                              left: '12%', 
-                              top: '35%', 
-                              padding: '10px', 
-                              background: 'rgba(6,9,20,0.8)',
-                              border: '1px solid rgba(255,255,255,0.08)',
-                              borderRadius: '12px',
-                              width: '130px',
-                              fontSize: '0.55rem',
-                              animation: 'snap-scale 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
-                              pointerEvents: 'auto'
-                            }}
-                          >
-                            <div style={{ color: 'var(--color-accent)', fontWeight: 'bold', fontFamily: 'var(--font-tech)', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '3px', marginBottom: '5px' }}>
-                              SOL SCHEDULE
-                            </div>
-                            <div style={{ color: '#ffffff' }}>🗓️ SOL 14: Lab Sync</div>
-                            <div style={{ color: 'var(--text-secondary)', marginTop: '2px' }}>⚙️ Syncing OS anchors</div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Entertainment Mode elements */}
-                      {activeScenario === 'entertainment' && (
-                        <div style={{ width: '100%', height: '100%', position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          
-                          {/* Floating Media Screen */}
-                          <div 
-                            className="bubbly-panel"
-                            style={{ 
-                              width: '240px', 
-                              height: '130px', 
-                              background: 'rgba(6,9,20,0.9)', 
-                              border: '1.5px solid var(--color-accent)',
-                              boxShadow: '0 0 20px var(--glass-glow)',
-                              borderRadius: '14px',
-                              padding: '10px',
-                              display: 'flex',
-                              flexDirection: 'column',
-                              justifyContent: 'space-between',
-                              animation: 'snap-scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
-                              pointerEvents: 'auto'
-                            }}
-                          >
-                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.52rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-tech)' }}>
-                              <span>📽️ COLONY CORE FEED</span>
-                              <span style={{ color: isPlayingMedia ? '#00ff88' : '#ff4400' }}>{isPlayingMedia ? 'STREAMING' : 'PAUSED'}</span>
-                            </div>
-
-                            {/* Simulated Video Waves */}
-                            <div style={{ flex: 1, display: 'flex', gap: '4px', alignItems: 'center', justifyContent: 'center', margin: '8px 0' }}>
-                              {[...Array(10)].map((_, i) => (
-                                <div 
-                                  key={i} 
-                                  style={{
-                                    width: '6px',
-                                    height: isPlayingMedia ? '20px' : '5px',
-                                    background: 'var(--color-accent)',
-                                    borderRadius: '3px',
-                                    animation: isPlayingMedia ? `wave-pulse ${0.6 + i * 0.08}s infinite ease-in-out` : 'none',
-                                    transition: 'all 0.3s ease'
-                                  }}
-                                ></div>
-                              ))}
-                            </div>
-
-                            {/* Widescreen controls */}
-                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center', fontSize: '0.55rem' }}>
-                              <button 
-                                onClick={() => setIsPlayingMedia(!isPlayingMedia)} 
-                                style={{ border: 'none', background: 'rgba(255,255,255,0.08)', color: '#ffffff', borderRadius: '4px', padding: '2px 8px', cursor: 'none' }}
-                              >
-                                {isPlayingMedia ? 'PAUSE' : 'PLAY'}
-                              </button>
-                              <div style={{ flex: 1, height: '3px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
-                                <div style={{ width: isPlayingMedia ? '65%' : '25%', height: '100%', background: 'var(--color-accent)', transition: 'width 2s linear' }}></div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {/* Traverse Active Mode elements */}
-                      {activeScenario === 'traverse' && (
-                        <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                          
-                          {/* Wristwatch anchor layout */}
-                          <div 
-                            className="bubbly-panel"
-                            style={{ 
-                              position: 'absolute', 
-                              left: '10%', 
-                              bottom: '12%', 
-                              padding: '8px 12px', 
-                              background: 'rgba(6,9,20,0.92)',
-                              border: '1.5px solid var(--color-accent)',
-                              boxShadow: '0 0 15px var(--glass-glow)',
-                              borderRadius: '12px',
-                              width: '125px',
-                              animation: 'snap-scale 0.4s cubic-bezier(0.25, 0.8, 0.25, 1) forwards',
-                              pointerEvents: 'auto'
-                            }}
-                          >
-                            <span style={{ fontSize: '0.48rem', color: 'var(--text-secondary)', display: 'block', fontFamily: 'var(--font-tech)' }}>
-                              WRIST WATCH PROJECTION
-                            </span>
-                            <div style={{ fontSize: '0.75rem', fontWeight: 'bold', color: '#ffffff', margin: '2px 0 4px 0', fontFamily: 'monospace' }}>
-                              💓 74 BPM
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', fontSize: '0.5rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                              <div>O₂ FLOW: 14.1%</div>
-                              <div>SYS LATENCY: 0.1ms</div>
-                            </div>
-                          </div>
-
-                          {/* Navigation path line in passthrough */}
-                          <svg width="100%" height="100%" style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none' }}>
-                            <path 
-                              d="M 300,140 Q 220,180 150,220" 
-                              fill="none" 
-                              stroke="var(--color-accent)" 
-                              strokeWidth="2" 
-                              strokeDasharray="4,4" 
-                              style={{ animation: 'scanline-sweep 3s infinite linear' }}
-                            />
-                            <circle cx="150" cy="220" r="5" fill="var(--color-accent)" />
-                          </svg>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Interactive Waypoints */}
-                    <div 
-                      style={{ 
-                        position: 'absolute', 
-                        top: 0, 
-                        left: 0, 
-                        right: 0, 
-                        bottom: 0, 
-                        zIndex: 3,
-                        transform: `translate3d(${parallax.x * 0.4}px, ${parallax.y * 0.4}px, 0)`,
-                        transition: 'transform 0.1s ease-out',
-                        pointerEvents: 'none'
-                      }}
-                    >
-                      {waypoints.map(point => (
-                        <div 
-                          key={point.id} 
-                          style={{ 
-                            position: 'absolute', 
-                            left: point.x, 
-                            top: point.y, 
-                            pointerEvents: 'auto',
-                            transform: 'translate(-50%, -50%)'
-                          }}
-                          onMouseEnter={() => setHoveredWaypoint(point.id)}
-                          onMouseLeave={() => setHoveredWaypoint(null)}
-                        >
-                          <div 
-                            style={{ 
-                              width: '8px', 
-                              height: '8px', 
-                              background: hoveredWaypoint === point.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.4)', 
-                              border: '1px solid #ffffff',
-                              borderRadius: '50%',
-                              cursor: 'crosshair',
-                              boxShadow: '0 0 8px var(--color-accent)',
-                              transition: 'all 0.2s ease',
-                              position: 'relative'
-                            }}
-                          >
-                            {hoveredWaypoint === point.id && (
-                              <div className="gaze-ring-overlay" style={{ width: '26px', height: '26px', left: '-10px', top: '-10px' }}></div>
-                            )}
-                          </div>
-
-                          {hoveredWaypoint === point.id && (
-                            <div 
-                              style={{ 
-                                position: 'absolute', 
-                                left: '14px', 
-                                top: '-20px', 
-                                background: 'rgba(6, 9, 20, 0.95)', 
-                                border: '1px solid var(--color-accent)', 
-                                borderRadius: '6px', 
-                                padding: '6px 10px', 
-                                width: '180px', 
-                                zIndex: 10,
-                                backdropFilter: 'blur(8px)',
-                                boxShadow: '0 5px 15px rgba(0,0,0,0.5)',
-                                pointerEvents: 'none',
-                                animation: 'slide-in-fast 0.2s ease-out'
-                              }}
-                            >
-                              <div style={{ fontSize: '0.6rem', fontWeight: 'bold', color: '#ffffff', fontFamily: 'var(--font-tech)' }}>
-                                {point.name}
-                              </div>
-                              <div style={{ fontSize: '0.5rem', color: 'var(--text-secondary)', fontFamily: 'monospace', marginTop: '3px', lineHeight: '1.2' }}>
-                                {point.desc}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* HUD CONTROL PANEL */}
-                    <div 
-                      style={{ 
-                        zIndex: 4, 
-                        display: 'flex', 
-                        justifyContent: 'space-between', 
-                        alignItems: 'flex-start',
-                        transform: `translate3d(${parallax.x * 0.8}px, ${parallax.y * 0.8}px, 0)`,
-                        transition: 'transform 0.1s ease-out'
-                      }}
-                    >
-                      {/* Left biometrics specs board */}
-                      <div 
-                        className="bubbly-panel" 
-                        style={{ 
-                          padding: '6px 10px', 
-                          background: 'rgba(6, 9, 20, 0.65)', 
-                          backdropFilter: 'blur(10px)',
-                          borderRadius: '8px', 
-                          border: '1px solid rgba(255,255,255,0.06)',
-                          fontSize: '0.55rem', 
-                          fontFamily: 'monospace' 
-                        }}
-                      >
-                        <div style={{ color: '#00ff88' }}>● LINK ACTIVE [99.8%]</div>
-                        <div style={{ color: 'var(--text-secondary)', marginTop: '2px' }}>🔋 GLUCOSE DRAW: 0.42mg/m</div>
-                      </div>
-
-                      {/* Right action toggles */}
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
-                        <button 
-                          onClick={() => setHudFilterActive(!hudFilterActive)}
-                          className={`hud-btn ${hudFilterActive ? 'active-tab-override' : ''}`}
-                          style={{ 
-                            fontSize: '0.55rem', 
-                            padding: '3px 8px', 
-                            borderRadius: '4px',
-                            borderColor: hudFilterActive ? 'var(--color-accent)' : 'rgba(255,255,255,0.1)'
-                          }}
-                        >
-                          {hudFilterActive ? '[ STOP WARNING ]' : '[ ENGAGE WARN GRID ]'}
-                        </button>
-                        <button 
-                          onClick={() => setThoughtSyncActive(!thoughtSyncActive)}
-                          className={`hud-btn ${thoughtSyncActive ? 'active-tab-override' : ''}`}
-                          style={{ 
-                            fontSize: '0.55rem', 
-                            padding: '3px 8px', 
-                            borderRadius: '4px',
-                            borderColor: thoughtSyncActive ? 'var(--color-accent)' : 'rgba(255,255,255,0.1)'
-                          }}
-                        >
-                          {thoughtSyncActive ? '[ TERMINAL STOP ]' : '[ THINK COMMANDS ]'}
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Middle thought terminal logs */}
-                    <div 
-                      style={{ 
-                        zIndex: 4, 
-                        flex: 1, 
-                        display: 'flex', 
-                        alignItems: 'center', 
-                        justifyContent: 'center',
-                        position: 'relative' 
-                      }}
-                    >
-                      {thoughtSyncActive ? (
-                        <div 
-                          className="bubbly-panel" 
-                          style={{ 
-                            width: '260px', 
-                            maxHeight: '100px', 
-                            padding: '10px', 
-                            background: 'rgba(6, 9, 20, 0.85)', 
-                            border: '1px solid var(--color-accent)', 
-                            borderRadius: '10px',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.6)',
-                            transform: `translate3d(${parallax.x * 1.1}px, ${parallax.y * 1.1}px, 0)`,
-                            transition: 'transform 0.1s ease-out'
-                          }}
-                        >
-                          <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.08)', paddingBottom: '3px', marginBottom: '5px', fontSize: '0.5rem', fontFamily: 'var(--font-tech)', color: 'var(--color-accent)' }}>
-                            <span>🧠 CORTICAL SYNAPSE STREAM</span>
-                            <span>LIVE SYNC</span>
-                          </div>
-                          <pre 
-                            style={{ 
-                              margin: 0, 
-                              fontSize: '0.5rem', 
-                              fontFamily: 'monospace', 
-                              color: 'var(--text-primary)', 
-                              lineHeight: '1.3', 
-                              whiteSpace: 'pre-wrap', 
-                              textAlign: 'left'
-                            }}
-                          >
-                            {typedText}
-                            <span style={{ animation: 'cursor-blink 1s infinite', color: 'var(--color-accent)' }}>_</span>
-                          </pre>
-                        </div>
-                      ) : (
-                        <div 
-                          style={{ 
-                            color: 'rgba(255,255,255,0.15)', 
-                            fontFamily: 'var(--font-tech)', 
-                            fontSize: '0.58rem', 
-                            textAlign: 'center',
-                            pointerEvents: 'none',
-                            transform: `translate3d(${parallax.x * 0.4}px, ${parallax.y * 0.4}px, 0)`,
-                            transition: 'transform 0.1s ease-out'
-                          }}
-                        >
-                          [ THOUGHT COMMAND FEED READY ]
-                        </div>
-                      )}
-                    </div>
+                    {/* Spacer to align dock to bottom */}
+                    <div style={{ flex: 1 }}></div>
 
                     {/* BOTTOM: App Dock simulating gaze launcher */}
                     <div 
@@ -1318,36 +955,34 @@ export default function NanobotPillDetails() {
               {/* Status Diagnostic biophysics specs */}
               <div style={{ marginTop: '10px', borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: '10px', display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.6rem', fontFamily: 'monospace' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>UPLINK STATE:</span>
-                  <span style={{ color: stats.systemState === 'ACTIVE' ? '#00ff88' : 'var(--color-accent)', fontWeight: 'bold' }}>
-                    {stats.systemState}
+                  <span style={{ color: 'var(--text-secondary)' }}>GENETIC AI CORE STATE:</span>
+                  <span style={{ color: activeTab === 'eclipse' ? '#00ff88' : 'var(--color-accent)', fontWeight: 'bold' }}>
+                    {activeTab === 'eclipse' ? 'ACTIVE (100% DNA MATCH)' : stats.systemState}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>CAPSULE INTEGRITY:</span>
-                  <span style={{ color: '#ffffff' }}>{stats.capsuleIntegrity}</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>BIOLOGICAL SYNC INDEX:</span>
+                  <span style={{ color: '#ffffff' }}>{activeTab === 'eclipse' ? '99.8%' : stats.synapticMapping}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>BBB PENETRATION:</span>
-                  <span style={{ color: '#ffffff' }}>{stats.bbbCrossing}</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>METABOLIC HEAT OVERRIDE:</span>
+                  <span style={{ color: '#ffffff' }}>{activeTab === 'overview' || activeTab === 'payload' ? 'PENDING' : '-55°C NOMINAL (18.5°C SKIN)'}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>SYNAPTIC MAPPING:</span>
-                  <span style={{ color: stats.synapticMapping === '100% SUCCESS' ? '#00ff88' : '#ffffff' }}>
-                    {stats.synapticMapping}
-                  </span>
+                  <span style={{ color: 'var(--text-secondary)' }}>RADIATION PROTECTION:</span>
+                  <span style={{ color: '#00ff88' }}>{stats.radiation}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>BIOMETRIC TEMP [CORE/SKIN]:</span>
-                  <span style={{ color: '#ffffff' }}>{stats.temp} / {stats.skinTemp}</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>HEART RATE / BLOOD O₂ SAT:</span>
+                  <span style={{ color: '#00ff88' }}>{activeTab === 'overview' ? '70 BPM / 99.1%' : activeTab === 'payload' ? '72 BPM / 99.0%' : `74 BPM / ${stats.oxygenSat}`}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>RAD PROTECTION / BLOOD O₂ SAT:</span>
-                  <span style={{ color: '#00ff88' }}>{stats.radiation} / {stats.oxygenSat}</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>GRAVITY COMPENSATION:</span>
+                  <span style={{ color: '#00ff88' }}>{activeTab === 'overview' || activeTab === 'payload' ? '1.00g (TERRESTRIAL)' : '0.38g (STABILIZED)'}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>GRAVITY ADAPT / NEURAL LATENCY:</span>
-                  <span style={{ color: '#00ff88' }}>{stats.gravity} / {stats.latency}</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>NEURAL SYSTEM LATENCY:</span>
+                  <span style={{ color: '#00ff88' }}>{stats.latency}</span>
                 </div>
               </div>
             </div>

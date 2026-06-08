@@ -6,6 +6,7 @@ import { useRouter, usePathname } from 'next/navigation';
 const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
   '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
+  '/research': { x: -180, y: 150, name: 'ARES LABS - SPECULATIVE TECH' },
   '/park': { x: 150, y: -100, name: 'ARES CITY PARK' },
   '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - WELCOME PLAZA' },
   '/neurodiversity/comms-grove': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - DIALOGUE BRIDGES' },
@@ -82,6 +83,16 @@ export default function CityGridMap({ isDrawer = false }) {
       rgb: '194, 89, 255',
       icon: '📂',
       desc: 'Retrospective engineering files'
+    },
+    {
+      id: 'research',
+      label: 'SECTOR 02 // RESEARCH',
+      title: 'SPECULATIVE TECH LAB',
+      route: '/research',
+      color: '#ffb300',
+      rgb: '255, 179, 0',
+      icon: '🔬',
+      desc: 'Speculative quantum engineering & future colony concepts'
     },
   ];
 

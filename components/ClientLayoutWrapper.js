@@ -22,8 +22,8 @@ export default function ClientLayoutWrapper({ children }) {
   } else if (pathname === '/research') {
     bgImage = '/assets/images/backgrounds/research-lab.png';
     currentTheme = 'quantum';
-    hudSectorName = 'Speculative Research Lab';
-    currentLocationName = 'ARES LABS - SPECULATIVE TECH';
+    hudSectorName = 'Research Lab';
+    currentLocationName = 'RESEARCH LAB';
   } else if (pathname === '/park' || pathname.startsWith('/neurodiversity')) {
     currentTheme = 'biosphere';
     if (pathname === '/park') {

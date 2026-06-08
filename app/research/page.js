@@ -143,7 +143,7 @@ export default function SpeculativeTechLab() {
         {/* Main Header / Info Panel */}
         <div className="bubbly-panel research-header-panel">
           <h2 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.4rem', color: 'var(--color-accent)', textShadow: '0 0 10px rgba(var(--color-accent-rgb), 0.3)', marginBottom: '8px' }}>
-            ARES SPECULATIVE TECHNOLOGY LAB // SECTOR 02
+            ARES RESEARCH LAB // SECTOR 02
           </h2>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5 }}>
             Welcome to the colony's central speculative laboratory deck. Here, citizens catalog technologies proposed for future phases of Ares City's Martian civilization. Filter existing proposals or use the Holographic Proposal Terminal to sync your own designs to the colony mainframe.

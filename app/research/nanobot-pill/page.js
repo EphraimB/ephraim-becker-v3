@@ -424,7 +424,7 @@ export default function NanobotPillDetails() {
           >
             
             {/* Story Card 1 */}
-            <div id="overview" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+            <div id="overview" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
                 STAGE 01 // ORAL INGESTION
               </span>
@@ -446,7 +446,7 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 2 */}
-            <div id="payload" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+            <div id="payload" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
                 STAGE 02 // NEURAL CROSSING
               </span>
@@ -468,7 +468,7 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 3 */}
-            <div id="adaptation" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+            <div id="adaptation" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
                 STAGE 03 // PHYSIOLOGICAL ADAPTATION
               </span>
@@ -494,7 +494,7 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 4 */}
-            <div id="assembly" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+            <div id="assembly" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
                 STAGE 04 // CLEFTS INTEGRATION
               </span>
@@ -516,7 +516,7 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 5 */}
-            <div id="eclipse" className="bubbly-panel" style={{ minHeight: '380px', padding: '24px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+            <div id="eclipse" className="bubbly-panel" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
                 STAGE 05 // SPATIAL INTERFACES
               </span>

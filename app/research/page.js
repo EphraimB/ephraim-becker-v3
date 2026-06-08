@@ -41,7 +41,7 @@ export default function ResearchLab() {
             ARES RESEARCH LAB // SECTOR 02
           </h2>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.45, margin: 0 }}>
-            speculative technology research laboratory. monitoring and validating futuristic biomechanical concept projects for the development of Ares City.
+            Ares Research Lab is where we dream and build the future of Martian life. Explore speculative projects designed to redefine human capability.
           </p>
         </div>
 

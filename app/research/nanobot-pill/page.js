@@ -26,10 +26,10 @@ export default function NanobotPillDetails() {
   }, []);
 
   const tabs = [
-    { id: 'overview', label: '01 // SPEC OVERVIEW' },
-    { id: 'payload', label: '02 // NANOBOT PAYLOAD' },
-    { id: 'assembly', label: '03 // CORTEX SYNC' },
-    { id: 'eclipse', label: '04 // DEVICE ECLIPSE' }
+    { id: 'overview', label: 'Overview' },
+    { id: 'payload', label: 'The Capsule' },
+    { id: 'assembly', label: 'The Nanobots' },
+    { id: 'eclipse', label: 'No More Devices' }
   ];
 
   return (
@@ -65,13 +65,13 @@ export default function NanobotPillDetails() {
             {/* Tech Title Panel */}
             <div className="bubbly-panel">
               <span style={{ fontSize: '0.65rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', fontWeight: 'bold', letterSpacing: '1.5px' }}>
-                BIOTECH_CORE // SPECULATIVE_BLUEPRINT_SYNC
+                PROJECT DECK // SPECULATIVE BIOTECH
               </span>
               <h2 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.5rem', color: '#ffffff', margin: '6px 0 10px 0', fontWeight: 'bold' }}>
-                BCI Nanobot Pill — Project Blueprint
+                BCI Nanobot Pill
               </h2>
-              <p style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Speculative schematics detailing the biochemical delivery mechanisms, cerebral nanobot navigation pathways, and synaptic bio-computer assembly protocols inside the human brain.
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                The future of human connection is here. Experience the blueprint of hardware-free computing, direct to your brain.
               </p>
             </div>
 
@@ -102,65 +102,45 @@ export default function NanobotPillDetails() {
               
               {activeTab === 'overview' && (
                 <div style={{ animation: 'slide-in-fast 0.25s ease-out' }}>
-                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.95rem', color: '#ffffff', marginBottom: '12px' }}>
-                    // SECTION 01: BIODEGRADABLE CAPSULE CORE
+                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: '8px', fontWeight: 'bold' }}>
+                    Simply swallow. Say hello to hardware-free.
                   </h4>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: 1.6, marginBottom: '15px' }}>
-                    The vehicle of delivery is a swallowable bio-compatible capsule constructed from cellulose-graphene hybrid lattices. This capsule is specifically engineered to withstand transit through the esophagus and stomach fluids before rapidly dissolving in the alkaline environment of the duodenum.
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>
+                    The BCI Pill is a tiny, bio-compatible capsule that completely replaces your screens, keypads, and communication decks. By safely releasing microscopic builders directly into your neural pathways, it compiles a fully integrated bio-computer in your brain. No screens. No weight. Just pure connection.
                   </p>
-                  <ul style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', paddingLeft: '20px', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <li><strong style={{ color: '#ffffff' }}>Graphene lattice shell:</strong> Prevents physical compression failure during ingestion.</li>
-                    <li><strong style={{ color: '#ffffff' }}>Rapid dissolution curve:</strong> Completely dissolves in under 4 minutes upon exposure to duodenal gastric buffers.</li>
-                    <li><strong style={{ color: '#ffffff' }}>Micro-shield seal:</strong> Protects the sensitive nanobot payload from early exposure to digestive acids.</li>
-                  </ul>
                 </div>
               )}
 
               {activeTab === 'payload' && (
                 <div style={{ animation: 'slide-in-fast 0.25s ease-out' }}>
-                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.95rem', color: '#ffffff', marginBottom: '12px' }}>
-                    // SECTION 02: NEURAL-NAVIGATIONAL NANOBOTS
+                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: '8px', fontWeight: 'bold' }}>
+                    Ingeniously organic. Dissolves in minutes.
                   </h4>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: 1.6, marginBottom: '15px' }}>
-                    Upon dissolution of the shell, the capsule releases a payload of 12.4 million sub-micrometer neural nanobots. Using synthetic flagella for flagellate propulsion, these biocompatible nodes navigate the bloodstream, cross the blood-brain barrier under localized electromagnetic guidance fields, and migrate to the cerebral cortex.
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>
+                    We made the pill shell out of pure, plant-based cellulose. It feels like swallowing a standard vitamin, but acts like a smart delivery capsule. Once in your system, it dissolves gently in under 4 minutes, releasing its intelligent nanobot payload safely into the bloodstream without a single side effect.
                   </p>
-                  <ul style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', paddingLeft: '20px', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <li><strong style={{ color: '#ffffff' }}>Flagellar Propulsion:</strong> Synthetic biocompatible flagella powered by local bloodstream glucose.</li>
-                    <li><strong style={{ color: '#ffffff' }}>BBB Translocation:</strong> Safely passes through the blood-brain barrier via tight-junction channels.</li>
-                    <li><strong style={{ color: '#ffffff' }}>Geodesic Magnetic Guidance:</strong> Directed in real-time by the colony's local dome telemetry grids.</li>
-                  </ul>
                 </div>
               )}
 
               {activeTab === 'assembly' && (
                 <div style={{ animation: 'slide-in-fast 0.25s ease-out' }}>
-                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.95rem', color: '#ffffff', marginBottom: '12px' }}>
-                    // SECTION 03: SYNAPTIC ASSEMBLY & BIOCONFIGURATION
+                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: '8px', fontWeight: 'bold' }}>
+                    12 million tiny builders. Working in harmony.
                   </h4>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: 1.6, marginBottom: '15px' }}>
-                    Once in the cerebral cortex, the nanobots organize themselves into a synchronized network. They map existing dendrite and synaptic pathways and build a sub-atomic bio-computational grid core. This core interfaces directly with the visual cortex to project digital structures onto the user's retina.
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>
+                    Inside each capsule is a network of 12.4 million microscopic biocompatible nodes. Powered by your body’s natural glucose, these smart nodes navigate safely to the cerebral cortex. They map and connect with your brain's existing synapses without changing who you are.
                   </p>
-                  <ul style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', paddingLeft: '20px', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <li><strong style={{ color: '#ffffff' }}>Synaptic Mapping:</strong> Non-destructive scanning of existing neural pathways.</li>
-                    <li><strong style={{ color: '#ffffff' }}>Retinal UI Projection:</strong> Displays terminal decks and data streams directly onto the visual field.</li>
-                    <li><strong style={{ color: '#ffffff' }}>Quantum Sync:</strong> Direct communication with the Ares City quantum network framework.</li>
-                  </ul>
                 </div>
               )}
 
               {activeTab === 'eclipse' && (
                 <div style={{ animation: 'slide-in-fast 0.25s ease-out' }}>
-                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.95rem', color: '#ffffff', marginBottom: '12px' }}>
-                    // SECTION 04: REDUNDANCY & THE PHYSICAL DEVICE ECLIPSE
+                  <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '1.1rem', color: 'var(--color-accent)', marginBottom: '8px', fontWeight: 'bold' }}>
+                    Goodbye screens. Hello visual infinity.
                   </h4>
-                  <p style={{ fontSize: '0.88rem', color: 'var(--text-primary)', lineHeight: 1.6, marginBottom: '15px' }}>
-                    The ultimate goal of the BCI Nanobot Pill project is the complete redundancy of external hardware. By integrating computational logic, deep space links, and visualization grids directly into the biological nervous system, physical terminals, screens, and wearable headsets become entirely redundant.
+                  <p style={{ fontSize: '0.9rem', color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>
+                    Once synced, the bio-computer communicates directly with your visual cortex. Digital interfaces appear floating naturally in your field of vision, only visible to you. Send messages, navigate Ares City, and access the quantum net instantly—no pockets, no wires, no chargers.
                   </p>
-                  <ul style={{ fontSize: '0.82rem', color: 'var(--text-secondary)', paddingLeft: '20px', lineHeight: 1.6, display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <li><strong style={{ color: '#ffffff' }}>Zero-Weight Comm Links:</strong> Instant, hardware-free communication across Ares City.</li>
-                    <li><strong style={{ color: '#ffffff' }}>Biomimetic Security:</strong> Encryption keys locked directly to the citizen's unique synaptic pulse signature.</li>
-                    <li><strong style={{ color: '#ffffff' }}>Ecological Conservation:</strong> Eradicates electronic waste, mining for device metals, and hardware assembly pollution in the Martian colony.</li>
-                  </ul>
                 </div>
               )}
 

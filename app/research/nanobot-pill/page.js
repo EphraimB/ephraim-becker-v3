@@ -17,7 +17,7 @@ export default function NanobotPillDetails() {
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
   const [cursorPos, setCursorPos] = useState({ x: 180, y: 120 });
   
-  // Active Scenario inside Phase 4
+  // Active Scenario inside Phase 5
   const [activeScenario, setActiveScenario] = useState('productivity');
   const [isPlayingMedia, setIsPlayingMedia] = useState(true);
   const [timeString, setTimeString] = useState('');
@@ -57,7 +57,7 @@ export default function NanobotPillDetails() {
   // Sync scroll positioning to activeTab
   const handleScroll = (e) => {
     const container = e.currentTarget;
-    const sections = ['overview', 'payload', 'assembly', 'eclipse'];
+    const sections = ['overview', 'payload', 'adaptation', 'assembly', 'eclipse'];
     let currentActive = 'overview';
 
     for (const id of sections) {
@@ -87,7 +87,6 @@ export default function NanobotPillDetails() {
     if (!viewportRef.current) return;
     const rect = viewportRef.current.getBoundingClientRect();
     
-    // Normalize coordinates between -1 and 1
     const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
     
@@ -180,6 +179,10 @@ export default function NanobotPillDetails() {
           latency: '-- ms',
           glucose: '0.00 mg/min',
           temp: '37.0°C',
+          skinTemp: '36.8°C [NOMINAL]',
+          radiation: 'PENDING',
+          oxygenSat: '99.1% [DOME_AIR]',
+          gravity: '1.00g [TERRESTRIAL]',
           systemState: 'ESTABLISHING'
         };
       case 'payload':
@@ -192,11 +195,31 @@ export default function NanobotPillDetails() {
           latency: '98 ms',
           glucose: '0.12 mg/min',
           temp: '37.1°C',
+          skinTemp: '36.5°C [STABLE]',
+          radiation: 'CALIBRATING',
+          oxygenSat: '99.0%',
+          gravity: '1.00g',
           systemState: 'UPLINK_SYNCING'
+        };
+      case 'adaptation':
+        return {
+          phase: 'PHASE 03 // PHYSO_ADAPTATION',
+          status: 'GENETIC INTEGRATION COMPLETED',
+          capsuleIntegrity: '0%',
+          bbbCrossing: '100% SUCCESS',
+          synapticMapping: '0.0%',
+          latency: '85 ms',
+          glucose: '0.98 mg/min',
+          temp: '37.0°C [STABLE]',
+          skinTemp: '18.5°C [ADAPTED]',
+          radiation: '99.4% REJECTED',
+          oxygenSat: '98.6% [HYPOXIA_OK]',
+          gravity: '0.38g [STABILIZED]',
+          systemState: 'ADAPTED'
         };
       case 'assembly':
         return {
-          phase: 'PHASE 03 // CORTICAL MAPPING',
+          phase: 'PHASE 04 // CORTICAL MAPPING',
           status: 'ANCHORING IN SYNAPTIC CLEFTS',
           capsuleIntegrity: '0%',
           bbbCrossing: '100% SUCCESS',
@@ -204,11 +227,15 @@ export default function NanobotPillDetails() {
           latency: '24 ms',
           glucose: '0.85 mg/min',
           temp: '37.3°C',
+          skinTemp: '18.5°C',
+          radiation: '99.4% REJECTED',
+          oxygenSat: '98.6%',
+          gravity: '0.38g',
           systemState: 'INTERFACING'
         };
       case 'eclipse':
         return {
-          phase: 'PHASE 04 // RETINA BCI OS',
+          phase: 'PHASE 05 // RETINA BCI OS',
           status: 'SYSTEM ONLINE // HUD ACTIVE',
           capsuleIntegrity: '0%',
           bbbCrossing: '100% SUCCESS',
@@ -216,6 +243,10 @@ export default function NanobotPillDetails() {
           latency: '0.8 ms',
           glucose: '0.42 mg/min',
           temp: '37.0°C',
+          skinTemp: '18.5°C',
+          radiation: '99.4% REJECTED',
+          oxygenSat: '98.6%',
+          gravity: '0.38g',
           systemState: 'ACTIVE'
         };
       default:
@@ -228,8 +259,9 @@ export default function NanobotPillDetails() {
   const tabs = [
     { id: 'overview', label: '1. Ingestion' },
     { id: 'payload', label: '2. Uptake' },
-    { id: 'assembly', label: '3. Assembly' },
-    { id: 'eclipse', label: '4. Retina OS' }
+    { id: 'adaptation', label: '3. Adaptation' },
+    { id: 'assembly', label: '4. Assembly' },
+    { id: 'eclipse', label: '5. Retina OS' }
   ];
 
   const scenarios = [
@@ -394,7 +426,7 @@ export default function NanobotPillDetails() {
             {/* Story Card 1 */}
             <div id="overview" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 01 // CELLULOSE DELIVERY
+                STAGE 01 // ORAL INGESTION
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
                 Organic Ingestion.
@@ -436,9 +468,35 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 3 */}
+            <div id="adaptation" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
+              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                STAGE 03 // PHYSIOLOGICAL ADAPTATION
+              </span>
+              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                Outdoors in the Bare Landscape.
+              </h2>
+              <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                Before the interface initializes, the capsule releases bio-synthetic genetic regulators that modify mitochondrial pathways and endocrine lines to adapt your physiology directly to Mars.
+              </p>
+              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                - **Thermal Homeostasis**: Calibrates metabolic heat production, enabling survival in the -55°C Martian cold without bulky protective suits.
+                <br />- **Radiation Shielding**: Enhances dermis melanin and speeds up cellular DNA repair to defend against cosmic rays.
+                <br />- **Hypoxic O₂ Efficiency**: Boosts cellular respiration efficiency, maximizing oxygen utility in thin air.
+                <br />- **0.38g Gravity Balancer**: Adapts muscle tone and bone density markers to Mars gravity.
+              </p>
+              
+              <div style={{ marginTop: '20px', display: 'flex', gap: '15px', flexWrap: 'wrap', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                <div>🌡️ SKIN: 18.5°C</div>
+                <div>🧬 RAD COAT: 99.4% REJECT</div>
+                <div>🫁 O2 SAT: 98.6%</div>
+                <div>🛰️ GRAVITY: 0.38g</div>
+              </div>
+            </div>
+
+            {/* Story Card 4 */}
             <div id="assembly" className="bubbly-panel" style={{ minHeight: '380px', padding: '30px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 03 // CLEFTS INTEGRATION
+                STAGE 04 // CLEFTS INTEGRATION
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
                 Cortical Mapping.
@@ -457,10 +515,10 @@ export default function NanobotPillDetails() {
               </div>
             </div>
 
-            {/* Story Card 4 */}
+            {/* Story Card 5 */}
             <div id="eclipse" className="bubbly-panel" style={{ minHeight: '380px', padding: '24px', justifyContent: 'center', background: 'rgba(6,9,20,0.5)' }}>
               <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 04 // SPATIAL INTERFACES
+                STAGE 05 // SPATIAL INTERFACES
               </span>
               <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
                 Retina BCI OS.
@@ -507,7 +565,7 @@ export default function NanobotPillDetails() {
 
           </div>
 
-          {/* RIGHT: Telemetry Dashboard & Active XR HUD */}
+          {/* RIGHT: Telemetry Dashboard & Layered Composites */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', height: '100%', minHeight: 0 }}>
             
             {/* Viewport Box */}
@@ -527,10 +585,10 @@ export default function NanobotPillDetails() {
             >
               
               <span className="net-label" style={{ display: 'block', fontSize: '0.6rem', color: 'var(--color-accent)', marginBottom: '5px' }}>
-                // SPATIAL CORE VIEWPORT
+                // LAYERED VISUAL COMPOSITE
               </span>
 
-              {/* Conditional Display: Phases 1-3 Show SVGs; Phase 4 Shows interactive HUD */}
+              {/* Viewport Frame */}
               <div 
                 ref={viewportRef}
                 onMouseMove={handleMouseMove}
@@ -549,36 +607,86 @@ export default function NanobotPillDetails() {
                 }}
               >
                 
-                {/* Visualizer: Phases 1-3 */}
-                {activeTab !== 'eclipse' && (
-                  <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-                    {activeTab === 'overview' && (
-                      <img 
-                        src="/assets/svgs/bci_payload.svg" 
-                        alt="BCI Capsule Payload" 
-                        style={{ width: '80%', height: '80%', objectFit: 'contain', transition: 'all 0.5s ease' }} 
-                      />
-                    )}
-                    {activeTab === 'payload' && (
-                      <img 
-                        src="/assets/svgs/bci_overview.svg" 
-                        alt="BCI Overview Schematic" 
-                        style={{ width: '80%', height: '80%', objectFit: 'contain', transition: 'all 0.5s ease' }} 
-                      />
-                    )}
-                    {activeTab === 'assembly' && (
-                      <img 
-                        src="/assets/svgs/bci_assembly.svg" 
-                        alt="BCI Synaptic Assembly" 
-                        style={{ width: '80%', height: '80%', objectFit: 'contain', transition: 'all 0.5s ease' }} 
-                      />
-                    )}
-                    
-                    <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, border: '1px dashed rgba(255, 179, 0, 0.04)', pointerEvents: 'none' }}></div>
+                {/* Composite: Ingestion (Phase 1) */}
+                {activeTab === 'overview' && (
+                  <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                    <img 
+                      src="/assets/images/bci/bci_ingestion.png" 
+                      alt="BCI Ingestion Background" 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+                    />
+                    <img 
+                      src="/assets/svgs/bci_payload.svg" 
+                      alt="BCI Ingestion SVG Overlay" 
+                      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
+                    />
                   </div>
                 )}
 
-                {/* Simulated XR BCI HUD viewport (Phase 4) */}
+                {/* Composite: Uptake (Phase 2) */}
+                {activeTab === 'payload' && (
+                  <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                    <img 
+                      src="/assets/images/bci/bci_uptake.png" 
+                      alt="BCI Uptake Background" 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+                    />
+                    <img 
+                      src="/assets/svgs/bci_overview.svg" 
+                      alt="BCI Uptake SVG Overlay" 
+                      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
+                    />
+                  </div>
+                )}
+
+                {/* Composite: Adaptation (Phase 3) */}
+                {activeTab === 'adaptation' && (
+                  <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                    <img 
+                      src="/assets/images/bci/bci_adaptation.png" 
+                      alt="BCI Adaptation Background" 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
+                    />
+                    {/* Inline biological/thermal grid overlay */}
+                    <svg 
+                      width="100%" 
+                      height="100%" 
+                      viewBox="0 0 100 100" 
+                      preserveAspectRatio="none" 
+                      style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, pointerEvents: 'none' }}
+                    >
+                      <rect x="8" y="8" width="84" height="84" fill="none" stroke="var(--color-accent)" strokeWidth="0.4" strokeDasharray="1,2" opacity="0.6" />
+                      <line x1="8" y1="50" x2="92" y2="50" stroke="#ff4400" strokeWidth="0.5" strokeDasharray="1,1" opacity="0.8" />
+                      <path d="M 12 12 L 20 12 M 12 12 L 12 20" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
+                      <path d="M 88 12 L 80 12 M 88 12 L 88 20" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
+                      <path d="M 12 88 L 20 88 M 12 88 L 12 80" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
+                      <path d="M 88 88 L 80 88 M 88 88 L 88 80" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
+                      
+                      <text x="14" y="20" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● METABOLIC HEAT ACTIVE [-55C NOMINAL]</text>
+                      <text x="14" y="25" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● RADIATION DENSE DEFENSE: 99.4%</text>
+                      <text x="14" y="30" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● O2 RESPIRED SATURATION: 98.6%</text>
+                      <text x="14" y="35" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● MUSCLE-BONE GRAVITY GAIN: 0.38G</text>
+                    </svg>
+                  </div>
+                )}
+
+                {/* Composite: Assembly (Phase 4) */}
+                {activeTab === 'assembly' && (
+                  <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+                    <img 
+                      src="/assets/images/bci/bci_assembly.png" 
+                      alt="BCI Assembly Background" 
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+                    />
+                    <img 
+                      src="/assets/svgs/bci_assembly.svg" 
+                      alt="BCI Assembly SVG Overlay" 
+                      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
+                    />
+                  </div>
+                )}
+
+                {/* Simulated XR BCI HUD viewport (Phase 5) */}
                 {activeTab === 'eclipse' && (
                   <div 
                     style={{ 
@@ -602,45 +710,40 @@ export default function NanobotPillDetails() {
                         right: '-15px',
                         bottom: '-15px',
                         zIndex: 1,
-                        background: activeScenario === 'productivity' 
-                          ? 'radial-gradient(circle at 50% 50%, rgba(10, 25, 47, 0.45) 0%, rgba(4, 6, 12, 1) 90%)'
-                          : activeScenario === 'entertainment'
-                          ? 'radial-gradient(circle at 50% 50%, rgba(30, 10, 50, 0.45) 0%, rgba(4, 6, 12, 1) 90%)'
-                          : 'radial-gradient(circle at 50% 50%, rgba(50, 25, 10, 0.4) 0%, rgba(4, 6, 12, 1) 90%)',
+                        background: 'radial-gradient(circle at 50% 50%, rgba(4, 6, 12, 0.4) 0%, rgba(4, 6, 12, 1) 90%)',
                         transform: `translate3d(${parallax.x * -0.5}px, ${parallax.y * -0.5}px, 0)`,
-                        transition: 'transform 0.1s ease-out, background 0.5s ease',
+                        transition: 'transform 0.1s ease-out',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center'
                       }}
                     >
+                      {/* High-fidelity Dome passthrough background */}
+                      <img 
+                        src="/assets/images/backgrounds/atmosphere-dome.png" 
+                        alt="Martian Dome Interior" 
+                        style={{ width: '110%', height: '110%', objectFit: 'cover', opacity: 0.45 }}
+                      />
+
                       {/* Vector lines of the environment */}
-                      <svg width="100%" height="100%" viewBox="0 0 400 300" style={{ opacity: 0.12, pointerEvents: 'none' }}>
+                      <svg width="100%" height="100%" viewBox="0 0 400 300" style={{ position: 'absolute', top: 0, left: 0, opacity: 0.12, pointerEvents: 'none', zIndex: 2 }}>
                         {activeScenario === 'productivity' && (
                           <g stroke="rgba(255,255,255,0.4)" strokeWidth="0.8" fill="none">
-                            {/* Office room lines */}
                             <line x1="0" y1="220" x2="400" y2="220" />
                             <line x1="80" y1="220" x2="80" y2="0" />
                             <line x1="320" y1="220" x2="320" y2="0" />
-                            <rect x="120" y="140" width="160" height="80" strokeDasharray="3,3" /> {/* Desktop */}
                           </g>
                         )}
                         {activeScenario === 'entertainment' && (
                           <g stroke="var(--color-accent)" strokeWidth="0.6" fill="none">
-                            {/* Concentric theater circles */}
                             <circle cx="200" cy="150" r="130" opacity="0.3" />
                             <circle cx="200" cy="150" r="90" opacity="0.5" />
-                            <circle cx="200" cy="150" r="50" opacity="0.7" />
                           </g>
                         )}
                         {activeScenario === 'traverse' && (
                           <g stroke="rgba(255,179,0,0.5)" strokeWidth="0.8" fill="none">
-                            {/* Mars terrain ribs */}
                             <path d="M 0,260 Q 200,180 400,260" />
                             <path d="M 0,220 Q 200,130 400,220" />
-                            {/* Perspective floor lines */}
-                            <line x1="200" y1="130" x2="0" y2="300" />
-                            <line x1="200" y1="130" x2="400" y2="300" />
                           </g>
                         )}
                       </svg>
@@ -1221,12 +1324,16 @@ export default function NanobotPillDetails() {
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>BIOMETRIC TEMP:</span>
-                  <span style={{ color: stats.temp === '37.3°C' ? '#ff4400' : '#ffffff' }}>{stats.temp}</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>BIOMETRIC TEMP [CORE/SKIN]:</span>
+                  <span style={{ color: '#ffffff' }}>{stats.temp} / {stats.skinTemp}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>NEURAL LATENCY:</span>
-                  <span style={{ color: '#00ff88' }}>{stats.latency}</span>
+                  <span style={{ color: 'var(--text-secondary)' }}>RAD PROTECTION / BLOOD O₂ SAT:</span>
+                  <span style={{ color: '#00ff88' }}>{stats.radiation} / {stats.oxygenSat}</span>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                  <span style={{ color: 'var(--text-secondary)' }}>GRAVITY ADAPT / NEURAL LATENCY:</span>
+                  <span style={{ color: '#00ff88' }}>{stats.gravity} / {stats.latency}</span>
                 </div>
               </div>
             </div>

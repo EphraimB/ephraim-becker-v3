@@ -24,6 +24,7 @@ export default function NanobotPillDetails() {
 
   const scrollRef = useRef(null);
   const viewportRef = useRef(null);
+  const visualContainerRef = useRef(null);
 
   // Live ticking clock for spatial anchors
   useEffect(() => {
@@ -52,6 +53,65 @@ export default function NanobotPillDetails() {
       }, 50);
       return () => clearTimeout(timer);
     }
+  }, []);
+
+  // Sync window scroll (mobile views) to activeTab
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const handleWindowScroll = () => {
+      if (window.innerWidth > 900) return;
+
+      const sections = ['overview', 'payload', 'adaptation', 'assembly', 'eclipse'];
+      let currentActive = 'overview';
+
+      // Check if window is scrolled near the bottom
+      const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
+      if (isAtBottom) {
+        setActiveTab('eclipse');
+        return;
+      }
+
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          // The visual viewport is sticky at the top with a height of 250px.
+          // Trigger when the element gets near the bottom half of the screen.
+          if (rect.top <= window.innerHeight / 2 + 50) {
+            currentActive = id;
+          }
+        }
+      }
+      setActiveTab(currentActive);
+    };
+
+    window.addEventListener('scroll', handleWindowScroll);
+    return () => window.removeEventListener('scroll', handleWindowScroll);
+  }, []);
+
+  // Prevent wheel and touch scroll propagation on the visual viewport area on mobile
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const preventScroll = (e) => {
+      if (window.innerWidth <= 900) {
+        e.preventDefault();
+      }
+    };
+
+    const el = visualContainerRef.current;
+    if (el) {
+      el.addEventListener('wheel', preventScroll, { passive: false });
+      el.addEventListener('touchmove', preventScroll, { passive: false });
+    }
+
+    return () => {
+      if (el) {
+        el.removeEventListener('wheel', preventScroll);
+        el.removeEventListener('touchmove', preventScroll);
+      }
+    };
   }, []);
 
   // Sync scroll positioning to activeTab
@@ -366,9 +426,17 @@ export default function NanobotPillDetails() {
           font-weight: 400;
         }
         @media (max-width: 900px) {
+          .nanobot-pill-content-container {
+            padding-top: 0 !important;
+            height: 100% !important;
+            overflow: hidden !important;
+            gap: 10px !important;
+          }
           .research-grid-deck {
             display: flex !important;
             flex-direction: column !important;
+            flex: 1 !important;
+            min-height: 0 !important;
             height: 100% !important;
             overflow: hidden !important;
             gap: 12px !important;
@@ -376,11 +444,19 @@ export default function NanobotPillDetails() {
           .research-grid-deck > div:nth-child(1) {
             order: 2 !important;
             flex: 1 !important;
+            min-height: 0 !important;
             overflow-y: auto !important;
             padding-bottom: 24px !important;
           }
           .research-grid-deck > div:nth-child(2) {
             order: 1 !important;
+            position: sticky !important;
+            top: 0px !important;
+            z-index: 1000 !important;
+            background: #060914 !important;
+            padding-top: 12px !important;
+            padding-bottom: 12px !important;
+            margin-top: -12px !important;
             height: auto !important;
             min-height: unset !important;
             flex-shrink: 0 !important;
@@ -632,7 +708,7 @@ export default function NanobotPillDetails() {
           </div>
 
           {/* RIGHT: Telemetry Dashboard & Layered Composites */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '15px', height: '100%', minHeight: 0 }}>
+          <div ref={visualContainerRef} style={{ display: 'flex', flexDirection: 'column', gap: '15px', height: '100%', minHeight: 0 }}>
             
             {/* Viewport Box */}
             <div 

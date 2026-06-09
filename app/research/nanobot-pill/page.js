@@ -426,11 +426,17 @@ export default function NanobotPillDetails() {
           font-weight: 400;
         }
         @media (max-width: 900px) {
+          html, body {
+            overflow: hidden !important;
+            height: 100dvh !important;
+            height: 100vh !important;
+          }
           .nanobot-pill-content-container {
             padding-top: 0 !important;
-            height: calc(100vh - 140px) !important;
+            height: calc(100vh - 138px) !important;
+            height: calc(100dvh - 138px) !important;
             overflow: hidden !important;
-            gap: 10px !important;
+            gap: 8px !important;
             display: flex !important;
             flex-direction: column !important;
           }
@@ -441,7 +447,7 @@ export default function NanobotPillDetails() {
             min-height: 0 !important;
             height: 100% !important;
             overflow: hidden !important;
-            gap: 12px !important;
+            gap: 8px !important;
           }
           .research-grid-deck > div:nth-child(1) {
             order: 2 !important;
@@ -449,6 +455,20 @@ export default function NanobotPillDetails() {
             min-height: 0 !important;
             overflow-y: auto !important;
             padding-bottom: 24px !important;
+          }
+          /* Compact card styling on mobile */
+          .research-grid-deck > div:nth-child(1) > div.bubbly-panel {
+            min-height: unset !important;
+            padding: 14px 18px !important;
+          }
+          .research-grid-deck > div:nth-child(1) > div.bubbly-panel h2 {
+            font-size: 1.35rem !important;
+            margin-bottom: 8px !important;
+          }
+          .research-grid-deck > div:nth-child(1) > div.bubbly-panel p {
+            font-size: 0.75rem !important;
+            line-height: 1.4 !important;
+            margin-bottom: 10px !important;
           }
           .research-grid-deck > div:nth-child(2) {
             order: 1 !important;
@@ -466,9 +486,10 @@ export default function NanobotPillDetails() {
             min-height: unset !important;
             flex-shrink: 0 !important;
           }
+          /* Slim down visual viewport height on mobile */
           .research-grid-deck > div:nth-child(2) > div:first-child {
-            min-height: 250px !important;
-            height: 250px !important;
+            min-height: 180px !important;
+            height: 180px !important;
             flex: unset !important;
           }
           .biometrics-table-desktop {
@@ -482,8 +503,8 @@ export default function NanobotPillDetails() {
             font-size: 0.58rem;
             color: var(--text-secondary);
             border-top: 1px dashed rgba(255,255,255,0.08);
-            padding-top: 8px;
-            margin-top: 8px;
+            padding-top: 6px;
+            margin-top: 6px;
           }
         }
         @media (min-width: 901px) {
@@ -508,7 +529,7 @@ export default function NanobotPillDetails() {
       >
         
         {/* Back navigation & Header Area */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
           <Link 
             href="/research" 
             onClick={() => {
@@ -527,7 +548,7 @@ export default function NanobotPillDetails() {
         </div>
 
         {/* Tab navigation - Quick Scroll Jumps */}
-        <div className="bubbly-panel" style={{ padding: '8px 12px', background: 'rgba(6, 9, 20, 0.45)' }}>
+        <div className="bubbly-panel" style={{ padding: '8px 12px', background: 'rgba(6, 9, 20, 0.45)', flexShrink: 0 }}>
           <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
             {tabs.map(tab => (
               <button

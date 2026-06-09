@@ -365,6 +365,57 @@ export default function NanobotPillDetails() {
           line-height: 1.6;
           font-weight: 400;
         }
+        @media (max-width: 900px) {
+          .research-grid-deck {
+            display: flex !important;
+            flex-direction: column !important;
+            height: 100% !important;
+            overflow: hidden !important;
+            gap: 12px !important;
+          }
+          .research-grid-deck > div:nth-child(1) {
+            order: 2 !important;
+            flex: 1 !important;
+            overflow-y: auto !important;
+            padding-bottom: 24px !important;
+          }
+          .research-grid-deck > div:nth-child(2) {
+            order: 1 !important;
+            height: auto !important;
+            min-height: unset !important;
+            flex-shrink: 0 !important;
+          }
+          .research-grid-deck > div:nth-child(2) > div:first-child {
+            min-height: 250px !important;
+            height: 250px !important;
+            flex: unset !important;
+          }
+          .biometrics-table-desktop {
+            display: none !important;
+          }
+          .biometrics-summary-mobile {
+            display: flex !important;
+            justify-content: space-between;
+            align-items: center;
+            font-family: monospace;
+            font-size: 0.58rem;
+            color: var(--text-secondary);
+            border-top: 1px dashed rgba(255,255,255,0.08);
+            padding-top: 8px;
+            margin-top: 8px;
+          }
+        }
+        @media (min-width: 901px) {
+          .biometrics-summary-mobile {
+            display: none !important;
+          }
+        }
+        @media (max-width: 600px) {
+          .bubbly-panel button {
+            padding: 4px 6px !important;
+            font-size: 0.58rem !important;
+          }
+        }
       `}} />
 
       {/* Immersive Sweeper Overlay */}
@@ -953,7 +1004,7 @@ export default function NanobotPillDetails() {
               </div>
 
               {/* Status Diagnostic biophysics specs */}
-              <div style={{ marginTop: '10px', borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: '10px', display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.6rem', fontFamily: 'monospace' }}>
+              <div className="biometrics-table-desktop" style={{ marginTop: '10px', borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: '10px', display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.6rem', fontFamily: 'monospace' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>GENETIC AI CORE STATE:</span>
                   <span style={{ color: activeTab === 'eclipse' ? '#00ff88' : 'var(--color-accent)', fontWeight: 'bold' }}>
@@ -983,6 +1034,16 @@ export default function NanobotPillDetails() {
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>NEURAL SYSTEM LATENCY:</span>
                   <span style={{ color: '#00ff88' }}>{stats.latency}</span>
+                </div>
+              </div>
+
+              {/* Mobile Status Diagnostic summary bar */}
+              <div className="biometrics-summary-mobile">
+                <div style={{ display: 'flex', gap: '8px', width: '100%', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                  <span>🧬 SYNC: <span style={{ color: '#00ff88' }}>{activeTab === 'eclipse' ? '99.8%' : stats.synapticMapping}</span></span>
+                  <span>🌡️ HEAT: <span style={{ color: '#ffffff' }}>{activeTab === 'overview' || activeTab === 'payload' ? 'PENDING' : '18.5°C'}</span></span>
+                  <span>🛰️ GRAV: <span style={{ color: '#00ff88' }}>{activeTab === 'overview' || activeTab === 'payload' ? '1.00g' : '0.38g'}</span></span>
+                  <span>📶 LAT: <span style={{ color: '#00ff88' }}>{stats.latency}</span></span>
                 </div>
               </div>
             </div>

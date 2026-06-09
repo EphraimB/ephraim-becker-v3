@@ -428,9 +428,11 @@ export default function NanobotPillDetails() {
         @media (max-width: 900px) {
           .nanobot-pill-content-container {
             padding-top: 0 !important;
-            height: 100% !important;
+            height: calc(100vh - 140px) !important;
             overflow: hidden !important;
             gap: 10px !important;
+            display: flex !important;
+            flex-direction: column !important;
           }
           .research-grid-deck {
             display: flex !important;
@@ -450,13 +452,16 @@ export default function NanobotPillDetails() {
           }
           .research-grid-deck > div:nth-child(2) {
             order: 1 !important;
-            position: sticky !important;
-            top: 0px !important;
-            z-index: 1000 !important;
-            background: #060914 !important;
-            padding-top: 12px !important;
-            padding-bottom: 12px !important;
-            margin-top: -12px !important;
+            position: relative !important;
+            top: auto !important;
+            left: auto !important;
+            right: auto !important;
+            width: auto !important;
+            z-index: auto !important;
+            background: transparent !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            box-shadow: none !important;
             height: auto !important;
             min-height: unset !important;
             flex-shrink: 0 !important;

@@ -3,6 +3,15 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
+const TELEPATHIC_MESSAGES = [
+  { sender: 'Ephraim', text: 'Hey, are we still meeting at the Neurodiversity Lawn campfire tonight?', top: '22%', right: '8%' },
+  { sender: 'Vance', text: 'Yeah! Just wrapping up my calibration tests in the Research Lab.', top: '34%', left: '8%' },
+  { sender: 'Ephraim', text: 'Great, the weather grid says the Ares Park dome is at a perfect 22°C.', top: '48%', right: '8%' },
+  { sender: 'Vance', text: 'Awesome. I\'ll take the pressurized bike lane. Should be there in 2 minutes.', top: '60%', left: '8%' },
+  { sender: 'Ephraim', text: 'Sounds good. Sending the path telemetry to your Retina BCI now.', top: '74%', right: '8%' },
+  { sender: 'Vance', text: 'Sync received. Telepathic link secure. See you there!', top: '82%', left: '8%' }
+];
+
 export default function NanobotPillDetails() {
   const [transitState, setTransitState] = useState('slide-active');
   const [activeTab, setActiveTab] = useState('overview');
@@ -17,10 +26,23 @@ export default function NanobotPillDetails() {
   const [activeScenario, setActiveScenario] = useState('productivity');
   const [isPlayingMedia, setIsPlayingMedia] = useState(true);
   const [timeString, setTimeString] = useState('');
+  const [telepathicMsgIndex, setTelepathicMsgIndex] = useState(0);
 
   const scrollRef = useRef(null);
   const viewportRef = useRef(null);
   const visualContainerRef = useRef(null);
+
+  // Cycle telepathic messages when activeScenario is 'telepathy'
+  useEffect(() => {
+    if (activeScenario !== 'telepathy') {
+      setTelepathicMsgIndex(0);
+      return;
+    }
+    const timer = setInterval(() => {
+      setTelepathicMsgIndex((prev) => (prev + 1) % TELEPATHIC_MESSAGES.length);
+    }, 3500);
+    return () => clearInterval(timer);
+  }, [activeScenario]);
 
   // Live ticking clock for spatial anchors
   useEffect(() => {
@@ -342,6 +364,12 @@ export default function NanobotPillDetails() {
       icon: '🏃',
       title: 'Active Traverse',
       description: 'Navigate the Martian terrain. Project navigation guides on the floor and a biometric wristwatch onto your wrist.'
+    },
+    {
+      id: 'telepathy',
+      icon: '🧠',
+      title: 'Telepathic Link',
+      description: 'Establish direct neural communication with other citizens. Exchange thoughts and coordinate events seamlessly.'
     }
   ];
 
@@ -900,6 +928,8 @@ export default function NanobotPillDetails() {
                             ? '/assets/images/bci/bci_productivity.png' 
                             : activeScenario === 'entertainment' 
                             ? '/assets/images/bci/bci_entertainment.png' 
+                            : activeScenario === 'telepathy'
+                            ? '/assets/images/bci/bci_telepathy.png'
                             : '/assets/images/bci/bci_traverse.png'
                         } 
                         alt={`Martian BCI OS - ${activeScenario}`} 
@@ -907,7 +937,108 @@ export default function NanobotPillDetails() {
                       />
                     </div>
 
+                    {/* Telepathic communication overlay stream */}
+                    {activeScenario === 'telepathy' && (
+                      <>
+                        {/* Telepathic sync indicator at the top center of the viewport */}
+                        <div 
+                          style={{
+                            position: 'absolute',
+                            top: '12px',
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            background: 'rgba(2, 6, 16, 0.6)',
+                            border: '1px solid rgba(0, 240, 255, 0.2)',
+                            borderRadius: '20px',
+                            padding: '4px 12px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '6px',
+                            zIndex: 5,
+                            fontFamily: 'monospace, var(--font-tech)',
+                            fontSize: '0.52rem',
+                            color: '#00f0ff',
+                            textTransform: 'uppercase',
+                            letterSpacing: '1px',
+                            backdropFilter: 'blur(4px)',
+                            WebkitBackdropFilter: 'blur(4px)'
+                          }}
+                        >
+                          <span className="active-pulse-dot" style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00f0ff', boxShadow: '0 0 6px #00f0ff' }}></span>
+                          <span>TELEPATHIC LINK SECURE // SYNC 99.8%</span>
+                        </div>
 
+                        {/* Dynamic floating thought bubbles */}
+                        {(() => {
+                          const activeMsgs = [];
+                          if (telepathicMsgIndex >= 0) {
+                            activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex], isCurrent: true });
+                          }
+                          if (telepathicMsgIndex > 0) {
+                            activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex - 1], isCurrent: false });
+                          }
+
+                          return activeMsgs.map((msg, idx) => {
+                            const isSelf = msg.sender === 'Ephraim';
+                            const opacity = msg.isCurrent ? 1 : 0.45;
+                            const scale = msg.isCurrent ? 'scale(1)' : 'scale(0.92)';
+                            
+                            return (
+                              <div 
+                                key={`${telepathicMsgIndex}-${idx}`} 
+                                style={{ 
+                                  position: 'absolute',
+                                  top: msg.top,
+                                  ...(isSelf ? { right: msg.right } : { left: msg.left }),
+                                  display: 'flex', 
+                                  flexDirection: 'column',
+                                  alignItems: isSelf ? 'flex-end' : 'flex-start',
+                                  animation: 'snap-scale 0.25s ease-out forwards',
+                                  opacity: opacity,
+                                  transform: scale,
+                                  transition: 'opacity 0.3s ease, transform 0.3s ease',
+                                  zIndex: msg.isCurrent ? 12 : 10,
+                                  maxWidth: '65%'
+                                }}
+                              >
+                                {/* Sender tag */}
+                                <span 
+                                  style={{ 
+                                    fontSize: '0.45rem', 
+                                    color: isSelf ? 'var(--color-accent)' : '#00ff88', 
+                                    fontFamily: 'monospace', 
+                                    marginBottom: '2px', 
+                                    textTransform: 'uppercase',
+                                    textShadow: '0 1px 3px rgba(0,0,0,0.8)'
+                                  }}
+                                >
+                                  {isSelf ? '[MY_RETINA // SELF]' : `[PEER // ${msg.sender.toUpperCase()}]`}
+                                </span>
+                                {/* Message bubble */}
+                                <div 
+                                  style={{
+                                    background: isSelf ? 'rgba(255, 87, 34, 0.24)' : 'rgba(0, 255, 136, 0.18)',
+                                    border: `1px solid ${isSelf ? 'rgba(255, 87, 34, 0.45)' : 'rgba(0, 255, 136, 0.4)'}`,
+                                    borderRadius: '12px',
+                                    padding: '8px 12px',
+                                    fontSize: '0.62rem',
+                                    fontFamily: 'monospace',
+                                    color: '#ffffff',
+                                    lineHeight: '1.35',
+                                    textAlign: 'left',
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                                    backdropFilter: 'blur(6px)',
+                                    WebkitBackdropFilter: 'blur(6px)'
+                                  }}
+                                >
+                                  {msg.text}
+                                </div>
+                              </div>
+                            );
+                          });
+                        })()}
+                      </>
+                    )}
 
                   </div>
                 )}

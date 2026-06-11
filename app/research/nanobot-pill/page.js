@@ -4,11 +4,11 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 const TELEPATHIC_MESSAGES = [
-  { sender: 'Ephraim', text: 'Hey Vance! Are you free for some flag football practice on the dome turf this weekend?', top: '22%', right: '8%' },
-  { sender: 'Vance', text: 'Yeah! I\'d love to. How about Saturday afternoon? Say, around 15:00?', top: '34%', left: '8%' },
-  { sender: 'Ephraim', text: 'Saturday at 15:00 works perfectly for me. Let\'s do it.', top: '48%', right: '8%' },
-  { sender: 'Vance', text: 'Awesome. Telepathic link handshake verified. Syncing schedule...', top: '60%', left: '8%' },
-  { sender: 'Ephraim', text: 'Retina BCI detected agreement. Practice scheduled in calendars.', top: '74%', right: '8%' },
+  { sender: 'Ephraim', text: 'Hey Vance! Are you free for some flag football practice on the dome turf this weekend?', top: '15%', right: '8%' },
+  { sender: 'Vance', text: 'Yeah! I\'d love to. How about Saturday afternoon? Say, around 15:00?', top: '27%', left: '8%' },
+  { sender: 'Ephraim', text: 'Saturday at 15:00 works perfectly for me. Let\'s do it.', top: '39%', right: '8%' },
+  { sender: 'RETINA_OS', text: 'Agreement detected. Syncing schedules and dome reservation logs...', top: '51%' },
+  { sender: 'RETINA_OS', text: 'Calendar event created. Practice successfully scheduled in both timelines.', top: '63%', hasCalendarCard: true },
   { sender: 'Vance', text: 'Nice! Got the calendar block. See you on the turf Saturday!', top: '82%', left: '8%' }
 ];
 
@@ -400,6 +400,10 @@ export default function NanobotPillDetails() {
         @keyframes snap-scale {
           0% { transform: scale(0.7); opacity: 0; filter: blur(4px); }
           100% { transform: scale(1); opacity: 1; filter: blur(0); }
+        }
+        @keyframes system-snap-scale {
+          0% { transform: translateX(-50%) scale(0.7); opacity: 0; filter: blur(4px); }
+          100% { transform: translateX(-50%) scale(1); opacity: 1; filter: blur(0); }
         }
         @keyframes wave-pulse {
           0%, 100% { height: 10px; }
@@ -980,6 +984,7 @@ export default function NanobotPillDetails() {
 
                           return activeMsgs.map((msg, idx) => {
                             const isSelf = msg.sender === 'Ephraim';
+                            const isSystem = msg.sender === 'RETINA_OS';
                             const opacity = msg.isCurrent ? 1 : 0.45;
                             const scale = msg.isCurrent ? 'scale(1)' : 'scale(0.92)';
                             
@@ -989,49 +994,104 @@ export default function NanobotPillDetails() {
                                 style={{ 
                                   position: 'absolute',
                                   top: msg.top,
-                                  ...(isSelf ? { right: msg.right } : { left: msg.left }),
+                                  ...(isSystem 
+                                    ? { left: '50%', transform: `translateX(-50%) ${scale}` } 
+                                    : (isSelf ? { right: msg.right, transform: scale } : { left: msg.left, transform: scale })
+                                  ),
                                   display: 'flex', 
                                   flexDirection: 'column',
-                                  alignItems: isSelf ? 'flex-end' : 'flex-start',
-                                  animation: 'snap-scale 0.25s ease-out forwards',
+                                  alignItems: isSystem ? 'center' : (isSelf ? 'flex-end' : 'flex-start'),
+                                  animation: isSystem 
+                                    ? 'system-snap-scale 0.25s ease-out forwards' 
+                                    : 'snap-scale 0.25s ease-out forwards',
                                   opacity: opacity,
-                                  transform: scale,
                                   transition: 'opacity 0.3s ease, transform 0.3s ease',
                                   zIndex: msg.isCurrent ? 12 : 10,
-                                  maxWidth: '65%'
+                                  maxWidth: isSystem ? '80%' : '65%'
                                 }}
                               >
                                 {/* Sender tag */}
                                 <span 
                                   style={{ 
                                     fontSize: '0.45rem', 
-                                    color: isSelf ? 'var(--color-accent)' : '#00ff88', 
+                                    color: isSystem ? '#00f0ff' : (isSelf ? 'var(--color-accent)' : '#00ff88'), 
                                     fontFamily: 'monospace', 
                                     marginBottom: '2px', 
                                     textTransform: 'uppercase',
                                     textShadow: '0 1px 3px rgba(0,0,0,0.8)'
                                   }}
                                 >
-                                  {isSelf ? '[MY_RETINA // SELF]' : `[PEER // ${msg.sender.toUpperCase()}]`}
+                                  {isSystem ? '[SYSTEM // RETINA OS]' : (isSelf ? '[MY_RETINA // SELF]' : `[PEER // ${msg.sender.toUpperCase()}]`)}
                                 </span>
                                 {/* Message bubble */}
                                 <div 
                                   style={{
-                                    background: isSelf ? 'rgba(255, 87, 34, 0.24)' : 'rgba(0, 255, 136, 0.18)',
-                                    border: `1px solid ${isSelf ? 'rgba(255, 87, 34, 0.45)' : 'rgba(0, 255, 136, 0.4)'}`,
+                                    background: isSystem 
+                                      ? 'rgba(0, 240, 255, 0.14)' 
+                                      : (isSelf ? 'rgba(255, 87, 34, 0.24)' : 'rgba(0, 255, 136, 0.18)'),
+                                    border: `1px solid ${isSystem 
+                                      ? 'rgba(0, 240, 255, 0.45)' 
+                                      : (isSelf ? 'rgba(255, 87, 34, 0.45)' : 'rgba(0, 255, 136, 0.4)')}`,
                                     borderRadius: '12px',
                                     padding: '8px 12px',
                                     fontSize: '0.62rem',
                                     fontFamily: 'monospace',
                                     color: '#ffffff',
                                     lineHeight: '1.35',
-                                    textAlign: 'left',
+                                    textAlign: isSystem ? 'center' : 'left',
                                     boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
                                     backdropFilter: 'blur(6px)',
-                                    WebkitBackdropFilter: 'blur(6px)'
+                                    WebkitBackdropFilter: 'blur(6px)',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '6px'
                                   }}
                                 >
-                                  {msg.text}
+                                  <div>{msg.text}</div>
+
+                                  {msg.hasCalendarCard && (
+                                    <div 
+                                      style={{
+                                        marginTop: '4px',
+                                        background: 'rgba(0, 0, 0, 0.4)',
+                                        border: '1px solid rgba(0, 240, 255, 0.25)',
+                                        borderRadius: '8px',
+                                        padding: '8px 10px',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        gap: '4px',
+                                        textAlign: 'left',
+                                        width: '100%',
+                                        boxSizing: 'border-box'
+                                      }}
+                                    >
+                                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', borderBottom: '1px solid rgba(0, 240, 255, 0.15)', paddingBottom: '3px', marginBottom: '2px' }}>
+                                        <span style={{ fontSize: '0.65rem' }}>📅</span>
+                                        <span style={{ fontSize: '0.52rem', color: '#ffffff', fontWeight: 'bold' }}>EVENT: FLAG FOOTBALL PRACTICE</span>
+                                      </div>
+                                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', fontSize: '0.52rem', color: 'rgba(255,255,255,0.8)' }}>
+                                        <div>🕒 <span style={{ color: '#00f0ff' }}>TIME:</span> Saturday, 15:00 - 16:30</div>
+                                        <div>📍 <span style={{ color: '#00f0ff' }}>ZONE:</span> Ares Dome Lawn (Grid 4)</div>
+                                        <div>👥 <span style={{ color: '#00f0ff' }}>PEERS:</span> Ephraim Becker, Vance K.</div>
+                                      </div>
+                                      <div 
+                                        style={{ 
+                                          marginTop: '4px', 
+                                          background: 'rgba(0, 255, 136, 0.08)', 
+                                          border: '1px solid rgba(0, 255, 136, 0.3)', 
+                                          borderRadius: '3px', 
+                                          padding: '2px 4px', 
+                                          display: 'flex', 
+                                          alignItems: 'center', 
+                                          justifyContent: 'center', 
+                                          gap: '4px' 
+                                        }}
+                                      >
+                                        <span className="active-pulse-dot" style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 4px #00ff88' }}></span>
+                                        <span style={{ fontSize: '0.45rem', color: '#00ff88', fontWeight: 'bold' }}>✓ EVENT SYNCHRONIZED</span>
+                                      </div>
+                                    </div>
+                                  )}
                                 </div>
                               </div>
                             );

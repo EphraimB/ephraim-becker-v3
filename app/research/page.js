@@ -27,6 +27,22 @@ export default function ResearchLab() {
 
   return (
     <div className="citizen-card-shell research-shell">
+      {/* Local high-tech hover and animation styles */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        .showcase-card:hover {
+          border-color: var(--color-accent) !important;
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 
+                      inset 0 1px 1px rgba(255, 255, 255, 0.1),
+                      0 0 40px rgba(var(--color-accent-rgb), 0.25) !important;
+        }
+        .showcase-card:hover .hud-btn {
+          background: rgba(var(--color-accent-rgb), 0.16) !important;
+          border-color: var(--color-accent) !important;
+          box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.35) !important;
+          color: var(--color-accent) !important;
+        }
+      `}} />
+
       {/* Immersive Transit Sweeper Overlay */}
       <div className="walking-motion-overlay research-walking-overlay"></div>
 
@@ -46,7 +62,7 @@ export default function ResearchLab() {
         </div>
 
         {/* Featured Project Showcase: BCI Nanobot Pill */}
-        <Link href="/research/nanobot-pill" className="bubbly-panel" style={{ padding: '30px', position: 'relative', overflow: 'hidden', display: 'block', cursor: 'pointer', textDecoration: 'none' }}>
+        <Link href="/research/nanobot-pill" className="bubbly-panel showcase-card" style={{ padding: '30px', position: 'relative', overflow: 'hidden', display: 'block', cursor: 'pointer', textDecoration: 'none' }}>
           
           {/* Subtle grid pattern background to enhance premium feeling */}
           <div style={{ position: 'absolute', inset: 0, opacity: 0.03, pointerEvents: 'none', background: 'radial-gradient(rgba(255,255,255,0.15) 1px, transparent 1px)', backgroundSize: '15px 15px' }}></div>
@@ -83,6 +99,13 @@ export default function ResearchLab() {
                   <span style={{ fontSize: '0.58rem', color: 'var(--text-secondary)', display: 'block', textTransform: 'uppercase' }}>PROJECT STATUS</span>
                   <span style={{ fontSize: '0.85rem', color: '#00ff88', fontFamily: 'var(--font-tech)', fontWeight: 600 }}>✓ UNDER PROPOSAL</span>
                 </div>
+              </div>
+
+              {/* High-tech Action CTA Button */}
+              <div style={{ marginTop: '25px' }}>
+                <span className="hud-btn" style={{ fontSize: '0.7rem', textTransform: 'uppercase', letterSpacing: '1px' }}>
+                  [ ENTER SPECULATION SEQUENCE ➔ ]
+                </span>
               </div>
             </div>
 

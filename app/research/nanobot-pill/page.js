@@ -11,8 +11,6 @@ export default function NanobotPillDetails() {
   const [hudFilterActive, setHudFilterActive] = useState(false);
   const [thoughtSyncActive, setThoughtSyncActive] = useState(false);
   const [typedText, setTypedText] = useState('');
-  const [hoveredApp, setHoveredApp] = useState(null);
-  const [selectedApp, setSelectedApp] = useState(null);
   const [hoveredWaypoint, setHoveredWaypoint] = useState(null);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
   const [cursorPos, setCursorPos] = useState({ x: 180, y: 120 });
@@ -354,12 +352,6 @@ export default function NanobotPillDetails() {
     }
   ];
 
-  const appList = [
-    { id: 'map', label: 'Colony Map', icon: '🗺️' },
-    { id: 'comms', label: 'Quantum Net', icon: '📡' },
-    { id: 'diag', label: 'Synaptic Health', icon: '🧠' },
-    { id: 'logs', label: 'OS Logs', icon: '📜' }
-  ];
 
   const waypoints = [
     { id: 'dome', name: 'RESEARCH LAB DOME', x: '75%', y: '35%', desc: 'Destination // Dist: 140m // Time: 2 mins // Oxygen Sync: 98.6%' },
@@ -486,11 +478,34 @@ export default function NanobotPillDetails() {
             min-height: unset !important;
             flex-shrink: 0 !important;
           }
-          /* Slim down visual viewport height on mobile */
+          /* Set exact 16:9 aspect ratio, scaled to 50% width and centered on mobile */
           .research-grid-deck > div:nth-child(2) > div:first-child {
-            min-height: 180px !important;
-            height: 180px !important;
+            aspect-ratio: 16 / 9 !important;
+            width: 50% !important;
+            margin: 0 auto !important;
+            height: auto !important;
+            min-height: unset !important;
+            padding: 0 !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
             flex: unset !important;
+          }
+          .research-grid-deck > div:nth-child(2) > div:first-child > span.net-label {
+            display: none !important;
+          }
+          /* Override absolute position boundaries and image object-fit on mobile to show the whole image */
+          .research-grid-deck > div:nth-child(2) > div:first-child > div:nth-child(2) > div > div:first-child {
+            top: 0 !important;
+            left: 0 !important;
+            right: 0 !important;
+            bottom: 0 !important;
+            transform: none !important;
+          }
+          .research-grid-deck > div:nth-child(2) > div:first-child > div:nth-child(2) img {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover !important;
           }
           .biometrics-table-desktop {
             display: none !important;
@@ -502,9 +517,11 @@ export default function NanobotPillDetails() {
             font-family: monospace;
             font-size: 0.58rem;
             color: var(--text-secondary);
-            border-top: 1px dashed rgba(255,255,255,0.08);
-            padding-top: 6px;
-            margin-top: 6px;
+            border: 1px solid rgba(255,255,255,0.08) !important;
+            border-radius: 12px !important;
+            background: rgba(6, 9, 20, 0.45) !important;
+            padding: 8px 12px !important;
+            margin: 0 !important;
           }
         }
         @media (min-width: 901px) {
@@ -977,88 +994,7 @@ export default function NanobotPillDetails() {
                       </div>
                     )}
 
-                    {/* Spacer to align dock to bottom */}
-                    <div style={{ flex: 1 }}></div>
 
-                    {/* BOTTOM: App Dock simulating gaze launcher */}
-                    <div 
-                      style={{ 
-                        zIndex: 4, 
-                        display: 'flex', 
-                        flexDirection: 'column', 
-                        alignItems: 'center', 
-                        gap: '6px',
-                        transform: `translate3d(${parallax.x * 1.2}px, ${parallax.y * 1.2}px, 0)`,
-                        transition: 'transform 0.1s ease-out'
-                      }}
-                    >
-                      <div 
-                        style={{ 
-                          display: 'flex', 
-                          gap: '8px', 
-                          background: 'rgba(6, 9, 20, 0.72)', 
-                          border: '1px solid rgba(255,255,255,0.08)', 
-                          padding: '6px 12px', 
-                          borderRadius: '20px', 
-                          backdropFilter: 'blur(12px)',
-                          boxShadow: '0 8px 25px rgba(0,0,0,0.5)'
-                        }}
-                      >
-                        {appList.map(app => (
-                          <div 
-                            key={app.id} 
-                            style={{ position: 'relative' }}
-                            onMouseEnter={() => setHoveredApp(app.id)}
-                            onMouseLeave={() => setHoveredApp(null)}
-                            onClick={() => setSelectedApp(selectedApp === app.id ? null : app.id)}
-                          >
-                            <button 
-                              style={{ 
-                                width: '28px', 
-                                height: '28px', 
-                                borderRadius: '50%', 
-                                border: '1px solid rgba(255,255,255,0.1)', 
-                                background: selectedApp === app.id ? 'rgba(var(--color-accent-rgb), 0.25)' : hoveredApp === app.id ? 'rgba(255,255,255,0.08)' : 'transparent',
-                                fontSize: '0.9rem',
-                                cursor: 'none',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                transition: 'all 0.25s ease'
-                              }}
-                            >
-                              {app.icon}
-                            </button>
-
-                            {hoveredApp === app.id && (
-                              <div 
-                                className="gaze-ring-overlay" 
-                                style={{ 
-                                  width: '40px', 
-                                  height: '40px', 
-                                  left: '-7px', 
-                                  top: '-7px' 
-                                }}
-                              ></div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Info label display */}
-                      <div style={{ height: '10px', display: 'flex', justifyContent: 'center' }}>
-                        {hoveredApp && (
-                          <span style={{ fontSize: '0.5rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', letterSpacing: '0.5px' }}>
-                            GAZE FOCUS: {appList.find(a => a.id === hoveredApp)?.label}
-                          </span>
-                        )}
-                        {!hoveredApp && selectedApp && (
-                          <span style={{ fontSize: '0.5rem', color: '#00ff88', fontFamily: 'monospace' }}>
-                            [ACTIVE APP]: {appList.find(a => a.id === selectedApp)?.label}
-                          </span>
-                        )}
-                      </div>
-                    </div>
 
                     {/* Simulated Eye-Gaze Pointer Dot */}
                     <div 
@@ -1139,14 +1075,15 @@ export default function NanobotPillDetails() {
                 </div>
               </div>
 
-              {/* Mobile Status Diagnostic summary bar */}
-              <div className="biometrics-summary-mobile">
-                <div style={{ display: 'flex', gap: '8px', width: '100%', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                  <span>🧬 SYNC: <span style={{ color: '#00ff88' }}>{activeTab === 'eclipse' ? '99.8%' : stats.synapticMapping}</span></span>
-                  <span>🌡️ HEAT: <span style={{ color: '#ffffff' }}>{activeTab === 'overview' || activeTab === 'payload' ? 'PENDING' : '18.5°C'}</span></span>
-                  <span>🛰️ GRAV: <span style={{ color: '#00ff88' }}>{activeTab === 'overview' || activeTab === 'payload' ? '1.00g' : '0.38g'}</span></span>
-                  <span>📶 LAT: <span style={{ color: '#00ff88' }}>{stats.latency}</span></span>
-                </div>
+            </div>
+
+            {/* Mobile Status Diagnostic summary bar */}
+            <div className="biometrics-summary-mobile bubbly-panel">
+              <div style={{ display: 'flex', gap: '8px', width: '100%', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                <span>🧬 SYNC: <span style={{ color: '#00ff88' }}>{activeTab === 'eclipse' ? '99.8%' : stats.synapticMapping}</span></span>
+                <span>🌡️ HEAT: <span style={{ color: '#ffffff' }}>{activeTab === 'overview' || activeTab === 'payload' ? 'PENDING' : '18.5°C'}</span></span>
+                <span>🛰️ GRAV: <span style={{ color: '#00ff88' }}>{activeTab === 'overview' || activeTab === 'payload' ? '1.00g' : '0.38g'}</span></span>
+                <span>📶 LAT: <span style={{ color: '#00ff88' }}>{stats.latency}</span></span>
               </div>
             </div>
 

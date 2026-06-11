@@ -19,6 +19,16 @@ export default function ClientLayoutWrapper({ children }) {
     currentTheme = 'metropolis';
     hudSectorName = 'Portfolio Archives';
     currentLocationName = 'PORTFOLIO';
+  } else if (pathname === '/research' || pathname === '/research/nanobot-pill') {
+    bgImage = '/assets/images/backgrounds/research-lab.png';
+    currentTheme = 'quantum';
+    if (pathname === '/research/nanobot-pill') {
+      hudSectorName = 'Research Lab - BCI Pill';
+      currentLocationName = 'RESEARCH LAB - BCI PILL';
+    } else {
+      hudSectorName = 'Research Lab';
+      currentLocationName = 'RESEARCH LAB';
+    }
   } else if (pathname === '/park' || pathname.startsWith('/neurodiversity')) {
     currentTheme = 'biosphere';
     if (pathname === '/park') {
@@ -143,7 +153,7 @@ export default function ClientLayoutWrapper({ children }) {
         
         <div className="workspace-deck">
           {/* Natural standing roomscale profile figure */}
-          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/neurodiversity' && (
+          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/neurodiversity' && pathname !== '/research' && pathname !== '/research/nanobot-pill' && (
             <div className={`roomscale-natural-body page-${currentTheme}`}>
               <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
             </div>

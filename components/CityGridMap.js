@@ -5,7 +5,9 @@ import { useRouter, usePathname } from 'next/navigation';
 
 const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
-  '/portfolio': { x: -220, y: 0, name: 'PORTFOLIO ARCHIVES' },
+  '/portfolio': { x: -449, y: -30, name: 'PORTFOLIO ARCHIVES' },
+  '/research': { x: -449, y: 30, name: 'RESEARCH LAB' },
+  '/research/nanobot-pill': { x: -449, y: 30, name: 'RESEARCH LAB - BCI PILL' },
   '/park': { x: 150, y: -100, name: 'ARES CITY PARK' },
   '/neurodiversity': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - WELCOME PLAZA' },
   '/neurodiversity/comms-grove': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - DIALOGUE BRIDGES' },
@@ -13,6 +15,20 @@ const COORDS = {
   '/neurodiversity/lexicon-pavilion': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - LEXICON PAVILION' },
   '/neurodiversity/meetup-campfire': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - COMMUNITY HEARTH' },
   'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }
+};
+
+// Realistic walking speed and distance constants
+// Average human walking speed is typically estimated around 1.35 m/s to 1.4 m/s (4.8 - 5.0 km/h)
+const WALK_SPEED = 1.35; // meters per second walking speed
+const WALK_DISTANCE = 50; // meters (indoor hallway walk)
+
+// Formats meters into kilometers with decimal precision when it reaches or exceeds 1km (1000m)
+const formatDistance = (meters) => {
+  if (meters >= 1000) {
+    const km = meters / 1000;
+    return `${parseFloat(km.toFixed(1))}km`;
+  }
+  return `${meters}m`;
 };
 
 export default function CityGridMap({ isDrawer = false }) {
@@ -32,8 +48,8 @@ export default function CityGridMap({ isDrawer = false }) {
     }
   };
 
-  // 2. Real-Time Spatial Walking Distance & Time Calculator (Corridor walk at 1.2 m/s)
-  const getWalkingDetails = (toPathOrKey) => {
+  // 2. Real-Time Spatial Biking Distance & Time Calculator (Cycle at 5.0 m/s with 10x spatial coordinate scale for realism)
+  const getBikingDetails = (toPathOrKey) => {
     const fromPath = pathname || '/';
     const from = COORDS[fromPath] || COORDS['/'];
     const to = COORDS[toPathOrKey] || COORDS['/'];
@@ -46,11 +62,21 @@ export default function CityGridMap({ isDrawer = false }) {
       return '[📍 CURRENT SECTOR / ACTIVE NEXUS]';
     }
 
+    if ((fromPath === '/research' && toPathOrKey === '/research/nanobot-pill') || 
+        (fromPath === '/research/nanobot-pill' && toPathOrKey === '/research')) {
+      const walkTimeSeconds = Math.round(WALK_DISTANCE / WALK_SPEED);
+      const mins = Math.floor(walkTimeSeconds / 60);
+      const secs = walkTimeSeconds % 60;
+      const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
+      return `🏃 ${formatDistance(WALK_DISTANCE)} walk from ${from.name} (${timeStr} indoor hallway walk)`;
+    }
+
     const dx = to.x - from.x;
     const dy = to.y - from.y;
-    const distance = Math.round(Math.sqrt(dx * dx + dy * dy));
+    // Scale coordinate units by 10 to represent realistic dome-to-dome distances in meters
+    const distance = Math.round(Math.sqrt(dx * dx + dy * dy)) * 10;
 
-    const speed = 1.2; // meters per second walking speed
+    const speed = 5.0; // meters per second cycling speed (18 km/h or 11.2 mph)
     const timeSeconds = Math.round(distance / speed);
     const mins = Math.floor(timeSeconds / 60);
     const secs = timeSeconds % 60;
@@ -58,7 +84,7 @@ export default function CityGridMap({ isDrawer = false }) {
     const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
     const fromName = from.name || 'ACTIVE BASE';
 
-    return `🏃 ${distance}m walk from ${fromName} (${timeStr} corridor transit)`;
+    return `🚲 ${formatDistance(distance)} cycle from ${fromName} (${timeStr} bike lane transit)`;
   };
 
   // Sector Themes for HUD Stack
@@ -82,6 +108,16 @@ export default function CityGridMap({ isDrawer = false }) {
       rgb: '194, 89, 255',
       icon: '📂',
       desc: 'Retrospective engineering files'
+    },
+    {
+      id: 'research',
+      label: 'SECTOR 02 // RESEARCH',
+      title: 'RESEARCH LAB',
+      route: '/research',
+      color: '#ffb300',
+      rgb: '255, 179, 0',
+      icon: '🔬',
+      desc: 'Speculative quantum engineering & future colony concepts'
     },
   ];
 
@@ -267,7 +303,7 @@ export default function CityGridMap({ isDrawer = false }) {
         }}
       >
         <div style={{ fontSize: '0.55rem', fontFamily: 'monospace', color: 'rgba(255, 255, 255, 0.35)', letterSpacing: '1.5px', textTransform: 'uppercase', marginBottom: '2px', textAlign: 'center', fontWeight: 'bold' }}>
-          Pressurized Corridor Route Configurator
+          Pressurized Bike Lane Route Configurator
         </div>
 
         {sectors.map((sector) => {
@@ -276,7 +312,9 @@ export default function CityGridMap({ isDrawer = false }) {
             ? academicSyncActive
             : (sector.id === 'neurodiversity'
               ? (pathname === '/park' || pathname.startsWith('/neurodiversity'))
-              : isRouteActive(sector.route));
+              : (sector.id === 'research'
+                ? (pathname === '/research' || pathname.startsWith('/research/'))
+                : isRouteActive(sector.route)));
 
           return (
             <div
@@ -349,8 +387,8 @@ export default function CityGridMap({ isDrawer = false }) {
                   gap: '4px'
                 }}
               >
-                {/* Dynamically calculated pressurized walks */}
-                {getWalkingDetails(sector.route || 'academics')}
+                {/* Dynamically calculated pressurized bike commutes */}
+                {getBikingDetails(sector.route || 'academics')}
               </div>
 
               {/* Sector Description */}
@@ -466,6 +504,84 @@ export default function CityGridMap({ isDrawer = false }) {
                       })}
                     </div>
                   )}
+                </div>
+              )}
+
+              {/* Tactical area sublist for Research Lab */}
+              {sector.id === 'research' && (
+                <div
+                  style={{
+                    marginTop: '8px',
+                    paddingTop: '8px',
+                    borderTop: '1px solid rgba(255, 179, 0, 0.15)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '6px'
+                  }}
+                  onClick={(e) => {
+                    // Prevent parent card-level click if clicking inside sublist
+                    e.stopPropagation();
+                  }}
+                >
+                  <span style={{ fontSize: '0.52rem', fontFamily: 'monospace', color: 'rgba(255, 179, 0, 0.6)', letterSpacing: '0.5px', textTransform: 'uppercase', fontWeight: 'bold' }}>
+                    [ LAB SECTORS ]
+                  </span>
+
+                  {/* Item 1: Lab Entrance */}
+                  <div
+                    onClick={() => {
+                      handleTeleport('/research');
+                    }}
+                    style={{
+                      padding: '4px 8px',
+                      fontSize: '0.65rem',
+                      fontFamily: 'monospace',
+                      background: pathname === '/research' ? 'rgba(255, 179, 0, 0.12)' : 'rgba(0,0,0,0.4)',
+                      border: `1px solid ${pathname === '/research' ? '#ffb300' : 'rgba(255,255,255,0.06)'}`,
+                      borderRadius: '4px',
+                      color: pathname === '/research' ? '#ffb300' : 'rgba(255,255,255,0.7)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s'
+                    }}
+                  >
+                    <span>📍 Lab Entrance{pathname === '/research/nanobot-pill' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}</span>
+                    {pathname === '/research' ? (
+                      <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>
+                    ) : (
+                      <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.35)' }}>[ ➔ WALK ]</span>
+                    )}
+                  </div>
+
+                  {/* Item 2: BCI Pill Bay */}
+                  <div
+                    onClick={() => {
+                      handleTeleport('/research/nanobot-pill');
+                    }}
+                    style={{
+                      padding: '4px 8px',
+                      fontSize: '0.65rem',
+                      fontFamily: 'monospace',
+                      background: pathname === '/research/nanobot-pill' ? 'rgba(255, 179, 0, 0.12)' : 'rgba(0,0,0,0.4)',
+                      border: `1px solid ${pathname === '/research/nanobot-pill' ? '#ffb300' : 'rgba(255,255,255,0.06)'}`,
+                      borderRadius: '4px',
+                      color: pathname === '/research/nanobot-pill' ? '#ffb300' : 'rgba(255,255,255,0.7)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      cursor: 'pointer',
+                      transition: 'all 0.15s'
+                    }}
+                  >
+                    <span>🧠 BCI Nanobot Pill Bay{pathname === '/research' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}</span>
+                    {pathname === '/research/nanobot-pill' ? (
+                      <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>
+                    ) : (
+                      <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.35)' }}>[ ➔ WALK ]</span>
+                    )}
+                  </div>
                 </div>
               )}
 

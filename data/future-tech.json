@@ -1,0 +1,11 @@
+[
+  {
+    "id": "bci_pill",
+    "name": "BCI Nanobot Pill",
+    "category": "Biotech & Comms",
+    "year": "MY50",
+    "description": "A swallowable bio-compatible capsule that releases localized neural nanobots into the brain. These nanobots assemble a fully integrated bio-computer inside the neural cortex, rendering all physical devices, screens, and terminals completely redundant.",
+    "complexity": 99,
+    "status": "DEVELOPMENTAL UNDER PROPOSAL"
+  }
+]

@@ -22,6 +22,15 @@ const COORDS = {
 const WALK_SPEED = 1.35; // meters per second walking speed
 const WALK_DISTANCE = 50; // meters (indoor hallway walk)
 
+// Formats meters into kilometers with decimal precision when it reaches or exceeds 1km (1000m)
+const formatDistance = (meters) => {
+  if (meters >= 1000) {
+    const km = meters / 1000;
+    return `${parseFloat(km.toFixed(1))}km`;
+  }
+  return `${meters}m`;
+};
+
 export default function CityGridMap({ isDrawer = false }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -59,7 +68,7 @@ export default function CityGridMap({ isDrawer = false }) {
       const mins = Math.floor(walkTimeSeconds / 60);
       const secs = walkTimeSeconds % 60;
       const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
-      return `🏃 ${WALK_DISTANCE}m walk from ${from.name} (${timeStr} indoor hallway walk)`;
+      return `🏃 ${formatDistance(WALK_DISTANCE)} walk from ${from.name} (${timeStr} indoor hallway walk)`;
     }
 
     const dx = to.x - from.x;
@@ -75,7 +84,7 @@ export default function CityGridMap({ isDrawer = false }) {
     const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
     const fromName = from.name || 'ACTIVE BASE';
 
-    return `🚲 ${distance}m cycle from ${fromName} (${timeStr} bike lane transit)`;
+    return `🚲 ${formatDistance(distance)} cycle from ${fromName} (${timeStr} bike lane transit)`;
   };
 
   // Sector Themes for HUD Stack
@@ -538,7 +547,7 @@ export default function CityGridMap({ isDrawer = false }) {
                       transition: 'all 0.15s'
                     }}
                   >
-                    <span>📍 Lab Entrance{pathname === '/research/nanobot-pill' ? ` (🏃 ${WALK_DISTANCE}m walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}</span>
+                    <span>📍 Lab Entrance{pathname === '/research/nanobot-pill' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}</span>
                     {pathname === '/research' ? (
                       <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>
                     ) : (
@@ -566,7 +575,7 @@ export default function CityGridMap({ isDrawer = false }) {
                       transition: 'all 0.15s'
                     }}
                   >
-                    <span>🧠 BCI Nanobot Pill Bay{pathname === '/research' ? ` (🏃 ${WALK_DISTANCE}m walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}</span>
+                    <span>🧠 BCI Nanobot Pill Bay{pathname === '/research' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}</span>
                     {pathname === '/research/nanobot-pill' ? (
                       <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>
                     ) : (

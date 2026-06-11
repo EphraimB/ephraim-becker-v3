@@ -108,30 +108,6 @@ export default function NanobotPillDetails() {
     return () => window.removeEventListener('scroll', handleWindowScroll);
   }, []);
 
-  // Prevent wheel and touch scroll propagation on the visual viewport area on mobile
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-
-    const preventScroll = (e) => {
-      if (window.innerWidth <= 900) {
-        e.preventDefault();
-      }
-    };
-
-    const el = visualContainerRef.current;
-    if (el) {
-      el.addEventListener('wheel', preventScroll, { passive: false });
-      el.addEventListener('touchmove', preventScroll, { passive: false });
-    }
-
-    return () => {
-      if (el) {
-        el.removeEventListener('wheel', preventScroll);
-        el.removeEventListener('touchmove', preventScroll);
-      }
-    };
-  }, []);
-
   // Sync scroll positioning to activeTab
   const handleScroll = (e) => {
     const container = e.currentTarget;
@@ -373,9 +349,302 @@ export default function NanobotPillDetails() {
     }
   ];
 
+  const renderViewportContent = (tab) => {
+    switch (tab) {
+      case 'overview':
+        return (
+          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <img 
+              src="/assets/images/bci/bci_ingestion.png" 
+              alt="BCI Ingestion Background" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+            />
+            <img 
+              src="/assets/svgs/bci_payload.svg" 
+              alt="BCI Ingestion SVG Overlay" 
+              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
+            />
+            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+              <span>SYSTEM CALIBRATION</span>
+              <span style={{ color: '#00ff88' }}>INGESTION STAGE</span>
+            </div>
+          </div>
+        );
+      case 'payload':
+        return (
+          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <img 
+              src="/assets/images/bci/bci_uptake.png" 
+              alt="BCI Uptake Background" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+            />
+            <img 
+              src="/assets/svgs/bci_overview.svg" 
+              alt="BCI Uptake SVG Overlay" 
+              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
+            />
+            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+              <span>SYSTEM CALIBRATION</span>
+              <span style={{ color: '#ff4400' }}>BBB TRANSIT</span>
+            </div>
+          </div>
+        );
+      case 'adaptation':
+        return (
+          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <img 
+              src="/assets/images/bci/bci_adaptation.png" 
+              alt="BCI Adaptation Background" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
+            />
+            <svg 
+              width="100%" 
+              height="100%" 
+              viewBox="0 0 100 100" 
+              preserveAspectRatio="none" 
+              style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, pointerEvents: 'none' }}
+            >
+              <rect x="8" y="8" width="84" height="84" fill="none" stroke="var(--color-accent)" strokeWidth="0.4" strokeDasharray="1,2" opacity="0.6" />
+              <line x1="8" y1="50" x2="92" y2="50" stroke="#ff4400" strokeWidth="0.5" strokeDasharray="1,1" opacity="0.8" />
+              <path d="M 12 12 L 20 12 M 12 12 L 12 20" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
+              <path d="M 88 12 L 80 12 M 88 12 L 88 20" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
+              <path d="M 12 88 L 20 88 M 12 88 L 12 80" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
+              <path d="M 88 88 L 80 88 M 88 88 L 88 80" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
+              
+              <text x="14" y="20" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● METABOLIC HEAT ACTIVE [-55C NOMINAL]</text>
+              <text x="14" y="25" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● RADIATION DENSE DEFENSE: 99.4%</text>
+              <text x="14" y="30" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● O2 RESPIRED SATURATION: 98.6%</text>
+              <text x="14" y="35" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● MUSCLE-BONE GRAVITY GAIN: 0.38G</text>
+            </svg>
+            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+              <span>SYSTEM CALIBRATION</span>
+              <span style={{ color: '#00ff88' }}>ALIGNMENT SEQUENCE</span>
+            </div>
+          </div>
+        );
+      case 'assembly':
+        return (
+          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+            <img 
+              src="/assets/images/bci/bci_assembly.png" 
+              alt="BCI Assembly Background" 
+              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+            />
+            <img 
+              src="/assets/svgs/bci_assembly.svg" 
+              alt="BCI Assembly SVG Overlay" 
+              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
+            />
+            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+              <span>SYSTEM CALIBRATION</span>
+              <span style={{ color: '#ffb300' }}>ALIGNMENT SEQUENCE</span>
+            </div>
+          </div>
+        );
+      case 'eclipse':
+        return (
+          <div 
+            style={{ 
+              width: '100%', 
+              height: '100%', 
+              position: 'relative', 
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              padding: '12px'
+            }}
+          >
+            <div 
+              style={{ 
+                position: 'absolute',
+                top: '-15px',
+                left: '-15px',
+                right: '-15px',
+                bottom: '-15px',
+                zIndex: 1,
+                background: 'radial-gradient(circle at 50% 50%, rgba(4, 6, 12, 0.4) 0%, rgba(4, 6, 12, 1) 90%)',
+                transform: `translate3d(${parallax.x * -0.5}px, ${parallax.y * -0.5}px, 0)`,
+                transition: 'transform 0.1s ease-out',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <img 
+                src={
+                  activeScenario === 'productivity' 
+                    ? '/assets/images/bci/bci_productivity.png' 
+                    : activeScenario === 'entertainment' 
+                    ? '/assets/images/bci/bci_entertainment.png' 
+                    : activeScenario === 'telepathy'
+                    ? '/assets/images/bci/bci_telepathy.png'
+                    : '/assets/images/bci/bci_traverse.png'
+                } 
+                alt={`Martian BCI OS - ${activeScenario}`} 
+                style={{ width: '110%', height: '110%', objectFit: 'cover', opacity: 0.85 }}
+              />
+            </div>
 
+            {activeScenario === 'telepathy' && (
+              <>
+                <div 
+                  style={{
+                    position: 'absolute',
+                    top: '12px',
+                    left: '50%',
+                    transform: 'translateX(-50%)',
+                    background: 'rgba(2, 6, 16, 0.6)',
+                    border: '1px solid rgba(0, 240, 255, 0.2)',
+                    borderRadius: '20px',
+                    padding: '4px 12px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                    zIndex: 5,
+                    fontFamily: 'monospace, var(--font-tech)',
+                    fontSize: '0.52rem',
+                    color: '#00f0ff',
+                    textTransform: 'uppercase',
+                    letterSpacing: '1px',
+                    backdropFilter: 'blur(4px)',
+                    WebkitBackdropFilter: 'blur(4px)'
+                  }}
+                >
+                  <span className="active-pulse-dot" style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00f0ff', boxShadow: '0 0 6px #00f0ff' }}></span>
+                  <span>TELEPATHIC LINK SECURE // SYNC 99.8%</span>
+                </div>
 
+                {(() => {
+                  const activeMsgs = [];
+                  if (telepathicMsgIndex >= 0) {
+                    activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex], isCurrent: true });
+                  }
+                  if (telepathicMsgIndex > 0) {
+                    activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex - 1], isCurrent: false });
+                  }
 
+                  return activeMsgs.map((msg, idx) => {
+                    const isSelf = msg.sender === 'Ephraim';
+                    const isSystem = msg.sender === 'RETINA_OS';
+                    const opacity = msg.isCurrent ? 1 : 0.45;
+                    const scale = msg.isCurrent ? 'scale(1)' : 'scale(0.92)';
+                    
+                    return (
+                      <div 
+                        key={`${telepathicMsgIndex}-${idx}`} 
+                        style={{ 
+                          position: 'absolute',
+                          top: msg.top,
+                          ...(isSystem 
+                            ? { left: '50%', transform: `translateX(-50%) ${scale}` } 
+                            : (isSelf ? { right: msg.right, transform: scale } : { left: msg.left, transform: scale })
+                          ),
+                          display: 'flex', 
+                          flexDirection: 'column',
+                          alignItems: isSystem ? 'center' : (isSelf ? 'flex-end' : 'flex-start'),
+                          animation: isSystem 
+                            ? 'system-snap-scale 0.25s ease-out forwards' 
+                            : 'snap-scale 0.25s ease-out forwards',
+                          opacity: opacity,
+                          transition: 'opacity 0.3s ease, transform 0.3s ease',
+                          zIndex: msg.isCurrent ? 12 : 10,
+                          maxWidth: isSystem ? '80%' : '65%'
+                        }}
+                      >
+                        <span 
+                          style={{ 
+                            fontSize: '0.45rem', 
+                            color: isSystem ? '#00f0ff' : (isSelf ? 'var(--color-accent)' : '#00ff88'), 
+                            fontFamily: 'monospace', 
+                            marginBottom: '2px', 
+                            textTransform: 'uppercase',
+                            textShadow: '0 1px 3px rgba(0,0,0,0.8)'
+                          }}
+                        >
+                          {isSystem ? '[SYSTEM // RETINA OS]' : (isSelf ? '[MY_RETINA // SELF]' : `[PEER // ${msg.sender.toUpperCase()}]`)}
+                        </span>
+                        <div 
+                          style={{
+                            background: isSystem 
+                              ? 'rgba(0, 240, 255, 0.14)' 
+                              : (isSelf ? 'rgba(255, 87, 34, 0.24)' : 'rgba(0, 255, 136, 0.18)'),
+                            border: `1px solid ${isSystem 
+                              ? 'rgba(0, 240, 255, 0.45)' 
+                              : (isSelf ? 'rgba(255, 87, 34, 0.45)' : 'rgba(0, 255, 136, 0.4)')}`,
+                            borderRadius: '12px',
+                            padding: '8px 12px',
+                            fontSize: '0.62rem',
+                            fontFamily: 'monospace',
+                            color: '#ffffff',
+                            lineHeight: '1.35',
+                            textAlign: isSystem ? 'center' : 'left',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
+                            backdropFilter: 'blur(6px)',
+                            WebkitBackdropFilter: 'blur(6px)',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '6px'
+                          }}
+                        >
+                          <div>{msg.text}</div>
+
+                          {msg.hasCalendarCard && msg.isCurrent && (
+                            <div 
+                              style={{
+                                marginTop: '4px',
+                                background: 'rgba(0, 0, 0, 0.4)',
+                                border: '1px solid rgba(0, 240, 255, 0.25)',
+                                borderRadius: '8px',
+                                padding: '8px 10px',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                gap: '4px',
+                                textAlign: 'left',
+                                width: '100%',
+                                boxSizing: 'border-box'
+                              }}
+                            >
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', borderBottom: '1px solid rgba(0, 240, 255, 0.15)', paddingBottom: '3px', marginBottom: '2px' }}>
+                                <span style={{ fontSize: '0.65rem' }}>📅</span>
+                                <span style={{ fontSize: '0.52rem', color: '#ffffff', fontWeight: 'bold' }}>EVENT: FLAG FOOTBALL PRACTICE</span>
+                              </div>
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', fontSize: '0.52rem', color: 'rgba(255,255,255,0.8)' }}>
+                                <div>🕒 <span style={{ color: '#00f0ff' }}>TIME:</span> Saturday, 15:00 - 16:30</div>
+                                <div>📍 <span style={{ color: '#00f0ff' }}>ZONE:</span> Ares Dome Lawn (Grid 4)</div>
+                                <div>👥 <span style={{ color: '#00f0ff' }}>PEERS:</span> Ephraim Becker, Vance K.</div>
+                              </div>
+                              <div 
+                                style={{ 
+                                  marginTop: '4px', 
+                                  background: 'rgba(0, 255, 136, 0.08)', 
+                                  border: '1px solid rgba(0, 255, 136, 0.3)', 
+                                  borderRadius: '3px', 
+                                  padding: '2px 4px', 
+                                  display: 'flex', 
+                                  alignItems: 'center', 
+                                  justifyContent: 'center', 
+                                  gap: '4px' 
+                                }}
+                              >
+                                <span className="active-pulse-dot" style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 4px #00ff88' }}></span>
+                                <span style={{ fontSize: '0.45rem', color: '#00ff88', fontWeight: 'bold' }}>✓ EVENT SYNCHRONIZED</span>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  });
+                })()}
+              </>
+            )}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <div className="citizen-card-shell nanobot-pill-shell">
@@ -441,120 +710,73 @@ export default function NanobotPillDetails() {
         }
         @media (max-width: 900px) {
           html, body {
-            overflow: hidden !important;
-            height: 100dvh !important;
-            height: 100vh !important;
+            overflow: auto !important;
+            height: auto !important;
           }
           .nanobot-pill-content-container {
-            padding-top: 0 !important;
-            height: calc(100vh - 138px) !important;
-            height: calc(100dvh - 138px) !important;
-            overflow: hidden !important;
-            gap: 8px !important;
+            padding-top: 10px !important;
+            height: auto !important;
+            overflow: visible !important;
             display: flex !important;
             flex-direction: column !important;
           }
           .research-grid-deck {
             display: flex !important;
             flex-direction: column !important;
-            flex: 1 !important;
-            min-height: 0 !important;
-            height: 100% !important;
-            overflow: hidden !important;
-            gap: 8px !important;
+            height: auto !important;
+            overflow: visible !important;
+            gap: 16px !important;
           }
           .research-grid-deck > div:nth-child(1) {
-            order: 2 !important;
-            flex: 1 !important;
-            min-height: 0 !important;
-            overflow-y: auto !important;
-            padding-bottom: 24px !important;
-          }
-          /* Compact card styling on mobile */
-          .research-grid-deck > div:nth-child(1) > div.bubbly-panel {
-            min-height: unset !important;
-            padding: 14px 18px !important;
-          }
-          .research-grid-deck > div:nth-child(1) > div.bubbly-panel h2 {
-            font-size: 1.35rem !important;
-            margin-bottom: 8px !important;
-          }
-          .research-grid-deck > div:nth-child(1) > div.bubbly-panel p {
-            font-size: 0.75rem !important;
-            line-height: 1.4 !important;
-            margin-bottom: 10px !important;
-          }
-          .research-grid-deck > div:nth-child(2) {
-            order: 1 !important;
-            position: relative !important;
-            top: auto !important;
-            left: auto !important;
-            right: auto !important;
-            width: auto !important;
-            z-index: auto !important;
-            background: transparent !important;
-            padding: 0 !important;
-            margin: 0 !important;
-            box-shadow: none !important;
-            height: auto !important;
-            min-height: unset !important;
-            flex-shrink: 0 !important;
-          }
-          /* Set exact 16:9 aspect ratio, scaled to 50% width and centered on mobile */
-          .research-grid-deck > div:nth-child(2) > div:first-child {
-            aspect-ratio: 16 / 9 !important;
-            width: 50% !important;
-            margin: 0 auto !important;
-            height: auto !important;
-            min-height: unset !important;
-            padding: 0 !important;
-            background: transparent !important;
-            border: none !important;
-            box-shadow: none !important;
-            flex: unset !important;
-          }
-          .research-grid-deck > div:nth-child(2) > div:first-child > span.net-label {
-            display: none !important;
-          }
-          /* Override absolute position boundaries and image object-fit on mobile to show the whole image */
-          .research-grid-deck > div:nth-child(2) > div:first-child > div:nth-child(2) > div > div:first-child {
-            top: 0 !important;
-            left: 0 !important;
-            right: 0 !important;
-            bottom: 0 !important;
-            transform: none !important;
-          }
-          .research-grid-deck > div:nth-child(2) > div:first-child > div:nth-child(2) img {
             width: 100% !important;
-            height: 100% !important;
-            object-fit: cover !important;
+            height: auto !important;
+            overflow: visible !important;
+            padding-bottom: 16px !important;
           }
-          .biometrics-table-desktop {
+          .desktop-visual-column {
             display: none !important;
           }
-          .biometrics-summary-mobile {
+          .touch-slide-card::-webkit-scrollbar {
+            display: none !important;
+          }
+          .touch-slide-card {
             display: flex !important;
-            justify-content: space-between;
-            align-items: center;
-            font-family: monospace;
-            font-size: 0.58rem;
-            color: var(--text-secondary);
-            border: 1px solid rgba(255,255,255,0.08) !important;
+            flex-direction: row !important;
+            overflow-x: auto !important;
+            scroll-snap-type: x mandatory !important;
+            width: 100% !important;
+            gap: 0 !important;
+            padding: 14px 16px !important;
+            box-sizing: border-box !important;
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+          }
+          .card-text-slide {
+            width: 85% !important;
+            flex-shrink: 0 !important;
+            scroll-snap-align: start !important;
+            padding-right: 14px !important;
+            box-sizing: border-box !important;
+          }
+          .card-visual-slide {
+            width: 85% !important;
+            flex-shrink: 0 !important;
+            scroll-snap-align: end !important;
+            padding-left: 14px !important;
+            box-sizing: border-box !important;
+            display: flex !important;
+            flex-direction: column !important;
+            background: rgba(2, 3, 6, 0.98) !important;
+            border: 1px solid rgba(0, 240, 255, 0.2) !important;
             border-radius: 12px !important;
-            background: rgba(6, 9, 20, 0.45) !important;
-            padding: 8px 12px !important;
-            margin: 0 !important;
+            overflow: hidden !important;
+            height: 260px !important;
+            align-self: center !important;
           }
         }
         @media (min-width: 901px) {
-          .biometrics-summary-mobile {
+          .card-visual-slide {
             display: none !important;
-          }
-        }
-        @media (max-width: 600px) {
-          .bubbly-panel button {
-            padding: 4px 6px !important;
-            font-size: 0.58rem !important;
           }
         }
       `}} />
@@ -624,156 +846,178 @@ export default function NanobotPillDetails() {
               overflowY: 'auto' 
             }}
           >
-            
             {/* Story Card 1 */}
-            {/* Story Card 1 */}
-            <div id="overview" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
-              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 01 // SIMPLE INGESTION
-              </span>
-              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Swallow. Sync. Enjoy.
-              </h2>
-              <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                It starts with a simple vitamin-sized capsule. The BCI Pill replaces the weight of screens, keyboards, and battery packs with a direct connection inside your mind.
-              </p>
-              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Swallowed with a sip of water, the organic cellulose shell dissolves naturally in your stomach in under 4 minutes. As it dissolves, it releases 12.4 million microscopic helper nodes safely into your system, with zero side effects.
-              </p>
-              
-              <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>⏱️ TIME: ~4 Min</div>
-                <div>🧪 SHELL: Plant Cellulose</div>
-                <div>🩹 ENTRY: 100% Non-Invasive</div>
+            <div id="overview" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+              <div className="card-text-slide">
+                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                  STAGE 01 // SIMPLE INGESTION
+                </span>
+                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                  Swallow. Sync. Enjoy.
+                </h2>
+                <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                  It starts with a simple vitamin-sized capsule. The BCI Pill replaces the weight of screens, keyboards, and battery packs with a direct connection inside your mind.
+                </p>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                  Swallowed with a sip of water, the organic cellulose shell dissolves naturally in your stomach in under 4 minutes. As it dissolves, it releases 12.4 million microscopic helper nodes safely into your system, with zero side effects.
+                </p>
+                
+                <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                  <div>⏱️ TIME: ~4 Min</div>
+                  <div>🧪 SHELL: Plant Cellulose</div>
+                  <div>🩹 ENTRY: 100% Non-Invasive</div>
+                </div>
+              </div>
+
+              <div className="card-visual-slide">
+                {renderViewportContent('overview')}
               </div>
             </div>
 
             {/* Story Card 2 */}
-            {/* Story Card 2 */}
-            <div id="payload" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
-              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 02 // NATURAL TRAVEL
-              </span>
-              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Safe Transit.
-              </h2>
-              <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                Once swallowed, the nodes use your natural circulation to travel. They are chemically coded to find and pass through the brain's natural filters.
-              </p>
-              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Over a 20-minute journey, they glide smoothly into place inside your visual center. No surgeries, no wires, and no discomfort—just a natural pathway to a new way of seeing.
-              </p>
-              
-              <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>⏱️ TRAVEL: ~20 Min</div>
-                <div>📍 TARGET: Visual Center</div>
-                <div>🛡️ SAFETY: Clinically Approved</div>
+            <div id="payload" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+              <div className="card-text-slide">
+                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                  STAGE 02 // NATURAL TRAVEL
+                </span>
+                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                  Safe Transit.
+                </h2>
+                <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                  Once swallowed, the nodes use your natural circulation to travel. They are chemically coded to find and pass through the brain's natural filters.
+                </p>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                  Over a 20-minute journey, they glide smoothly into place inside your visual center. No surgeries, no wires, and no discomfort—just a natural pathway to a new way of seeing.
+                </p>
+                
+                <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                  <div>⏱️ TRAVEL: ~20 Min</div>
+                  <div>📍 TARGET: Visual Center</div>
+                  <div>🛡️ SAFETY: Clinically Approved</div>
+                </div>
+              </div>
+
+              <div className="card-visual-slide">
+                {renderViewportContent('payload')}
               </div>
             </div>
 
             {/* Story Card 3 */}
-            {/* Story Card 3 */}
-            <div id="adaptation" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
-              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 03 // PHYSIOLOGICAL ADAPTATION
-              </span>
-              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Mars. Just like Earth.
-              </h2>
-              <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                Powered by a living Genetic AI compiled directly from your DNA, the pill silently adapts your biological markers so you can step onto the Martian surface suitless and helmetless.
-              </p>
-              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                - **Metabolic Warmth**: Automatically regulates core heat so freezing -55°C Martian winds feel like a mild summer breeze.
-                <br />- **DNA-Level Shielding**: Activates cellular melanin/protein coatings to deflect solar radiation.
-                <br />- **Respiration Tuning**: Optimizes hemoglobin oxygen binding, allowing comfortable respiration in the thin atmosphere.
-                <br />- **0.38g Gravity Sync**: Dynamically maintains muscle tone and bone density markers.
-              </p>
-              
-              <div style={{ marginTop: '20px', display: 'flex', gap: '15px', flexWrap: 'wrap', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>🧬 GENETIC AI: ACTIVE</div>
-                <div>🌡️ SKIN TEMP: 18.5°C</div>
-                <div>🛡️ RAD REJECT: 99.4%</div>
-                <div>🫁 O2 SAT: 98.6%</div>
+            <div id="adaptation" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+              <div className="card-text-slide">
+                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                  STAGE 03 // PHYSIOLOGICAL ADAPTATION
+                </span>
+                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                  Mars. Just like Earth.
+                </h2>
+                <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                  Powered by a living Genetic AI compiled directly from your DNA, the pill silently adapts your biological markers so you can step onto the Martian surface suitless and helmetless.
+                </p>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                  - **Metabolic Warmth**: Automatically regulates core heat so freezing -55°C Martian winds feel like a mild summer breeze.
+                  <br />- **DNA-Level Shielding**: Activates cellular melanin/protein coatings to deflect solar radiation.
+                  <br />- **Respiration Tuning**: Optimizes hemoglobin oxygen binding, allowing comfortable respiration in the thin atmosphere.
+                  <br />- **0.38g Gravity Sync**: Dynamically maintains muscle tone and bone density markers.
+                </p>
+                
+                <div style={{ marginTop: '20px', display: 'flex', gap: '15px', flexWrap: 'wrap', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                  <div>🧬 GENETIC AI: ACTIVE</div>
+                  <div>🌡️ SKIN TEMP: 18.5°C</div>
+                  <div>🛡️ RAD REJECT: 99.4%</div>
+                  <div>🫁 O2 SAT: 98.6%</div>
+                </div>
+              </div>
+
+              <div className="card-visual-slide">
+                {renderViewportContent('adaptation')}
               </div>
             </div>
 
             {/* Story Card 4 */}
-            {/* Story Card 4 */}
-            <div id="assembly" className="bubbly-panel" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
-              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 04 // CORTICAL MAPPING
-              </span>
-              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                Connecting to Your Thoughts.
-              </h2>
-              <p className="apple-sub" style={{ marginBottom: '15px' }}>
-                The nodes settle gently around your synapses, forming an interface that respects your neural privacy. It maps your intent without changing who you are.
-              </p>
-              <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
-                Powered entirely by body glucose, the Genetic AI integrates with your visual cortex in under 45 minutes, ready to translate subconscious intent into natural spatial anchors.
-              </p>
-              
-              <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
-                <div>⏱️ SETUP: ~45 Min</div>
-                <div>🔋 FUEL: Glucose-Powered</div>
-                <div>🧠 SYNAPSE LINK: 64.5%</div>
+            <div id="assembly" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+              <div className="card-text-slide">
+                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                  STAGE 04 // CORTICAL MAPPING
+                </span>
+                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                  Connecting to Your Thoughts.
+                </h2>
+                <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                  The nodes settle gently around your synapses, forming an interface that respects your neural privacy. It maps your intent without changing who you are.
+                </p>
+                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                  Powered entirely by body glucose, the Genetic AI integrates with your visual cortex in under 45 minutes, ready to translate subconscious intent into natural spatial anchors.
+                </p>
+                
+                <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                  <div>⏱️ SETUP: ~45 Min</div>
+                  <div>🔋 FUEL: Glucose-Powered</div>
+                  <div>🧠 SYNAPSE LINK: 64.5%</div>
+                </div>
+              </div>
+
+              <div className="card-visual-slide">
+                {renderViewportContent('assembly')}
               </div>
             </div>
 
             {/* Story Card 5 */}
-            {/* Story Card 5 */}
-            <div id="eclipse" className="bubbly-panel" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
-              <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                STAGE 05 // RETINA BCI OS
-              </span>
-              <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                HUD-Free. Screen-Free.
-              </h2>
-              <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
-                The visual field is completely clean. Virtual screens, clocks, maps, and guides anchor to the physical environment only when you need them. Select a scenario below to experience it.
-              </p>
-              
-              {/* Horizontal scroll selector deck */}
-              <div 
-                className="hide-scrollbar" 
-                style={{ 
-                  display: 'flex', 
-                  gap: '10px', 
-                  overflowX: 'auto', 
-                  paddingBottom: '5px',
-                  scrollSnapType: 'x mandatory',
-                  width: '100%'
-                }}
-              >
-                {scenarios.map(sc => (
-                  <div 
-                    key={sc.id} 
-                    onClick={() => setActiveScenario(sc.id)}
-                    style={{
-                      flex: '0 0 190px',
-                      scrollSnapAlign: 'start',
-                      background: activeScenario === sc.id ? 'rgba(var(--color-accent-rgb), 0.12)' : 'rgba(255,255,255,0.02)',
-                      border: `1px solid ${activeScenario === sc.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.06)'}`,
-                      borderRadius: '12px',
-                      padding: '12px',
-                      cursor: 'pointer',
-                      transition: 'all 0.25s ease'
-                    }}
-                  >
-                    <span style={{ fontSize: '1.2rem', display: 'block', marginBottom: '6px' }}>{sc.icon}</span>
-                    <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: '#ffffff', margin: '0 0 4px 0' }}>{sc.title}</h4>
-                    <p style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.3 }}>{sc.description}</p>
-                  </div>
-                ))}
+            <div id="eclipse" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+              <div className="card-text-slide">
+                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                  STAGE 05 // RETINA BCI OS
+                </span>
+                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                  HUD-Free. Screen-Free.
+                </h2>
+                <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
+                  The visual field is completely clean. Virtual screens, clocks, maps, and guides anchor to the physical environment only when you need them. Select a scenario below to experience it.
+                </p>
+                
+                {/* Horizontal scroll selector deck */}
+                <div 
+                  className="hide-scrollbar" 
+                  style={{ 
+                    display: 'flex', 
+                    gap: '10px', 
+                    overflowX: 'auto', 
+                    paddingBottom: '5px',
+                    scrollSnapType: 'x mandatory',
+                    width: '100%'
+                  }}
+                >
+                  {scenarios.map(sc => (
+                    <div 
+                      key={sc.id} 
+                      onClick={() => setActiveScenario(sc.id)}
+                      style={{
+                        flex: '0 0 190px',
+                        scrollSnapAlign: 'start',
+                        background: activeScenario === sc.id ? 'rgba(var(--color-accent-rgb), 0.12)' : 'rgba(255,255,255,0.02)',
+                        border: `1px solid ${activeScenario === sc.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.06)'}`,
+                        borderRadius: '12px',
+                        padding: '12px',
+                        cursor: 'pointer',
+                        transition: 'all 0.25s ease'
+                      }}
+                    >
+                      <span style={{ fontSize: '1.2rem', display: 'block', marginBottom: '6px' }}>{sc.icon}</span>
+                      <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: '#ffffff', margin: '0 0 4px 0' }}>{sc.title}</h4>
+                      <p style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.3 }}>{sc.description}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
 
+              <div className="card-visual-slide">
+                {renderViewportContent('eclipse')}
+              </div>
             </div>
-
           </div>
 
           {/* RIGHT: Telemetry Dashboard & Layered Composites */}
-          <div ref={visualContainerRef} style={{ display: 'flex', flexDirection: 'column', gap: '15px', height: '100%', minHeight: 0 }}>
+          <div ref={visualContainerRef} className="desktop-visual-column" style={{ display: 'flex', flexDirection: 'column', gap: '15px', height: '100%', minHeight: 0 }}>
             
             {/* Viewport Box */}
             <div 
@@ -813,318 +1057,7 @@ export default function NanobotPillDetails() {
                   cursor: 'default'
                 }}
               >
-                
-                {/* Composite: Ingestion (Phase 1) */}
-                {activeTab === 'overview' && (
-                  <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                    <img 
-                      src="/assets/images/bci/bci_ingestion.png" 
-                      alt="BCI Ingestion Background" 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
-                    />
-                    <img 
-                      src="/assets/svgs/bci_payload.svg" 
-                      alt="BCI Ingestion SVG Overlay" 
-                      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
-                    />
-                  </div>
-                )}
-
-                {/* Composite: Uptake (Phase 2) */}
-                {activeTab === 'payload' && (
-                  <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                    <img 
-                      src="/assets/images/bci/bci_uptake.png" 
-                      alt="BCI Uptake Background" 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
-                    />
-                    <img 
-                      src="/assets/svgs/bci_overview.svg" 
-                      alt="BCI Uptake SVG Overlay" 
-                      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
-                    />
-                  </div>
-                )}
-
-                {/* Composite: Adaptation (Phase 3) */}
-                {activeTab === 'adaptation' && (
-                  <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                    <img 
-                      src="/assets/images/bci/bci_adaptation.png" 
-                      alt="BCI Adaptation Background" 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
-                    />
-                    {/* Inline biological/thermal grid overlay */}
-                    <svg 
-                      width="100%" 
-                      height="100%" 
-                      viewBox="0 0 100 100" 
-                      preserveAspectRatio="none" 
-                      style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, pointerEvents: 'none' }}
-                    >
-                      <rect x="8" y="8" width="84" height="84" fill="none" stroke="var(--color-accent)" strokeWidth="0.4" strokeDasharray="1,2" opacity="0.6" />
-                      <line x1="8" y1="50" x2="92" y2="50" stroke="#ff4400" strokeWidth="0.5" strokeDasharray="1,1" opacity="0.8" />
-                      <path d="M 12 12 L 20 12 M 12 12 L 12 20" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
-                      <path d="M 88 12 L 80 12 M 88 12 L 88 20" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
-                      <path d="M 12 88 L 20 88 M 12 88 L 12 80" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
-                      <path d="M 88 88 L 80 88 M 88 88 L 88 80" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
-                      
-                      <text x="14" y="20" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● METABOLIC HEAT ACTIVE [-55C NOMINAL]</text>
-                      <text x="14" y="25" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● RADIATION DENSE DEFENSE: 99.4%</text>
-                      <text x="14" y="30" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● O2 RESPIRED SATURATION: 98.6%</text>
-                      <text x="14" y="35" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● MUSCLE-BONE GRAVITY GAIN: 0.38G</text>
-                    </svg>
-                  </div>
-                )}
-
-                {/* Composite: Assembly (Phase 4) */}
-                {activeTab === 'assembly' && (
-                  <div style={{ width: '100%', height: '100%', position: 'relative' }}>
-                    <img 
-                      src="/assets/images/bci/bci_assembly.png" 
-                      alt="BCI Assembly Background" 
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
-                    />
-                    <img 
-                      src="/assets/svgs/bci_assembly.svg" 
-                      alt="BCI Assembly SVG Overlay" 
-                      style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
-                    />
-                  </div>
-                )}
-
-                {/* Simulated XR BCI HUD viewport (Phase 5) */}
-                {activeTab === 'eclipse' && (
-                  <div 
-                    style={{ 
-                      width: '100%', 
-                      height: '100%', 
-                      position: 'relative', 
-                      overflow: 'hidden',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'space-between',
-                      padding: '12px'
-                    }}
-                  >
-                    
-                    {/* Simulated XR BCI HUD viewport (Phase 5) */}
-                    <div 
-                      style={{ 
-                        position: 'absolute',
-                        top: '-15px',
-                        left: '-15px',
-                        right: '-15px',
-                        bottom: '-15px',
-                        zIndex: 1,
-                        background: 'radial-gradient(circle at 50% 50%, rgba(4, 6, 12, 0.4) 0%, rgba(4, 6, 12, 1) 90%)',
-                        transform: `translate3d(${parallax.x * -0.5}px, ${parallax.y * -0.5}px, 0)`,
-                        transition: 'transform 0.1s ease-out',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
-                      }}
-                    >
-                      {/* High-fidelity Scenario Background */}
-                      <img 
-                        src={
-                          activeScenario === 'productivity' 
-                            ? '/assets/images/bci/bci_productivity.png' 
-                            : activeScenario === 'entertainment' 
-                            ? '/assets/images/bci/bci_entertainment.png' 
-                            : activeScenario === 'telepathy'
-                            ? '/assets/images/bci/bci_telepathy.png'
-                            : '/assets/images/bci/bci_traverse.png'
-                        } 
-                        alt={`Martian BCI OS - ${activeScenario}`} 
-                        style={{ width: '110%', height: '110%', objectFit: 'cover', opacity: 0.85 }}
-                      />
-                    </div>
-
-                    {/* Telepathic communication overlay stream */}
-                    {activeScenario === 'telepathy' && (
-                      <>
-                        {/* Telepathic sync indicator at the top center of the viewport */}
-                        <div 
-                          style={{
-                            position: 'absolute',
-                            top: '12px',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            background: 'rgba(2, 6, 16, 0.6)',
-                            border: '1px solid rgba(0, 240, 255, 0.2)',
-                            borderRadius: '20px',
-                            padding: '4px 12px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '6px',
-                            zIndex: 5,
-                            fontFamily: 'monospace, var(--font-tech)',
-                            fontSize: '0.52rem',
-                            color: '#00f0ff',
-                            textTransform: 'uppercase',
-                            letterSpacing: '1px',
-                            backdropFilter: 'blur(4px)',
-                            WebkitBackdropFilter: 'blur(4px)'
-                          }}
-                        >
-                          <span className="active-pulse-dot" style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00f0ff', boxShadow: '0 0 6px #00f0ff' }}></span>
-                          <span>TELEPATHIC LINK SECURE // SYNC 99.8%</span>
-                        </div>
-
-                        {/* Dynamic floating thought bubbles */}
-                        {(() => {
-                          const activeMsgs = [];
-                          if (telepathicMsgIndex >= 0) {
-                            activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex], isCurrent: true });
-                          }
-                          if (telepathicMsgIndex > 0) {
-                            activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex - 1], isCurrent: false });
-                          }
-
-                          return activeMsgs.map((msg, idx) => {
-                            const isSelf = msg.sender === 'Ephraim';
-                            const isSystem = msg.sender === 'RETINA_OS';
-                            const opacity = msg.isCurrent ? 1 : 0.45;
-                            const scale = msg.isCurrent ? 'scale(1)' : 'scale(0.92)';
-                            
-                            return (
-                              <div 
-                                key={`${telepathicMsgIndex}-${idx}`} 
-                                style={{ 
-                                  position: 'absolute',
-                                  top: msg.top,
-                                  ...(isSystem 
-                                    ? { left: '50%', transform: `translateX(-50%) ${scale}` } 
-                                    : (isSelf ? { right: msg.right, transform: scale } : { left: msg.left, transform: scale })
-                                  ),
-                                  display: 'flex', 
-                                  flexDirection: 'column',
-                                  alignItems: isSystem ? 'center' : (isSelf ? 'flex-end' : 'flex-start'),
-                                  animation: isSystem 
-                                    ? 'system-snap-scale 0.25s ease-out forwards' 
-                                    : 'snap-scale 0.25s ease-out forwards',
-                                  opacity: opacity,
-                                  transition: 'opacity 0.3s ease, transform 0.3s ease',
-                                  zIndex: msg.isCurrent ? 12 : 10,
-                                  maxWidth: isSystem ? '80%' : '65%'
-                                }}
-                              >
-                                {/* Sender tag */}
-                                <span 
-                                  style={{ 
-                                    fontSize: '0.45rem', 
-                                    color: isSystem ? '#00f0ff' : (isSelf ? 'var(--color-accent)' : '#00ff88'), 
-                                    fontFamily: 'monospace', 
-                                    marginBottom: '2px', 
-                                    textTransform: 'uppercase',
-                                    textShadow: '0 1px 3px rgba(0,0,0,0.8)'
-                                  }}
-                                >
-                                  {isSystem ? '[SYSTEM // RETINA OS]' : (isSelf ? '[MY_RETINA // SELF]' : `[PEER // ${msg.sender.toUpperCase()}]`)}
-                                </span>
-                                {/* Message bubble */}
-                                <div 
-                                  style={{
-                                    background: isSystem 
-                                      ? 'rgba(0, 240, 255, 0.14)' 
-                                      : (isSelf ? 'rgba(255, 87, 34, 0.24)' : 'rgba(0, 255, 136, 0.18)'),
-                                    border: `1px solid ${isSystem 
-                                      ? 'rgba(0, 240, 255, 0.45)' 
-                                      : (isSelf ? 'rgba(255, 87, 34, 0.45)' : 'rgba(0, 255, 136, 0.4)')}`,
-                                    borderRadius: '12px',
-                                    padding: '8px 12px',
-                                    fontSize: '0.62rem',
-                                    fontFamily: 'monospace',
-                                    color: '#ffffff',
-                                    lineHeight: '1.35',
-                                    textAlign: isSystem ? 'center' : 'left',
-                                    boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-                                    backdropFilter: 'blur(6px)',
-                                    WebkitBackdropFilter: 'blur(6px)',
-                                    display: 'flex',
-                                    flexDirection: 'column',
-                                    gap: '6px'
-                                  }}
-                                >
-                                  <div>{msg.text}</div>
-
-                                  {msg.hasCalendarCard && msg.isCurrent && (
-                                    <div 
-                                      style={{
-                                        marginTop: '4px',
-                                        background: 'rgba(0, 0, 0, 0.4)',
-                                        border: '1px solid rgba(0, 240, 255, 0.25)',
-                                        borderRadius: '8px',
-                                        padding: '8px 10px',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        gap: '4px',
-                                        textAlign: 'left',
-                                        width: '100%',
-                                        boxSizing: 'border-box'
-                                      }}
-                                    >
-                                      <div style={{ display: 'flex', alignItems: 'center', gap: '4px', borderBottom: '1px solid rgba(0, 240, 255, 0.15)', paddingBottom: '3px', marginBottom: '2px' }}>
-                                        <span style={{ fontSize: '0.65rem' }}>📅</span>
-                                        <span style={{ fontSize: '0.52rem', color: '#ffffff', fontWeight: 'bold' }}>EVENT: FLAG FOOTBALL PRACTICE</span>
-                                      </div>
-                                      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', fontSize: '0.52rem', color: 'rgba(255,255,255,0.8)' }}>
-                                        <div>🕒 <span style={{ color: '#00f0ff' }}>TIME:</span> Saturday, 15:00 - 16:30</div>
-                                        <div>📍 <span style={{ color: '#00f0ff' }}>ZONE:</span> Ares Dome Lawn (Grid 4)</div>
-                                        <div>👥 <span style={{ color: '#00f0ff' }}>PEERS:</span> Ephraim Becker, Vance K.</div>
-                                      </div>
-                                      <div 
-                                        style={{ 
-                                          marginTop: '4px', 
-                                          background: 'rgba(0, 255, 136, 0.08)', 
-                                          border: '1px solid rgba(0, 255, 136, 0.3)', 
-                                          borderRadius: '3px', 
-                                          padding: '2px 4px', 
-                                          display: 'flex', 
-                                          alignItems: 'center', 
-                                          justifyContent: 'center', 
-                                          gap: '4px' 
-                                        }}
-                                      >
-                                        <span className="active-pulse-dot" style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 4px #00ff88' }}></span>
-                                        <span style={{ fontSize: '0.45rem', color: '#00ff88', fontWeight: 'bold' }}>✓ EVENT SYNCHRONIZED</span>
-                                      </div>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            );
-                          });
-                        })()}
-                      </>
-                    )}
-
-                  </div>
-                )}
-
-                {/* Status indicator bottom left overlay */}
-                {activeTab !== 'eclipse' && (
-                  <div 
-                    style={{ 
-                      position: 'absolute', 
-                      bottom: '10px', 
-                      left: '10px', 
-                      right: '10px', 
-                      display: 'flex', 
-                      justifyContent: 'space-between',
-                      fontFamily: 'monospace',
-                      fontSize: '0.55rem',
-                      color: 'var(--text-secondary)'
-                    }}
-                  >
-                    <span>SYSTEM CALIBRATION</span>
-                    <span style={{ color: activeTab === 'assembly' ? '#ffb300' : activeTab === 'payload' ? '#ff4400' : '#00ff88' }}>
-                      {activeTab === 'overview' ? 'INGESTION STAGE' : activeTab === 'payload' ? 'BBB TRANSIT' : 'ALIGNMENT SEQUENCE'}
-                    </span>
-                  </div>
-                )}
-
+                {renderViewportContent(activeTab)}
               </div>
 
               {/* Status Diagnostic biophysics specs */}

@@ -11,9 +11,7 @@ export default function NanobotPillDetails() {
   const [hudFilterActive, setHudFilterActive] = useState(false);
   const [thoughtSyncActive, setThoughtSyncActive] = useState(false);
   const [typedText, setTypedText] = useState('');
-  const [hoveredWaypoint, setHoveredWaypoint] = useState(null);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
-  const [cursorPos, setCursorPos] = useState({ x: 180, y: 120 });
   
   // Active Scenario inside Phase 5
   const [activeScenario, setActiveScenario] = useState('productivity');
@@ -157,11 +155,6 @@ export default function NanobotPillDetails() {
     const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
     
-    setCursorPos({
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    });
-
     setParallax({
       x: x * 8, // Max offset 8px
       y: y * 8
@@ -353,10 +346,7 @@ export default function NanobotPillDetails() {
   ];
 
 
-  const waypoints = [
-    { id: 'dome', name: 'RESEARCH LAB DOME', x: '75%', y: '35%', desc: 'Destination // Dist: 140m // Time: 2 mins // Oxygen Sync: 98.6%' },
-    { id: 'waypoint_alpha', name: 'WAYPOINT ALPHA (RIDGE BEACON)', x: '45%', y: '52%', desc: 'Path Guide // Dist: 60m // Time: 45s // Oxygen Sync: 98.5%' }
-  ];
+
 
 
   return (
@@ -788,7 +778,7 @@ export default function NanobotPillDetails() {
                   alignItems: 'center', 
                   justifyContent: 'center',
                   overflow: 'hidden',
-                  cursor: activeTab === 'eclipse' ? 'none' : 'default'
+                  cursor: 'default'
                 }}
               >
                 
@@ -917,102 +907,7 @@ export default function NanobotPillDetails() {
                       />
                     </div>
 
-                    {/* Interactive Waypoints - Only visible in Traverse scenario */}
-                    {activeScenario === 'traverse' && (
-                      <div 
-                        style={{ 
-                          position: 'absolute', 
-                          top: 0, 
-                          left: 0, 
-                          right: 0, 
-                          bottom: 0, 
-                          zIndex: 3,
-                          transform: `translate3d(${parallax.x * 0.4}px, ${parallax.y * 0.4}px, 0)`,
-                          transition: 'transform 0.1s ease-out',
-                          pointerEvents: 'none'
-                        }}
-                      >
-                        {waypoints.map(point => (
-                          <div 
-                            key={point.id} 
-                            style={{ 
-                              position: 'absolute', 
-                              left: point.x, 
-                              top: point.y, 
-                              pointerEvents: 'auto',
-                              transform: 'translate(-50%, -50%)'
-                            }}
-                            onMouseEnter={() => setHoveredWaypoint(point.id)}
-                            onMouseLeave={() => setHoveredWaypoint(null)}
-                          >
-                            <div 
-                              style={{ 
-                                width: '10px', 
-                                height: '10px', 
-                                background: hoveredWaypoint === point.id ? 'var(--color-accent)' : 'rgba(255,179,0,0.6)', 
-                                border: '1.5px solid #ffffff',
-                                borderRadius: '50%',
-                                cursor: 'crosshair',
-                                boxShadow: '0 0 10px var(--color-accent)',
-                                transition: 'all 0.2s ease',
-                                position: 'relative'
-                              }}
-                            >
-                              {hoveredWaypoint === point.id && (
-                                <div className="gaze-ring-overlay" style={{ width: '28px', height: '28px', left: '-10px', top: '-10px' }}></div>
-                              )}
-                            </div>
 
-                            {hoveredWaypoint === point.id && (
-                              <div 
-                                style={{ 
-                                  position: 'absolute', 
-                                  left: '16px', 
-                                  top: '-20px', 
-                                  background: 'rgba(6, 9, 20, 0.95)', 
-                                  border: '1px solid var(--color-accent)', 
-                                  borderRadius: '6px', 
-                                  padding: '6px 10px', 
-                                  width: '210px', 
-                                  zIndex: 10,
-                                  backdropFilter: 'blur(8px)',
-                                  boxShadow: '0 5px 15px rgba(0,0,0,0.5)',
-                                  pointerEvents: 'none',
-                                  animation: 'slide-in-fast 0.2s ease-out'
-                                }}
-                              >
-                                <div style={{ fontSize: '0.6rem', fontWeight: 'bold', color: '#ffffff', fontFamily: 'var(--font-tech)' }}>
-                                  {point.name}
-                                </div>
-                                <div style={{ fontSize: '0.5rem', color: 'var(--text-secondary)', fontFamily: 'monospace', marginTop: '3px', lineHeight: '1.2' }}>
-                                  {point.desc}
-                                </div>
-                              </div>
-                            )}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-
-
-                    {/* Simulated Eye-Gaze Pointer Dot */}
-                    <div 
-                      style={{ 
-                        position: 'absolute', 
-                        left: `${cursorPos.x}px`, 
-                        top: `${cursorPos.y}px`, 
-                        width: '8px', 
-                        height: '8px', 
-                        borderRadius: '50%', 
-                        background: 'rgba(255, 179, 0, 0.8)', 
-                        boxShadow: '0 0 6px #ffb300', 
-                        zIndex: 100, 
-                        pointerEvents: 'none',
-                        transform: 'translate(-50%, -50%)',
-                        transition: 'width 0.1s, height 0.1s'
-                      }}
-                    ></div>
 
                   </div>
                 )}

@@ -4,12 +4,12 @@ import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
 const TELEPATHIC_MESSAGES = [
-  { sender: 'Ephraim', text: 'Hey, are we still meeting at the Neurodiversity Lawn campfire tonight?', top: '22%', right: '8%' },
-  { sender: 'Vance', text: 'Yeah! Just wrapping up my calibration tests in the Research Lab.', top: '34%', left: '8%' },
-  { sender: 'Ephraim', text: 'Great, the weather grid says the Ares Park dome is at a perfect 22°C.', top: '48%', right: '8%' },
-  { sender: 'Vance', text: 'Awesome. I\'ll take the pressurized bike lane. Should be there in 2 minutes.', top: '60%', left: '8%' },
-  { sender: 'Ephraim', text: 'Sounds good. Sending the path telemetry to your Retina BCI now.', top: '74%', right: '8%' },
-  { sender: 'Vance', text: 'Sync received. Telepathic link secure. See you there!', top: '82%', left: '8%' }
+  { sender: 'Ephraim', text: 'Hey Vance! Are you free for some flag football practice on the dome turf this weekend?', top: '22%', right: '8%' },
+  { sender: 'Vance', text: 'Yeah! I\'d love to. How about Saturday afternoon? Say, around 15:00?', top: '34%', left: '8%' },
+  { sender: 'Ephraim', text: 'Saturday at 15:00 works perfectly for me. Let\'s do it.', top: '48%', right: '8%' },
+  { sender: 'Vance', text: 'Awesome. Telepathic link handshake verified. Syncing schedule...', top: '60%', left: '8%' },
+  { sender: 'Ephraim', text: 'Retina BCI detected agreement. Practice scheduled in calendars.', top: '74%', right: '8%' },
+  { sender: 'Vance', text: 'Nice! Got the calendar block. See you on the turf Saturday!', top: '82%', left: '8%' }
 ];
 
 export default function NanobotPillDetails() {

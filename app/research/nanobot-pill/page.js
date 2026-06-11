@@ -27,6 +27,17 @@ export default function NanobotPillDetails() {
   const [isPlayingMedia, setIsPlayingMedia] = useState(true);
   const [timeString, setTimeString] = useState('');
   const [telepathicMsgIndex, setTelepathicMsgIndex] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 900);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const scrollRef = useRef(null);
   const viewportRef = useRef(null);
@@ -520,7 +531,7 @@ export default function NanobotPillDetails() {
                   if (telepathicMsgIndex >= 0) {
                     activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex], isCurrent: true });
                   }
-                  if (telepathicMsgIndex > 0) {
+                  if (!isMobile && telepathicMsgIndex > 0) {
                     activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex - 1], isCurrent: false });
                   }
 
@@ -535,7 +546,7 @@ export default function NanobotPillDetails() {
                         key={`${telepathicMsgIndex}-${idx}`} 
                         style={{ 
                           position: 'absolute',
-                          top: msg.top,
+                          top: isMobile ? (msg.hasCalendarCard ? '16%' : '35%') : msg.top,
                           ...(isSystem 
                             ? { left: '50%', transform: `translateX(-50%) ${scale}` } 
                             : (isSelf ? { right: msg.right, transform: scale } : { left: msg.left, transform: scale })

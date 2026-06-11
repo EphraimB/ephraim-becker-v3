@@ -1049,7 +1049,7 @@ export default function NanobotPillDetails() {
                                 >
                                   <div>{msg.text}</div>
 
-                                  {msg.hasCalendarCard && (
+                                  {msg.hasCalendarCard && msg.isCurrent && (
                                     <div 
                                       style={{
                                         marginTop: '4px',

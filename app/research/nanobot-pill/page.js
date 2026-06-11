@@ -757,7 +757,7 @@ export default function NanobotPillDetails() {
             scroll-snap-type: x mandatory !important;
             width: 100% !important;
             gap: 0 !important;
-            padding: 14px 16px !important;
+            padding: 14px 0 !important;
             box-sizing: border-box !important;
             -ms-overflow-style: none !important;
             scrollbar-width: none !important;
@@ -766,6 +766,7 @@ export default function NanobotPillDetails() {
             width: 85% !important;
             flex-shrink: 0 !important;
             scroll-snap-align: start !important;
+            padding-left: 26px !important;
             padding-right: 14px !important;
             box-sizing: border-box !important;
           }
@@ -774,15 +775,20 @@ export default function NanobotPillDetails() {
             flex-shrink: 0 !important;
             scroll-snap-align: end !important;
             padding-left: 14px !important;
+            padding-right: 26px !important;
             box-sizing: border-box !important;
             display: flex !important;
             flex-direction: column !important;
+            align-self: center !important;
+          }
+          .viewport-mobile-frame {
+            width: 100% !important;
+            height: 260px !important;
             background: rgba(2, 3, 6, 0.98) !important;
             border: 1px solid rgba(0, 240, 255, 0.2) !important;
             border-radius: 12px !important;
             overflow: hidden !important;
-            height: 260px !important;
-            align-self: center !important;
+            position: relative !important;
           }
         }
         @media (min-width: 901px) {
@@ -881,7 +887,9 @@ export default function NanobotPillDetails() {
               </div>
 
               <div className="card-visual-slide">
-                {renderViewportContent('overview')}
+                <div className="viewport-mobile-frame">
+                  {renderViewportContent('overview')}
+                </div>
               </div>
             </div>
 
@@ -909,7 +917,9 @@ export default function NanobotPillDetails() {
               </div>
 
               <div className="card-visual-slide">
-                {renderViewportContent('payload')}
+                <div className="viewport-mobile-frame">
+                  {renderViewportContent('payload')}
+                </div>
               </div>
             </div>
 
@@ -941,7 +951,9 @@ export default function NanobotPillDetails() {
               </div>
 
               <div className="card-visual-slide">
-                {renderViewportContent('adaptation')}
+                <div className="viewport-mobile-frame">
+                  {renderViewportContent('adaptation')}
+                </div>
               </div>
             </div>
 
@@ -969,7 +981,9 @@ export default function NanobotPillDetails() {
               </div>
 
               <div className="card-visual-slide">
-                {renderViewportContent('assembly')}
+                <div className="viewport-mobile-frame">
+                  {renderViewportContent('assembly')}
+                </div>
               </div>
             </div>
 
@@ -1022,7 +1036,9 @@ export default function NanobotPillDetails() {
               </div>
 
               <div className="card-visual-slide">
-                {renderViewportContent('eclipse')}
+                <div className="viewport-mobile-frame">
+                  {renderViewportContent('eclipse')}
+                </div>
               </div>
             </div>
           </div>

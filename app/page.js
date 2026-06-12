@@ -38,6 +38,18 @@ export default function AresDashboard() {
     setActiveSlide(0);
   }, [activeInterest]);
 
+  // Lock background body scrolling when modal is active
+  useEffect(() => {
+    if (activeInterest) {
+      document.documentElement.classList.add('modal-open');
+    } else {
+      document.documentElement.classList.remove('modal-open');
+    }
+    return () => {
+      document.documentElement.classList.remove('modal-open');
+    };
+  }, [activeInterest]);
+
   // Dynamic Mars Age calculation based on current time - client side only
   useEffect(() => {
     if (!isMounted) return;

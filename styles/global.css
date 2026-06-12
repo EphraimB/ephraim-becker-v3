@@ -545,20 +545,22 @@ body {
   /* Full-Screen Holographic Modal Mobile & Touch Viewport Clearances */
   .interest-modal-overlay {
     align-items: flex-start !important;
-    padding: 108px 10px calc(40px + env(safe-area-inset-bottom)) 10px !important; /* Pushes content below the 98px sticky mobile header mask */
-    overflow-y: auto !important;
+    padding: 108px 10px calc(10px + env(safe-area-inset-bottom)) 10px !important; /* Pushes content below the 98px sticky mobile header mask */
+    overflow: hidden !important;
   }
   .interest-modal-content {
-    max-height: none !important;
-    height: auto !important;
-    overflow: visible !important;
-    display: block !important;
+    max-height: calc(100dvh - 108px - 10px - env(safe-area-inset-bottom)) !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
   }
   .interest-modal-overlay .custom-scroll {
-    overflow-y: visible !important;
-    height: auto !important;
-    flex: none !important;
+    overflow-y: auto !important;
+    flex: 1 !important;
     max-height: none !important;
+    height: auto !important;
   }
 }
 
@@ -1906,6 +1908,7 @@ body {
   flex: 1;
   padding: 24px;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .interest-modal-body {
@@ -2062,13 +2065,17 @@ body {
 
   .interest-modal-overlay {
     align-items: flex-start !important;
-    padding: 108px 10px calc(40px + env(safe-area-inset-bottom)) 10px !important;
-    overflow-y: auto !important;
+    padding: 108px 10px calc(10px + env(safe-area-inset-bottom)) 10px !important;
+    overflow: hidden !important;
   }
 
   .interest-modal-content {
-    max-height: none !important;
-    height: auto !important;
+    max-height: calc(100dvh - 108px - 10px - env(safe-area-inset-bottom)) !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
   }
 }
 
@@ -2538,6 +2545,7 @@ body {
   flex: 1;
   padding: 24px;
   overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 .modal-columns-grid {
@@ -3158,5 +3166,10 @@ body {
   .portfolio-grid-deck {
     padding-bottom: calc(30px + env(safe-area-inset-bottom)) !important;
   }
+}
+
+/* Global body scroll lock when modal is open */
+html.modal-open, html.modal-open body {
+  overflow: hidden !important;
 }
 

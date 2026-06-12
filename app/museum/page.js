@@ -366,10 +366,10 @@ export default function AresMuseum() {
               Designing a navigation system that aligns with a military console theme while functioning on both desktop monitors and mobile datapads was a major UX bottleneck. Traditional navbars and standard hamburger menus shattered the localized Martian OS illusion.
             </p>
             <p>
-              The solution was the peeking <span className="highlight-cyan">Locator Tab</span> and the slide-out <span className="highlight-amber">Tactical Map Drawer</span>. The Locator Tab displays current coordinates on the left edge. Tapping it opens the holographic transit map.
+              Initially, the plan was to build a <span className="highlight-cyan">fully responsive city map interface (similar to Google Maps)</span>. However, testing showed that a raw map canvas failed to respond well or remain usable across various screen sizes.
             </p>
             <p>
-              On desktop, this displays a detailed vector grid; on mobile, it transitions into touch cards that list biking transit distance and transit times.
+              The perfect compromise was the development of the peeking <span className="highlight-cyan">Locator Tab</span> and a slide-out <span className="highlight-amber">list-based Tactical Map Drawer</span>. This drawer dynamically calculates and displays pressurized bike and walk transit distance/duration metrics, preserving the spatial feel without map layout breakage.
             </p>
           </div>
         </div>

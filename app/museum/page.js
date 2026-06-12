@@ -363,7 +363,7 @@ export default function AresMuseum() {
           <h4 className="plaque-title">Responsive Tactical Navigation</h4>
           <div className="plaque-body">
             <p>
-              Designing a navigation system that aligns with a military console theme while functioning on both desktop monitors and mobile datapads was a major UX bottleneck. Traditional navbars and standard hamburger menus shattered the localized Martian OS illusion.
+              Designing a navigation system that aligns with a sci-fi OS console theme while functioning on both desktop monitors and mobile datapads was a major UX bottleneck. Traditional navbars and standard hamburger menus shattered the localized Martian OS illusion.
             </p>
             <p>
               Initially, the plan was to build a <span className="highlight-cyan">fully responsive city map interface (similar to Google Maps)</span>. However, testing showed that a raw map canvas failed to respond well or remain usable across various screen sizes.

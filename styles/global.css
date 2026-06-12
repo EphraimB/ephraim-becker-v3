@@ -543,20 +543,17 @@ body {
   }
 
   /* Full-Screen Holographic Modal Mobile & Touch Viewport Clearances */
-  .portfolio-modal-overlay,
   .interest-modal-overlay {
     align-items: flex-start !important;
     padding: 108px 10px calc(40px + env(safe-area-inset-bottom)) 10px !important; /* Pushes content below the 98px sticky mobile header mask */
     overflow-y: auto !important;
   }
-  .portfolio-modal-content,
   .interest-modal-content {
     max-height: none !important;
     height: auto !important;
     overflow: visible !important;
     display: block !important;
   }
-  .portfolio-modal-overlay .custom-scroll,
   .interest-modal-overlay .custom-scroll {
     overflow-y: visible !important;
     height: auto !important;
@@ -3086,13 +3083,30 @@ body {
 
   .portfolio-modal-overlay {
     align-items: flex-start !important;
-    padding: 108px 10px calc(40px + env(safe-area-inset-bottom)) 10px !important;
-    overflow-y: auto !important;
+    padding: 102px 10px calc(10px + env(safe-area-inset-bottom)) 10px !important;
+    overflow: hidden !important;
   }
 
   .portfolio-modal-content {
+    max-height: calc(100dvh - 102px - 10px - env(safe-area-inset-bottom)) !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    overflow: hidden !important;
+    border-radius: 16px !important;
+  }
+
+  .portfolio-modal-overlay .custom-scroll {
+    overflow-y: auto !important;
+    flex: 1 !important;
     max-height: none !important;
     height: auto !important;
+  }
+
+  .portfolio-modal-header {
+    background: rgba(6, 9, 20, 0.75) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
   }
 }
 

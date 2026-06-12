@@ -93,10 +93,9 @@ export default function AresMuseum() {
           flex-direction: column;
           justify-content: flex-start !important;
           align-items: stretch;
-          overflow: hidden; /* Prevent body scrollbars */
+          overflow: hidden;
         }
         
-        /* Immersive header bar that matches the cyber-grid HUD */
         .museum-header {
           display: flex;
           justify-content: space-between;
@@ -134,26 +133,18 @@ export default function AresMuseum() {
           font-family: monospace;
         }
 
-        /* Fixed-height Grid Layout to prevent overflow */
+        /* 2x2 Grid Layout for Left-to-Right Desktop flow */
         .museum-grid-container {
           display: grid;
           grid-template-columns: 1fr 1fr;
+          grid-template-rows: 1fr 1fr;
           gap: 15px;
           flex: 1;
           min-height: 0;
           width: 100%;
         }
 
-        .museum-col {
-          display: flex;
-          flex-direction: column;
-          gap: 15px;
-          min-height: 0;
-        }
-
         .plaque-card {
-          flex: 1;
-          min-height: 0;
           display: flex;
           flex-direction: column;
           background: rgba(4, 6, 12, 0.94) !important;
@@ -186,7 +177,7 @@ export default function AresMuseum() {
 
         .plaque-label {
           font-family: var(--font-tech), monospace;
-          font-size: 0.65rem;
+          font-size: 0.68rem;
           color: #ffb300;
           letter-spacing: 1px;
           font-weight: bold;
@@ -194,13 +185,13 @@ export default function AresMuseum() {
 
         .plaque-status {
           font-family: monospace;
-          font-size: 0.6rem;
+          font-size: 0.62rem;
           color: rgba(255, 255, 255, 0.45);
         }
 
         .plaque-title {
           font-family: var(--font-tech), monospace;
-          font-size: 0.95rem;
+          font-size: 1.05rem;
           color: #ffffff;
           margin: 0 0 6px 0;
           font-weight: bold;
@@ -213,10 +204,10 @@ export default function AresMuseum() {
           flex: 1;
           min-height: 0;
           font-family: var(--font-sans), sans-serif;
-          font-size: 0.8rem;
+          font-size: 0.9rem; /* Increased size on desktop for optimal readability */
           line-height: 1.5;
           color: var(--text-primary);
-          overflow: hidden; /* No scrollbars within paragraph content */
+          overflow: hidden;
         }
 
         .plaque-body p {
@@ -307,6 +298,7 @@ export default function AresMuseum() {
           }
           .museum-grid-container {
             grid-template-columns: 1fr;
+            grid-template-rows: auto;
             height: auto !important;
           }
           .plaque-card {
@@ -315,11 +307,21 @@ export default function AresMuseum() {
           }
           .plaque-body {
             overflow: visible !important;
+            font-size: 0.8rem !important; /* Scale text down on mobile to fit screen */
+          }
+          .plaque-title {
+            font-size: 0.88rem !important;
+          }
+          .plaque-label {
+            font-size: 0.6rem !important;
+          }
+          .plaque-status {
+            font-size: 0.55rem !important;
           }
         }
       `}} />
 
-      {/* Immersive Header Panel (Zero-scrolling desktop format) */}
+      {/* Immersive Header Panel */}
       <div className="museum-header">
         <h2 className="museum-header-title">
           🏛️ Ares City Museum of Web Engineering
@@ -329,127 +331,117 @@ export default function AresMuseum() {
         </p>
       </div>
 
-      {/* Grid Container */}
+      {/* 2x2 Grid Container (Left-to-Right Order) */}
       <div className="museum-grid-container">
         
-        {/* LEFT COLUMN: Exhibits 1 & 2 */}
-        <div className="museum-col">
-          
-          {/* PLAQUE 1: SEO & 2D WEB */}
-          <div className="plaque-card">
-            <div className="plaque-header">
-              <span className="plaque-label">// EXHIBIT 01: STRUCTURAL FOUNDATION</span>
-              <span className="plaque-status">[ ONLINE // STABLE ]</span>
-            </div>
-            <h4 className="plaque-title">Traditional 2D Web & SEO Pathways</h4>
-            <div className="plaque-body">
-              <p>
-                Immersive spaces often suffer from a discoverability crisis. Portals built inside heavy 3D canvases or WebXR frameworks are <span className="highlight-cyan">invisible to planetary search engine crawlers (SEOs)</span>.
-              </p>
-              <p>
-                To resolve this, this site is engineered as a <span className="highlight-amber">native Next.js 2D HTML5 application</span>. Search spiders can index the citizen's portfolio archives and research files directly.
-              </p>
-              <p>
-                Overlaying absolute background canvas matrices and translucent HUD components onto a semantic document structure delivers a rich sci-fi atmosphere without sacrificing web standards or SEO discoverability.
-              </p>
-            </div>
+        {/* ROW 1 LEFT: PLAQUE 1 (SEO & 2D WEB) */}
+        <div className="plaque-card">
+          <div className="plaque-header">
+            <span className="plaque-label">// EXHIBIT 01: STRUCTURAL FOUNDATION</span>
+            <span className="plaque-status">[ ONLINE // STABLE ]</span>
           </div>
-
-          {/* PLAQUE 2: RESPONSIVE NAV */}
-          <div className="plaque-card">
-            <div className="plaque-header">
-              <span className="plaque-label">// EXHIBIT 02: SPATIAL TRANSIT</span>
-              <span className="plaque-status">[ ONLINE // STABLE ]</span>
-            </div>
-            <h4 className="plaque-title">Responsive Tactical Navigation</h4>
-            <div className="plaque-body">
-              <p>
-                Designing a navigation system that aligns with a military console theme while functioning on both desktop monitors and mobile datapads was a major UX bottleneck. Traditional navbars and standard hamburger menus shattered the localized Martian OS illusion.
-              </p>
-              <p>
-                The solution was the peeking <span className="highlight-cyan">Locator Tab</span> and the slide-out <span className="highlight-amber">Tactical Map Drawer</span>. The Locator Tab displays current coordinates on the left edge. Tapping it opens the holographic transit map.
-              </p>
-              <p>
-                On desktop, this displays a detailed vector grid; on mobile, it transitions into touch cards that list biking transit distance and transit times.
-              </p>
-            </div>
+          <h4 className="plaque-title">Traditional 2D Web & SEO Pathways</h4>
+          <div className="plaque-body">
+            <p>
+              Immersive spaces often suffer from a discoverability crisis. Portals built inside heavy 3D canvases or WebXR frameworks are <span className="highlight-cyan">invisible to planetary search engine crawlers (SEOs)</span>.
+            </p>
+            <p>
+              To resolve this, this site is engineered as a <span className="highlight-amber">native Next.js 2D HTML5 application</span>. Search spiders can index the citizen's portfolio archives and research files directly.
+            </p>
+            <p>
+              Overlaying absolute background canvas matrices and translucent HUD components onto a semantic document structure delivers a rich sci-fi atmosphere without sacrificing web standards or SEO discoverability.
+            </p>
           </div>
-
         </div>
 
-        {/* RIGHT COLUMN: Exhibits 3 & 4 */}
-        <div className="museum-col">
-          
-          {/* PLAQUE 3: SOLAR CLOCK & WIDGET */}
-          <div className="plaque-card">
-            <div className="plaque-header">
-              <span className="plaque-label">// EXHIBIT 03: PLANETARY TIMEKEEPING</span>
-              <span className="plaque-status">[ LIVE_SYNC ]</span>
-            </div>
-            <h4 className="plaque-title">Ares City Solar Clock</h4>
-            <div className="plaque-body">
-              <p>
-                Martian timekeeping operates on Sols (24h 39m 35.244s). The top-bar clock tracks Clancy Martian Year 38 (epoch start Nov 12, 2024). Time is formatted as: <span className="highlight-cyan">Mars Year / Sol / 4-Digit decimal fraction</span>.
-              </p>
-              
-              {/* Telemetry Clock Widget */}
-              <div className="clock-widget-container">
-                <div className="clock-readout-main">
-                  {clockData.marsYear} / {clockData.currentSol} / {clockData.decimalStr}
+        {/* ROW 1 RIGHT: PLAQUE 2 (RESPONSIVE NAV) */}
+        <div className="plaque-card">
+          <div className="plaque-header">
+            <span className="plaque-label">// EXHIBIT 02: SPATIAL TRANSIT</span>
+            <span className="plaque-status">[ ONLINE // STABLE ]</span>
+          </div>
+          <h4 className="plaque-title">Responsive Tactical Navigation</h4>
+          <div className="plaque-body">
+            <p>
+              Designing a navigation system that aligns with a military console theme while functioning on both desktop monitors and mobile datapads was a major UX bottleneck. Traditional navbars and standard hamburger menus shattered the localized Martian OS illusion.
+            </p>
+            <p>
+              The solution was the peeking <span className="highlight-cyan">Locator Tab</span> and the slide-out <span className="highlight-amber">Tactical Map Drawer</span>. The Locator Tab displays current coordinates on the left edge. Tapping it opens the holographic transit map.
+            </p>
+            <p>
+              On desktop, this displays a detailed vector grid; on mobile, it transitions into touch cards that list biking transit distance and transit times.
+            </p>
+          </div>
+        </div>
+
+        {/* ROW 2 LEFT: PLAQUE 3 (SOLAR CLOCK & WIDGET) */}
+        <div className="plaque-card">
+          <div className="plaque-header">
+            <span className="plaque-label">// EXHIBIT 03: PLANETARY TIMEKEEPING</span>
+            <span className="plaque-status">[ LIVE_SYNC ]</span>
+          </div>
+          <h4 className="plaque-title">Ares City Solar Clock</h4>
+          <div className="plaque-body">
+            <p>
+              Martian timekeeping operates on Sols (24h 39m 35.244s). The clock tracks Clancy Martian Year 38 (epoch start Nov 12, 2024). Time is formatted as: <span className="highlight-cyan">Mars Year / Sol / 4-Digit decimal fraction</span>.
+            </p>
+            
+            {/* Telemetry Clock Widget */}
+            <div className="clock-widget-container">
+              <div className="clock-readout-main">
+                {clockData.marsYear} / {clockData.currentSol} / {clockData.decimalStr}
+              </div>
+
+              <div className="telemetry-grid">
+                <div className="telemetry-row">
+                  <span className="telemetry-label">UTC Ref:</span>
+                  <span className="telemetry-value" style={{ fontSize: '0.48rem' }}>{clockData.utcTime.substring(5, 22)}</span>
                 </div>
 
-                <div className="telemetry-grid">
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">UTC Ref:</span>
-                    <span className="telemetry-value" style={{ fontSize: '0.48rem' }}>{clockData.utcTime.substring(5, 22)}</span>
-                  </div>
+                <div className="telemetry-row">
+                  <span className="telemetry-label">Epoch:</span>
+                  <span className="telemetry-value">2024-11-12 UTC</span>
+                </div>
 
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Epoch:</span>
-                    <span className="telemetry-value">2024-11-12 UTC</span>
-                  </div>
+                <div className="telemetry-row">
+                  <span className="telemetry-label">Earth Days:</span>
+                  <span className="telemetry-value">{clockData.elapsedEarthDays.toFixed(3)}</span>
+                </div>
 
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Earth Days:</span>
-                    <span className="telemetry-value">{clockData.elapsedEarthDays.toFixed(3)}</span>
-                  </div>
+                <div className="telemetry-row">
+                  <span className="telemetry-label">Ratio:</span>
+                  <span className="telemetry-constant">1.0275 Days/Sol</span>
+                </div>
 
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Ratio:</span>
-                    <span className="telemetry-constant">1.0275 Days/Sol</span>
-                  </div>
+                <div className="telemetry-row">
+                  <span className="telemetry-label">Total Sols:</span>
+                  <span className="telemetry-value">{clockData.totalSols.toFixed(3)}</span>
+                </div>
 
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Total Sols:</span>
-                    <span className="telemetry-value">{clockData.totalSols.toFixed(3)}</span>
-                  </div>
-
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Sol Fraction:</span>
-                    <span className="telemetry-value">{clockData.solFraction.toFixed(4)}</span>
-                  </div>
+                <div className="telemetry-row">
+                  <span className="telemetry-label">Sol Fraction:</span>
+                  <span className="telemetry-value">{clockData.solFraction.toFixed(4)}</span>
                 </div>
               </div>
             </div>
           </div>
+        </div>
 
-          {/* PLAQUE 4: AI PARTNERSHIP */}
-          <div className="plaque-card">
-            <div className="plaque-header">
-              <span className="plaque-label">// EXHIBIT 04: CO-CREATION PARADIGM</span>
-              <span className="plaque-status">[ ONLINE // STABLE ]</span>
-            </div>
-            <h4 className="plaque-title">AI Partnership & "Vibe Coding"</h4>
-            <div className="plaque-body">
-              <p>
-                This interface is the result of human-directed, AI-accelerated vibe coding. AI generated the structural frameworks, calculated the Martian epoch Sol constant delta, and plotted the initial CSS layout tokens.
-              </p>
-              <p>
-                The citizen then audited the mathematical logic, refined the responsive map drawers, and customized the HSL cyber-cyan theme accents. This partnership allowed rapid prototyping while preserving hand-crafted layout precision.
-              </p>
-            </div>
+        {/* ROW 2 RIGHT: PLAQUE 4 (AI PARTNERSHIP) */}
+        <div className="plaque-card">
+          <div className="plaque-header">
+            <span className="plaque-label">// EXHIBIT 04: CO-CREATION PARADIGM</span>
+            <span className="plaque-status">[ ONLINE // STABLE ]</span>
           </div>
-
+          <h4 className="plaque-title">AI Partnership & "Vibe Coding"</h4>
+          <div className="plaque-body">
+            <p>
+              This interface is the result of human-directed, AI-accelerated vibe coding. AI generated the structural frameworks, calculated the Martian epoch Sol constant delta, and plotted the initial CSS layout tokens.
+            </p>
+            <p>
+              The citizen then audited the mathematical logic, refined the responsive map drawers, and customized the HSL cyber-cyan theme accents. This partnership allowed rapid prototyping while preserving hand-crafted layout precision.
+            </p>
+          </div>
         </div>
 
       </div>

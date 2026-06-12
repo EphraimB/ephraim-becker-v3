@@ -14,7 +14,8 @@ const COORDS = {
   '/neurodiversity/sensory-garden': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - SENSORY GARDEN' },
   '/neurodiversity/lexicon-pavilion': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - LEXICON PAVILION' },
   '/neurodiversity/meetup-campfire': { x: 150, y: -100, name: 'ARES CITY PARK - NEURODIVERSITY LAWN - COMMUNITY HEARTH' },
-  'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' }
+  'academics': { x: 0, y: 120, name: 'ACADEMIC SYNC' },
+  '/museum': { x: 180, y: 80, name: 'ARES CITY MUSEUM' }
 };
 
 // Realistic walking speed and distance constants
@@ -118,6 +119,16 @@ export default function CityGridMap({ isDrawer = false }) {
       rgb: '255, 179, 0',
       icon: '🔬',
       desc: 'Speculative quantum engineering & future colony concepts'
+    },
+    {
+      id: 'museum',
+      label: 'COLONY HISTORY // MUSEUM',
+      title: 'ARES CITY MUSEUM',
+      route: '/museum',
+      color: '#00f0ff',
+      rgb: '0, 240, 255',
+      icon: '🏛️',
+      desc: 'Colony history & website engineering blueprints'
     },
   ];
 

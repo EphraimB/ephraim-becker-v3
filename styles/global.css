@@ -545,7 +545,7 @@ body {
   .portfolio-modal-overlay,
   .interest-modal-overlay {
     align-items: flex-start !important;
-    padding: 108px 10px calc(20px + env(safe-area-inset-bottom)) 10px !important; /* Pushes content below the 98px sticky mobile header mask */
+    padding: 108px 10px calc(40px + env(safe-area-inset-bottom)) 10px !important; /* Pushes content below the 98px sticky mobile header mask */
     overflow-y: auto !important;
   }
   .portfolio-modal-content,
@@ -668,7 +668,7 @@ body {
     overflow-y: visible !important;
     min-height: auto !important;
     margin-top: 98px !important; /* Pushes content down past the solid sticky header block */
-    padding-bottom: 20px !important;
+    padding-bottom: calc(40px + env(safe-area-inset-bottom)) !important;
   }
   .comic-speech-bubble {
     position: relative !important;
@@ -1360,12 +1360,12 @@ body {
 
   /* Compact scrollable container with hardware accelerated momentum scrolling */
   .custom-scroll {
-    overflow-y: auto !important;
+    overflow-y: visible !important;
     -webkit-overflow-scrolling: touch !important;
-    flex: 1 !important;
+    flex: none !important;
     min-height: 0 !important;
-    max-height: calc(100vh - 130px) !important;
-    max-height: calc(100dvh - 130px) !important;
+    max-height: none !important;
+    height: auto !important;
   }
 
   /* Keep closed locator button fixed exactly 10px below the HUD bar, staying stuck to the top while content scrolls under the header mask */
@@ -2056,7 +2056,7 @@ body {
 
   .interest-modal-overlay {
     align-items: flex-start !important;
-    padding: 108px 10px calc(20px + env(safe-area-inset-bottom)) 10px !important;
+    padding: 108px 10px calc(40px + env(safe-area-inset-bottom)) 10px !important;
     overflow-y: auto !important;
   }
 
@@ -3075,7 +3075,7 @@ body {
 
   .portfolio-modal-overlay {
     align-items: flex-start !important;
-    padding: 108px 10px calc(20px + env(safe-area-inset-bottom)) 10px !important;
+    padding: 108px 10px calc(40px + env(safe-area-inset-bottom)) 10px !important;
     overflow-y: auto !important;
   }
 

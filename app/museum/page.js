@@ -458,64 +458,6 @@ export default function AresMuseum() {
           </div>
         </div>
 
-        {/* ROW 2 RIGHT: PLAQUE 6 (SYSTEM DIAGNOSTICS DECORATIVE PANEL) */}
-        <div className="plaque-card">
-          <div className="plaque-header">
-            <span className="plaque-label">// DIAGNOSTICS: HABITAT INTEGRITY</span>
-            <span className="plaque-status" style={{ color: '#00ff88' }}>[ SECURE ]</span>
-          </div>
-          <h4 className="plaque-title">Ares Outpost Diagnostics</h4>
-          <div className="plaque-body" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
-            <div className="diagnostic-row">
-              <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>SYS_SYNC_MODE:</span>
-              <span style={{ color: '#00f0ff', fontWeight: 'bold' }}>COCKPIT // DIRECT</span>
-            </div>
-            <div className="diagnostic-row">
-              <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>ATMOSPHERE_GRID:</span>
-              <span style={{ color: '#00ff88', fontWeight: 'bold' }}>NOMINAL // 101.3 kPa</span>
-            </div>
-            <div className="diagnostic-row">
-              <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>DOME_SHIELDING:</span>
-              <span style={{ color: '#00ff88', fontWeight: 'bold' }}>ACTIVE // 99.4%</span>
-            </div>
-            <div className="diagnostic-row">
-              <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>NEXUS_LINK_BAND:</span>
-              <span style={{ color: '#ffb300', fontWeight: 'bold' }}>SECURE // 43.8 GHz</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      {/* Footer Return Button */}
-      <div className="museum-footer">
-        <Link href="/">
-          <button 
-            className="hud-btn"
-            style={{
-              borderColor: '#00f0ff',
-              color: '#00f0ff',
-              padding: '6px 16px',
-              fontSize: '0.68rem',
-              fontFamily: 'var(--font-tech), monospace',
-              boxShadow: '0 0 10px rgba(0, 240, 255, 0.1)',
-              cursor: 'pointer',
-              background: 'rgba(0, 240, 255, 0.05)',
-              transition: 'all 0.2s',
-              borderRadius: '6px'
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 240, 255, 0.15)';
-              e.currentTarget.style.boxShadow = '0 0 15px rgba(0, 240, 255, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(0, 240, 255, 0.05)';
-              e.currentTarget.style.boxShadow = '0 0 10px rgba(0, 240, 255, 0.1)';
-            }}
-          >
-            [ ↩ RETURN TO CITIZEN SUITE ]
-          </button>
-        </Link>
       </div>
 
     </div>

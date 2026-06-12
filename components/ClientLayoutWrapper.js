@@ -29,6 +29,11 @@ export default function ClientLayoutWrapper({ children }) {
       hudSectorName = 'Research Lab';
       currentLocationName = 'RESEARCH LAB';
     }
+  } else if (pathname === '/museum') {
+    bgImage = '/assets/images/backgrounds/ares-city-museum.png';
+    currentTheme = 'quantum';
+    hudSectorName = 'Ares City Museum';
+    currentLocationName = 'ARES CITY MUSEUM';
   } else if (pathname === '/park' || pathname.startsWith('/neurodiversity')) {
     currentTheme = 'biosphere';
     if (pathname === '/park') {
@@ -65,6 +70,18 @@ export default function ClientLayoutWrapper({ children }) {
   useEffect(() => {
     setMapDrawerOpen(false);
   }, [pathname]);
+
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    if (mapDrawerOpen) {
+      document.documentElement.classList.add('modal-open');
+    } else {
+      document.documentElement.classList.remove('modal-open');
+    }
+    return () => {
+      document.documentElement.classList.remove('modal-open');
+    };
+  }, [mapDrawerOpen]);
 
   // Parse location name into primary, middle, and sub-location for stacked map styling
   let primaryLoc = currentLocationName;
@@ -153,7 +170,7 @@ export default function ClientLayoutWrapper({ children }) {
         
         <div className="workspace-deck">
           {/* Natural standing roomscale profile figure */}
-          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/neurodiversity' && pathname !== '/research' && pathname !== '/research/nanobot-pill' && (
+          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/neurodiversity' && pathname !== '/research' && pathname !== '/research/nanobot-pill' && pathname !== '/museum' && (
             <div className={`roomscale-natural-body page-${currentTheme}`}>
               <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
             </div>

@@ -58,6 +58,14 @@ export default function PortfolioDome() {
 
   useEffect(() => {
     setDownloadDropdownOpen(false);
+    if (activeProject) {
+      document.documentElement.classList.add('modal-open');
+    } else {
+      document.documentElement.classList.remove('modal-open');
+    }
+    return () => {
+      document.documentElement.classList.remove('modal-open');
+    };
   }, [activeProject]);
 
 

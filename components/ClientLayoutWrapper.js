@@ -29,6 +29,11 @@ export default function ClientLayoutWrapper({ children }) {
       hudSectorName = 'Research Lab';
       currentLocationName = 'RESEARCH LAB';
     }
+  } else if (pathname === '/museum') {
+    bgImage = '/assets/images/backgrounds/ares-city-museum.png';
+    currentTheme = 'quantum';
+    hudSectorName = 'Ares City Museum';
+    currentLocationName = 'ARES CITY MUSEUM';
   } else if (pathname === '/park' || pathname.startsWith('/neurodiversity')) {
     currentTheme = 'biosphere';
     if (pathname === '/park') {
@@ -153,7 +158,7 @@ export default function ClientLayoutWrapper({ children }) {
         
         <div className="workspace-deck">
           {/* Natural standing roomscale profile figure */}
-          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/neurodiversity' && pathname !== '/research' && pathname !== '/research/nanobot-pill' && (
+          {pathname !== '/portfolio' && pathname !== '/' && pathname !== '/park' && pathname !== '/neurodiversity' && pathname !== '/research' && pathname !== '/research/nanobot-pill' && pathname !== '/museum' && (
             <div className={`roomscale-natural-body page-${currentTheme}`}>
               <img src="/assets/images/profile.png" className="roomscale-natural-img" alt="Ephraim Becker" />
             </div>

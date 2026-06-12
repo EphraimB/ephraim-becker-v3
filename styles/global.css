@@ -545,7 +545,7 @@ body {
   .portfolio-modal-overlay,
   .interest-modal-overlay {
     align-items: flex-start !important;
-    padding: 108px 10px 20px 10px !important; /* Pushes content below the 98px sticky mobile header mask */
+    padding: 108px 10px calc(20px + env(safe-area-inset-bottom)) 10px !important; /* Pushes content below the 98px sticky mobile header mask */
     overflow-y: auto !important;
   }
   .portfolio-modal-content,
@@ -2056,7 +2056,7 @@ body {
 
   .interest-modal-overlay {
     align-items: flex-start !important;
-    padding: 108px 10px 20px 10px !important;
+    padding: 108px 10px calc(20px + env(safe-area-inset-bottom)) 10px !important;
     overflow-y: auto !important;
   }
 
@@ -3075,7 +3075,7 @@ body {
 
   .portfolio-modal-overlay {
     align-items: flex-start !important;
-    padding: 108px 10px 20px 10px !important;
+    padding: 108px 10px calc(20px + env(safe-area-inset-bottom)) 10px !important;
     overflow-y: auto !important;
   }
 
@@ -3128,6 +3128,10 @@ body {
     display: flex !important;
     flex-direction: column !important;
     gap: 20px !important;
+  }
+
+  .portfolio-grid-deck {
+    padding-bottom: calc(30px + env(safe-area-inset-bottom)) !important;
   }
 }
 

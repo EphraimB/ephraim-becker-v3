@@ -133,10 +133,10 @@ export default function AresMuseum() {
           font-family: monospace;
         }
 
-        /* 2x2 Grid Layout for Left-to-Right Desktop flow */
+        /* 3-Column by 2-Row Grid Layout on Desktop to fit 5 plaques */
         .museum-grid-container {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
           grid-template-rows: 1fr 1fr;
           gap: 15px;
           flex: 1;
@@ -150,7 +150,7 @@ export default function AresMuseum() {
           background: rgba(4, 6, 12, 0.94) !important;
           border: 1.5px solid rgba(0, 240, 255, 0.15);
           border-radius: 10px;
-          padding: 14px 18px;
+          padding: 12px 16px;
           box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.08);
           backdrop-filter: blur(16px);
           WebkitBackdropFilter: blur(16px);
@@ -171,13 +171,13 @@ export default function AresMuseum() {
           align-items: center;
           border-bottom: 1px solid rgba(255, 255, 255, 0.08);
           padding-bottom: 6px;
-          margin-bottom: 8px;
+          margin-bottom: 6px;
           flex-shrink: 0;
         }
 
         .plaque-label {
           font-family: var(--font-tech), monospace;
-          font-size: 0.68rem;
+          font-size: 0.65rem;
           color: #ffb300;
           letter-spacing: 1px;
           font-weight: bold;
@@ -185,13 +185,13 @@ export default function AresMuseum() {
 
         .plaque-status {
           font-family: monospace;
-          font-size: 0.62rem;
+          font-size: 0.58rem;
           color: rgba(255, 255, 255, 0.45);
         }
 
         .plaque-title {
           font-family: var(--font-tech), monospace;
-          font-size: 1.05rem;
+          font-size: 0.95rem;
           color: #ffffff;
           margin: 0 0 6px 0;
           font-weight: bold;
@@ -204,8 +204,8 @@ export default function AresMuseum() {
           flex: 1;
           min-height: 0;
           font-family: var(--font-sans), sans-serif;
-          font-size: 0.9rem; /* Increased size on desktop for optimal readability */
-          line-height: 1.5;
+          font-size: 0.9rem;
+          line-height: 1.45;
           color: var(--text-primary);
           overflow: hidden;
         }
@@ -232,9 +232,9 @@ export default function AresMuseum() {
           background: rgba(2, 4, 8, 0.6);
           border: 1px solid rgba(0, 240, 255, 0.2);
           border-radius: 6px;
-          padding: 8px 12px;
+          padding: 6px 12px;
           font-family: monospace;
-          margin-top: 6px;
+          margin-top: 4px;
           flex-shrink: 0;
         }
 
@@ -280,7 +280,7 @@ export default function AresMuseum() {
         .museum-footer {
           display: flex;
           justify-content: center;
-          margin-top: 10px;
+          margin-top: 8px;
           flex-shrink: 0;
         }
 
@@ -302,12 +302,13 @@ export default function AresMuseum() {
             height: auto !important;
           }
           .plaque-card {
+            grid-column: auto !important;
             flex-shrink: 0;
             height: auto !important;
           }
           .plaque-body {
             overflow: visible !important;
-            font-size: 0.8rem !important; /* Scale text down on mobile to fit screen */
+            font-size: 0.8rem !important;
           }
           .plaque-title {
             font-size: 0.88rem !important;
@@ -331,13 +332,33 @@ export default function AresMuseum() {
         </p>
       </div>
 
-      {/* 2x2 Grid Container (Left-to-Right Order) */}
+      {/* 3-Column by 2-Row Grid Container */}
       <div className="museum-grid-container">
         
-        {/* ROW 1 LEFT: PLAQUE 1 (SEO & 2D WEB) */}
+        {/* ROW 1 LEFT: PLAQUE 1 (SCI-FI INSPIRATION) */}
         <div className="plaque-card">
           <div className="plaque-header">
-            <span className="plaque-label">// EXHIBIT 01: STRUCTURAL FOUNDATION</span>
+            <span className="plaque-label">// EXHIBIT 01: THE SCI-FI INSPIRATION</span>
+            <span className="plaque-status">[ ONLINE // STABLE ]</span>
+          </div>
+          <h4 className="plaque-title">The Sci-Fi Passion & Ares Outpost</h4>
+          <div className="plaque-body">
+            <p>
+              The journey to building this digital outpost began with a lifelong <span className="highlight-cyan">passion for science fiction</span>. Sci-fi has always been more than speculative storytelling—it is an inspiring lens through which we view human potential.
+            </p>
+            <p>
+              Choosing a Martian habitat theme for this website was a natural evolution of this passion. It transforms a standard developer portfolio into an ambient, immersive simulation of <span className="highlight-amber">Ares City</span>.
+            </p>
+            <p>
+              By placing the user inside a high-tech colony workspace (replete with HUD systems and solar clocks), the interface bridges creative sci-fi world-building with modern web engineering.
+            </p>
+          </div>
+        </div>
+
+        {/* ROW 1 CENTER: PLAQUE 2 (SEO & 2D WEB) */}
+        <div className="plaque-card">
+          <div className="plaque-header">
+            <span className="plaque-label">// EXHIBIT 02: STRUCTURAL FOUNDATION</span>
             <span className="plaque-status">[ ONLINE // STABLE ]</span>
           </div>
           <h4 className="plaque-title">Traditional 2D Web & SEO Pathways</h4>
@@ -354,10 +375,10 @@ export default function AresMuseum() {
           </div>
         </div>
 
-        {/* ROW 1 RIGHT: PLAQUE 2 (RESPONSIVE NAV) */}
+        {/* ROW 1 RIGHT: PLAQUE 3 (RESPONSIVE NAV) */}
         <div className="plaque-card">
           <div className="plaque-header">
-            <span className="plaque-label">// EXHIBIT 02: SPATIAL TRANSIT</span>
+            <span className="plaque-label">// EXHIBIT 03: SPATIAL TRANSIT</span>
             <span className="plaque-status">[ ONLINE // STABLE ]</span>
           </div>
           <h4 className="plaque-title">Responsive Tactical Navigation</h4>
@@ -374,63 +395,73 @@ export default function AresMuseum() {
           </div>
         </div>
 
-        {/* ROW 2 LEFT: PLAQUE 3 (SOLAR CLOCK & WIDGET) */}
-        <div className="plaque-card">
+        {/* ROW 2 LEFT & CENTER: PLAQUE 4 (SOLAR CLOCK & WIDGET) - SPANS 2 COLUMNS */}
+        <div className="plaque-card" style={{ gridColumn: 'span 2' }}>
           <div className="plaque-header">
-            <span className="plaque-label">// EXHIBIT 03: PLANETARY TIMEKEEPING</span>
+            <span className="plaque-label">// EXHIBIT 04: PLANETARY TIMEKEEPING</span>
             <span className="plaque-status">[ LIVE_SYNC ]</span>
           </div>
-          <h4 className="plaque-title">Ares City Solar Clock</h4>
-          <div className="plaque-body">
-            <p>
-              Martian timekeeping operates on Sols (24h 39m 35.244s). The clock tracks Clancy Martian Year 38 (epoch start Nov 12, 2024). Time is formatted as: <span className="highlight-cyan">Mars Year / Sol / 4-Digit decimal fraction</span>.
-            </p>
-            
-            {/* Telemetry Clock Widget */}
-            <div className="clock-widget-container">
-              <div className="clock-readout-main">
-                {clockData.marsYear} / {clockData.currentSol} / {clockData.decimalStr}
+          
+          <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', height: '100%', minHeight: 0 }}>
+            <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <h4 className="plaque-title" style={{ margin: 0 }}>Ares City Solar Clock</h4>
+              <div className="plaque-body" style={{ marginTop: '6px' }}>
+                <p>
+                  Martian timekeeping operates on Sols (24h 39m 35.244s). The clock tracks Clancy Martian Year 38 (epoch start Nov 12, 2024). Time is formatted as: <span className="highlight-cyan">Mars Year / Sol / 4-Digit decimal fraction</span>.
+                </p>
+                <p>
+                  Instead of translating Sols back into artificial Earth hours and minutes, the clock represents time as a telemetry ratio of Sol progress. This decoder widget calculates this Sol progress in real-time.
+                </p>
               </div>
-
-              <div className="telemetry-grid">
-                <div className="telemetry-row">
-                  <span className="telemetry-label">UTC Ref:</span>
-                  <span className="telemetry-value" style={{ fontSize: '0.48rem' }}>{clockData.utcTime.substring(5, 22)}</span>
+            </div>
+            
+            <div style={{ width: '260px', flexShrink: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              {/* Telemetry Clock Widget */}
+              <div className="clock-widget-container" style={{ margin: 0 }}>
+                <div className="clock-readout-main">
+                  {clockData.marsYear} / {clockData.currentSol} / {clockData.decimalStr}
                 </div>
 
-                <div className="telemetry-row">
-                  <span className="telemetry-label">Epoch:</span>
-                  <span className="telemetry-value">2024-11-12 UTC</span>
-                </div>
+                <div className="telemetry-grid">
+                  <div className="telemetry-row">
+                    <span className="telemetry-label">UTC Ref:</span>
+                    <span className="telemetry-value" style={{ fontSize: '0.48rem' }}>{clockData.utcTime.substring(5, 22)}</span>
+                  </div>
 
-                <div className="telemetry-row">
-                  <span className="telemetry-label">Earth Days:</span>
-                  <span className="telemetry-value">{clockData.elapsedEarthDays.toFixed(3)}</span>
-                </div>
+                  <div className="telemetry-row">
+                    <span className="telemetry-label">Epoch:</span>
+                    <span className="telemetry-value">2024-11-12 UTC</span>
+                  </div>
 
-                <div className="telemetry-row">
-                  <span className="telemetry-label">Ratio:</span>
-                  <span className="telemetry-constant">1.0275 Days/Sol</span>
-                </div>
+                  <div className="telemetry-row">
+                    <span className="telemetry-label">Earth Days:</span>
+                    <span className="telemetry-value">{clockData.elapsedEarthDays.toFixed(3)}</span>
+                  </div>
 
-                <div className="telemetry-row">
-                  <span className="telemetry-label">Total Sols:</span>
-                  <span className="telemetry-value">{clockData.totalSols.toFixed(3)}</span>
-                </div>
+                  <div className="telemetry-row">
+                    <span className="telemetry-label">Ratio:</span>
+                    <span className="telemetry-constant">1.0275 Days/Sol</span>
+                  </div>
 
-                <div className="telemetry-row">
-                  <span className="telemetry-label">Sol Fraction:</span>
-                  <span className="telemetry-value">{clockData.solFraction.toFixed(4)}</span>
+                  <div className="telemetry-row">
+                    <span className="telemetry-label">Total Sols:</span>
+                    <span className="telemetry-value">{clockData.totalSols.toFixed(3)}</span>
+                  </div>
+
+                  <div className="telemetry-row">
+                    <span className="telemetry-label">Sol Fraction:</span>
+                    <span className="telemetry-value">{clockData.solFraction.toFixed(4)}</span>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ROW 2 RIGHT: PLAQUE 4 (AI PARTNERSHIP) */}
+        {/* ROW 2 RIGHT: PLAQUE 5 (AI PARTNERSHIP) */}
         <div className="plaque-card">
           <div className="plaque-header">
-            <span className="plaque-label">// EXHIBIT 04: CO-CREATION PARADIGM</span>
+            <span className="plaque-label">// EXHIBIT 05: CO-CREATION PARADIGM</span>
             <span className="plaque-status">[ ONLINE // STABLE ]</span>
           </div>
           <h4 className="plaque-title">AI Partnership & "Vibe Coding"</h4>

@@ -120,7 +120,7 @@ export default function AresMuseum() {
           margin: 0;
           letter-spacing: 1.5px;
           text-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
-          line-height: 1.2;
+          line-height: 1.5; /* Explicit line-height to prevent vertical text clipping */
           display: flex;
           align-items: center;
           gap: 6px;
@@ -133,12 +133,12 @@ export default function AresMuseum() {
           font-family: monospace;
         }
 
-        /* 3-Column by 2-Row Grid Layout on Desktop to fit 5 plaques */
+        /* 3-Column by 2-Row Grid Layout on Desktop - all cards exactly equal size */
         .museum-grid-container {
           display: grid;
           grid-template-columns: 1fr 1fr 1fr;
           grid-template-rows: 1fr 1fr;
-          gap: 15px;
+          gap: 12px;
           flex: 1;
           min-height: 0;
           width: 100%;
@@ -177,7 +177,7 @@ export default function AresMuseum() {
 
         .plaque-label {
           font-family: var(--font-tech), monospace;
-          font-size: 0.65rem;
+          font-size: 0.68rem;
           color: #ffb300;
           letter-spacing: 1px;
           font-weight: bold;
@@ -185,18 +185,18 @@ export default function AresMuseum() {
 
         .plaque-status {
           font-family: monospace;
-          font-size: 0.58rem;
+          font-size: 0.62rem;
           color: rgba(255, 255, 255, 0.45);
         }
 
         .plaque-title {
           font-family: var(--font-tech), monospace;
-          font-size: 0.95rem;
+          font-size: 1.05rem;
           color: #ffffff;
           margin: 0 0 6px 0;
           font-weight: bold;
           flex-shrink: 0;
-          line-height: 1.2;
+          line-height: 1.4; /* Explicit line-height to prevent vertical text clipping */
           letter-spacing: 0.5px;
         }
 
@@ -232,14 +232,14 @@ export default function AresMuseum() {
           background: rgba(2, 4, 8, 0.6);
           border: 1px solid rgba(0, 240, 255, 0.2);
           border-radius: 6px;
-          padding: 6px 12px;
+          padding: 6px 10px;
           font-family: monospace;
           margin-top: 4px;
           flex-shrink: 0;
         }
 
         .clock-readout-main {
-          font-size: 1.15rem;
+          font-size: 1.1rem;
           color: #ffb300;
           text-align: center;
           padding: 2px 0;
@@ -253,13 +253,13 @@ export default function AresMuseum() {
         .telemetry-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 2px 12px;
+          gap: 2px 8px;
         }
 
         .telemetry-row {
           display: flex;
           justify-content: space-between;
-          font-size: 0.64rem;
+          font-size: 0.6rem;
           padding: 1px 0;
           border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         }
@@ -284,6 +284,19 @@ export default function AresMuseum() {
           flex-shrink: 0;
         }
 
+        /* Diagnostic List styles */
+        .diagnostic-row {
+          display: flex;
+          justify-content: space-between;
+          font-size: 0.72rem;
+          font-family: monospace;
+          padding: 4px 0;
+          border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
+        }
+        .diagnostic-row:last-child {
+          border-bottom: none;
+        }
+
         /* Responsive Mobile Layout Override */
         @media (max-width: 900px) {
           .museum-shell {
@@ -302,7 +315,6 @@ export default function AresMuseum() {
             height: auto !important;
           }
           .plaque-card {
-            grid-column: auto !important;
             flex-shrink: 0;
             height: auto !important;
           }
@@ -332,7 +344,7 @@ export default function AresMuseum() {
         </p>
       </div>
 
-      {/* 3-Column by 2-Row Grid Container */}
+      {/* 3x2 Grid Container (Symmetrical 6-Card Layout) */}
       <div className="museum-grid-container">
         
         {/* ROW 1 LEFT: PLAQUE 1 (SCI-FI INSPIRATION) */}
@@ -344,13 +356,10 @@ export default function AresMuseum() {
           <h4 className="plaque-title">The Sci-Fi Passion & Ares Outpost</h4>
           <div className="plaque-body">
             <p>
-              The journey to building this digital outpost began with a lifelong <span className="highlight-cyan">passion for science fiction</span>. Sci-fi has always been more than speculative storytelling—it is an inspiring lens through which we view human potential.
+              The journey to building this digital outpost began with a lifelong <span className="highlight-cyan">passion for science fiction</span>. Sci-fi inspires us to push human potential and reimagine technology.
             </p>
             <p>
-              Choosing a Martian habitat theme for this website was a natural evolution of this passion. It transforms a standard developer portfolio into an ambient, immersive simulation of <span className="highlight-amber">Ares City</span>.
-            </p>
-            <p>
-              By placing the user inside a high-tech colony workspace (replete with HUD systems and solar clocks), the interface bridges creative sci-fi world-building with modern web engineering.
+              Choosing a Martian habitat theme for this website was a natural evolution of this passion, transforming a standard developer portfolio into an ambient simulation of <span className="highlight-amber">Ares City</span>.
             </p>
           </div>
         </div>
@@ -364,13 +373,10 @@ export default function AresMuseum() {
           <h4 className="plaque-title">Traditional 2D Web & SEO Pathways</h4>
           <div className="plaque-body">
             <p>
-              Immersive spaces often suffer from a discoverability crisis. Portals built inside heavy 3D canvases or WebXR frameworks are <span className="highlight-cyan">invisible to planetary search engine crawlers (SEOs)</span>.
+              Immersive spaces often suffer from a discoverability crisis; portals built inside heavy 3D canvases are <span className="highlight-cyan">invisible to search engine crawlers (SEOs)</span>.
             </p>
             <p>
-              To resolve this, this site is engineered as a <span className="highlight-amber">native Next.js 2D HTML5 application</span>. Search spiders can index the citizen's portfolio archives and research files directly.
-            </p>
-            <p>
-              Overlaying absolute background canvas matrices and translucent HUD components onto a semantic document structure delivers a rich sci-fi atmosphere without sacrificing web standards or SEO discoverability.
+              To solve this, this site is engineered as a <span className="highlight-amber">native Next.js 2D HTML5 application</span>. Search spiders can index the citizen's portfolio archives and research files directly.
             </p>
           </div>
         </div>
@@ -384,81 +390,58 @@ export default function AresMuseum() {
           <h4 className="plaque-title">Responsive Tactical Navigation</h4>
           <div className="plaque-body">
             <p>
-              Designing a navigation system that aligns with a sci-fi OS console theme while functioning on both desktop monitors and mobile datapads was a major UX bottleneck. Traditional navbars and standard hamburger menus shattered the localized Martian OS illusion.
+              Designing a navigation system that aligns with a sci-fi OS console theme while remaining responsive on mobile datapads was a major UX bottleneck.
             </p>
             <p>
-              Initially, the plan was to build a <span className="highlight-cyan">fully responsive city map interface (similar to Google Maps)</span>. However, testing showed that a raw map canvas failed to respond well or remain usable across various screen sizes.
-            </p>
-            <p>
-              The perfect compromise was the development of the peeking <span className="highlight-cyan">Locator Tab</span> and a slide-out <span className="highlight-amber">list-based Tactical Map Drawer</span>. This drawer dynamically calculates and displays pressurized bike and walk transit distance/duration metrics, preserving the spatial feel without map layout breakage.
+              Initially, the plan was to build a fully responsive city map like Google Maps, but it wouldn't respond well. We found the perfect compromise with a <span className="highlight-cyan">locator tab and a slide-out, list-based map drawer</span> that kept the transit distance metrics intact.
             </p>
           </div>
         </div>
 
-        {/* ROW 2 LEFT & CENTER: PLAQUE 4 (SOLAR CLOCK & WIDGET) - SPANS 2 COLUMNS */}
-        <div className="plaque-card" style={{ gridColumn: 'span 2' }}>
+        {/* ROW 2 LEFT: PLAQUE 4 (SOLAR CLOCK & COMPACT WIDGET) */}
+        <div className="plaque-card">
           <div className="plaque-header">
             <span className="plaque-label">// EXHIBIT 04: PLANETARY TIMEKEEPING</span>
             <span className="plaque-status">[ LIVE_SYNC ]</span>
           </div>
-          
-          <div style={{ display: 'flex', flexDirection: 'row', gap: '15px', height: '100%', minHeight: 0 }}>
-            <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              <h4 className="plaque-title" style={{ margin: 0 }}>Ares City Solar Clock</h4>
-              <div className="plaque-body" style={{ marginTop: '6px' }}>
-                <p>
-                  Martian timekeeping operates on Sols (24h 39m 35.244s). The clock tracks Clancy Martian Year 38 (epoch start Nov 12, 2024). Time is formatted as: <span className="highlight-cyan">Mars Year / Sol / 4-Digit decimal fraction</span>.
-                </p>
-                <p>
-                  Instead of translating Sols back into artificial Earth hours and minutes, the clock represents time as a telemetry ratio of Sol progress. This decoder widget calculates this Sol progress in real-time.
-                </p>
-              </div>
-            </div>
+          <h4 className="plaque-title">Ares City Solar Clock</h4>
+          <div className="plaque-body">
+            <p>
+              Martian Sols last 24h 39m 35s. The clock tracks Clancy Martian Year 38 (epoch start Nov 12, 2024), formatted as: <span className="highlight-cyan">Mars Year / Sol / Decimal Sol fraction</span>.
+            </p>
             
-            <div style={{ width: '260px', flexShrink: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-              {/* Telemetry Clock Widget */}
-              <div className="clock-widget-container" style={{ margin: 0 }}>
-                <div className="clock-readout-main">
-                  {clockData.marsYear} / {clockData.currentSol} / {clockData.decimalStr}
+            {/* Compact Telemetry Clock Widget */}
+            <div className="clock-widget-container">
+              <div className="clock-readout-main">
+                {clockData.marsYear} / {clockData.currentSol} / {clockData.decimalStr}
+              </div>
+
+              <div className="telemetry-grid">
+                <div className="telemetry-row">
+                  <span className="telemetry-label">UTC Ref:</span>
+                  <span className="telemetry-value" style={{ fontSize: '0.48rem' }}>{clockData.utcTime.substring(5, 22)}</span>
                 </div>
 
-                <div className="telemetry-grid">
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">UTC Ref:</span>
-                    <span className="telemetry-value" style={{ fontSize: '0.48rem' }}>{clockData.utcTime.substring(5, 22)}</span>
-                  </div>
+                <div className="telemetry-row">
+                  <span className="telemetry-label">Total Sols:</span>
+                  <span className="telemetry-value">{clockData.totalSols.toFixed(3)}</span>
+                </div>
 
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Epoch:</span>
-                    <span className="telemetry-value">2024-11-12 UTC</span>
-                  </div>
+                <div className="telemetry-row">
+                  <span className="telemetry-label">Ratio:</span>
+                  <span className="telemetry-constant">1.0275 Days/Sol</span>
+                </div>
 
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Earth Days:</span>
-                    <span className="telemetry-value">{clockData.elapsedEarthDays.toFixed(3)}</span>
-                  </div>
-
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Ratio:</span>
-                    <span className="telemetry-constant">1.0275 Days/Sol</span>
-                  </div>
-
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Total Sols:</span>
-                    <span className="telemetry-value">{clockData.totalSols.toFixed(3)}</span>
-                  </div>
-
-                  <div className="telemetry-row">
-                    <span className="telemetry-label">Sol Fraction:</span>
-                    <span className="telemetry-value">{clockData.solFraction.toFixed(4)}</span>
-                  </div>
+                <div className="telemetry-row">
+                  <span className="telemetry-label">Sol Fraction:</span>
+                  <span className="telemetry-value">{clockData.solFraction.toFixed(4)}</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* ROW 2 RIGHT: PLAQUE 5 (AI PARTNERSHIP) */}
+        {/* ROW 2 CENTER: PLAQUE 5 (AI PARTNERSHIP) */}
         <div className="plaque-card">
           <div className="plaque-header">
             <span className="plaque-label">// EXHIBIT 05: CO-CREATION PARADIGM</span>
@@ -470,8 +453,35 @@ export default function AresMuseum() {
               This interface is the result of human-directed, AI-accelerated vibe coding. AI generated the structural frameworks, calculated the Martian epoch Sol constant delta, and plotted the initial CSS layout tokens.
             </p>
             <p>
-              The citizen then audited the mathematical logic, refined the responsive map drawers, and customized the HSL cyber-cyan theme accents. This partnership allowed rapid prototyping while preserving hand-crafted layout precision.
+              The citizen then audited the mathematical logic, refined the responsive map drawers, and customized the theme accents, preserving hand-crafted precision.
             </p>
+          </div>
+        </div>
+
+        {/* ROW 2 RIGHT: PLAQUE 6 (SYSTEM DIAGNOSTICS DECORATIVE PANEL) */}
+        <div className="plaque-card">
+          <div className="plaque-header">
+            <span className="plaque-label">// DIAGNOSTICS: HABITAT INTEGRITY</span>
+            <span className="plaque-status" style={{ color: '#00ff88' }}>[ SECURE ]</span>
+          </div>
+          <h4 className="plaque-title">Ares Outpost Diagnostics</h4>
+          <div className="plaque-body" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', height: '100%' }}>
+            <div className="diagnostic-row">
+              <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>SYS_SYNC_MODE:</span>
+              <span style={{ color: '#00f0ff', fontWeight: 'bold' }}>COCKPIT // DIRECT</span>
+            </div>
+            <div className="diagnostic-row">
+              <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>ATMOSPHERE_GRID:</span>
+              <span style={{ color: '#00ff88', fontWeight: 'bold' }}>NOMINAL // 101.3 kPa</span>
+            </div>
+            <div className="diagnostic-row">
+              <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>DOME_SHIELDING:</span>
+              <span style={{ color: '#00ff88', fontWeight: 'bold' }}>ACTIVE // 99.4%</span>
+            </div>
+            <div className="diagnostic-row">
+              <span style={{ color: 'rgba(255, 255, 255, 0.4)' }}>NEXUS_LINK_BAND:</span>
+              <span style={{ color: '#ffb300', fontWeight: 'bold' }}>SECURE // 43.8 GHz</span>
+            </div>
           </div>
         </div>
 

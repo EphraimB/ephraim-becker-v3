@@ -186,34 +186,36 @@ export default function AresMuseum() {
 
         .plaque-label {
           font-family: var(--font-tech), monospace;
-          font-size: 0.58rem;
+          font-size: 0.65rem;
           color: #ffb300;
-          letter-spacing: 0.8px;
+          letter-spacing: 1px;
           font-weight: bold;
         }
 
         .plaque-status {
           font-family: monospace;
-          font-size: 0.52rem;
-          color: rgba(255, 255, 255, 0.35);
+          font-size: 0.6rem;
+          color: rgba(255, 255, 255, 0.45);
         }
 
         .plaque-title {
           font-family: var(--font-tech), monospace;
-          font-size: 0.88rem;
+          font-size: 0.95rem;
           color: #ffffff;
           margin: 0 0 6px 0;
           font-weight: bold;
           flex-shrink: 0;
           line-height: 1.2;
+          letter-spacing: 0.5px;
         }
 
         .plaque-body {
           flex: 1;
           min-height: 0;
-          font-size: 0.72rem;
-          line-height: 1.45;
-          color: rgba(255, 255, 255, 0.8);
+          font-family: var(--font-sans), sans-serif;
+          font-size: 0.8rem;
+          line-height: 1.5;
+          color: var(--text-primary);
           overflow: hidden; /* No scrollbars within paragraph content */
         }
 
@@ -246,7 +248,7 @@ export default function AresMuseum() {
         }
 
         .clock-readout-main {
-          font-size: 1.05rem;
+          font-size: 1.15rem;
           color: #ffb300;
           text-align: center;
           padding: 2px 0;
@@ -266,13 +268,13 @@ export default function AresMuseum() {
         .telemetry-row {
           display: flex;
           justify-content: space-between;
-          font-size: 0.55rem;
+          font-size: 0.64rem;
           padding: 1px 0;
           border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         }
 
         .telemetry-label {
-          color: rgba(255, 255, 255, 0.4);
+          color: rgba(255, 255, 255, 0.55);
         }
 
         .telemetry-value {

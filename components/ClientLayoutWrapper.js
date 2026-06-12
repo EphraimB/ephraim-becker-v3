@@ -71,6 +71,18 @@ export default function ClientLayoutWrapper({ children }) {
     setMapDrawerOpen(false);
   }, [pathname]);
 
+  // Lock body scroll when drawer is open
+  useEffect(() => {
+    if (mapDrawerOpen) {
+      document.documentElement.classList.add('modal-open');
+    } else {
+      document.documentElement.classList.remove('modal-open');
+    }
+    return () => {
+      document.documentElement.classList.remove('modal-open');
+    };
+  }, [mapDrawerOpen]);
+
   // Parse location name into primary, middle, and sub-location for stacked map styling
   let primaryLoc = currentLocationName;
   let middleLoc = '';

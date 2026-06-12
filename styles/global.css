@@ -1375,6 +1375,13 @@ body {
     height: auto !important;
   }
 
+  .global-map-drawer .custom-scroll {
+    overflow-y: auto !important;
+    flex: 1 !important;
+    height: 100% !important;
+    padding-bottom: calc(80px + env(safe-area-inset-bottom)) !important;
+  }
+
   /* Keep closed locator button fixed exactly 10px below the HUD bar, staying stuck to the top while content scrolls under the header mask */
   /* Keep closed locator button styled as a compact translucent bar directly below the HUD bar that fits its content */
   .mobile-locator-btn {

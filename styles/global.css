@@ -1958,6 +1958,8 @@ body {
   box-sizing: border-box;
   width: 100%;
   display: block;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .bento-interest-card:hover .bento-interest-tag {

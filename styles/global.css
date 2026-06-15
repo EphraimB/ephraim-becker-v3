@@ -1843,13 +1843,17 @@ body {
 /* Bento Interest Card */
 .bento-interest-card {
   position: relative;
-  background: rgba(255, 255, 255, 0.02);
+  background: radial-gradient(
+    circle at 85% 25%, 
+    color-mix(in srgb, var(--interest-color, var(--color-accent)) 8%, transparent) 0%, 
+    rgba(255, 255, 255, 0.018) 65%
+  );
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 12px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-end; /* Align content to bottom */
   align-items: flex-start;
   cursor: pointer;
   width: 100%;
@@ -1865,9 +1869,13 @@ body {
 }
 
 .bento-interest-card:hover {
-  background: var(--interest-bg, rgba(255, 255, 255, 0.05));
+  background: radial-gradient(
+    circle at 85% 25%, 
+    color-mix(in srgb, var(--interest-color, var(--color-accent)) 22%, transparent) 0%, 
+    rgba(255, 255, 255, 0.045) 75%
+  );
   border-color: var(--interest-color, var(--color-accent));
-  box-shadow: 0 0 15px color-mix(in srgb, var(--interest-color, var(--color-accent)) 35%, transparent);
+  box-shadow: 0 0 15px color-mix(in srgb, var(--interest-color, var(--color-accent)) 30%, transparent);
   transform: translateY(-2px);
 }
 
@@ -1883,6 +1891,7 @@ body {
   border-color: rgba(255, 255, 255, 0.12);
   border-style: solid;
   transition: border-color var(--transition-fast);
+  z-index: 2;
 }
 
 .bento-corner--tl {
@@ -1913,15 +1922,25 @@ body {
   border-color: var(--interest-color, var(--color-accent));
 }
 
-/* Emojis */
-.bento-interest-icon {
-  font-size: 1.35rem;
-  line-height: 1;
-  transition: transform var(--transition-fast);
+/* Bento card inline icon wrapper */
+.bento-card-icon-wrapper {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  width: 38px;
+  height: 38px;
+  color: var(--interest-color, var(--color-accent));
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  transition: opacity var(--transition-fast), transform var(--transition-fast), filter var(--transition-fast);
+  pointer-events: none;
+  z-index: 1;
 }
 
-.bento-interest-card:hover .bento-interest-icon {
-  transform: scale(1.15);
+.bento-interest-card:hover .bento-card-icon-wrapper {
+  opacity: 0.60;
+  transform: scale(1.1) rotate(5deg);
+  filter: drop-shadow(0 0 5px var(--interest-color, var(--color-accent)));
 }
 
 /* Tags */
@@ -1933,6 +1952,8 @@ body {
   text-transform: uppercase;
   margin-top: auto;
   transition: color var(--transition-fast);
+  position: relative;
+  z-index: 2;
 }
 
 .bento-interest-card:hover .bento-interest-tag {
@@ -1948,6 +1969,7 @@ body {
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.2);
   transition: all var(--transition-fast);
+  z-index: 2;
 }
 
 .bento-interest-card:hover .bento-chevron {

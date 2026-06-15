@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import INTERESTS from '../data/interests.json';
 import PERSONAL from '../data/personal.json';
 import InterestVisuals from '../components/InterestVisuals';
+import InterestIconSvg from '../components/InterestIconSvg';
 
 
 export default function AresDashboard() {
@@ -147,7 +148,10 @@ export default function AresDashboard() {
                   <span className="bento-corner bento-corner--bl"></span>
                   <span className="bento-corner bento-corner--br"></span>
 
-                  <span className="bento-interest-icon">{interest.icon}</span>
+                  {/* Clean inline SVG icon in the top-right */}
+                  <div className="bento-card-icon-wrapper">
+                    <InterestIconSvg type={interest.id} />
+                  </div>
                   <span className="bento-interest-tag">{interest.tag}</span>
                   <span className="bento-chevron">➔</span>
                 </button>

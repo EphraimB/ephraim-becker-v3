@@ -1954,6 +1954,10 @@ body {
   transition: color var(--transition-fast);
   position: relative;
   z-index: 2;
+  padding-right: 18px; /* Leave space to prevent collision with chevron */
+  box-sizing: border-box;
+  width: 100%;
+  display: block;
 }
 
 .bento-interest-card:hover .bento-interest-tag {

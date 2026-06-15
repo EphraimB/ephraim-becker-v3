@@ -130,15 +130,26 @@ export default function AresDashboard() {
           <div className="dashboard-interests-block">
             <span className="dashboard-section-label">// CLASSIFIED INTEREST REGISTRY</span>
             
-            <div className="left-card-column dashboard-interests-list">
+            <div className="dashboard-interests-list">
               {INTERESTS.map((interest) => (
                 <button
                   key={interest.id}
                   onClick={() => setActiveInterest(interest)}
-                  className="hud-badge dashboard-left-col-badge-btn"
+                  className="bento-interest-card"
+                  style={{
+                    '--interest-color': interest.themeColor || '#00f0ff',
+                    '--interest-bg': interest.themeBg || 'rgba(0, 240, 255, 0.08)',
+                  }}
                 >
-                  <span>[{interest.tag}]</span>
-                  <span className="interest-icon-span">{interest.icon}</span>
+                  {/* Tech corners */}
+                  <span className="bento-corner bento-corner--tl"></span>
+                  <span className="bento-corner bento-corner--tr"></span>
+                  <span className="bento-corner bento-corner--bl"></span>
+                  <span className="bento-corner bento-corner--br"></span>
+
+                  <span className="bento-interest-icon">{interest.icon}</span>
+                  <span className="bento-interest-tag">{interest.tag}</span>
+                  <span className="bento-chevron">➔</span>
                 </button>
               ))}
             </div>

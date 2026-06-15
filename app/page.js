@@ -6,7 +6,31 @@ import INTERESTS from '../data/interests.json';
 import PERSONAL from '../data/personal.json';
 import InterestVisuals from '../components/InterestVisuals';
 import InterestIconSvg from '../components/InterestIconSvg';
+import SocialIconSvg from '../components/SocialIconSvg';
 
+const getBrandColor = (name) => {
+  switch (name.toLowerCase()) {
+    case 'github': return '#22c55e';
+    case 'linkedin': return '#00a2ff';
+    case 'x': return '#f3f4f6';
+    case 'youtube': return '#ef4444';
+    case 'instagram': return '#ec4899';
+    case 'facebook': return '#3b82f6';
+    default: return '#00f0ff';
+  }
+};
+
+const getBrandColorRgb = (name) => {
+  switch (name.toLowerCase()) {
+    case 'github': return '34, 197, 94';
+    case 'linkedin': return '0, 162, 255';
+    case 'x': return '243, 244, 246';
+    case 'youtube': return '239, 68, 68';
+    case 'instagram': return '236, 72, 153';
+    case 'facebook': return '59, 130, 246';
+    default: return '0, 240, 255';
+  }
+};
 
 export default function AresDashboard() {
   const birthDate = new Date(PERSONAL.birthDate);
@@ -110,8 +134,15 @@ export default function AresDashboard() {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="social-link-port dashboard-social-link"
+                style={{
+                  '--brand-color': getBrandColor(social.name),
+                  '--brand-color-rgb': getBrandColorRgb(social.name)
+                }}
               >
-                {social.name}
+                <span className="social-icon-wrapper">
+                  <SocialIconSvg brand={social.name.toLowerCase()} />
+                </span>
+                <span className="social-name-text">{social.name}</span>
               </a>
             ))}
           </div>

@@ -87,8 +87,8 @@ export default function InterestIconSvg({ type }) {
           width="100%"
           height="100%"
         >
-          <path d="M3 21C11.5 21 21 11.5 21 3" />
-          <path d="M3 21C3 12.5 12.5 3 21 3" />
+          <path d="M3 21C14.5 21 21 14.5 21 3" />
+          <path d="M3 21C3 9.5 9.5 3 21 3" />
           <line x1="7.5" y1="16.5" x2="16.5" y2="7.5" />
           <line x1="10.5" y1="11" x2="13.5" y2="14" />
           <line x1="12" y1="9.5" x2="15" y2="12.5" />

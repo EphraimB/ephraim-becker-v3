@@ -7,7 +7,7 @@ export default function InterestVisuals({ svgType }) {
 
   return (
     <img
-      src={`${SVG_BASE}${svgType}.svg`}
+      src={`${SVG_BASE}${svgType}.svg?v=3`}
       alt={svgType}
       width="100%"
       style={{ display: 'block', borderRadius: '8px' }}

@@ -342,7 +342,7 @@ export default function CityGridMap({ isDrawer = false }) {
   };
 
 
-  // ================= BLUEPRINT HOLOGRAPHIC BACKGROUND SVG =================
+  // ================= ARES CITY HABITAT BACKGROUND IMAGE =================
   const renderBlueprintBackgroundMap = () => {
     return (
       <div
@@ -350,7 +350,7 @@ export default function CityGridMap({ isDrawer = false }) {
         style={{
           position: 'absolute',
           inset: 0,
-          opacity: 0.08,
+          opacity: 0.18,
           pointerEvents: 'none',
           zIndex: 0,
           overflow: 'hidden',
@@ -358,8 +358,8 @@ export default function CityGridMap({ isDrawer = false }) {
         }}
       >
         <img
-          src="/assets/svgs/citygrid_blueprint.svg"
-          alt=""
+          src="/assets/images/backgrounds/ares-city-habitat.png"
+          alt="Ares City Habitat"
           width="100%"
           height="100%"
           style={{ display: 'block', objectFit: 'cover', position: 'absolute', inset: 0 }}
@@ -367,6 +367,7 @@ export default function CityGridMap({ isDrawer = false }) {
       </div>
     );
   };
+
 
 
   // ================= MAIN LAYOUT =================

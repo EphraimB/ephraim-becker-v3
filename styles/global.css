@@ -1505,6 +1505,22 @@ body {
   transform: scale(0.985);
 }
 
+.touch-card:hover .sector-card-icon,
+.touch-card-sublink:hover .sector-card-icon {
+  animation: sector-icon-pulse 1s ease-in-out infinite alternate;
+}
+
+@keyframes sector-icon-pulse {
+  from {
+    transform: scale(1) rotate(0deg);
+  }
+  to {
+    transform: scale(1.15) rotate(3deg);
+    filter: drop-shadow(0 0 5px currentColor);
+  }
+}
+
+
 /* Vatican-Inspired Mars Map Keyframe Animations */
 @keyframes maglev-pulse {
   from { stroke-dashoffset: 0; }

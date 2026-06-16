@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import NavIconSvg from './NavIconSvg';
 
@@ -20,7 +20,6 @@ const COORDS = {
 };
 
 // Realistic walking speed and distance constants
-// Average human walking speed is typically estimated around 1.35 m/s to 1.4 m/s (4.8 - 5.0 km/h)
 const WALK_SPEED = 1.35; // meters per second walking speed
 const WALK_DISTANCE = 50; // meters (indoor hallway walk)
 
@@ -33,12 +32,110 @@ const formatDistance = (meters) => {
   return `${meters}m`;
 };
 
+// Dynamic Day/Night Background calculation based on Sol fraction
+const getDynamicBackground = (fraction) => {
+  let t = 0;
+  if (fraction >= 0.2 && fraction < 0.3) {
+    t = (fraction - 0.2) / 0.1;
+  } else if (fraction >= 0.3 && fraction < 0.7) {
+    t = 1;
+  } else if (fraction >= 0.7 && fraction < 0.8) {
+    t = 1 - (fraction - 0.7) / 0.1;
+  } else {
+    t = 0;
+  }
+
+  // Day colors: dusty Martian red (RGB: [42, 14, 10])
+  // Night colors: deep dark blue/violet (RGB: [8, 8, 28])
+  const r = Math.round(8 + t * (42 - 8));
+  const g = Math.round(8 + t * (14 - 8));
+  const b = Math.round(28 + t * (10 - 28));
+
+  // Secondary gradient color
+  const r2 = Math.round(13 + t * (46 - 13));
+  const g2 = Math.round(13 + t * (16 - 13));
+  const b2 = Math.round(43 + t * (12 - 43));
+
+  return `linear-gradient(135deg, rgb(${r}, ${g}, ${b}) 0%, rgb(${r2}, ${g2}, ${b2}) 100%)`;
+};
+
+// Sci-Fi Scrambled text component
+function ScrambledText({ text, animate }) {
+  const [displayText, setDisplayText] = useState(text);
+  const intervalRef = useRef(null);
+  const frameRef = useRef(0);
+
+  useEffect(() => {
+    if (!animate) {
+      setDisplayText(text);
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      return;
+    }
+
+    const chars = 'XXYYZZ0123456789%@#$&*+=?';
+    const duration = 25;
+    const totalFrames = 20;
+    frameRef.current = 0;
+
+    intervalRef.current = setInterval(() => {
+      frameRef.current += 1;
+      const progress = frameRef.current / totalFrames;
+
+      if (progress >= 1) {
+        setDisplayText(text);
+        clearInterval(intervalRef.current);
+        return;
+      }
+
+      const scrambled = text
+        .split('')
+        .map((char, index) => {
+          if (char === ' ') return ' ';
+          const charProgress = index / text.length;
+          if (charProgress < progress) {
+            return char;
+          }
+          if (/\d/.test(char)) {
+            return Math.floor(Math.random() * 10).toString();
+          }
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join('');
+
+      setDisplayText(scrambled);
+    }, duration);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [animate, text]);
+
+  return <span>{displayText}</span>;
+}
+
 export default function CityGridMap({ isDrawer = false }) {
   const router = useRouter();
   const pathname = usePathname();
   const [mapHoverNode, setMapHoverNode] = useState(null);
   const [academicSyncActive, setAcademicSyncActive] = useState(false);
   const [isDistrictExpanded, setIsDistrictExpanded] = useState(true);
+  const [hoveredSectorId, setHoveredSectorId] = useState(null);
+  const [solFraction, setSolFraction] = useState(0.5);
+
+  useEffect(() => {
+    function updateTime() {
+      const now = new Date();
+      const my38StartUTC = Date.UTC(2024, 10, 12, 0, 0, 0);
+      const timeDeltaMs = now.getTime() - my38StartUTC;
+      const deltaEarthDays = timeDeltaMs / (1000 * 60 * 60 * 24);
+      const totalSolsSinceMY38 = deltaEarthDays / 1.02749125;
+      const solsElapsed = Math.max(0, totalSolsSinceMY38);
+      setSolFraction(solsElapsed - Math.floor(solsElapsed));
+    }
+    updateTime();
+    const interval = setInterval(updateTime, 10000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Helper to check if a route is currently active
   const isRouteActive = (route) => pathname === route;
@@ -51,7 +148,7 @@ export default function CityGridMap({ isDrawer = false }) {
   };
 
   // 2. Real-Time Spatial Biking Distance & Time Calculator (Cycle at 5.0 m/s with 10x spatial coordinate scale for realism)
-  const getBikingDetails = (toPathOrKey) => {
+  const getBikingDetails = (toPathOrKey, animate) => {
     const fromPath = pathname || '/';
     const from = COORDS[fromPath] || COORDS['/'];
     const to = COORDS[toPathOrKey] || COORDS['/'];
@@ -62,7 +159,7 @@ export default function CityGridMap({ isDrawer = false }) {
           <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
             <NavIconSvg type="pin" />
           </span>
-          CURRENT SECTOR / ACTIVE NEXUS
+          <ScrambledText text="CURRENT SECTOR / ACTIVE NEXUS" animate={animate} />
         </span>
       );
     }
@@ -73,7 +170,7 @@ export default function CityGridMap({ isDrawer = false }) {
           <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
             <NavIconSvg type="pin" />
           </span>
-          CURRENT SECTOR / ACTIVE NEXUS
+          <ScrambledText text="CURRENT SECTOR / ACTIVE NEXUS" animate={animate} />
         </span>
       );
     }
@@ -84,12 +181,13 @@ export default function CityGridMap({ isDrawer = false }) {
       const mins = Math.floor(walkTimeSeconds / 60);
       const secs = walkTimeSeconds % 60;
       const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
+      const walkText = `${formatDistance(WALK_DISTANCE)} walk from ${from.name} (${timeStr} indoor hallway walk)`;
       return (
         <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
           <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
             <NavIconSvg type="walk" />
           </span>
-          {formatDistance(WALK_DISTANCE)} walk from {from.name} ({timeStr} indoor hallway walk)
+          <ScrambledText text={walkText} animate={animate} />
         </span>
       );
     }
@@ -106,13 +204,14 @@ export default function CityGridMap({ isDrawer = false }) {
 
     const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
     const fromName = from.name || 'ACTIVE BASE';
+    const bikeText = `${formatDistance(distance)} cycle from ${fromName} (${timeStr} bike lane transit)`;
 
     return (
       <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
         <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
           <NavIconSvg type="bike" />
         </span>
-        {formatDistance(distance)} cycle from {fromName} ({timeStr} bike lane transit)
+        <ScrambledText text={bikeText} animate={animate} />
       </span>
     );
   };
@@ -282,11 +381,12 @@ export default function CityGridMap({ isDrawer = false }) {
         height: '100%',
         flex: 1,
         minHeight: 0,
-        background: '#020306',
+        background: getDynamicBackground(solFraction),
         color: '#ffffff',
         position: 'relative',
         boxSizing: 'border-box',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        transition: 'background 1.5s ease-in-out'
       }}
     >
       {/* 1. Immersive holographic map background blueprint */}
@@ -366,8 +466,14 @@ export default function CityGridMap({ isDrawer = false }) {
                   handleTeleport(sector.route);
                 }
               }}
-              onMouseEnter={() => setMapHoverNode(sector.title)}
-              onMouseLeave={() => setMapHoverNode(null)}
+              onMouseEnter={() => {
+                setMapHoverNode(sector.title);
+                setHoveredSectorId(sector.id);
+              }}
+              onMouseLeave={() => {
+                setMapHoverNode(null);
+                setHoveredSectorId(null);
+              }}
               className="touch-card"
               style={{
                 background: 'rgba(4, 6, 12, 0.72)',
@@ -407,7 +513,7 @@ export default function CityGridMap({ isDrawer = false }) {
               {/* Title & Redirection Target Row */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <span style={{ fontFamily: 'monospace, var(--font-tech)', fontSize: '0.86rem', color: '#ffffff', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ width: '18px', height: '18px', display: 'inline-block', flexShrink: 0, color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.45)' }}>
+                  <span className="sector-card-icon" style={{ width: '18px', height: '18px', display: 'inline-block', flexShrink: 0, color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
                     <NavIconSvg type={sector.icon} />
                   </span>
                   {sector.title}
@@ -431,7 +537,7 @@ export default function CityGridMap({ isDrawer = false }) {
                 }}
               >
                 {/* Dynamically calculated pressurized bike commutes */}
-                {getBikingDetails(sector.route || 'academics')}
+                {getBikingDetails(sector.route || 'academics', hoveredSectorId === sector.id)}
               </div>
 
               {/* Sector Description */}
@@ -464,6 +570,7 @@ export default function CityGridMap({ isDrawer = false }) {
                     onClick={() => {
                       handleTeleport('/park');
                     }}
+                    className="touch-card-sublink"
                     style={{
                       padding: '4px 8px',
                       fontSize: '0.65rem',
@@ -480,7 +587,7 @@ export default function CityGridMap({ isDrawer = false }) {
                     }}
                   >
                     <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/park' ? '#00ff88' : 'rgba(255, 255, 255, 0.45)' }}>
+                      <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/park' ? '#00ff88' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
                         <NavIconSvg type="pin" />
                       </span>
                       Park Entrance Plaza
@@ -493,6 +600,7 @@ export default function CityGridMap({ isDrawer = false }) {
                     onClick={() => {
                       setIsDistrictExpanded(!isDistrictExpanded);
                     }}
+                    className="touch-card-sublink"
                     style={{
                       padding: '4px 8px',
                       fontSize: '0.65rem',
@@ -511,7 +619,7 @@ export default function CityGridMap({ isDrawer = false }) {
                   >
                     <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span>{isDistrictExpanded ? '▼' : '▶'}</span>
-                      <span style={{ width: '14px', height: '14px', display: 'inline-block', flexShrink: 0, color: '#00ff88' }}>
+                      <span className="sector-card-icon" style={{ width: '14px', height: '14px', display: 'inline-block', flexShrink: 0, color: '#00ff88', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
                         <NavIconSvg type="infinity" />
                       </span>
                       Neurodiversity Lawn
@@ -536,6 +644,7 @@ export default function CityGridMap({ isDrawer = false }) {
                             onClick={() => {
                               handleTeleport(subSector.route);
                             }}
+                            className="touch-card-sublink"
                             style={{
                               padding: '4px 8px',
                               fontSize: '0.65rem',
@@ -552,7 +661,7 @@ export default function CityGridMap({ isDrawer = false }) {
                             }}
                           >
                             <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                              <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: isSubActive ? '#00ff88' : 'rgba(255, 255, 255, 0.45)' }}>
+                              <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: isSubActive ? '#00ff88' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
                                 <NavIconSvg type={subSector.icon} />
                               </span>
                               {subSector.label}
@@ -591,6 +700,7 @@ export default function CityGridMap({ isDrawer = false }) {
                     onClick={() => {
                       handleTeleport('/research');
                     }}
+                    className="touch-card-sublink"
                     style={{
                       padding: '4px 8px',
                       fontSize: '0.65rem',
@@ -607,7 +717,7 @@ export default function CityGridMap({ isDrawer = false }) {
                     }}
                   >
                     <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)' }}>
+                      <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
                         <NavIconSvg type="pin" />
                       </span>
                       Lab Entrance{pathname === '/research/nanobot-pill' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}
@@ -624,6 +734,7 @@ export default function CityGridMap({ isDrawer = false }) {
                     onClick={() => {
                       handleTeleport('/research/nanobot-pill');
                     }}
+                    className="touch-card-sublink"
                     style={{
                       padding: '4px 8px',
                       fontSize: '0.65rem',
@@ -640,7 +751,7 @@ export default function CityGridMap({ isDrawer = false }) {
                     }}
                   >
                     <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research/nanobot-pill' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)' }}>
+                      <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research/nanobot-pill' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
                         <NavIconSvg type="brain" />
                       </span>
                       BCI Nanobot Pill Bay{pathname === '/research' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}

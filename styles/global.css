@@ -1808,6 +1808,44 @@ body {
   transition: transform 0.3s ease;
 }
 
+.social-icon-mask {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
+}
+
+.social-icon-mask-github {
+  -webkit-mask-image: url('/assets/svgs/github.svg');
+  mask-image: url('/assets/svgs/github.svg');
+}
+.social-icon-mask-linkedin {
+  -webkit-mask-image: url('/assets/svgs/linkedin.svg');
+  mask-image: url('/assets/svgs/linkedin.svg');
+}
+.social-icon-mask-x {
+  -webkit-mask-image: url('/assets/svgs/x.svg');
+  mask-image: url('/assets/svgs/x.svg');
+}
+.social-icon-mask-youtube {
+  -webkit-mask-image: url('/assets/svgs/youtube.svg');
+  mask-image: url('/assets/svgs/youtube.svg');
+}
+.social-icon-mask-instagram {
+  -webkit-mask-image: url('/assets/svgs/instagram.svg');
+  mask-image: url('/assets/svgs/instagram.svg');
+}
+.social-icon-mask-facebook {
+  -webkit-mask-image: url('/assets/svgs/facebook.svg');
+  mask-image: url('/assets/svgs/facebook.svg');
+}
+
 .dashboard-social-link .social-name-text {
   font-family: var(--font-tech), monospace;
   letter-spacing: 1px;

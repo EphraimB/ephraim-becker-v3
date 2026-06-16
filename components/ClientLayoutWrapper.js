@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import HudBar from './HudBar';
 import CityGridMap from './CityGridMap';
+import NavIconSvg from './NavIconSvg';
 
 export default function ClientLayoutWrapper({ children }) {
   const pathname = usePathname();
@@ -129,7 +130,12 @@ export default function ClientLayoutWrapper({ children }) {
       >
         <span className="locator-pulse-light"></span>
         <div className="layout-name-stack">
-          <span className="locator-location-name">📍 {primaryLoc}</span>
+          <span className="locator-location-name" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+            <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
+              <NavIconSvg type="pin" />
+            </span>
+            {primaryLoc}
+          </span>
           {middleLoc && (
             <span className="locator-middle-name locator-middle-name--override">
               ↳ {middleLoc}

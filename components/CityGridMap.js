@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
+import NavIconSvg from './NavIconSvg';
 
 const COORDS = {
   '/': { x: 0, y: 0, name: 'CITIZEN SUITE' },
@@ -56,11 +57,25 @@ export default function CityGridMap({ isDrawer = false }) {
     const to = COORDS[toPathOrKey] || COORDS['/'];
 
     if (fromPath === toPathOrKey) {
-      return '[📍 CURRENT SECTOR / ACTIVE NEXUS]';
+      return (
+        <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
+            <NavIconSvg type="pin" />
+          </span>
+          CURRENT SECTOR / ACTIVE NEXUS
+        </span>
+      );
     }
 
     if (toPathOrKey === '/park' && (fromPath === '/park' || fromPath.startsWith('/neurodiversity'))) {
-      return '[📍 CURRENT SECTOR / ACTIVE NEXUS]';
+      return (
+        <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
+            <NavIconSvg type="pin" />
+          </span>
+          CURRENT SECTOR / ACTIVE NEXUS
+        </span>
+      );
     }
 
     if ((fromPath === '/research' && toPathOrKey === '/research/nanobot-pill') || 
@@ -69,7 +84,14 @@ export default function CityGridMap({ isDrawer = false }) {
       const mins = Math.floor(walkTimeSeconds / 60);
       const secs = walkTimeSeconds % 60;
       const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
-      return `🏃 ${formatDistance(WALK_DISTANCE)} walk from ${from.name} (${timeStr} indoor hallway walk)`;
+      return (
+        <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+          <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
+            <NavIconSvg type="walk" />
+          </span>
+          {formatDistance(WALK_DISTANCE)} walk from {from.name} ({timeStr} indoor hallway walk)
+        </span>
+      );
     }
 
     const dx = to.x - from.x;
@@ -85,7 +107,14 @@ export default function CityGridMap({ isDrawer = false }) {
     const timeStr = mins > 0 ? `${mins}m ${secs.toString().padStart(2, '0')}s` : `${secs}s`;
     const fromName = from.name || 'ACTIVE BASE';
 
-    return `🚲 ${formatDistance(distance)} cycle from ${fromName} (${timeStr} bike lane transit)`;
+    return (
+      <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+        <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
+          <NavIconSvg type="bike" />
+        </span>
+        {formatDistance(distance)} cycle from {fromName} ({timeStr} bike lane transit)
+      </span>
+    );
   };
 
   // Sector Themes for HUD Stack
@@ -97,7 +126,7 @@ export default function CityGridMap({ isDrawer = false }) {
       route: '/',
       color: '#ff5722',
       rgb: '255, 87, 34',
-      icon: '🏠',
+      icon: 'suite',
       desc: 'Central colony command penthouse'
     },
     {
@@ -107,7 +136,7 @@ export default function CityGridMap({ isDrawer = false }) {
       route: '/portfolio',
       color: '#c259ff',
       rgb: '194, 89, 255',
-      icon: '📂',
+      icon: 'portfolio',
       desc: 'Retrospective engineering files'
     },
     {
@@ -117,7 +146,7 @@ export default function CityGridMap({ isDrawer = false }) {
       route: '/research',
       color: '#ffb300',
       rgb: '255, 179, 0',
-      icon: '🔬',
+      icon: 'research',
       desc: 'Speculative quantum engineering & future colony concepts'
     },
     {
@@ -127,7 +156,7 @@ export default function CityGridMap({ isDrawer = false }) {
       route: '/museum',
       color: '#00f0ff',
       rgb: '0, 240, 255',
-      icon: '🏛️',
+      icon: 'museum',
       desc: 'Colony history & website engineering blueprints'
     },
   ];
@@ -377,8 +406,11 @@ export default function CityGridMap({ isDrawer = false }) {
 
               {/* Title & Redirection Target Row */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                <span style={{ fontFamily: 'monospace, var(--font-tech)', fontSize: '0.86rem', color: '#ffffff', fontWeight: 'bold' }}>
-                  {sector.icon} {sector.title}
+                <span style={{ fontFamily: 'monospace, var(--font-tech)', fontSize: '0.86rem', color: '#ffffff', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span style={{ width: '18px', height: '18px', display: 'inline-block', flexShrink: 0, color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.45)' }}>
+                    <NavIconSvg type={sector.icon} />
+                  </span>
+                  {sector.title}
                 </span>
                 <span style={{ fontSize: '0.58rem', color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.4)', fontFamily: 'monospace', fontWeight: 600 }}>
                   {isAcad ? (academicSyncActive ? '[TAP TO BREAK SYNC]' : '[TAP TO SYNC DATA]') : (isCurrentActive ? '[📍 CURRENT LOCATION]' : '[➔ TELEPORT]')}
@@ -447,7 +479,12 @@ export default function CityGridMap({ isDrawer = false }) {
                       transition: 'all 0.2s'
                     }}
                   >
-                    <span>📍 Park Entrance Plaza</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/park' ? '#00ff88' : 'rgba(255, 255, 255, 0.45)' }}>
+                        <NavIconSvg type="pin" />
+                      </span>
+                      Park Entrance Plaza
+                    </span>
                     {pathname === '/park' && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
                   </div>
 
@@ -472,7 +509,13 @@ export default function CityGridMap({ isDrawer = false }) {
                       fontWeight: 'bold'
                     }}
                   >
-                    <span>{isDistrictExpanded ? '▼' : '▶'} ∞ Neurodiversity Lawn</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span>{isDistrictExpanded ? '▼' : '▶'}</span>
+                      <span style={{ width: '14px', height: '14px', display: 'inline-block', flexShrink: 0, color: '#00ff88' }}>
+                        <NavIconSvg type="infinity" />
+                      </span>
+                      Neurodiversity Lawn
+                    </span>
                     <span style={{ fontSize: '0.52rem', color: 'rgba(0, 255, 136, 0.6)' }}>[ PRIDE HUB ]</span>
                   </div>
 
@@ -480,11 +523,11 @@ export default function CityGridMap({ isDrawer = false }) {
                   {isDistrictExpanded && (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', paddingLeft: '12px', borderLeft: '1px dashed rgba(0, 255, 136, 0.2)' }}>
                       {[
-                        { label: '🛰️ District Welcome Hub', route: '/neurodiversity' },
-                        { label: '📡 Comms Grove & Bridges', route: '/neurodiversity/comms-grove' },
-                        { label: '🌿 Sensory Garden Biome', route: '/neurodiversity/sensory-garden' },
-                        { label: '🌌 Synaptic Map Pavilion', route: '/neurodiversity/lexicon-pavilion' },
-                        { label: '👥 Community Hearth Campfire', route: '/neurodiversity/meetup-campfire' }
+                        { label: 'District Welcome Hub', route: '/neurodiversity', icon: 'satellite' },
+                        { label: 'Comms Grove & Bridges', route: '/neurodiversity/comms-grove', icon: 'dish' },
+                        { label: 'Sensory Garden Biome', route: '/neurodiversity/sensory-garden', icon: 'leaf' },
+                        { label: 'Synaptic Map Pavilion', route: '/neurodiversity/lexicon-pavilion', icon: 'galaxy' },
+                        { label: 'Community Hearth Campfire', route: '/neurodiversity/meetup-campfire', icon: 'campfire' }
                       ].map((subSector) => {
                         const isSubActive = pathname === subSector.route;
                         return (
@@ -508,7 +551,12 @@ export default function CityGridMap({ isDrawer = false }) {
                               transition: 'all 0.15s'
                             }}
                           >
-                            <span>{subSector.label}</span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: isSubActive ? '#00ff88' : 'rgba(255, 255, 255, 0.45)' }}>
+                                <NavIconSvg type={subSector.icon} />
+                              </span>
+                              {subSector.label}
+                            </span>
                             {isSubActive && <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>}
                           </div>
                         );
@@ -558,7 +606,12 @@ export default function CityGridMap({ isDrawer = false }) {
                       transition: 'all 0.15s'
                     }}
                   >
-                    <span>📍 Lab Entrance{pathname === '/research/nanobot-pill' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)' }}>
+                        <NavIconSvg type="pin" />
+                      </span>
+                      Lab Entrance{pathname === '/research/nanobot-pill' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}
+                    </span>
                     {pathname === '/research' ? (
                       <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>
                     ) : (
@@ -586,7 +639,12 @@ export default function CityGridMap({ isDrawer = false }) {
                       transition: 'all 0.15s'
                     }}
                   >
-                    <span>🧠 BCI Nanobot Pill Bay{pathname === '/research' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}</span>
+                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                      <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research/nanobot-pill' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)' }}>
+                        <NavIconSvg type="brain" />
+                      </span>
+                      BCI Nanobot Pill Bay{pathname === '/research' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}
+                    </span>
                     {pathname === '/research/nanobot-pill' ? (
                       <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>
                     ) : (

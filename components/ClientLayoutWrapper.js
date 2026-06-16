@@ -152,6 +152,7 @@ export default function ClientLayoutWrapper({ children }) {
 
       {/* Slide-out Tactical Map Drawer overlay (Universal across all pages, desktop & mobile) */}
       <div className={`global-map-drawer ${mapDrawerOpen ? 'drawer-active' : ''}`}>
+        <div className="global-map-drawer-seal" />
         
         {/* Drawer header close button */}
         <div className="global-map-drawer-close-bar">

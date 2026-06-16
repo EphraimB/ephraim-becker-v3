@@ -137,14 +137,19 @@ export default function CityGridMap({ isDrawer = false }) {
     return () => clearInterval(interval);
   }, []);
 
+  const [chargingRoute, setChargingRoute] = useState(null);
+
   // Helper to check if a route is currently active
   const isRouteActive = (route) => pathname === route;
 
   // Teleportation navigator
   const handleTeleport = (route) => {
-    if (route) {
+    if (!route || chargingRoute) return;
+    setChargingRoute(route);
+    setTimeout(() => {
       router.push(route);
-    }
+      setChargingRoute(null);
+    }, 300);
   };
 
   // 2. Real-Time Spatial Biking Distance & Time Calculator (Cycle at 5.0 m/s with 10x spatial coordinate scale for realism)
@@ -483,6 +488,7 @@ export default function CityGridMap({ isDrawer = false }) {
                 padding: '14px 16px',
                 cursor: 'pointer',
                 position: 'relative',
+                overflow: 'hidden',
                 display: 'flex',
                 flexDirection: 'column',
                 gap: '4px',
@@ -491,6 +497,16 @@ export default function CityGridMap({ isDrawer = false }) {
                 WebkitBackdropFilter: 'blur(5px)'
               }}
             >
+              {/* Teleport Charge Overlay */}
+              {chargingRoute === sector.route && (
+                <div
+                  className="teleport-charge-overlay"
+                  style={{
+                    background: `rgba(${sector.rgb}, 0.25)`,
+                    boxShadow: `inset 0 0 20px rgba(${sector.rgb}, 0.5)`
+                  }}
+                />
+              )}
               {/* Header Row */}
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontFamily: 'monospace', fontSize: '0.62rem', color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.45)', fontWeight: 'bold', letterSpacing: '0.5px' }}>
@@ -714,9 +730,21 @@ export default function CityGridMap({ isDrawer = false }) {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       cursor: 'pointer',
-                      transition: 'all 0.15s'
+                      transition: 'all 0.15s',
+                      position: 'relative',
+                      overflow: 'hidden'
                     }}
                   >
+                    {/* Teleport Charge Overlay */}
+                    {chargingRoute === '/research' && (
+                      <div
+                        className="teleport-charge-overlay"
+                        style={{
+                          background: `rgba(${sector.rgb}, 0.25)`,
+                          boxShadow: `inset 0 0 10px rgba(${sector.rgb}, 0.4)`
+                        }}
+                      />
+                    )}
                     <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
                         <NavIconSvg type="pin" />
@@ -748,9 +776,21 @@ export default function CityGridMap({ isDrawer = false }) {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                       cursor: 'pointer',
-                      transition: 'all 0.15s'
+                      transition: 'all 0.15s',
+                      position: 'relative',
+                      overflow: 'hidden'
                     }}
                   >
+                    {/* Teleport Charge Overlay */}
+                    {chargingRoute === '/research/nanobot-pill' && (
+                      <div
+                        className="teleport-charge-overlay"
+                        style={{
+                          background: `rgba(${sector.rgb}, 0.25)`,
+                          boxShadow: `inset 0 0 10px rgba(${sector.rgb}, 0.4)`
+                        }}
+                      />
+                    )}
                     <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                       <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research/nanobot-pill' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
                         <NavIconSvg type="brain" />

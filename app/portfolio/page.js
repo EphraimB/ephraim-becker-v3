@@ -28,6 +28,7 @@ export default function PortfolioDome() {
   const [downloadDropdownOpen, setDownloadDropdownOpen] = useState(false);
   const [vibeCodedOnly, setVibeCodedOnly] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [catDropdownOpen, setCatDropdownOpen] = useState(false);
 
   const getLightboxImages = () => {
     if (!activeProject) return [];
@@ -69,6 +70,17 @@ export default function PortfolioDome() {
       document.documentElement.classList.remove('modal-open');
     };
   }, [activeProject]);
+
+  useEffect(() => {
+    if (!catDropdownOpen) return;
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('.cat-dropdown-wrapper')) {
+        setCatDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [catDropdownOpen]);
 
 
   const getProjectYear = (project) => {
@@ -168,11 +180,50 @@ export default function PortfolioDome() {
               </div>
             </div>
 
+            {/* Category Dropdown Selector */}
+            <div className="cat-dropdown-col">
+              <label className="filter-col-label">
+                SECTOR CLASSIFICATION
+              </label>
+              <div className="cat-dropdown-wrapper">
+                <button
+                  type="button"
+                  onClick={() => setCatDropdownOpen(!catDropdownOpen)}
+                  className={`cat-dropdown-trigger ${catDropdownOpen ? 'open' : ''}`}
+                >
+                  <span className="cat-dropdown-value">
+                    {category.toUpperCase()}
+                  </span>
+                  <span className="cat-dropdown-arrow">
+                    {catDropdownOpen ? '▲' : '▼'}
+                  </span>
+                </button>
+                {catDropdownOpen && (
+                  <div className="cat-dropdown-menu custom-scroll">
+                    {CATEGORIES.map(cat => (
+                      <button
+                        key={cat}
+                        type="button"
+                        onClick={() => {
+                          setCategory(cat);
+                          setCatDropdownOpen(false);
+                        }}
+                        className={`cat-dropdown-item ${category === cat ? 'active' : ''}`}
+                      >
+                        {cat.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </div>
+
             {/* Actions Column: Vibe Coded Toggle + Advanced Button */}
             <div className="filter-actions-col">
               <div className="filter-action-item">
                 <label className="filter-col-label">AI CO-CREATIONS</label>
                 <button
+                  type="button"
                   onClick={() => setVibeCodedOnly(!vibeCodedOnly)}
                   className={`vibe-toggle-pill ${vibeCodedOnly ? 'active' : ''}`}
                 >
@@ -184,6 +235,7 @@ export default function PortfolioDome() {
               <div className="filter-action-item">
                 <label className="filter-col-label">DIAGNOSTIC MODE</label>
                 <button
+                  type="button"
                   onClick={() => setShowAdvanced(!showAdvanced)}
                   className={`advanced-toggle-btn ${showAdvanced ? 'active' : ''}`}
                 >
@@ -204,12 +256,14 @@ export default function PortfolioDome() {
                 </label>
                 <div className="filter-sort-row">
                   <button
+                    type="button"
                     onClick={() => setSortOrder('desc')}
                     className={`category-pill filter-sort-btn ${sortOrder === 'desc' ? 'active' : ''}`}
                   >
                     ⏳ RECENTS
                   </button>
                   <button
+                    type="button"
                     onClick={() => setSortOrder('asc')}
                     className={`category-pill filter-sort-btn ${sortOrder === 'asc' ? 'active' : ''}`}
                   >
@@ -261,24 +315,6 @@ export default function PortfolioDome() {
 
             </div>
           )}
-
-          {/* Category Tag Pills Row */}
-          <div className="filter-category-section">
-            <span className="filter-category-label">
-              SECTOR CLASSIFICATION TAGS
-            </span>
-            <div className="category-pills-row">
-              {CATEGORIES.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setCategory(cat)}
-                  className={`category-pill ${category === cat ? 'active' : ''}`}
-                >
-                  {cat.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
 
         </div>
 

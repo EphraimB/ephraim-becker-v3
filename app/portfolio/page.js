@@ -26,6 +26,8 @@ export default function PortfolioDome() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' by default (recents first)
   const [downloadDropdownOpen, setDownloadDropdownOpen] = useState(false);
+  const [vibeCodedOnly, setVibeCodedOnly] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(false);
 
   const getLightboxImages = () => {
     if (!activeProject) return [];
@@ -99,6 +101,11 @@ export default function PortfolioDome() {
       }
     }
 
+    // 4. Vibe Coded Filter
+    if (vibeCodedOnly && !project.vibeCoded) {
+      return false;
+    }
+
     return true;
   });
 
@@ -134,7 +141,7 @@ export default function PortfolioDome() {
         {/* Advanced Holographic Filter Deck */}
         <div className="bubbly-panel portfolio-filter-panel">
 
-          <div className="filter-deck-layout">
+          <div className="filter-primary-row">
 
             {/* Search Input Box */}
             <div className="filter-search-col">
@@ -161,69 +168,99 @@ export default function PortfolioDome() {
               </div>
             </div>
 
-            {/* Sort Order Selector */}
-            <div className="filter-sort-col">
-              <label className="filter-col-label">
-                ARCHIVE CHRONO SORT ORDER
-              </label>
-              <div className="filter-sort-row">
+            {/* Actions Column: Vibe Coded Toggle + Advanced Button */}
+            <div className="filter-actions-col">
+              <div className="filter-action-item">
+                <label className="filter-col-label">AI CO-CREATIONS</label>
                 <button
-                  onClick={() => setSortOrder('desc')}
-                  className={`category-pill filter-sort-btn ${sortOrder === 'desc' ? 'active' : ''}`}
+                  onClick={() => setVibeCodedOnly(!vibeCodedOnly)}
+                  className={`vibe-toggle-pill ${vibeCodedOnly ? 'active' : ''}`}
                 >
-                  ⏳ RECENTS
-                </button>
-                <button
-                  onClick={() => setSortOrder('asc')}
-                  className={`category-pill filter-sort-btn ${sortOrder === 'asc' ? 'active' : ''}`}
-                >
-                  ⌛ OLDEST
+                  <span className="vibe-toggle-icon">🤖</span>
+                  <span className="vibe-toggle-label">VIBE CODED ONLY</span>
                 </button>
               </div>
-            </div>
 
-            {/* Date Range Control (Sliders side-by-side) */}
-            <div className="filter-sliders-container">
-              <div className="range-slider-group">
-                <div className="filter-year-header">
-                  <span className="range-slider-label">MIN COMPLETED YEAR</span>
-                  <span className="filter-year-value">{minYear}</span>
-                </div>
-                <input
-                  type="range"
-                  min="2014"
-                  max="2026"
-                  value={minYear}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    setMinYear(val);
-                    if (val > maxYear) setMaxYear(val);
-                  }}
-                  className="range-slider-control"
-                />
-              </div>
-
-              <div className="range-slider-group">
-                <div className="filter-year-header">
-                  <span className="range-slider-label">MAX COMPLETED YEAR</span>
-                  <span className="filter-year-value">{maxYear}</span>
-                </div>
-                <input
-                  type="range"
-                  min="2014"
-                  max="2026"
-                  value={maxYear}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    setMaxYear(val);
-                    if (val < minYear) setMinYear(val);
-                  }}
-                  className="range-slider-control"
-                />
+              <div className="filter-action-item">
+                <label className="filter-col-label">DIAGNOSTIC MODE</label>
+                <button
+                  onClick={() => setShowAdvanced(!showAdvanced)}
+                  className={`advanced-toggle-btn ${showAdvanced ? 'active' : ''}`}
+                >
+                  ⚙️ {showAdvanced ? 'HIDE FILTERS' : 'ADVANCED FILTERS'}
+                </button>
               </div>
             </div>
 
           </div>
+
+          {showAdvanced && (
+            <div className="filter-advanced-row animate-fade-in">
+
+              {/* Sort Order Selector */}
+              <div className="filter-sort-col">
+                <label className="filter-col-label">
+                  ARCHIVE CHRONO SORT ORDER
+                </label>
+                <div className="filter-sort-row">
+                  <button
+                    onClick={() => setSortOrder('desc')}
+                    className={`category-pill filter-sort-btn ${sortOrder === 'desc' ? 'active' : ''}`}
+                  >
+                    ⏳ RECENTS
+                  </button>
+                  <button
+                    onClick={() => setSortOrder('asc')}
+                    className={`category-pill filter-sort-btn ${sortOrder === 'asc' ? 'active' : ''}`}
+                  >
+                    ⌛ OLDEST
+                  </button>
+                </div>
+              </div>
+
+              {/* Date Range Control (Sliders side-by-side) */}
+              <div className="filter-sliders-container">
+                <div className="range-slider-group">
+                  <div className="filter-year-header">
+                    <span className="range-slider-label">MIN COMPLETED YEAR</span>
+                    <span className="filter-year-value">{minYear}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="2014"
+                    max="2026"
+                    value={minYear}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value);
+                      setMinYear(val);
+                      if (val > maxYear) setMaxYear(val);
+                    }}
+                    className="range-slider-control"
+                  />
+                </div>
+
+                <div className="range-slider-group">
+                  <div className="filter-year-header">
+                    <span className="range-slider-label">MAX COMPLETED YEAR</span>
+                    <span className="filter-year-value">{maxYear}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="2014"
+                    max="2026"
+                    value={maxYear}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value);
+                      setMaxYear(val);
+                      if (val < minYear) setMinYear(val);
+                    }}
+                    className="range-slider-control"
+                  />
+                </div>
+              </div>
+
+            </div>
+          )}
 
           {/* Category Tag Pills Row */}
           <div className="filter-category-section">
@@ -262,7 +299,7 @@ export default function PortfolioDome() {
                 <div
                   key={project.id}
                   onClick={() => setActiveProject(project)}
-                  className="project-card"
+                  className={`project-card ${project.vibeCoded ? 'vibe-coded-card' : ''}`}
                 >
                   <div>
                     <div className="project-card-header">

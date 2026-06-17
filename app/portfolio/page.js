@@ -447,7 +447,7 @@ export default function PortfolioDome() {
                           activeProject.images.slice(0, 4).map((img, idx) => {
                             const isLastVisible = idx === 3;
                             const hasMore = activeProject.images.length > 4;
-                            const remainingCount = activeProject.images.length - 4;
+                            const remainingCount = activeProject.images.length - 3;
 
                             return (
                               <div
@@ -460,16 +460,15 @@ export default function PortfolioDome() {
                                   alt={`${activeProject.title} screenshot ${idx + 1}`}
                                   className="gallery-thumb-img"
                                 />
-                                {isLastVisible && hasMore ? (
+                                {isLastVisible && hasMore && (
                                   <div className="gallery-thumbnail-overlay">
                                     <span className="gallery-overlay-count">+{remainingCount}</span>
                                     <span className="gallery-overlay-text">more screenshots</span>
                                   </div>
-                                ) : (
-                                  <div className="gallery-thumb-label">
-                                    [ EXPAND SCREENSHOT {idx + 1} 🔍 ]
-                                  </div>
                                 )}
+                                <div className="gallery-thumb-label">
+                                  {isLastVisible && hasMore ? '[ VIEW ALL SCREENSHOTS 🔍 ]' : `[ EXPAND SCREENSHOT ${idx + 1} 🔍 ]`}
+                                </div>
                               </div>
                             );
                           })

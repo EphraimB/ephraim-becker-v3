@@ -228,7 +228,10 @@ export default function PortfolioDome() {
                   className={`vibe-toggle-pill ${vibeCodedOnly ? 'active' : ''}`}
                 >
                   <span className="vibe-toggle-icon">🤖</span>
-                  <span className="vibe-toggle-label">VIBE CODED ONLY</span>
+                  <span className="vibe-toggle-label">
+                    VIBE CODED: {vibeCodedOnly ? 'ON' : 'OFF'}
+                  </span>
+                  <span className="vibe-toggle-led"></span>
                 </button>
               </div>
 

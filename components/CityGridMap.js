@@ -494,7 +494,8 @@ export default function CityGridMap({ isDrawer = false }) {
                 gap: '4px',
                 boxShadow: isCurrentActive ? `0 0 15px rgba(${sector.rgb}, 0.15)` : 'none',
                 backdropFilter: 'blur(5px)',
-                WebkitBackdropFilter: 'blur(5px)'
+                WebkitBackdropFilter: 'blur(5px)',
+                flexShrink: 0
               }}
             >
               {/* Teleport Charge Overlay */}
@@ -508,8 +509,8 @@ export default function CityGridMap({ isDrawer = false }) {
                 />
               )}
               {/* Header Row */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                <span style={{ fontFamily: 'monospace', fontSize: '0.62rem', color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.45)', fontWeight: 'bold', letterSpacing: '0.5px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', minWidth: 0, gap: '8px' }}>
+                <span style={{ fontFamily: 'monospace', fontSize: '0.62rem', color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.45)', fontWeight: 'bold', letterSpacing: '0.5px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', minWidth: 0, flex: 1 }}>
                   {sector.label}
                 </span>
                 {isCurrentActive && (
@@ -521,21 +522,24 @@ export default function CityGridMap({ isDrawer = false }) {
                       borderRadius: '50%',
                       background: sector.color,
                       boxShadow: `0 0 8px ${sector.color}`,
-                      animation: 'pulse-dot 1.2s infinite alternate'
+                      animation: 'pulse-dot 1.2s infinite alternate',
+                      flexShrink: 0
                     }}
                   ></span>
                 )}
               </div>
 
               {/* Title & Redirection Target Row */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
-                <span style={{ fontFamily: 'monospace, var(--font-tech)', fontSize: '0.86rem', color: '#ffffff', fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span className="sector-card-icon" style={{ width: '18px', height: '18px', display: 'inline-block', flexShrink: 0, color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', minWidth: 0, gap: '12px' }}>
+                <span style={{ fontFamily: 'monospace, var(--font-tech)', fontSize: '0.86rem', color: '#ffffff', fontWeight: 'bold', display: 'flex', alignItems: 'flex-start', gap: '8px', minWidth: 0, flexShrink: 1, flex: 1 }}>
+                  <span className="sector-card-icon" style={{ width: '18px', height: '18px', display: 'inline-block', flexShrink: 0, color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease', marginTop: '1px' }}>
                     <NavIconSvg type={sector.icon} />
                   </span>
-                  {sector.title}
+                  <span style={{ flex: 1, minWidth: 0, wordBreak: 'break-word' }}>
+                    {sector.title}
+                  </span>
                 </span>
-                <span style={{ fontSize: '0.58rem', color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.4)', fontFamily: 'monospace', fontWeight: 600 }}>
+                <span style={{ fontSize: '0.58rem', color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.4)', fontFamily: 'monospace', fontWeight: 600, flexShrink: 0, whiteSpace: 'nowrap', marginTop: '3px' }}>
                   {isAcad ? (academicSyncActive ? '[TAP TO BREAK SYNC]' : '[TAP TO SYNC DATA]') : (isCurrentActive ? '[📍 CURRENT LOCATION]' : '[➔ TELEPORT]')}
                 </span>
               </div>
@@ -727,12 +731,14 @@ export default function CityGridMap({ isDrawer = false }) {
                       borderRadius: '4px',
                       color: pathname === '/research' ? '#ffb300' : 'rgba(255,255,255,0.7)',
                       display: 'flex',
-                      alignItems: 'center',
+                      alignItems: 'flex-start',
                       justifyContent: 'space-between',
                       cursor: 'pointer',
                       transition: 'all 0.15s',
                       position: 'relative',
-                      overflow: 'hidden'
+                      overflow: 'hidden',
+                      minWidth: 0,
+                      gap: '12px'
                     }}
                   >
                     {/* Teleport Charge Overlay */}
@@ -745,16 +751,18 @@ export default function CityGridMap({ isDrawer = false }) {
                         }}
                       />
                     )}
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
+                    <span style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', minWidth: 0, flexShrink: 1, flex: 1 }}>
+                      <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease', marginTop: '2px' }}>
                         <NavIconSvg type="pin" />
                       </span>
-                      Lab Entrance{pathname === '/research/nanobot-pill' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}
+                      <span style={{ flex: 1, minWidth: 0, wordBreak: 'break-word' }}>
+                        Lab Entrance{pathname === '/research/nanobot-pill' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}
+                      </span>
                     </span>
                     {pathname === '/research' ? (
-                      <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>
+                      <span style={{ fontSize: '0.52rem', flexShrink: 0, whiteSpace: 'nowrap', marginTop: '2px' }}>[ ACTIVE ]</span>
                     ) : (
-                      <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.35)' }}>[ ➔ WALK ]</span>
+                      <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.35)', flexShrink: 0, whiteSpace: 'nowrap', marginTop: '2px' }}>[ ➔ WALK ]</span>
                     )}
                   </div>
 
@@ -773,12 +781,14 @@ export default function CityGridMap({ isDrawer = false }) {
                       borderRadius: '4px',
                       color: pathname === '/research/nanobot-pill' ? '#ffb300' : 'rgba(255,255,255,0.7)',
                       display: 'flex',
-                      alignItems: 'center',
+                      alignItems: 'flex-start',
                       justifyContent: 'space-between',
                       cursor: 'pointer',
                       transition: 'all 0.15s',
                       position: 'relative',
-                      overflow: 'hidden'
+                      overflow: 'hidden',
+                      minWidth: 0,
+                      gap: '12px'
                     }}
                   >
                     {/* Teleport Charge Overlay */}
@@ -791,16 +801,18 @@ export default function CityGridMap({ isDrawer = false }) {
                         }}
                       />
                     )}
-                    <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research/nanobot-pill' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease' }}>
+                    <span style={{ display: 'flex', alignItems: 'flex-start', gap: '6px', minWidth: 0, flexShrink: 1, flex: 1 }}>
+                      <span className="sector-card-icon" style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: pathname === '/research/nanobot-pill' ? '#ffb300' : 'rgba(255, 255, 255, 0.45)', transition: 'transform 0.2s ease, filter 0.2s ease', marginTop: '2px' }}>
                         <NavIconSvg type="brain" />
                       </span>
-                      BCI Nanobot Pill Bay{pathname === '/research' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}
+                      <span style={{ flex: 1, minWidth: 0, wordBreak: 'break-word' }}>
+                        BCI Nanobot Pill Bay{pathname === '/research' ? ` (🏃 ${formatDistance(WALK_DISTANCE)} walk, ${Math.round(WALK_DISTANCE / WALK_SPEED)}s)` : ''}
+                      </span>
                     </span>
                     {pathname === '/research/nanobot-pill' ? (
-                      <span style={{ fontSize: '0.52rem' }}>[ ACTIVE ]</span>
+                      <span style={{ fontSize: '0.52rem', flexShrink: 0, whiteSpace: 'nowrap', marginTop: '2px' }}>[ ACTIVE ]</span>
                     ) : (
-                      <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.35)' }}>[ ➔ WALK ]</span>
+                      <span style={{ fontSize: '0.52rem', color: 'rgba(255,255,255,0.35)', flexShrink: 0, whiteSpace: 'nowrap', marginTop: '2px' }}>[ ➔ WALK ]</span>
                     )}
                   </div>
                 </div>

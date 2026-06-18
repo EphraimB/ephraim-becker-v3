@@ -380,6 +380,9 @@ export default function AresMuseum() {
             <p>
               To solve this, this site is engineered as a <span className="highlight-amber">native Next.js 2D HTML5 application</span>. Search spiders can index the citizen's portfolio archives and research files directly.
             </p>
+            <p>
+              Despite using a traditional 2D structure, immersion is preserved through <span className="highlight-cyan">realistic background environments</span> and a location-shifting navigation system, making transitions between pages feel like traveling to <span className="highlight-amber">new physical sectors</span>.
+            </p>
           </div>
         </div>
 

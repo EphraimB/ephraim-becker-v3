@@ -233,36 +233,36 @@ export default function AresMuseum() {
         .clock-widget-container {
           background: rgba(2, 4, 8, 0.6);
           border: 1px solid rgba(0, 240, 255, 0.2);
-          border-radius: 6px;
-          padding: 6px 10px;
+          border-radius: 8px;
+          padding: 10px 14px;
           font-family: monospace;
-          margin-top: 4px;
+          margin-top: 8px;
           flex-shrink: 0;
         }
 
         .clock-readout-main {
-          font-size: 1.1rem;
+          font-size: 1.45rem;
           color: #ffb300;
           text-align: center;
-          padding: 2px 0;
-          text-shadow: 0 0 8px rgba(255, 179, 0, 0.35);
-          letter-spacing: 1px;
+          padding: 4px 0;
+          text-shadow: 0 0 10px rgba(255, 179, 0, 0.45);
+          letter-spacing: 1.5px;
           border-bottom: 1px dashed rgba(0, 240, 255, 0.15);
-          margin-bottom: 4px;
+          margin-bottom: 8px;
           font-weight: bold;
         }
 
         .telemetry-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 2px 8px;
+          grid-template-columns: 1.25fr 0.75fr;
+          gap: 4px 12px;
         }
 
         .telemetry-row {
           display: flex;
           justify-content: space-between;
-          font-size: 0.6rem;
-          padding: 1px 0;
+          font-size: 0.72rem;
+          padding: 2px 0;
           border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         }
 
@@ -421,7 +421,7 @@ export default function AresMuseum() {
               <div className="telemetry-grid">
                 <div className="telemetry-row">
                   <span className="telemetry-label">UTC Ref:</span>
-                  <span className="telemetry-value" style={{ fontSize: '0.48rem' }}>{clockData.utcTime.substring(5, 22)}</span>
+                  <span className="telemetry-value">{clockData.utcTime.substring(5, 22)}</span>
                 </div>
 
                 <div className="telemetry-row">

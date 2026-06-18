@@ -24,6 +24,7 @@ export default function NanobotPillDetails() {
   
   // Active Scenario inside Phase 5
   const [activeScenario, setActiveScenario] = useState('productivity');
+  const [activeSuperhumanScenario, setActiveSuperhumanScenario] = useState('autoRaze');
   const [isPlayingMedia, setIsPlayingMedia] = useState(true);
   const [timeString, setTimeString] = useState('');
   const [telepathicMsgIndex, setTelepathicMsgIndex] = useState(0);
@@ -91,13 +92,13 @@ export default function NanobotPillDetails() {
     const handleWindowScroll = () => {
       if (window.innerWidth > 900) return;
 
-      const sections = ['overview', 'payload', 'adaptation', 'assembly', 'eclipse'];
+      const sections = ['overview', 'payload', 'adaptation', 'assembly', 'eclipse', 'superhuman'];
       let currentActive = 'overview';
 
       // Check if window is scrolled near the bottom
       const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
       if (isAtBottom) {
-        setActiveTab('eclipse');
+        setActiveTab('superhuman');
         return;
       }
 
@@ -126,11 +127,11 @@ export default function NanobotPillDetails() {
     // Check if scrolled to the bottom
     const isAtBottom = Math.abs(container.scrollHeight - container.clientHeight - container.scrollTop) < 15;
     if (isAtBottom) {
-      setActiveTab('eclipse');
+      setActiveTab('superhuman');
       return;
     }
 
-    const sections = ['overview', 'payload', 'adaptation', 'assembly', 'eclipse'];
+    const sections = ['overview', 'payload', 'adaptation', 'assembly', 'eclipse', 'superhuman'];
     let currentActive = 'overview';
 
     for (const id of sections) {
@@ -318,6 +319,22 @@ export default function NanobotPillDetails() {
           gravity: '0.38g',
           systemState: 'ACTIVE'
         };
+      case 'superhuman':
+        return {
+          phase: 'PHASE 06 // SUPERHUMAN PHYSIOLOGY',
+          status: 'AUTO-MAINTENANCE ACTIVE',
+          capsuleIntegrity: '0%',
+          bbbCrossing: '100% SUCCESS',
+          synapticMapping: '100% SUCCESS',
+          latency: '0.4 ms',
+          glucose: '1.45 mg/min',
+          temp: '37.0°C [STABLE]',
+          skinTemp: '18.5°C [STABLE]',
+          radiation: '100% BLOCKED',
+          oxygenSat: '99.8% [OPTIMIZED]',
+          gravity: '0.38g [STABILIZED]',
+          systemState: 'SUPERHUMAN'
+        };
       default:
         return {};
     }
@@ -330,7 +347,29 @@ export default function NanobotPillDetails() {
     { id: 'payload', label: '2. Uptake' },
     { id: 'adaptation', label: '3. Adaptation' },
     { id: 'assembly', label: '4. Assembly' },
-    { id: 'eclipse', label: '5. Retina OS' }
+    { id: 'eclipse', label: '5. Retina OS' },
+    { id: 'superhuman', label: '6. Superhuman' }
+  ];
+
+  const superhumanScenarios = [
+    {
+      id: 'autoRaze',
+      icon: '🪒',
+      title: 'Auto-Raze Grooming',
+      description: 'Automated follicle-level grooming. Suppresses facial hair growth and maintains a clean-shaven look entirely device-free.'
+    },
+    {
+      id: 'antiAging',
+      icon: '🧬',
+      title: 'Telomere Anti-Aging',
+      description: 'Real-time DNA telomere repair. Nanobots stabilize genetic replication bounds to arrest and reverse cellular aging.'
+    },
+    {
+      id: 'pharmacy',
+      icon: '💊',
+      title: 'Shot-Free Pharmacy',
+      description: 'Needle-free vaccine & medicine delivery. Direct molecular synthesis via wireless link to your authorized pharmacy.'
+    }
   ];
 
   const scenarios = [
@@ -650,6 +689,132 @@ export default function NanobotPillDetails() {
                 })()}
               </>
             )}
+          </div>
+        );
+      case 'superhuman':
+        return (
+          <div 
+            style={{ 
+              width: '100%', 
+              height: '100%', 
+              position: 'relative', 
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              padding: '12px'
+            }}
+          >
+            <div 
+              style={{ 
+                position: 'absolute',
+                top: '-15px',
+                left: '-15px',
+                right: '-15px',
+                bottom: '-15px',
+                zIndex: 1,
+                background: 'radial-gradient(circle at 50% 50%, rgba(4, 6, 12, 0.4) 0%, rgba(4, 6, 12, 1) 90%)',
+                transform: `translate3d(${parallax.x * -0.5}px, ${parallax.y * -0.5}px, 0)`,
+                transition: 'transform 0.1s ease-out',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+            >
+              <img 
+                src={
+                  activeSuperhumanScenario === 'autoRaze' 
+                    ? '/assets/images/bci/bci_autoraze.png' 
+                    : activeSuperhumanScenario === 'antiAging' 
+                    ? '/assets/images/bci/bci_antiaging.png' 
+                    : '/assets/images/bci/bci_pharmacy.png'
+                } 
+                alt={`Martian BCI OS - ${activeSuperhumanScenario}`} 
+                style={{ width: '110%', height: '110%', objectFit: 'cover', opacity: 0.85 }}
+              />
+            </div>
+
+            {/* Tech-styled SVG Overlay Panel */}
+            <div style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
+              {activeSuperhumanScenario === 'autoRaze' && (
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
+                  {/* Scanning Grid / Face wireframe overlay lines */}
+                  <path d="M 10 20 L 90 20 M 10 80 L 90 80" stroke="rgba(255, 179, 0, 0.3)" strokeWidth="0.5" strokeDasharray="2,2" />
+                  <path d="M 20 10 L 20 90 M 80 10 L 80 90" stroke="rgba(255, 179, 0, 0.3)" strokeWidth="0.5" strokeDasharray="2,2" />
+                  {/* Animated scanning bar */}
+                  <line x1="5" y1="10" x2="95" y2="10" stroke="#ffb300" strokeWidth="0.8" opacity="0.8">
+                    <animate attributeName="y1" values="15;85;15" dur="4s" repeatCount="indefinite" />
+                    <animate attributeName="y2" values="15;85;15" dur="4s" repeatCount="indefinite" />
+                  </line>
+                  {/* Targeted follicles dots */}
+                  <circle cx="35" cy="65" r="1.5" fill="#ffb300" opacity="0.8">
+                    <animate attributeName="r" values="0.5;2;0.5" dur="1.5s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx="50" cy="72" r="1.2" fill="#ffb300" opacity="0.8">
+                    <animate attributeName="r" values="1.2;0.2;1.2" dur="2s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx="65" cy="65" r="1.5" fill="#ffb300" opacity="0.8">
+                    <animate attributeName="r" values="0.5;2;0.5" dur="1.8s" repeatCount="indefinite" />
+                  </circle>
+                  <text x="12" y="15" fill="#ffb300" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● FOLLICLE INHIBITION: ACTIVE [100% CLEAN]</text>
+                  <text x="12" y="88" fill="rgba(255,179,0,0.8)" fontSize="2.2" fontFamily="monospace">SHAVE PROFILE: ULTRA-GLIDE SMOOTH</text>
+                </svg>
+              )}
+
+              {activeSuperhumanScenario === 'antiAging' && (
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
+                  {/* Glowing repair nodes and indicators */}
+                  <rect x="8" y="8" width="84" height="84" fill="none" stroke="rgba(0, 240, 255, 0.2)" strokeWidth="0.4" />
+                  {/* DNA helix schematic representation */}
+                  <path d="M 20 50 Q 35 25, 50 50 T 80 50" fill="none" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="1,1" opacity="0.7">
+                    <animate attributeName="stroke-dashoffset" values="0;20" dur="2s" repeatCount="indefinite" />
+                  </path>
+                  <path d="M 20 50 Q 35 75, 50 50 T 80 50" fill="none" stroke="rgba(0, 255, 136, 0.7)" strokeWidth="0.8" strokeDasharray="1,1" opacity="0.7">
+                    <animate attributeName="stroke-dashoffset" values="20;0" dur="2s" repeatCount="indefinite" />
+                  </path>
+                  {/* Repair nodes */}
+                  <circle cx="35" cy="37" r="1" fill="#ffffff">
+                    <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" repeatCount="indefinite" />
+                  </circle>
+                  <circle cx="65" cy="63" r="1" fill="#ffffff">
+                    <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite" />
+                  </circle>
+                  <text x="12" y="16" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● TELOMERE INTEGRITY: 99.99% [LOCKED]</text>
+                  <text x="12" y="22" fill="#00f0ff" fontSize="2.4" fontFamily="monospace">CELLULAR DECAY RATE: 0.0000% / YR</text>
+                  <text x="12" y="88" fill="rgba(255,255,255,0.7)" fontSize="2.2" fontFamily="monospace">GENETIC REVERSAL SEQUENCE: COMPLETE</text>
+                </svg>
+              )}
+
+              {activeSuperhumanScenario === 'pharmacy' && (
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
+                  {/* Bloodstream or grid flow with docking nodes */}
+                  <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.5" strokeDasharray="1,3" />
+                  <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(0, 255, 136, 0.2)" strokeWidth="0.5" strokeDasharray="2,4" />
+                  {/* Docking animation elements */}
+                  <g transform="translate(50, 50)">
+                    <circle cx="0" cy="0" r="3" fill="#00ff88" opacity="0.9">
+                      <animate attributeName="r" values="1;4;1" dur="2.5s" repeatCount="indefinite" />
+                    </circle>
+                    {/* Floating dose packets */}
+                    <line x1="-35" y1="-35" x2="-5" y2="-5" stroke="#00ff88" strokeWidth="0.4" strokeDasharray="1,1" opacity="0.6" />
+                    <circle cx="-35" cy="-35" r="1.5" fill="#00ff88">
+                      <animate attributeName="transform" type="translate" values="0,0; 30,30" dur="3s" repeatCount="indefinite" />
+                    </circle>
+                    <circle cx="35" cy="35" r="1.5" fill="#00ff88">
+                      <animate attributeName="transform" type="translate" values="0,0; -30,-30" dur="2.5s" repeatCount="indefinite" />
+                    </circle>
+                  </g>
+                  <text x="12" y="16" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● PHARMACY LINK: SECURE [MARS_EAST_DOME]</text>
+                  <text x="12" y="22" fill="#ffffff" fontSize="2.4" fontFamily="monospace">IMMUNIZATION RECEPTOR SYNC: 100%</text>
+                  <text x="12" y="88" fill="#00ff88" fontSize="2.2" fontFamily="monospace">✓ NO-SHOT VAC-DOCK: ACTIVE [INFLUENZA-M56]</text>
+                </svg>
+              )}
+            </div>
+
+            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+              <span>SYSTEM OS ADVANCED</span>
+              <span style={{ color: '#00ff88' }}>SUPERHUMAN BIO-SYNTHESIS</span>
+            </div>
           </div>
         );
       default:
@@ -1124,6 +1289,66 @@ export default function NanobotPillDetails() {
                 </div>
               </div>
             </div>
+
+            {/* Story Card 6 */}
+            <div id="superhuman" className="bubbly-panel stage5-card" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+              <div className="stage5-slider">
+                <div className="card-text-slide">
+                  <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px', display: 'block' }}>
+                    STAGE 06 // SUPERHUMAN PHYSIOLOGY
+                  </span>
+                  <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                    Superhuman Synthesis.
+                  </h2>
+                  <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
+                    Unlock complete biological automation. Maintain physical appearance, prevent aging, and synchronize with medical grids to install vaccines and doses needle-free.
+                  </p>
+                </div>
+
+                <div className="card-visual-slide">
+                  <div className="viewport-mobile-frame">
+                    {renderViewportContent('superhuman')}
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom scenario dock bar */}
+              <div className="scenario-bottom-dock">
+                <div 
+                  className="hide-scrollbar scenarios-grid-deck" 
+                  style={{ 
+                    display: 'flex', 
+                    gap: '10px', 
+                    overflowX: 'auto', 
+                    paddingBottom: '5px',
+                    scrollSnapType: 'x mandatory',
+                    width: '100%'
+                  }}
+                >
+                  {superhumanScenarios.map(sc => (
+                    <div 
+                      key={sc.id} 
+                      onClick={() => setActiveSuperhumanScenario(sc.id)}
+                      className="scenario-btn-card"
+                      style={{
+                        flex: '0 0 190px',
+                        scrollSnapAlign: 'start',
+                        background: activeSuperhumanScenario === sc.id ? 'rgba(var(--color-accent-rgb), 0.12)' : 'rgba(255,255,255,0.02)',
+                        border: `1px solid ${activeSuperhumanScenario === sc.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.06)'}`,
+                        borderRadius: '12px',
+                        padding: '12px',
+                        cursor: 'pointer',
+                        transition: 'all 0.25s ease'
+                      }}
+                    >
+                      <span style={{ fontSize: '1.2rem', display: 'block', marginBottom: '6px' }} className="scenario-icon">{sc.icon}</span>
+                      <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: '#ffffff', margin: '0 0 4px 0' }} className="scenario-title">{sc.title}</h4>
+                      <p style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.3 }} className="scenario-desc">{sc.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* RIGHT: Telemetry Dashboard & Layered Composites */}
@@ -1174,13 +1399,13 @@ export default function NanobotPillDetails() {
               <div className="biometrics-table-desktop" style={{ marginTop: '10px', borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: '10px', display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.6rem', fontFamily: 'monospace' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>GENETIC AI CORE STATE:</span>
-                  <span style={{ color: activeTab === 'eclipse' ? '#00ff88' : 'var(--color-accent)', fontWeight: 'bold' }}>
-                    {activeTab === 'eclipse' ? 'ACTIVE (100% DNA MATCH)' : stats.systemState}
+                  <span style={{ color: activeTab === 'eclipse' || activeTab === 'superhuman' ? '#00ff88' : 'var(--color-accent)', fontWeight: 'bold' }}>
+                    {activeTab === 'eclipse' || activeTab === 'superhuman' ? 'ACTIVE (100% DNA MATCH)' : stats.systemState}
                   </span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>BIOLOGICAL SYNC INDEX:</span>
-                  <span style={{ color: '#ffffff' }}>{activeTab === 'eclipse' ? '99.8%' : stats.synapticMapping}</span>
+                  <span style={{ color: '#ffffff' }}>{activeTab === 'eclipse' || activeTab === 'superhuman' ? '99.8%' : stats.synapticMapping}</span>
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                   <span style={{ color: 'var(--text-secondary)' }}>METABOLIC HEAT OVERRIDE:</span>
@@ -1209,7 +1434,7 @@ export default function NanobotPillDetails() {
             {/* Mobile Status Diagnostic summary bar */}
             <div className="biometrics-summary-mobile bubbly-panel">
               <div style={{ display: 'flex', gap: '8px', width: '100%', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                <span>🧬 SYNC: <span style={{ color: '#00ff88' }}>{activeTab === 'eclipse' ? '99.8%' : stats.synapticMapping}</span></span>
+                <span>🧬 SYNC: <span style={{ color: '#00ff88' }}>{activeTab === 'eclipse' || activeTab === 'superhuman' ? '99.8%' : stats.synapticMapping}</span></span>
                 <span>🌡️ HEAT: <span style={{ color: '#ffffff' }}>{activeTab === 'overview' || activeTab === 'payload' ? 'PENDING' : '18.5°C'}</span></span>
                 <span>🛰️ GRAV: <span style={{ color: '#00ff88' }}>{activeTab === 'overview' || activeTab === 'payload' ? '1.00g' : '0.38g'}</span></span>
                 <span>📶 LAT: <span style={{ color: '#00ff88' }}>{stats.latency}</span></span>

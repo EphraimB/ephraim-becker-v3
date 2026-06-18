@@ -858,6 +858,21 @@ export default function NanobotPillDetails() {
             width: 100%;
             margin-top: 15px;
           }
+          .scenarios-grid-deck {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 10px !important;
+            width: 100% !important;
+          }
+          .scenario-btn-card {
+            flex: none !important;
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+            text-align: left !important;
+            scroll-snap-align: none !important;
+          }
         }
       `}} />
 

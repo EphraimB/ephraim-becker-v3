@@ -23,8 +23,8 @@ export default function NanobotPillDetails() {
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
   
   // Active Scenario inside Phase 5
-  const [activeScenario, setActiveScenario] = useState('productivity');
-  const [activeSuperhumanScenario, setActiveSuperhumanScenario] = useState('autoRaze');
+  const [activeScenario, setActiveScenario] = useState('overview');
+  const [activeSuperhumanScenario, setActiveSuperhumanScenario] = useState('overview');
   const [isPlayingMedia, setIsPlayingMedia] = useState(true);
   const [timeString, setTimeString] = useState('');
   const [telepathicMsgIndex, setTelepathicMsgIndex] = useState(0);
@@ -356,6 +356,12 @@ export default function NanobotPillDetails() {
 
   const superhumanScenarios = [
     {
+      id: 'overview',
+      icon: '👁️',
+      title: 'Superhuman Synthesis.',
+      description: 'Unlock complete biological automation. Maintain physical appearance, prevent aging, and synchronize with medical grids to install vaccines and doses needle-free. Select a scenario below to experience it.'
+    },
+    {
       id: 'autoRaze',
       icon: '🪒',
       title: 'Auto-Raze Grooming',
@@ -376,6 +382,12 @@ export default function NanobotPillDetails() {
   ];
 
   const scenarios = [
+    {
+      id: 'overview',
+      icon: '👁️',
+      title: 'HUD-Free. Screen-Free.',
+      description: 'The visual field is completely clean. Virtual screens, clocks, maps, and guides anchor to the physical environment only when you need them. Select a scenario below to experience it.'
+    },
     {
       id: 'productivity',
       icon: '💼',
@@ -835,7 +847,9 @@ export default function NanobotPillDetails() {
                     ? '/assets/images/bci/bci_autoraze.png' 
                     : activeSuperhumanScenario === 'antiAging' 
                     ? '/assets/images/bci/bci_antiaging.png' 
-                    : '/assets/images/bci/bci_pharmacy.png'
+                    : activeSuperhumanScenario === 'pharmacy'
+                    ? '/assets/images/bci/bci_pharmacy.png'
+                    : '/assets/images/bci/bci_adaptation.png'
                 } 
                 alt={`Martian BCI OS - ${activeSuperhumanScenario}`} 
                 style={{ width: '110%', height: '110%', objectFit: 'cover', opacity: 0.85 }}
@@ -1090,34 +1104,36 @@ export default function NanobotPillDetails() {
             padding: 10px 26px 18px 26px !important;
           }
           .scenarios-grid-deck {
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 8px !important;
-            width: 100% !important;
-            overflow-x: visible !important;
-            padding-bottom: 0 !important;
-          }
-          .scenario-btn-card {
-            flex: none !important;
             display: flex !important;
             flex-direction: row !important;
-            gap: 8px !important;
-            align-items: center !important;
+            gap: 10px !important;
+            width: 100% !important;
+            overflow-x: auto !important;
+            padding-bottom: 5px !important;
             justify-content: flex-start !important;
-            text-align: left !important;
-            padding: 8px 12px !important;
-            scroll-snap-align: none !important;
           }
-          .scenario-icon {
-            margin-bottom: 0 !important;
-            font-size: 1.1rem !important;
+          .scenario-icon-btn {
+            width: 48px !important;
+            height: 48px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(255, 255, 255, 0.06) !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            flex-shrink: 0 !important;
           }
-          .scenario-title {
-            font-size: 0.65rem !important;
-            margin: 0 !important;
+          .scenario-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            transform: translateY(-2px) !important;
           }
-          .scenario-desc {
-            display: none !important;
+          .scenario-icon-btn.active-btn {
+            background: rgba(var(--color-accent-rgb), 0.15) !important;
+            border-color: var(--color-accent) !important;
+            box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
           }
         }
         @media (min-width: 901px) {
@@ -1132,19 +1148,34 @@ export default function NanobotPillDetails() {
             margin-top: 15px;
           }
           .scenarios-grid-deck {
-            display: grid !important;
-            grid-template-columns: repeat(2, 1fr) !important;
-            gap: 10px !important;
-            width: 100% !important;
-          }
-          .scenario-btn-card {
-            flex: none !important;
             display: flex !important;
-            flex-direction: column !important;
-            align-items: flex-start !important;
+            flex-direction: row !important;
+            gap: 12px !important;
+            width: 100% !important;
             justify-content: flex-start !important;
-            text-align: left !important;
-            scroll-snap-align: none !important;
+          }
+          .scenario-icon-btn {
+            width: 48px !important;
+            height: 48px !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            background: rgba(255, 255, 255, 0.02) !important;
+            border: 1px solid rgba(255, 255, 255, 0.06) !important;
+            border-radius: 50% !important;
+            cursor: pointer !important;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            flex-shrink: 0 !important;
+          }
+          .scenario-icon-btn:hover {
+            background: rgba(255, 255, 255, 0.08) !important;
+            border-color: rgba(255, 255, 255, 0.15) !important;
+            transform: translateY(-2px) !important;
+          }
+          .scenario-icon-btn.active-btn {
+            background: rgba(var(--color-accent-rgb), 0.15) !important;
+            border-color: var(--color-accent) !important;
+            box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
           }
         }
       `}} />
@@ -1345,12 +1376,19 @@ export default function NanobotPillDetails() {
                   <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px', display: 'block' }}>
                     STAGE 05 // RETINA BCI OS
                   </span>
-                  <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                    HUD-Free. Screen-Free.
-                  </h2>
-                  <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
-                    The visual field is completely clean. Virtual screens, clocks, maps, and guides anchor to the physical environment only when you need them. Select a scenario below to experience it.
-                  </p>
+                  {(() => {
+                    const currentScenario = scenarios.find(s => s.id === activeScenario) || scenarios[0];
+                    return (
+                      <>
+                        <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px', minHeight: '52px' }}>
+                          {currentScenario.title}
+                        </h2>
+                        <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem', minHeight: '70px' }}>
+                          {currentScenario.description}
+                        </p>
+                      </>
+                    );
+                  })()}
                 </div>
 
                 <div className="card-visual-slide">
@@ -1377,21 +1415,10 @@ export default function NanobotPillDetails() {
                     <div 
                       key={sc.id} 
                       onClick={() => setActiveScenario(sc.id)}
-                      className="scenario-btn-card"
-                      style={{
-                        flex: '0 0 190px',
-                        scrollSnapAlign: 'start',
-                        background: activeScenario === sc.id ? 'rgba(var(--color-accent-rgb), 0.12)' : 'rgba(255,255,255,0.02)',
-                        border: `1px solid ${activeScenario === sc.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.06)'}`,
-                        borderRadius: '12px',
-                        padding: '12px',
-                        cursor: 'pointer',
-                        transition: 'all 0.25s ease'
-                      }}
+                      className={`scenario-icon-btn ${activeScenario === sc.id ? 'active-btn' : ''}`}
+                      title={sc.title}
                     >
-                      <span style={{ fontSize: '1.2rem', display: 'block', marginBottom: '6px' }} className="scenario-icon">{sc.icon}</span>
-                      <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: '#ffffff', margin: '0 0 4px 0' }} className="scenario-title">{sc.title}</h4>
-                      <p style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.3 }} className="scenario-desc">{sc.description}</p>
+                      <span style={{ fontSize: '1.3rem' }}>{sc.icon}</span>
                     </div>
                   ))}
                 </div>
@@ -1405,12 +1432,19 @@ export default function NanobotPillDetails() {
                   <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px', display: 'block' }}>
                     STAGE 06 // SUPERHUMAN PHYSIOLOGY
                   </span>
-                  <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                    Superhuman Synthesis.
-                  </h2>
-                  <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
-                    Unlock complete biological automation. Maintain physical appearance, prevent aging, and synchronize with medical grids to install vaccines and doses needle-free.
-                  </p>
+                  {(() => {
+                    const currentSuperhumanScenario = superhumanScenarios.find(s => s.id === activeSuperhumanScenario) || superhumanScenarios[0];
+                    return (
+                      <>
+                        <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px', minHeight: '52px' }}>
+                          {currentSuperhumanScenario.title}
+                        </h2>
+                        <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem', minHeight: '70px' }}>
+                          {currentSuperhumanScenario.description}
+                        </p>
+                      </>
+                    );
+                  })()}
                 </div>
 
                 <div className="card-visual-slide">
@@ -1437,21 +1471,10 @@ export default function NanobotPillDetails() {
                     <div 
                       key={sc.id} 
                       onClick={() => setActiveSuperhumanScenario(sc.id)}
-                      className="scenario-btn-card"
-                      style={{
-                        flex: '0 0 190px',
-                        scrollSnapAlign: 'start',
-                        background: activeSuperhumanScenario === sc.id ? 'rgba(var(--color-accent-rgb), 0.12)' : 'rgba(255,255,255,0.02)',
-                        border: `1px solid ${activeSuperhumanScenario === sc.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.06)'}`,
-                        borderRadius: '12px',
-                        padding: '12px',
-                        cursor: 'pointer',
-                        transition: 'all 0.25s ease'
-                      }}
+                      className={`scenario-icon-btn ${activeSuperhumanScenario === sc.id ? 'active-btn' : ''}`}
+                      title={sc.title}
                     >
-                      <span style={{ fontSize: '1.2rem', display: 'block', marginBottom: '6px' }} className="scenario-icon">{sc.icon}</span>
-                      <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: '#ffffff', margin: '0 0 4px 0' }} className="scenario-title">{sc.title}</h4>
-                      <p style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.3 }} className="scenario-desc">{sc.description}</p>
+                      <span style={{ fontSize: '1.3rem' }}>{sc.icon}</span>
                     </div>
                   ))}
                 </div>

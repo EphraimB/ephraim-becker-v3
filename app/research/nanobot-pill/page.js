@@ -357,25 +357,44 @@ export default function NanobotPillDetails() {
   const superhumanScenarios = [
     {
       id: 'overview',
-      icon: '👁️',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
+          <circle cx={12} cy={12} r={3} />
+        </svg>
+      ),
       title: 'Superhuman Synthesis.',
       description: 'Unlock complete biological automation. Maintain physical appearance, prevent aging, and synchronize with medical grids to install vaccines and doses needle-free. Select a scenario below to experience it.'
     },
     {
       id: 'autoRaze',
-      icon: '🪒',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.34 6.34l2.83 2.83M14.83 14.83l2.83 2.83M6.34 17.66l2.83-2.83M14.83 9.17l2.83-2.83" />
+        </svg>
+      ),
       title: 'Auto-Raze Grooming',
       description: 'Automated follicle-level grooming. Suppresses facial hair growth and maintains a clean-shaven look entirely device-free.'
     },
     {
       id: 'antiAging',
-      icon: '🧬',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+          <path d="M12 8v4l3 3" />
+        </svg>
+      ),
       title: 'Telomere Anti-Aging',
       description: 'Real-time DNA telomere repair. Nanobots stabilize genetic replication bounds to arrest and reverse cellular aging.'
     },
     {
       id: 'pharmacy',
-      icon: '💊',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <rect x={5} y={5} width={14} height={14} rx={7} ry={7} transform="rotate(45 12 12)" />
+          <line x1={7.5} y1={16.5} x2={16.5} y2={7.5} />
+        </svg>
+      ),
       title: 'Shot-Free Pharmacy',
       description: 'Needle-free vaccine & medicine delivery. Direct molecular synthesis via wireless link to your authorized pharmacy.'
     }
@@ -384,37 +403,74 @@ export default function NanobotPillDetails() {
   const scenarios = [
     {
       id: 'overview',
-      icon: '👁️',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
+          <circle cx={12} cy={12} r={3} />
+        </svg>
+      ),
       title: 'HUD-Free. Screen-Free.',
       description: 'The visual field is completely clean. Virtual screens, clocks, maps, and guides anchor to the physical environment only when you need them. Select a scenario below to experience it.'
     },
     {
       id: 'productivity',
-      icon: '💼',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <rect x={2} y={7} width={20} height={14} rx={2} ry={2} />
+          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+        </svg>
+      ),
       title: 'Spatial Productivity',
       description: 'Snap functional widgets to physical walls. Keep a ticking clock on the wall and calendars floating above your desk.'
     },
     {
       id: 'entertainment',
-      icon: '🍿',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <rect x={2} y={2} width={20} height={20} rx={2.18} ry={2.18} />
+          <line x1={7} y1={2} x2={7} y2={22} />
+          <line x1={17} y1={2} x2={17} y2={22} />
+          <line x1={2} y1={12} x2={22} y2={12} />
+          <line x1={2} y1={7} x2={7} y2={7} />
+          <line x1={2} y1={17} x2={7} y2={17} />
+          <line x1={17} y1={17} x2={22} y2={17} />
+          <line x1={17} y1={7} x2={22} y2={7} />
+        </svg>
+      ),
       title: 'Infinite Entertainment',
       description: 'Project giant glassmorphic media screens in mid-air. Stream video layers and coordinate spatial audio waves.'
     },
     {
       id: 'traverse',
-      icon: '🏃',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <polygon points="3 11 22 2 13 21 11 13 3 11" />
+        </svg>
+      ),
       title: 'Active Traverse',
       description: 'Navigate the Martian terrain. Project navigation guides on the floor and a biometric wristwatch onto your wrist.'
     },
     {
       id: 'telepathy',
-      icon: '🧠',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M5 12.55a11 11 0 0 1 14.08 0" />
+          <path d="M1.42 9a16 16 0 0 1 21.16 0" />
+          <circle cx={12} cy={12} r={2} />
+          <path d="M12 14v8" />
+        </svg>
+      ),
       title: 'Telepathic Link',
       description: 'Establish direct neural communication with other citizens. Exchange thoughts and coordinate events seamlessly.'
     },
     {
       id: 'memories',
-      icon: '📸',
+      icon: (
+        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+          <circle cx={12} cy={13} r={4} />
+        </svg>
+      ),
       title: 'Continuous Memories',
       description: 'Always-on visual/auditory neural recording. Instantly replay memories, share clips with friends, view AI summaries, or auto-transcribe logs into a personal diary.'
     }
@@ -1435,7 +1491,7 @@ export default function NanobotPillDetails() {
                       onClick={() => setActiveScenario(sc.id)}
                       className={`scenario-pill-btn ${activeScenario === sc.id ? 'active-btn' : ''}`}
                     >
-                      <span style={{ fontSize: '0.9rem' }}>{sc.icon}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', height: '14px', width: '14px', flexShrink: 0 }}>{sc.icon}</span>
                       <span className="scenario-pill-title">{sc.id === 'overview' ? 'Overview' : sc.title}</span>
                     </button>
                   ))}
@@ -1491,7 +1547,7 @@ export default function NanobotPillDetails() {
                       onClick={() => setActiveSuperhumanScenario(sc.id)}
                       className={`scenario-pill-btn ${activeSuperhumanScenario === sc.id ? 'active-btn' : ''}`}
                     >
-                      <span style={{ fontSize: '0.9rem' }}>{sc.icon}</span>
+                      <span style={{ display: 'flex', alignItems: 'center', height: '14px', width: '14px', flexShrink: 0 }}>{sc.icon}</span>
                       <span className="scenario-pill-title">{sc.id === 'overview' ? 'Overview' : sc.title}</span>
                     </button>
                   ))}

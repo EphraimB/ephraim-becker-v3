@@ -3,6 +3,22 @@
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 
+const BciIcon = ({ name }) => (
+  <svg 
+    width={14} 
+    height={14} 
+    viewBox="0 0 24 24" 
+    fill="none" 
+    stroke="currentColor" 
+    strokeWidth={2.5} 
+    strokeLinecap="round" 
+    strokeLinejoin="round"
+  >
+    <use href={`/assets/svgs/bci_icon_${name}.svg#icon`} />
+  </svg>
+);
+
+
 const TELEPATHIC_MESSAGES = [
   { sender: 'Ephraim', text: 'Hey Vance! Are you free for some flag football practice on the dome turf this weekend?', top: '15%', right: '8%' },
   { sender: 'Vance', text: 'Yeah! I\'d love to. How about Saturday afternoon? Say, around 15:00?', top: '27%', left: '8%' },
@@ -357,44 +373,25 @@ export default function NanobotPillDetails() {
   const superhumanScenarios = [
     {
       id: 'overview',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
-          <circle cx={12} cy={12} r={3} />
-        </svg>
-      ),
+      icon: <BciIcon name="overview" />,
       title: 'Superhuman Synthesis.',
       description: 'Unlock complete biological automation. Maintain physical appearance, prevent aging, and synchronize with medical grids to install vaccines and doses needle-free. Select a scenario below to experience it.'
     },
     {
       id: 'autoRaze',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 3v4M12 17v4M3 12h4M17 12h4M6.34 6.34l2.83 2.83M14.83 14.83l2.83 2.83M6.34 17.66l2.83-2.83M14.83 9.17l2.83-2.83" />
-        </svg>
-      ),
+      icon: <BciIcon name="autoraze" />,
       title: 'Auto-Raze Grooming',
       description: 'Automated follicle-level grooming. Suppresses facial hair growth and maintains a clean-shaven look entirely device-free.'
     },
     {
       id: 'antiAging',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          <path d="M12 8v4l3 3" />
-        </svg>
-      ),
+      icon: <BciIcon name="antiaging" />,
       title: 'Telomere Anti-Aging',
       description: 'Real-time DNA telomere repair. Nanobots stabilize genetic replication bounds to arrest and reverse cellular aging.'
     },
     {
       id: 'pharmacy',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <rect x={5} y={5} width={14} height={14} rx={7} ry={7} transform="rotate(45 12 12)" />
-          <line x1={7.5} y1={16.5} x2={16.5} y2={7.5} />
-        </svg>
-      ),
+      icon: <BciIcon name="pharmacy" />,
       title: 'Shot-Free Pharmacy',
       description: 'Needle-free vaccine & medicine delivery. Direct molecular synthesis via wireless link to your authorized pharmacy.'
     }
@@ -403,74 +400,37 @@ export default function NanobotPillDetails() {
   const scenarios = [
     {
       id: 'overview',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z" />
-          <circle cx={12} cy={12} r={3} />
-        </svg>
-      ),
+      icon: <BciIcon name="overview" />,
       title: 'HUD-Free. Screen-Free.',
       description: 'The visual field is completely clean. Virtual screens, clocks, maps, and guides anchor to the physical environment only when you need them. Select a scenario below to experience it.'
     },
     {
       id: 'productivity',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <rect x={2} y={7} width={20} height={14} rx={2} ry={2} />
-          <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
-        </svg>
-      ),
+      icon: <BciIcon name="productivity" />,
       title: 'Spatial Productivity',
       description: 'Snap functional widgets to physical walls. Keep a ticking clock on the wall and calendars floating above your desk.'
     },
     {
       id: 'entertainment',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <rect x={2} y={2} width={20} height={20} rx={2.18} ry={2.18} />
-          <line x1={7} y1={2} x2={7} y2={22} />
-          <line x1={17} y1={2} x2={17} y2={22} />
-          <line x1={2} y1={12} x2={22} y2={12} />
-          <line x1={2} y1={7} x2={7} y2={7} />
-          <line x1={2} y1={17} x2={7} y2={17} />
-          <line x1={17} y1={17} x2={22} y2={17} />
-          <line x1={17} y1={7} x2={22} y2={7} />
-        </svg>
-      ),
+      icon: <BciIcon name="entertainment" />,
       title: 'Infinite Entertainment',
       description: 'Project giant glassmorphic media screens in mid-air. Stream video layers and coordinate spatial audio waves.'
     },
     {
       id: 'traverse',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <polygon points="3 11 22 2 13 21 11 13 3 11" />
-        </svg>
-      ),
+      icon: <BciIcon name="traverse" />,
       title: 'Active Traverse',
       description: 'Navigate the Martian terrain. Project navigation guides on the floor and a biometric wristwatch onto your wrist.'
     },
     {
       id: 'telepathy',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M5 12.55a11 11 0 0 1 14.08 0" />
-          <path d="M1.42 9a16 16 0 0 1 21.16 0" />
-          <circle cx={12} cy={12} r={2} />
-          <path d="M12 14v8" />
-        </svg>
-      ),
+      icon: <BciIcon name="telepathy" />,
       title: 'Telepathic Link',
       description: 'Establish direct neural communication with other citizens. Exchange thoughts and coordinate events seamlessly.'
     },
     {
       id: 'memories',
-      icon: (
-        <svg width={14} height={14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
-          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
-          <circle cx={12} cy={13} r={4} />
-        </svg>
-      ),
+      icon: <BciIcon name="memories" />,
       title: 'Continuous Memories',
       description: 'Always-on visual/auditory neural recording. Instantly replay memories, share clips with friends, view AI summaries, or auto-transcribe logs into a personal diary.'
     }
@@ -531,17 +491,7 @@ export default function NanobotPillDetails() {
               preserveAspectRatio="none" 
               style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, pointerEvents: 'none' }}
             >
-              <rect x="8" y="8" width="84" height="84" fill="none" stroke="var(--color-accent)" strokeWidth="0.4" strokeDasharray="1,2" opacity="0.6" />
-              <line x1="8" y1="50" x2="92" y2="50" stroke="#ff4400" strokeWidth="0.5" strokeDasharray="1,1" opacity="0.8" />
-              <path d="M 12 12 L 20 12 M 12 12 L 12 20" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
-              <path d="M 88 12 L 80 12 M 88 12 L 88 20" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
-              <path d="M 12 88 L 20 88 M 12 88 L 12 80" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
-              <path d="M 88 88 L 80 88 M 88 88 L 88 80" fill="none" stroke="#ffb300" strokeWidth="0.6"/>
-              
-              <text x="14" y="20" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● METABOLIC HEAT ACTIVE [-55C NOMINAL]</text>
-              <text x="14" y="25" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● RADIATION DENSE DEFENSE: 99.4%</text>
-              <text x="14" y="30" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● O2 RESPIRED SATURATION: 98.6%</text>
-              <text x="14" y="35" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● MUSCLE-BONE GRAVITY GAIN: 0.38G</text>
+              <use href="/assets/svgs/bci_adaptation.svg#overlay" />
             </svg>
             <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
               <span>SYSTEM CALIBRATION</span>
@@ -916,75 +866,19 @@ export default function NanobotPillDetails() {
             <div style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
               {activeSuperhumanScenario === 'autoRaze' && (
                 <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
-                  {/* Scanning Grid / Face wireframe overlay lines */}
-                  <path d="M 10 20 L 90 20 M 10 80 L 90 80" stroke="rgba(255, 179, 0, 0.3)" strokeWidth="0.5" strokeDasharray="2,2" />
-                  <path d="M 20 10 L 20 90 M 80 10 L 80 90" stroke="rgba(255, 179, 0, 0.3)" strokeWidth="0.5" strokeDasharray="2,2" />
-                  {/* Animated scanning bar */}
-                  <line x1="5" y1="10" x2="95" y2="10" stroke="#ffb300" strokeWidth="0.8" opacity="0.8">
-                    <animate attributeName="y1" values="15;85;15" dur="4s" repeatCount="indefinite" />
-                    <animate attributeName="y2" values="15;85;15" dur="4s" repeatCount="indefinite" />
-                  </line>
-                  {/* Targeted follicles dots */}
-                  <circle cx="35" cy="65" r="1.5" fill="#ffb300" opacity="0.8">
-                    <animate attributeName="r" values="0.5;2;0.5" dur="1.5s" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx="50" cy="72" r="1.2" fill="#ffb300" opacity="0.8">
-                    <animate attributeName="r" values="1.2;0.2;1.2" dur="2s" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx="65" cy="65" r="1.5" fill="#ffb300" opacity="0.8">
-                    <animate attributeName="r" values="0.5;2;0.5" dur="1.8s" repeatCount="indefinite" />
-                  </circle>
-                  <text x="12" y="15" fill="#ffb300" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● FOLLICLE INHIBITION: ACTIVE [100% CLEAN]</text>
-                  <text x="12" y="88" fill="rgba(255,179,0,0.8)" fontSize="2.2" fontFamily="monospace">SHAVE PROFILE: ULTRA-GLIDE SMOOTH</text>
+                  <use href="/assets/svgs/bci_superhuman_autoraze.svg#overlay" />
                 </svg>
               )}
 
               {activeSuperhumanScenario === 'antiAging' && (
                 <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
-                  {/* Glowing repair nodes and indicators */}
-                  <rect x="8" y="8" width="84" height="84" fill="none" stroke="rgba(0, 240, 255, 0.2)" strokeWidth="0.4" />
-                  {/* DNA helix schematic representation */}
-                  <path d="M 20 50 Q 35 25, 50 50 T 80 50" fill="none" stroke="#00f0ff" strokeWidth="0.8" strokeDasharray="1,1" opacity="0.7">
-                    <animate attributeName="stroke-dashoffset" values="0;20" dur="2s" repeatCount="indefinite" />
-                  </path>
-                  <path d="M 20 50 Q 35 75, 50 50 T 80 50" fill="none" stroke="rgba(0, 255, 136, 0.7)" strokeWidth="0.8" strokeDasharray="1,1" opacity="0.7">
-                    <animate attributeName="stroke-dashoffset" values="20;0" dur="2s" repeatCount="indefinite" />
-                  </path>
-                  {/* Repair nodes */}
-                  <circle cx="35" cy="37" r="1" fill="#ffffff">
-                    <animate attributeName="opacity" values="0.2;1;0.2" dur="1.2s" repeatCount="indefinite" />
-                  </circle>
-                  <circle cx="65" cy="63" r="1" fill="#ffffff">
-                    <animate attributeName="opacity" values="1;0.2;1" dur="1.5s" repeatCount="indefinite" />
-                  </circle>
-                  <text x="12" y="16" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● TELOMERE INTEGRITY: 99.99% [LOCKED]</text>
-                  <text x="12" y="22" fill="#00f0ff" fontSize="2.4" fontFamily="monospace">CELLULAR DECAY RATE: 0.0000% / YR</text>
-                  <text x="12" y="88" fill="rgba(255,255,255,0.7)" fontSize="2.2" fontFamily="monospace">GENETIC REVERSAL SEQUENCE: COMPLETE</text>
+                  <use href="/assets/svgs/bci_superhuman_antiaging.svg#overlay" />
                 </svg>
               )}
 
               {activeSuperhumanScenario === 'pharmacy' && (
                 <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
-                  {/* Bloodstream or grid flow with docking nodes */}
-                  <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(0, 255, 136, 0.3)" strokeWidth="0.5" strokeDasharray="1,3" />
-                  <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(0, 255, 136, 0.2)" strokeWidth="0.5" strokeDasharray="2,4" />
-                  {/* Docking animation elements */}
-                  <g transform="translate(50, 50)">
-                    <circle cx="0" cy="0" r="3" fill="#00ff88" opacity="0.9">
-                      <animate attributeName="r" values="1;4;1" dur="2.5s" repeatCount="indefinite" />
-                    </circle>
-                    {/* Floating dose packets */}
-                    <line x1="-35" y1="-35" x2="-5" y2="-5" stroke="#00ff88" strokeWidth="0.4" strokeDasharray="1,1" opacity="0.6" />
-                    <circle cx="-35" cy="-35" r="1.5" fill="#00ff88">
-                      <animate attributeName="transform" type="translate" values="0,0; 30,30" dur="3s" repeatCount="indefinite" />
-                    </circle>
-                    <circle cx="35" cy="35" r="1.5" fill="#00ff88">
-                      <animate attributeName="transform" type="translate" values="0,0; -30,-30" dur="2.5s" repeatCount="indefinite" />
-                    </circle>
-                  </g>
-                  <text x="12" y="16" fill="#00ff88" fontSize="2.8" fontFamily="monospace" fontWeight="bold">● PHARMACY LINK: SECURE [MARS_EAST_DOME]</text>
-                  <text x="12" y="22" fill="#ffffff" fontSize="2.4" fontFamily="monospace">IMMUNIZATION RECEPTOR SYNC: 100%</text>
-                  <text x="12" y="88" fill="#00ff88" fontSize="2.2" fontFamily="monospace">✓ NO-SHOT VAC-DOCK: ACTIVE [INFLUENZA-M56]</text>
+                  <use href="/assets/svgs/bci_superhuman_pharmacy.svg#overlay" />
                 </svg>
               )}
             </div>

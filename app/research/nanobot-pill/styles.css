@@ -1,0 +1,256 @@
+@keyframes scanline-sweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+@keyframes rotate-reticle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes alert-flash {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+}
+@keyframes snap-scale {
+  0% { transform: scale(0.7); opacity: 0; filter: blur(4px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+@keyframes system-snap-scale {
+  0% { transform: translateX(-50%) scale(0.7); opacity: 0; filter: blur(4px); }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; filter: blur(0); }
+}
+@keyframes wave-pulse {
+  0%, 100% { height: 10px; }
+  50% { height: 35px; }
+}
+.gaze-ring-overlay {
+  pointer-events: none;
+  position: absolute;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 50%;
+  animation: pulse-ring 1.8s infinite linear;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.apple-headline {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+  background: linear-gradient(180deg, #ffffff 30%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.apple-sub {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-weight: 400;
+}
+@media (max-width: 900px) {
+  html, body {
+    overflow: auto !important;
+    height: auto !important;
+  }
+  .nanobot-pill-content-container {
+    padding-top: 10px !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .research-grid-deck {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+    gap: 16px !important;
+  }
+  .research-grid-deck > div:nth-child(1) {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding-bottom: 16px !important;
+  }
+  .desktop-visual-column {
+    display: none !important;
+  }
+  .touch-slide-card::-webkit-scrollbar {
+    display: none !important;
+  }
+  .touch-slide-card {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    width: 100% !important;
+    gap: 0 !important;
+    padding: 14px 0 !important;
+    box-sizing: border-box !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+  .card-text-slide {
+    width: 85% !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start !important;
+    padding-left: 26px !important;
+    padding-right: 14px !important;
+    box-sizing: border-box !important;
+  }
+  .card-visual-slide {
+    width: 85% !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: end !important;
+    padding-left: 14px !important;
+    padding-right: 26px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-self: center !important;
+  }
+  .viewport-mobile-frame {
+    width: 100% !important;
+    height: 260px !important;
+    background: rgba(2, 3, 6, 0.98) !important;
+    border: 1px solid rgba(0, 240, 255, 0.2) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+  .stage5-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+  }
+  .stage5-slider {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    width: 100% !important;
+    gap: 0 !important;
+    padding: 14px 0 0 0 !important;
+    box-sizing: border-box !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+  .stage5-slider::-webkit-scrollbar {
+    display: none !important;
+  }
+  .scenario-bottom-dock {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 26px 18px 26px !important;
+  }
+  .scenarios-grid-deck {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    overflow: visible !important;
+  }
+  .scenario-pill-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 12px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    flex-shrink: 0 !important;
+    height: 28px !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+  }
+  .scenario-pill-btn:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-2px) !important;
+    color: #ffffff !important;
+  }
+  .scenario-pill-btn.active-btn {
+    background: rgba(var(--color-accent-rgb), 0.15) !important;
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
+    color: var(--color-accent) !important;
+  }
+  .scenario-pill-title {
+    font-family: var(--font-tech), monospace;
+    font-size: 0.58rem !important;
+    color: inherit !important;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+}
+@media (min-width: 901px) {
+  .card-visual-slide {
+    display: none !important;
+  }
+  .stage5-slider {
+    width: 100%;
+  }
+  .scenario-bottom-dock {
+    width: 100%;
+    margin-top: 15px;
+  }
+  .scenarios-grid-deck {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    overflow: visible !important;
+  }
+  .scenario-pill-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 14px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    flex-shrink: 0 !important;
+    height: 32px !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+  }
+  .scenario-pill-btn:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-2px) !important;
+    color: #ffffff !important;
+  }
+  .scenario-pill-btn.active-btn {
+    background: rgba(var(--color-accent-rgb), 0.15) !important;
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
+    color: var(--color-accent) !important;
+  }
+  .scenario-pill-title {
+    font-family: var(--font-tech), monospace;
+    font-size: 0.62rem !important;
+    color: inherit !important;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+}

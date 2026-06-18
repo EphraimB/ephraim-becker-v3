@@ -441,112 +441,91 @@ export default function NanobotPillDetails() {
     switch (tab) {
       case 'overview':
         return (
-          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <div className="viewport-relative-wrapper">
             <img 
               src="/assets/images/bci/bci_ingestion.png" 
               alt="BCI Ingestion Background" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+              className="viewport-overlay-bg viewport-bg-opacity-60"
             />
             <img 
               src="/assets/svgs/bci_payload.svg" 
               alt="BCI Ingestion SVG Overlay" 
-              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
+              className="viewport-svg-overlay-centered"
             />
-            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+            <div className="viewport-calibration-footer">
               <span>SYSTEM CALIBRATION</span>
-              <span style={{ color: '#00ff88' }}>INGESTION STAGE</span>
+              <span className="text-accent-green">INGESTION STAGE</span>
             </div>
           </div>
         );
       case 'payload':
         return (
-          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <div className="viewport-relative-wrapper">
             <img 
               src="/assets/images/bci/bci_uptake.png" 
               alt="BCI Uptake Background" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+              className="viewport-overlay-bg viewport-bg-opacity-60"
             />
             <img 
               src="/assets/svgs/bci_overview.svg" 
               alt="BCI Uptake SVG Overlay" 
-              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
+              className="viewport-svg-overlay-centered"
             />
-            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+            <div className="viewport-calibration-footer">
               <span>SYSTEM CALIBRATION</span>
-              <span style={{ color: '#ff4400' }}>BBB TRANSIT</span>
+              <span className="text-accent-red">BBB TRANSIT</span>
             </div>
           </div>
         );
       case 'adaptation':
         return (
-          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <div className="viewport-relative-wrapper">
             <img 
               src="/assets/images/bci/bci_adaptation.png" 
               alt="BCI Adaptation Background" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }}
+              className="viewport-overlay-bg viewport-bg-opacity-55"
             />
             <svg 
               width="100%" 
               height="100%" 
               viewBox="0 0 100 100" 
               preserveAspectRatio="none" 
-              style={{ position: 'absolute', top: 0, left: 0, zIndex: 2, pointerEvents: 'none' }}
+              className="viewport-svg-overlay-stretched"
             >
               <use href="/assets/svgs/bci_adaptation.svg#overlay" />
             </svg>
-            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+            <div className="viewport-calibration-footer">
               <span>SYSTEM CALIBRATION</span>
-              <span style={{ color: '#00ff88' }}>ALIGNMENT SEQUENCE</span>
+              <span className="text-accent-green">ALIGNMENT SEQUENCE</span>
             </div>
           </div>
         );
       case 'assembly':
         return (
-          <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+          <div className="viewport-relative-wrapper">
             <img 
               src="/assets/images/bci/bci_assembly.png" 
               alt="BCI Assembly Background" 
-              style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }}
+              className="viewport-overlay-bg viewport-bg-opacity-60"
             />
             <img 
               src="/assets/svgs/bci_assembly.svg" 
               alt="BCI Assembly SVG Overlay" 
-              style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '80%', height: '80%', objectFit: 'contain', zIndex: 2 }}
+              className="viewport-svg-overlay-centered"
             />
-            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+            <div className="viewport-calibration-footer">
               <span>SYSTEM CALIBRATION</span>
-              <span style={{ color: '#ffb300' }}>ALIGNMENT SEQUENCE</span>
+              <span className="text-accent-amber">ALIGNMENT SEQUENCE</span>
             </div>
           </div>
         );
       case 'eclipse':
         return (
-          <div 
-            style={{ 
-              width: '100%', 
-              height: '100%', 
-              position: 'relative', 
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              padding: '12px'
-            }}
-          >
+          <div className="viewport-interactive-container">
             <div 
+              className="viewport-parallax-wrapper"
               style={{ 
-                position: 'absolute',
-                top: '-15px',
-                left: '-15px',
-                right: '-15px',
-                bottom: '-15px',
-                zIndex: 1,
-                background: 'radial-gradient(circle at 50% 50%, rgba(4, 6, 12, 0.4) 0%, rgba(4, 6, 12, 1) 90%)',
-                transform: `translate3d(${parallax.x * -0.5}px, ${parallax.y * -0.5}px, 0)`,
-                transition: 'transform 0.1s ease-out',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                transform: `translate3d(${parallax.x * -0.5}px, ${parallax.y * -0.5}px, 0)`
               }}
             >
               <img 
@@ -562,36 +541,14 @@ export default function NanobotPillDetails() {
                     : '/assets/images/bci/bci_traverse.png'
                 } 
                 alt={`Martian BCI OS - ${activeScenario}`} 
-                style={{ width: '110%', height: '110%', objectFit: 'cover', opacity: 0.85 }}
+                className="viewport-parallax-bg"
               />
             </div>
 
             {activeScenario === 'telepathy' && (
               <>
-                <div 
-                  style={{
-                    position: 'absolute',
-                    top: '12px',
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    background: 'rgba(2, 6, 16, 0.6)',
-                    border: '1px solid rgba(0, 240, 255, 0.2)',
-                    borderRadius: '20px',
-                    padding: '4px 12px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '6px',
-                    zIndex: 5,
-                    fontFamily: 'monospace, var(--font-tech)',
-                    fontSize: '0.52rem',
-                    color: '#00f0ff',
-                    textTransform: 'uppercase',
-                    letterSpacing: '1px',
-                    backdropFilter: 'blur(4px)',
-                    WebkitBackdropFilter: 'blur(4px)'
-                  }}
-                >
-                  <span className="active-pulse-dot" style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#00f0ff', boxShadow: '0 0 6px #00f0ff' }}></span>
+                <div className="telepathy-status-badge">
+                  <span className="active-pulse-dot pulse-dot-cyan"></span>
                   <span>TELEPATHIC LINK SECURE // SYNC 99.8%</span>
                 </div>
 
@@ -613,38 +570,32 @@ export default function NanobotPillDetails() {
                     return (
                       <div 
                         key={msg.msgIndex} 
+                        className="telepathy-bubble-wrapper"
                         style={{ 
-                          position: 'absolute',
                           top: isMobile ? (msg.hasCalendarCard ? '16%' : '35%') : msg.top,
                           ...(isSystem 
                             ? { left: '50%', transform: `translateX(-50%) ${scale}` } 
                             : (isSelf ? { right: msg.right, transform: scale } : { left: msg.left, transform: scale })
                           ),
-                          display: 'flex', 
-                          flexDirection: 'column',
                           alignItems: isSystem ? 'center' : (isSelf ? 'flex-end' : 'flex-start'),
                           animation: isSystem 
                             ? 'system-snap-scale 0.25s ease-out forwards' 
                             : 'snap-scale 0.25s ease-out forwards',
                           opacity: opacity,
-                          transition: 'opacity 0.3s ease, transform 0.3s ease',
                           zIndex: msg.isCurrent ? 12 : 10,
                           maxWidth: isSystem ? '80%' : '65%'
                         }}
                       >
                         <span 
+                          className="telepathy-bubble-sender"
                           style={{ 
-                            fontSize: '0.45rem', 
-                            color: isSystem ? '#00f0ff' : (isSelf ? 'var(--color-accent)' : '#00ff88'), 
-                            fontFamily: 'monospace', 
-                            marginBottom: '2px', 
-                            textTransform: 'uppercase',
-                            textShadow: '0 1px 3px rgba(0,0,0,0.8)'
+                            color: isSystem ? '#00f0ff' : (isSelf ? 'var(--color-accent)' : '#00ff88')
                           }}
                         >
                           {isSystem ? '[SYSTEM // RETINA OS]' : (isSelf ? '[MY_RETINA // SELF]' : `[PEER // ${msg.sender.toUpperCase()}]`)}
                         </span>
                         <div 
+                          className="telepathy-bubble-content"
                           style={{
                             background: isSystem 
                               ? 'rgba(0, 240, 255, 0.14)' 
@@ -652,63 +603,25 @@ export default function NanobotPillDetails() {
                             border: `1px solid ${isSystem 
                               ? 'rgba(0, 240, 255, 0.45)' 
                               : (isSelf ? 'rgba(255, 87, 34, 0.45)' : 'rgba(0, 255, 136, 0.4)')}`,
-                            borderRadius: '12px',
-                            padding: '8px 12px',
-                            fontSize: '0.62rem',
-                            fontFamily: 'monospace',
-                            color: '#ffffff',
-                            lineHeight: '1.35',
-                            textAlign: isSystem ? 'center' : 'left',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.5)',
-                            backdropFilter: 'blur(6px)',
-                            WebkitBackdropFilter: 'blur(6px)',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '6px'
+                            textAlign: isSystem ? 'center' : 'left'
                           }}
                         >
                           <div>{msg.text}</div>
 
                           {msg.hasCalendarCard && msg.isCurrent && (
-                            <div 
-                              style={{
-                                marginTop: '4px',
-                                background: 'rgba(0, 0, 0, 0.4)',
-                                border: '1px solid rgba(0, 240, 255, 0.25)',
-                                borderRadius: '8px',
-                                padding: '8px 10px',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                gap: '4px',
-                                textAlign: 'left',
-                                width: '100%',
-                                boxSizing: 'border-box'
-                              }}
-                            >
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px', borderBottom: '1px solid rgba(0, 240, 255, 0.15)', paddingBottom: '3px', marginBottom: '2px' }}>
-                                <span style={{ fontSize: '0.65rem' }}>📅</span>
-                                <span style={{ fontSize: '0.52rem', color: '#ffffff', fontWeight: 'bold' }}>EVENT: FLAG FOOTBALL PRACTICE</span>
+                            <div className="telepathy-calendar-card">
+                              <div className="telepathy-calendar-card-header">
+                                <span className="calendar-emoji">📅</span>
+                                <span className="telepathy-calendar-card-title">EVENT: FLAG FOOTBALL PRACTICE</span>
                               </div>
-                              <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', fontSize: '0.52rem', color: 'rgba(255,255,255,0.8)' }}>
-                                <div>🕒 <span style={{ color: '#00f0ff' }}>TIME:</span> Saturday, 15:00 - 16:30</div>
-                                <div>📍 <span style={{ color: '#00f0ff' }}>ZONE:</span> Ares Dome Lawn (Grid 4)</div>
-                                <div>👥 <span style={{ color: '#00f0ff' }}>PEERS:</span> Ephraim Becker, Vance K.</div>
+                              <div className="telepathy-calendar-card-body">
+                                <div>🕒 <span className="text-cyan">TIME:</span> Saturday, 15:00 - 16:30</div>
+                                <div>📍 <span className="text-cyan">ZONE:</span> Ares Dome Lawn (Grid 4)</div>
+                                <div>👥 <span className="text-cyan">PEERS:</span> Ephraim Becker, Vance K.</div>
                               </div>
-                              <div 
-                                style={{ 
-                                  marginTop: '4px', 
-                                  background: 'rgba(0, 255, 136, 0.08)', 
-                                  border: '1px solid rgba(0, 255, 136, 0.3)', 
-                                  borderRadius: '3px', 
-                                  padding: '2px 4px', 
-                                  display: 'flex', 
-                                  alignItems: 'center', 
-                                  justifyContent: 'center', 
-                                  gap: '4px' 
-                                }}
-                              >
-                                <span className="active-pulse-dot" style={{ width: '3px', height: '3px', borderRadius: '50%', background: '#00ff88', boxShadow: '0 0 4px #00ff88' }}></span>
-                                <span style={{ fontSize: '0.45rem', color: '#00ff88', fontWeight: 'bold' }}>✓ EVENT SYNCHRONIZED</span>
+                              <div className="telepathy-calendar-sync-status">
+                                <span className="active-pulse-dot pulse-dot-green"></span>
+                                <span className="telepathy-calendar-sync-text">✓ EVENT SYNCHRONIZED</span>
                               </div>
                             </div>
                           )}
@@ -724,68 +637,29 @@ export default function NanobotPillDetails() {
               <>
                 {/* Share Notification Alert */}
                 {memoryShared && (
-                  <div 
-                    style={{ 
-                      position: 'absolute',
-                      bottom: '55px',
-                      left: '50%',
-                      transform: 'translateX(-50%)',
-                      background: 'rgba(0, 255, 136, 0.9)',
-                      border: '1px solid #00ff88',
-                      borderRadius: '6px', 
-                      padding: '4px 12px', 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      justifyContent: 'center',
-                      boxShadow: '0 4px 12px rgba(0,255,136,0.2)',
-                      animation: 'snap-scale 0.25s ease-out forwards',
-                      zIndex: 10
-                    }}
-                  >
-                    <span style={{ fontSize: '0.55rem', color: '#000000', fontWeight: 'bold', fontFamily: 'monospace' }}>
+                  <div className="memories-share-alert">
+                    <span className="memories-share-text">
                       ✓ CLIP COPIED & SHARED WITH VANCE K.
                     </span>
                   </div>
                 )}
 
                 {/* Bottom playback & sharing control bar */}
-                <div 
-                  style={{
-                    position: 'absolute',
-                    bottom: '10px',
-                    left: '12px',
-                    right: '12px',
-                    height: '35px',
-                    background: 'rgba(2, 6, 16, 0.8)',
-                    border: '1px solid rgba(0, 240, 255, 0.25)',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    padding: '0 8px',
-                    zIndex: 5
-                  }}
-                >
-                  <div style={{ display: 'flex', gap: '4px' }}>
+                <div className="memories-control-bar">
+                  <div className="memories-btn-group">
                     <button 
                       onClick={() => {
                         setMemoryPlaybackActive(true);
                       }}
-                      className="hud-btn" 
-                      style={{ fontSize: '0.52rem', padding: '3px 6px', margin: 0, height: 'auto', minWidth: 0 }}
+                      className="hud-btn memories-control-btn" 
                       title="Rewind 10 Seconds"
                     >
                       ⏮ REW
                     </button>
                     <button 
                       onClick={() => setMemoryPlaybackActive(!memoryPlaybackActive)}
-                      className="hud-btn" 
+                      className="hud-btn memories-control-btn" 
                       style={{ 
-                        fontSize: '0.52rem', 
-                        padding: '3px 6px', 
-                        margin: 0, 
-                        height: 'auto', 
-                        minWidth: 0,
                         borderColor: memoryPlaybackActive ? 'var(--color-accent)' : 'rgba(255,255,255,0.08)',
                         color: memoryPlaybackActive ? 'var(--color-accent)' : '#ffffff'
                       }}
@@ -796,8 +670,7 @@ export default function NanobotPillDetails() {
                       onClick={() => {
                         setMemoryPlaybackActive(true);
                       }}
-                      className="hud-btn" 
-                      style={{ fontSize: '0.52rem', padding: '3px 6px', margin: 0, height: 'auto', minWidth: 0 }}
+                      className="hud-btn memories-control-btn" 
                       title="Forward 10 Seconds"
                     >
                       ⏭ FWD
@@ -808,8 +681,7 @@ export default function NanobotPillDetails() {
                       setMemoryShared(true);
                       setTimeout(() => setMemoryShared(false), 3500);
                     }}
-                    className="hud-btn" 
-                    style={{ fontSize: '0.52rem', padding: '3px 8px', margin: 0, height: 'auto', minWidth: 0, borderColor: '#00ff88', color: '#00ff88' }}
+                    className="hud-btn memories-share-btn" 
                   >
                     📤 SHARE CLIP
                   </button>
@@ -820,32 +692,11 @@ export default function NanobotPillDetails() {
         );
       case 'superhuman':
         return (
-          <div 
-            style={{ 
-              width: '100%', 
-              height: '100%', 
-              position: 'relative', 
-              overflow: 'hidden',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-              padding: '12px'
-            }}
-          >
+          <div className="viewport-interactive-container">
             <div 
+              className="viewport-parallax-wrapper"
               style={{ 
-                position: 'absolute',
-                top: '-15px',
-                left: '-15px',
-                right: '-15px',
-                bottom: '-15px',
-                zIndex: 1,
-                background: 'radial-gradient(circle at 50% 50%, rgba(4, 6, 12, 0.4) 0%, rgba(4, 6, 12, 1) 90%)',
-                transform: `translate3d(${parallax.x * -0.5}px, ${parallax.y * -0.5}px, 0)`,
-                transition: 'transform 0.1s ease-out',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center'
+                transform: `translate3d(${parallax.x * -0.5}px, ${parallax.y * -0.5}px, 0)`
               }}
             >
               <img 
@@ -859,34 +710,34 @@ export default function NanobotPillDetails() {
                     : '/assets/images/bci/bci_adaptation.png'
                 } 
                 alt={`Martian BCI OS - ${activeSuperhumanScenario}`} 
-                style={{ width: '110%', height: '110%', objectFit: 'cover', opacity: 0.85 }}
+                className="viewport-parallax-bg"
               />
             </div>
 
             {/* Tech-styled SVG Overlay Panel */}
-            <div style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
+            <div className="viewport-svg-overlay-stretched">
               {activeSuperhumanScenario === 'autoRaze' && (
-                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" className="viewport-svg-overlay-stretched">
                   <use href="/assets/svgs/bci_superhuman_autoraze.svg#overlay" />
                 </svg>
               )}
 
               {activeSuperhumanScenario === 'antiAging' && (
-                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" className="viewport-svg-overlay-stretched">
                   <use href="/assets/svgs/bci_superhuman_antiaging.svg#overlay" />
                 </svg>
               )}
 
               {activeSuperhumanScenario === 'pharmacy' && (
-                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" style={{ position: 'absolute', top: 0, left: 0 }}>
+                <svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" className="viewport-svg-overlay-stretched">
                   <use href="/assets/svgs/bci_superhuman_pharmacy.svg#overlay" />
                 </svg>
               )}
             </div>
 
-            <div style={{ position: 'absolute', bottom: '10px', left: '10px', right: '10px', display: 'flex', justifyContent: 'space-between', fontFamily: 'monospace', fontSize: '0.55rem', color: 'var(--text-secondary)', zIndex: 3 }}>
+            <div className="viewport-calibration-footer">
               <span>SYSTEM OS ADVANCED</span>
-              <span style={{ color: '#00ff88' }}>SUPERHUMAN BIO-SYNTHESIS</span>
+              <span className="text-accent-green">SUPERHUMAN BIO-SYNTHESIS</span>
             </div>
           </div>
         );
@@ -903,12 +754,11 @@ export default function NanobotPillDetails() {
       <div className="walking-motion-overlay nanobot-pill-walking-overlay"></div>
 
       <div 
-        className={`walking-content-container ${transitState} nanobot-pill-content-container`} 
-        style={{ display: 'flex', flexDirection: 'column', width: '100%', gap: '15px', maxWidth: '1080px', margin: '0 auto', minHeight: 0, height: '100%' }}
+        className={`walking-content-container ${transitState} nanobot-pill-content-container pill-details-container`} 
       >
         
         {/* Back navigation & Header Area */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexShrink: 0 }}>
+        <div className="pill-details-header">
           <Link 
             href="/research" 
             onClick={() => {
@@ -916,27 +766,24 @@ export default function NanobotPillDetails() {
                 window.sessionStorage.setItem('walk-direction', 'left');
               }
             }}
-            className="hud-btn" 
-            style={{ width: 'fit-content' }}
+            className="hud-btn pill-details-back-btn" 
           >
             [ ↩ BACK TO LAB DECK ]
           </Link>
-          <span style={{ fontSize: '0.62rem', color: 'var(--color-accent)', fontFamily: 'var(--font-tech)', fontWeight: 'bold', letterSpacing: '1px' }}>
+          <span className="pill-details-logo">
             ARES LABS // RETINA BCI OS
           </span>
         </div>
 
         {/* Tab navigation - Quick Scroll Jumps */}
-        <div className="bubbly-panel" style={{ padding: '8px 12px', background: 'rgba(6, 9, 20, 0.45)', flexShrink: 0 }}>
-          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+        <div className="bubbly-panel pill-details-tabs-panel">
+          <div className="pill-details-tabs-list">
             {tabs.map(tab => (
               <button
                 key={tab.id}
                 onClick={() => scrollToSection(tab.id)}
-                className={`hud-btn ${activeTab === tab.id ? 'active-tab-override' : ''}`}
+                className={`hud-btn pill-details-tab-btn ${activeTab === tab.id ? 'active-tab-override' : ''}`}
                 style={{
-                  flex: 1,
-                  fontSize: '0.68rem',
                   borderColor: activeTab === tab.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.08)',
                   background: activeTab === tab.id ? 'rgba(var(--color-accent-rgb), 0.1)' : 'transparent',
                   color: activeTab === tab.id ? 'var(--color-accent)' : 'var(--text-secondary)'
@@ -949,38 +796,31 @@ export default function NanobotPillDetails() {
         </div>
 
         {/* Main Content Layout Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1.3fr', gap: '20px', flex: 1, minHeight: 0, height: '100%' }} className="research-grid-deck">
+        <div className="research-grid-deck pill-details-grid">
           
           {/* LEFT: Scrollable story container */}
           <div 
             ref={scrollRef}
             onScroll={handleScroll}
-            className="custom-scroll"
-            style={{ 
-              display: 'flex', 
-              flexDirection: 'column', 
-              gap: '24px', 
-              height: '100%', 
-              overflowY: 'auto' 
-            }}
+            className="custom-scroll pill-details-story-column"
           >
             {/* Story Card 1 */}
-            <div id="overview" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+            <div id="overview" className="bubbly-panel touch-slide-card pill-details-story-card">
               <div className="card-text-slide">
-                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                <span className="net-label pill-card-label">
                   STAGE 01 // SIMPLE INGESTION
                 </span>
-                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                <h2 className="apple-headline pill-card-title">
                   Swallow. Sync. Enjoy.
                 </h2>
-                <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                <p className="apple-sub pill-card-sub">
                   It starts with a simple vitamin-sized capsule. The BCI Pill replaces the weight of screens, keyboards, and battery packs with a direct connection inside your mind.
                 </p>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                <p className="pill-card-text">
                   Swallowed with a sip of water, the organic cellulose shell dissolves naturally in your stomach in under 4 minutes. As it dissolves, it releases 12.4 million microscopic helper nodes safely into your system, with zero side effects.
                 </p>
                 
-                <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                <div className="pill-card-metadata">
                   <div>⏱️ TIME: ~4 Min</div>
                   <div>🧪 SHELL: Plant Cellulose</div>
                   <div>🩹 ENTRY: 100% Non-Invasive</div>
@@ -995,22 +835,22 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 2 */}
-            <div id="payload" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+            <div id="payload" className="bubbly-panel touch-slide-card pill-details-story-card">
               <div className="card-text-slide">
-                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                <span className="net-label pill-card-label">
                   STAGE 02 // NATURAL TRAVEL
                 </span>
-                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                <h2 className="apple-headline pill-card-title">
                   Safe Transit.
                 </h2>
-                <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                <p className="apple-sub pill-card-sub">
                   Once swallowed, the nodes use your natural circulation to travel. They are chemically coded to find and pass through the brain's natural filters.
                 </p>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                <p className="pill-card-text">
                   Over a 20-minute journey, they glide smoothly into place inside your visual center. No surgeries, no wires, and no discomfort—just a natural pathway to a new way of seeing.
                 </p>
                 
-                <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                <div className="pill-card-metadata">
                   <div>⏱️ TRAVEL: ~20 Min</div>
                   <div>📍 TARGET: Visual Center</div>
                   <div>🛡️ SAFETY: Clinically Approved</div>
@@ -1025,25 +865,25 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 3 */}
-            <div id="adaptation" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+            <div id="adaptation" className="bubbly-panel touch-slide-card pill-details-story-card">
               <div className="card-text-slide">
-                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                <span className="net-label pill-card-label">
                   STAGE 03 // PHYSIOLOGICAL ADAPTATION
                 </span>
-                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                <h2 className="apple-headline pill-card-title">
                   Mars. Just like Earth.
                 </h2>
-                <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                <p className="apple-sub pill-card-sub">
                   Powered by a living Genetic AI compiled directly from your DNA, the pill silently adapts your biological markers so you can step onto the Martian surface suitless and helmetless.
                 </p>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                <p className="pill-card-text">
                   - **Metabolic Warmth**: Automatically regulates core heat so freezing -55°C Martian winds feel like a mild summer breeze.
                   <br />- **DNA-Level Shielding**: Activates cellular melanin/protein coatings to deflect solar radiation.
                   <br />- **Respiration Tuning**: Optimizes hemoglobin oxygen binding, allowing comfortable respiration in the thin atmosphere.
                   <br />- **0.38g Gravity Sync**: Dynamically maintains muscle tone and bone density markers.
                 </p>
                 
-                <div style={{ marginTop: '20px', display: 'flex', gap: '15px', flexWrap: 'wrap', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                <div className="pill-card-metadata-wrap">
                   <div>🧬 GENETIC AI: ACTIVE</div>
                   <div>🌡️ SKIN TEMP: 18.5°C</div>
                   <div>🛡️ RAD REJECT: 99.4%</div>
@@ -1059,22 +899,22 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 4 */}
-            <div id="assembly" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '22px 26px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+            <div id="assembly" className="bubbly-panel touch-slide-card pill-details-story-card">
               <div className="card-text-slide">
-                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
+                <span className="net-label pill-card-label">
                   STAGE 04 // CORTICAL MAPPING
                 </span>
-                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                <h2 className="apple-headline pill-card-title">
                   Connecting to Your Thoughts.
                 </h2>
-                <p className="apple-sub" style={{ marginBottom: '15px' }}>
+                <p className="apple-sub pill-card-sub">
                   The nodes settle gently around your synapses, forming an interface that respects your neural privacy. It maps your intent without changing who you are.
                 </p>
-                <p style={{ fontSize: '0.78rem', color: 'var(--text-secondary)', lineHeight: 1.5, margin: 0 }}>
+                <p className="pill-card-text">
                   Powered entirely by body glucose, the Genetic AI integrates with your visual cortex in under 45 minutes, ready to translate subconscious intent into natural spatial anchors.
                 </p>
                 
-                <div style={{ marginTop: '20px', display: 'flex', gap: '20px', fontSize: '0.62rem', fontFamily: 'monospace', color: 'var(--text-secondary)' }}>
+                <div className="pill-card-metadata">
                   <div>⏱️ SETUP: ~45 Min</div>
                   <div>🔋 FUEL: Glucose-Powered</div>
                   <div>🧠 SYNAPSE LINK: 64.5%</div>
@@ -1089,20 +929,20 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 5 */}
-            <div id="eclipse" className="bubbly-panel stage5-card" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+            <div id="eclipse" className="bubbly-panel stage5-card pill-details-story-card-compact">
               <div className="stage5-slider">
                 <div className="card-text-slide">
-                  <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px', display: 'block' }}>
+                  <span className="net-label pill-card-label-block">
                     STAGE 05 // RETINA BCI OS
                   </span>
                   {(() => {
                     const currentScenario = scenarios.find(s => s.id === activeScenario) || scenarios[0];
                     return (
                       <>
-                        <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px', minHeight: '52px' }}>
+                        <h2 className="apple-headline pill-card-title-fixed-height">
                           {currentScenario.title}
                         </h2>
-                        <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem', minHeight: '70px' }}>
+                        <p className="apple-sub pill-card-sub-fixed-height">
                           {currentScenario.description}
                         </p>
                       </>
@@ -1119,22 +959,14 @@ export default function NanobotPillDetails() {
 
               {/* Bottom scenario dock bar */}
               <div className="scenario-bottom-dock">
-                <div 
-                  className="hide-scrollbar scenarios-grid-deck" 
-                  style={{ 
-                    display: 'flex', 
-                    gap: '10px', 
-                    overflow: 'visible',
-                    width: '100%'
-                  }}
-                >
+                <div className="hide-scrollbar scenarios-grid-deck">
                   {scenarios.map(sc => (
                     <button 
                       key={sc.id} 
                       onClick={() => setActiveScenario(sc.id)}
                       className={`scenario-pill-btn ${activeScenario === sc.id ? 'active-btn' : ''}`}
                     >
-                      <span style={{ display: 'flex', alignItems: 'center', height: '14px', width: '14px', flexShrink: 0 }}>{sc.icon}</span>
+                      <span className="scenario-pill-icon-wrapper">{sc.icon}</span>
                       <span className="scenario-pill-title">{sc.id === 'overview' ? 'Overview' : sc.title}</span>
                     </button>
                   ))}
@@ -1143,20 +975,20 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 6 */}
-            <div id="superhuman" className="bubbly-panel stage5-card" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+            <div id="superhuman" className="bubbly-panel stage5-card pill-details-story-card-compact">
               <div className="stage5-slider">
                 <div className="card-text-slide">
-                  <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px', display: 'block' }}>
+                  <span className="net-label pill-card-label-block">
                     STAGE 06 // SUPERHUMAN PHYSIOLOGY
                   </span>
                   {(() => {
                     const currentSuperhumanScenario = superhumanScenarios.find(s => s.id === activeSuperhumanScenario) || superhumanScenarios[0];
                     return (
                       <>
-                        <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px', minHeight: '52px' }}>
+                        <h2 className="apple-headline pill-card-title-fixed-height">
                           {currentSuperhumanScenario.title}
                         </h2>
-                        <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem', minHeight: '70px' }}>
+                        <p className="apple-sub pill-card-sub-fixed-height">
                           {currentSuperhumanScenario.description}
                         </p>
                       </>
@@ -1173,22 +1005,14 @@ export default function NanobotPillDetails() {
 
               {/* Bottom scenario dock bar */}
               <div className="scenario-bottom-dock">
-                <div 
-                  className="hide-scrollbar scenarios-grid-deck" 
-                  style={{ 
-                    display: 'flex', 
-                    gap: '10px', 
-                    overflow: 'visible',
-                    width: '100%'
-                  }}
-                >
+                <div className="hide-scrollbar scenarios-grid-deck">
                   {superhumanScenarios.map(sc => (
                     <button 
                       key={sc.id} 
                       onClick={() => setActiveSuperhumanScenario(sc.id)}
                       className={`scenario-pill-btn ${activeSuperhumanScenario === sc.id ? 'active-btn' : ''}`}
                     >
-                      <span style={{ display: 'flex', alignItems: 'center', height: '14px', width: '14px', flexShrink: 0 }}>{sc.icon}</span>
+                      <span className="scenario-pill-icon-wrapper">{sc.icon}</span>
                       <span className="scenario-pill-title">{sc.id === 'overview' ? 'Overview' : sc.title}</span>
                     </button>
                   ))}
@@ -1198,25 +1022,12 @@ export default function NanobotPillDetails() {
           </div>
 
           {/* RIGHT: Telemetry Dashboard & Layered Composites */}
-          <div ref={visualContainerRef} className="desktop-visual-column" style={{ display: 'flex', flexDirection: 'column', gap: '15px', height: '100%', minHeight: 0 }}>
+          <div ref={visualContainerRef} className="desktop-visual-column">
             
             {/* Viewport Box */}
-            <div 
-              className="bubbly-panel" 
-              style={{ 
-                flex: 1, 
-                padding: '12px', 
-                display: 'flex', 
-                flexDirection: 'column', 
-                justifyContent: 'space-between',
-                minHeight: '380px',
-                position: 'relative',
-                overflow: 'hidden',
-                background: 'rgba(6, 9, 20, 0.75)'
-              }}
-            >
+            <div className="bubbly-panel viewport-outer-panel">
               
-              <span className="net-label" style={{ display: 'block', fontSize: '0.6rem', color: 'var(--color-accent)', marginBottom: '5px' }}>
+              <span className="net-label pill-card-label-block">
                 // LAYERED VISUAL COMPOSITE
               </span>
 
@@ -1225,53 +1036,42 @@ export default function NanobotPillDetails() {
                 ref={viewportRef}
                 onMouseMove={handleMouseMove}
                 onMouseLeave={handleMouseLeave}
-                style={{ 
-                  flex: 1, 
-                  background: 'rgba(2, 3, 6, 0.98)', 
-                  border: '1px solid rgba(var(--color-accent-rgb), 0.2)', 
-                  borderRadius: '12px', 
-                  position: 'relative', 
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center',
-                  overflow: 'hidden',
-                  cursor: 'default'
-                }}
+                className="viewport-frame-box"
               >
                 {renderViewportContent(activeTab)}
               </div>
 
               {/* Status Diagnostic biophysics specs */}
-              <div className="biometrics-table-desktop" style={{ marginTop: '10px', borderTop: '1px dashed rgba(255,255,255,0.08)', paddingTop: '10px', display: 'flex', flexDirection: 'column', gap: '5px', fontSize: '0.6rem', fontFamily: 'monospace' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>GENETIC AI CORE STATE:</span>
-                  <span style={{ color: activeTab === 'eclipse' || activeTab === 'superhuman' ? '#00ff88' : 'var(--color-accent)', fontWeight: 'bold' }}>
+              <div className="biometrics-table-desktop viewport-diagnostics-table">
+                <div className="viewport-diagnostics-row">
+                  <span className="viewport-diagnostics-label">GENETIC AI CORE STATE:</span>
+                  <span className="font-bold" style={{ color: activeTab === 'eclipse' || activeTab === 'superhuman' ? '#00ff88' : 'var(--color-accent)' }}>
                     {activeTab === 'eclipse' || activeTab === 'superhuman' ? 'ACTIVE (100% DNA MATCH)' : stats.systemState}
                   </span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>BIOLOGICAL SYNC INDEX:</span>
-                  <span style={{ color: '#ffffff' }}>{activeTab === 'eclipse' || activeTab === 'superhuman' ? '99.8%' : stats.synapticMapping}</span>
+                <div className="viewport-diagnostics-row">
+                  <span className="viewport-diagnostics-label">BIOLOGICAL SYNC INDEX:</span>
+                  <span className="text-pure-white">{activeTab === 'eclipse' || activeTab === 'superhuman' ? '99.8%' : stats.synapticMapping}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>METABOLIC HEAT OVERRIDE:</span>
-                  <span style={{ color: '#ffffff' }}>{activeTab === 'overview' || activeTab === 'payload' ? 'PENDING' : '-55°C NOMINAL (18.5°C SKIN)'}</span>
+                <div className="viewport-diagnostics-row">
+                  <span className="viewport-diagnostics-label">METABOLIC HEAT OVERRIDE:</span>
+                  <span className="text-pure-white">{activeTab === 'overview' || activeTab === 'payload' ? 'PENDING' : '-55°C NOMINAL (18.5°C SKIN)'}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>RADIATION PROTECTION:</span>
-                  <span style={{ color: '#00ff88' }}>{stats.radiation}</span>
+                <div className="viewport-diagnostics-row">
+                  <span className="viewport-diagnostics-label">RADIATION PROTECTION:</span>
+                  <span className="text-accent-green">{stats.radiation}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>HEART RATE / BLOOD O₂ SAT:</span>
-                  <span style={{ color: '#00ff88' }}>{activeTab === 'overview' ? '70 BPM / 99.1%' : activeTab === 'payload' ? '72 BPM / 99.0%' : `74 BPM / ${stats.oxygenSat}`}</span>
+                <div className="viewport-diagnostics-row">
+                  <span className="viewport-diagnostics-label">HEART RATE / BLOOD O₂ SAT:</span>
+                  <span className="text-accent-green">{activeTab === 'overview' ? '70 BPM / 99.1%' : activeTab === 'payload' ? '72 BPM / 99.0%' : `74 BPM / ${stats.oxygenSat}`}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>GRAVITY COMPENSATION:</span>
-                  <span style={{ color: '#00ff88' }}>{activeTab === 'overview' || activeTab === 'payload' ? '1.00g (TERRESTRIAL)' : '0.38g (STABILIZED)'}</span>
+                <div className="viewport-diagnostics-row">
+                  <span className="viewport-diagnostics-label">GRAVITY COMPENSATION:</span>
+                  <span className="text-accent-green">{activeTab === 'overview' || activeTab === 'payload' ? '1.00g (TERRESTRIAL)' : '0.38g (STABILIZED)'}</span>
                 </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <span style={{ color: 'var(--text-secondary)' }}>NEURAL SYSTEM LATENCY:</span>
-                  <span style={{ color: '#00ff88' }}>{stats.latency}</span>
+                <div className="viewport-diagnostics-row">
+                  <span className="viewport-diagnostics-label">NEURAL SYSTEM LATENCY:</span>
+                  <span className="text-accent-green">{stats.latency}</span>
                 </div>
               </div>
 
@@ -1279,11 +1079,11 @@ export default function NanobotPillDetails() {
 
             {/* Mobile Status Diagnostic summary bar */}
             <div className="biometrics-summary-mobile bubbly-panel">
-              <div style={{ display: 'flex', gap: '8px', width: '100%', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                <span>🧬 SYNC: <span style={{ color: '#00ff88' }}>{activeTab === 'eclipse' || activeTab === 'superhuman' ? '99.8%' : stats.synapticMapping}</span></span>
-                <span>🌡️ HEAT: <span style={{ color: '#ffffff' }}>{activeTab === 'overview' || activeTab === 'payload' ? 'PENDING' : '18.5°C'}</span></span>
-                <span>🛰️ GRAV: <span style={{ color: '#00ff88' }}>{activeTab === 'overview' || activeTab === 'payload' ? '1.00g' : '0.38g'}</span></span>
-                <span>📶 LAT: <span style={{ color: '#00ff88' }}>{stats.latency}</span></span>
+              <div className="biometrics-summary-row">
+                <span>🧬 SYNC: <span className="text-accent-green">{activeTab === 'eclipse' || activeTab === 'superhuman' ? '99.8%' : stats.synapticMapping}</span></span>
+                <span>🌡️ HEAT: <span className="text-pure-white">{activeTab === 'overview' || activeTab === 'payload' ? 'PENDING' : '18.5°C'}</span></span>
+                <span>🛰️ GRAV: <span className="text-accent-green">{activeTab === 'overview' || activeTab === 'payload' ? '1.00g' : '0.38g'}</span></span>
+                <span>📶 LAT: <span className="text-accent-green">{stats.latency}</span></span>
               </div>
             </div>
 

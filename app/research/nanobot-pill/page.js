@@ -1166,6 +1166,7 @@ export default function NanobotPillDetails() {
             gap: 8px !important;
             width: 100% !important;
             justify-content: flex-start !important;
+            overflow: visible !important;
           }
           .scenario-pill-btn {
             display: inline-flex !important;
@@ -1221,6 +1222,7 @@ export default function NanobotPillDetails() {
             gap: 10px !important;
             width: 100% !important;
             justify-content: flex-start !important;
+            overflow: visible !important;
           }
           .scenario-pill-btn {
             display: inline-flex !important;
@@ -1485,9 +1487,7 @@ export default function NanobotPillDetails() {
                   style={{ 
                     display: 'flex', 
                     gap: '10px', 
-                    overflowX: 'auto', 
-                    paddingBottom: '5px',
-                    scrollSnapType: 'x mandatory',
+                    overflow: 'visible',
                     width: '100%'
                   }}
                 >
@@ -1541,9 +1541,7 @@ export default function NanobotPillDetails() {
                   style={{ 
                     display: 'flex', 
                     gap: '10px', 
-                    overflowX: 'auto', 
-                    paddingBottom: '5px',
-                    scrollSnapType: 'x mandatory',
+                    overflow: 'visible',
                     width: '100%'
                   }}
                 >

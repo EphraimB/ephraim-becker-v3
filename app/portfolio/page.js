@@ -26,7 +26,7 @@ export default function PortfolioDome() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' by default (recents first)
   const [downloadDropdownOpen, setDownloadDropdownOpen] = useState(false);
-  const [vibeCodedOnly, setVibeCodedOnly] = useState(false);
+  const [devStyle, setDevStyle] = useState('all');
   const [showAdvanced, setShowAdvanced] = useState(false);
   const [catDropdownOpen, setCatDropdownOpen] = useState(false);
 
@@ -113,8 +113,11 @@ export default function PortfolioDome() {
       }
     }
 
-    // 4. Vibe Coded Filter
-    if (vibeCodedOnly && !project.vibeCoded) {
+    // 4. Development Style Filter
+    if (devStyle === 'vibeCoded' && !project.vibeCoded) {
+      return false;
+    }
+    if (devStyle === 'handCoded' && project.vibeCoded) {
       return false;
     }
 
@@ -218,21 +221,33 @@ export default function PortfolioDome() {
               </div>
             </div>
 
-            {/* Actions Column: Vibe Coded Toggle + Advanced Button */}
+            {/* Actions Column: Development Style + Advanced Button */}
             <div className="filter-actions-col">
               <div className="filter-action-item">
-                <label className="filter-col-label">AI CO-CREATIONS</label>
-                <button
-                  type="button"
-                  onClick={() => setVibeCodedOnly(!vibeCodedOnly)}
-                  className={`vibe-toggle-pill ${vibeCodedOnly ? 'active' : ''}`}
-                >
-                  <span className="vibe-toggle-icon">🤖</span>
-                  <span className="vibe-toggle-label">
-                    VIBE CODED ONLY
-                  </span>
-                  <span className="vibe-toggle-led"></span>
-                </button>
+                <label className="filter-col-label">DEVELOPMENT TYPE</label>
+                <div className="dev-style-segmented-control">
+                  <button
+                    type="button"
+                    onClick={() => setDevStyle('all')}
+                    className={`segment-btn ${devStyle === 'all' ? 'active active-all' : ''}`}
+                  >
+                    ALL
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDevStyle('vibeCoded')}
+                    className={`segment-btn ${devStyle === 'vibeCoded' ? 'active active-vibe' : ''}`}
+                  >
+                    AI CO-CREATIONS
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDevStyle('handCoded')}
+                    className={`segment-btn ${devStyle === 'handCoded' ? 'active active-hand' : ''}`}
+                  >
+                    HAND-CODED
+                  </button>
+                </div>
               </div>
 
               <div className="filter-action-item">

@@ -1106,34 +1106,42 @@ export default function NanobotPillDetails() {
           .scenarios-grid-deck {
             display: flex !important;
             flex-direction: row !important;
-            gap: 10px !important;
+            flex-wrap: wrap !important;
+            gap: 8px !important;
             width: 100% !important;
-            overflow-x: auto !important;
-            padding-bottom: 5px !important;
             justify-content: flex-start !important;
           }
-          .scenario-icon-btn {
-            width: 48px !important;
-            height: 48px !important;
-            display: flex !important;
+          .scenario-pill-btn {
+            display: inline-flex !important;
             align-items: center !important;
-            justify-content: center !important;
+            gap: 6px !important;
+            padding: 6px 12px !important;
             background: rgba(255, 255, 255, 0.02) !important;
             border: 1px solid rgba(255, 255, 255, 0.06) !important;
-            border-radius: 50% !important;
+            border-radius: 20px !important;
             cursor: pointer !important;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
             flex-shrink: 0 !important;
+            height: 28px !important;
           }
-          .scenario-icon-btn:hover {
+          .scenario-pill-btn:hover {
             background: rgba(255, 255, 255, 0.08) !important;
             border-color: rgba(255, 255, 255, 0.15) !important;
             transform: translateY(-2px) !important;
           }
-          .scenario-icon-btn.active-btn {
+          .scenario-pill-btn.active-btn {
             background: rgba(var(--color-accent-rgb), 0.15) !important;
             border-color: var(--color-accent) !important;
             box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
+          }
+          .scenario-pill-title {
+            font-family: var(--font-tech), monospace;
+            font-size: 0.58rem !important;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin: 0 !important;
+            line-height: 1 !important;
           }
         }
         @media (min-width: 901px) {
@@ -1150,32 +1158,42 @@ export default function NanobotPillDetails() {
           .scenarios-grid-deck {
             display: flex !important;
             flex-direction: row !important;
-            gap: 12px !important;
+            flex-wrap: wrap !important;
+            gap: 10px !important;
             width: 100% !important;
             justify-content: flex-start !important;
           }
-          .scenario-icon-btn {
-            width: 48px !important;
-            height: 48px !important;
-            display: flex !important;
+          .scenario-pill-btn {
+            display: inline-flex !important;
             align-items: center !important;
-            justify-content: center !important;
+            gap: 8px !important;
+            padding: 8px 14px !important;
             background: rgba(255, 255, 255, 0.02) !important;
             border: 1px solid rgba(255, 255, 255, 0.06) !important;
-            border-radius: 50% !important;
+            border-radius: 20px !important;
             cursor: pointer !important;
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
             flex-shrink: 0 !important;
+            height: 32px !important;
           }
-          .scenario-icon-btn:hover {
+          .scenario-pill-btn:hover {
             background: rgba(255, 255, 255, 0.08) !important;
             border-color: rgba(255, 255, 255, 0.15) !important;
             transform: translateY(-2px) !important;
           }
-          .scenario-icon-btn.active-btn {
+          .scenario-pill-btn.active-btn {
             background: rgba(var(--color-accent-rgb), 0.15) !important;
             border-color: var(--color-accent) !important;
             box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
+          }
+          .scenario-pill-title {
+            font-family: var(--font-tech), monospace;
+            font-size: 0.62rem !important;
+            color: #ffffff;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin: 0 !important;
+            line-height: 1 !important;
           }
         }
       `}} />
@@ -1412,14 +1430,14 @@ export default function NanobotPillDetails() {
                   }}
                 >
                   {scenarios.map(sc => (
-                    <div 
+                    <button 
                       key={sc.id} 
                       onClick={() => setActiveScenario(sc.id)}
-                      className={`scenario-icon-btn ${activeScenario === sc.id ? 'active-btn' : ''}`}
-                      title={sc.title}
+                      className={`scenario-pill-btn ${activeScenario === sc.id ? 'active-btn' : ''}`}
                     >
-                      <span style={{ fontSize: '1.3rem' }}>{sc.icon}</span>
-                    </div>
+                      <span style={{ fontSize: '0.9rem' }}>{sc.icon}</span>
+                      <span className="scenario-pill-title">{sc.id === 'overview' ? 'Overview' : sc.title}</span>
+                    </button>
                   ))}
                 </div>
               </div>
@@ -1468,14 +1486,14 @@ export default function NanobotPillDetails() {
                   }}
                 >
                   {superhumanScenarios.map(sc => (
-                    <div 
+                    <button 
                       key={sc.id} 
                       onClick={() => setActiveSuperhumanScenario(sc.id)}
-                      className={`scenario-icon-btn ${activeSuperhumanScenario === sc.id ? 'active-btn' : ''}`}
-                      title={sc.title}
+                      className={`scenario-pill-btn ${activeSuperhumanScenario === sc.id ? 'active-btn' : ''}`}
                     >
-                      <span style={{ fontSize: '1.3rem' }}>{sc.icon}</span>
-                    </div>
+                      <span style={{ fontSize: '0.9rem' }}>{sc.icon}</span>
+                      <span className="scenario-pill-title">{sc.id === 'overview' ? 'Overview' : sc.title}</span>
+                    </button>
                   ))}
                 </div>
               </div>

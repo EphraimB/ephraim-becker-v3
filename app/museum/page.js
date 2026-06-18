@@ -187,6 +187,8 @@ export default function AresMuseum() {
           font-family: monospace;
           font-size: 0.62rem;
           color: rgba(255, 255, 255, 0.45);
+          white-space: nowrap;
+          flex-shrink: 0;
         }
 
         .plaque-title {
@@ -231,41 +233,42 @@ export default function AresMuseum() {
         .clock-widget-container {
           background: rgba(2, 4, 8, 0.6);
           border: 1px solid rgba(0, 240, 255, 0.2);
-          border-radius: 6px;
-          padding: 6px 10px;
+          border-radius: 8px;
+          padding: 10px 14px;
           font-family: monospace;
-          margin-top: 4px;
+          margin-top: 8px;
           flex-shrink: 0;
         }
 
         .clock-readout-main {
-          font-size: 1.1rem;
+          font-size: 1.45rem;
           color: #ffb300;
           text-align: center;
-          padding: 2px 0;
-          text-shadow: 0 0 8px rgba(255, 179, 0, 0.35);
-          letter-spacing: 1px;
+          padding: 4px 0;
+          text-shadow: 0 0 10px rgba(255, 179, 0, 0.45);
+          letter-spacing: 1.5px;
           border-bottom: 1px dashed rgba(0, 240, 255, 0.15);
-          margin-bottom: 4px;
+          margin-bottom: 8px;
           font-weight: bold;
         }
 
         .telemetry-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 2px 8px;
+          grid-template-columns: 1.1fr 0.9fr;
+          gap: 4px 12px;
         }
 
         .telemetry-row {
           display: flex;
           justify-content: space-between;
-          font-size: 0.6rem;
-          padding: 1px 0;
+          font-size: 0.72rem;
+          padding: 2px 0;
           border-bottom: 1px solid rgba(255, 255, 255, 0.02);
         }
 
         .telemetry-label {
           color: rgba(255, 255, 255, 0.55);
+          white-space: nowrap;
         }
 
         .telemetry-value {
@@ -356,7 +359,7 @@ export default function AresMuseum() {
           <h4 className="plaque-title">The Sci-Fi Passion & Ares Outpost</h4>
           <div className="plaque-body">
             <p>
-              The journey to building this digital outpost began with a lifelong <span className="highlight-cyan">passion for science fiction</span>. Sci-fi inspires us to push human potential and reimagine technology.
+              The journey to building this digital outpost began with a lifelong <span className="highlight-cyan">passion for science fiction</span>. Sci-fi inspires me to push human potential and reimagine technology.
             </p>
             <p>
               Choosing a Martian habitat theme for this website was a natural evolution of this passion, transforming a standard developer portfolio into an ambient simulation of <span className="highlight-amber">Ares City</span>.
@@ -373,10 +376,10 @@ export default function AresMuseum() {
           <h4 className="plaque-title">Traditional 2D Web & SEO Pathways</h4>
           <div className="plaque-body">
             <p>
-              Immersive spaces often suffer from a discoverability crisis; portals built inside heavy 3D canvases are <span className="highlight-cyan">invisible to search engine crawlers (SEOs)</span>.
+              Immersive spaces often suffer from a discoverability crisis since heavy 3D canvases are <span className="highlight-cyan">invisible to search engine crawlers (SEOs)</span>. To solve this, this site is a <span className="highlight-amber">native Next.js 2D HTML5 application</span>, allowing search spiders to index archives directly.
             </p>
             <p>
-              To solve this, this site is engineered as a <span className="highlight-amber">native Next.js 2D HTML5 application</span>. Search spiders can index the citizen's portfolio archives and research files directly.
+              Immersion is preserved through <span className="highlight-cyan">realistic background environments</span> and a location-shifting navigation system, making page transitions feel like traveling to <span className="highlight-amber">new physical sectors</span>.
             </p>
           </div>
         </div>
@@ -393,7 +396,7 @@ export default function AresMuseum() {
               Designing a navigation system that aligns with a sci-fi OS console theme while remaining responsive on mobile datapads was a major UX bottleneck.
             </p>
             <p>
-              Initially, the plan was to build a fully responsive city map like Google Maps, but it wouldn't respond well. We found the perfect compromise with a <span className="highlight-cyan">locator tab and a slide-out, list-based map drawer</span> that kept the transit distance metrics intact.
+              Initially, the plan was to build a fully responsive city map like Google Maps, but it wouldn't respond well. I found the perfect compromise with a <span className="highlight-cyan">locator tab and a slide-out, list-based map drawer</span> that kept the transit distance metrics intact.
             </p>
           </div>
         </div>
@@ -419,7 +422,7 @@ export default function AresMuseum() {
               <div className="telemetry-grid">
                 <div className="telemetry-row">
                   <span className="telemetry-label">UTC Ref:</span>
-                  <span className="telemetry-value" style={{ fontSize: '0.48rem' }}>{clockData.utcTime.substring(5, 22)}</span>
+                  <span className="telemetry-value">{clockData.utcTime.substring(5, 22)}</span>
                 </div>
 
                 <div className="telemetry-row">

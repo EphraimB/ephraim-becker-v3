@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+  <style>
+    @keyframes dishBeam {
+      0%, 100% { transform: translateY(0) scaleX(1); opacity: 0.3; }
+      50% { transform: translateY(-3px) scaleX(1.3); opacity: 0.9; stroke: #fff; }
+    }
+    .dish-beam-path {
+      animation: dishBeam 1.5s infinite ease-in-out;
+      transform-origin: 12px 3px;
+    }
+  </style>
+  <path d="M4 10a8 8 0 0 0 16 0H4z" transform="rotate(-30 12 12)" />
+  <path d="M12 14v5M9 20h6" />
+  <line x1="12" y1="10" x2="12" y2="4" transform="rotate(-30 12 12)" />
+  <path d="M7 3q5-3 10 0" stroke-dasharray="2 1" class="dish-beam-path" />
+</svg>

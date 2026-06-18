@@ -1,18 +1,26 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 110" width="100%" height="110px" style="background:#0a0d17;border-radius:8px;border:1px solid rgba(255,0,127,0.22);box-shadow:inset 0 0 10px rgba(255,0,127,0.08)">
+  <style>
+    @keyframes routeFlow { from { stroke-dashoffset: 12; } to { stroke-dashoffset: 0; } }
+    @keyframes nodeGlow { 0%, 100% { opacity: 0.7; } 50% { opacity: 1; } }
+    .route-flow-fast { animation: routeFlow 0.8s linear infinite; }
+    .route-flow-slow { animation: routeFlow 1.6s linear infinite; }
+    .node-pulse-1 { animation: nodeGlow 2s infinite ease-in-out; transform-origin: 50px 75px; }
+    .node-pulse-2 { animation: nodeGlow 2.5s infinite ease-in-out; transform-origin: 150px 55px; }
+  </style>
   <circle cx="160" cy="180" r="140" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="0.8" stroke-dasharray="3 3"/>
   <circle cx="160" cy="180" r="90" fill="none" stroke="rgba(255,255,255,0.02)" stroke-width="0.8"/>
   <line x1="5" y1="55" x2="315" y2="55" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
   <line x1="160" y1="5" x2="160" y2="105" stroke="rgba(255,255,255,0.03)" stroke-width="0.5"/>
-  <path d="M 50,75 Q 100,20 150,55" fill="none" stroke="#ff007f" stroke-width="1.5" stroke-dasharray="3 3" filter="drop-shadow(0 0 2.5px #ff007f)"/>
-  <path d="M 150,55 Q 210,15 250,35" fill="none" stroke="#ff007f" stroke-width="1.5" filter="drop-shadow(0 0 2.5px #ff007f)"/>
-  <path d="M 250,35 Q 280,50 280,75" fill="none" stroke="#ffb300" stroke-width="1" stroke-dasharray="2 2"/>
-  <circle cx="50" cy="75" r="3" fill="#ff007f" filter="drop-shadow(0 0 3px #ff007f)"/>
+  <path d="M 50,75 Q 100,20 150,55" fill="none" stroke="#ff007f" stroke-width="1.5" stroke-dasharray="4 2" class="route-flow-fast" filter="drop-shadow(0 0 2.5px #ff007f)"/>
+  <path d="M 150,55 Q 210,15 250,35" fill="none" stroke="#ff007f" stroke-width="1.5" stroke-dasharray="6 3" class="route-flow-slow" filter="drop-shadow(0 0 2.5px #ff007f)"/>
+  <path d="M 250,35 Q 280,50 280,75" fill="none" stroke="#ffb300" stroke-width="1" stroke-dasharray="3 3" class="route-flow-fast"/>
+  <circle cx="50" cy="75" r="3" fill="#ff007f" class="node-pulse-1" filter="drop-shadow(0 0 3px #ff007f)"/>
   <text x="50" y="70" fill="#fff" font-size="5" font-family="monospace" text-anchor="middle">NYC</text>
-  <circle cx="150" cy="55" r="3.5" fill="#fff" stroke="#ff007f" stroke-width="0.8"/>
+  <circle cx="150" cy="55" r="3.5" fill="#fff" stroke="#ff007f" stroke-width="0.8" class="node-pulse-2"/>
   <text x="150" y="50" fill="#fff" font-size="5" font-family="monospace" text-anchor="middle">PHILLY</text>
-  <circle cx="250" cy="35" r="3" fill="#ffb300" filter="drop-shadow(0 0 2px #ffb300)"/>
+  <circle cx="250" cy="35" r="3" fill="#ffb300" class="node-pulse-1" filter="drop-shadow(0 0 2px #ffb300)"/>
   <text x="250" y="30" fill="#ffb300" font-size="5" font-family="monospace" text-anchor="middle">BOSTON</text>
-  <circle cx="280" cy="75" r="3" fill="#00f0ff"/>
+  <circle cx="280" cy="75" r="3" fill="#00f0ff" class="node-pulse-2"/>
   <text x="280" y="70" fill="#00f0ff" font-size="5" font-family="monospace" text-anchor="middle">DC</text>
   <g transform="translate(5, 22)">
     <rect x="0" y="0" width="120" height="45" rx="4" fill="rgba(0,0,0,0.6)" stroke="rgba(255,0,127,0.25)" stroke-width="1"/>

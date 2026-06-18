@@ -45,7 +45,7 @@ export default function TransmitterForm({ onNewLog }) {
   };
 
   return (
-    <form style={{ display: 'flex', flexDirection: 'column', gap: '12px', flex: 1 }} onSubmit={handleSubmit}>
+    <form className="transmitter-form" onSubmit={handleSubmit}>
       <div className="net-form-group">
         <label className="net-label" htmlFor="comm-sender">Citizen Sender / Org Name</label>
         <input
@@ -64,8 +64,7 @@ export default function TransmitterForm({ onNewLog }) {
         <label className="net-label" htmlFor="comm-recipient">Subspace Channel Link</label>
         <select
           id="comm-recipient"
-          className="net-input"
-          style={{ cursor: 'pointer' }}
+          className="net-input transmitter-select"
           value={recipient}
           onChange={(e) => setRecipient(e.target.value)}
           disabled={isTransmitting}
@@ -76,7 +75,7 @@ export default function TransmitterForm({ onNewLog }) {
         </select>
       </div>
 
-      <div className="net-form-group" style={{ flex: 1 }}>
+      <div className="net-form-group transmitter-textarea-wrapper">
         <label className="net-label" htmlFor="comm-body">Quantum Packet Message</label>
         <textarea
           id="comm-body"
@@ -91,12 +90,7 @@ export default function TransmitterForm({ onNewLog }) {
 
       <button
         type="submit"
-        className="hud-btn"
-        style={{
-          width: '100%',
-          borderColor: isTransmitting && statusText.includes('SECURED') ? 'var(--neon-emerald)' : '',
-          color: isTransmitting && statusText.includes('SECURED') ? 'var(--neon-emerald)' : ''
-        }}
+        className={`hud-btn ${isTransmitting && statusText.includes('SECURED') ? 'transmitter-submit-btn--secured' : ''}`}
         disabled={isTransmitting}
       >
         {statusText}

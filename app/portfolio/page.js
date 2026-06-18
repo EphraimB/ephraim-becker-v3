@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 import PROJECTS from '../../data/projects.json';
+import './styles.css';
 
 
 const CATEGORIES = [
@@ -26,6 +27,9 @@ export default function PortfolioDome() {
   const [lightboxIndex, setLightboxIndex] = useState(null);
   const [sortOrder, setSortOrder] = useState('desc'); // 'desc' by default (recents first)
   const [downloadDropdownOpen, setDownloadDropdownOpen] = useState(false);
+  const [devStyle, setDevStyle] = useState('all');
+  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [catDropdownOpen, setCatDropdownOpen] = useState(false);
 
   const getLightboxImages = () => {
     if (!activeProject) return [];
@@ -68,6 +72,17 @@ export default function PortfolioDome() {
     };
   }, [activeProject]);
 
+  useEffect(() => {
+    if (!catDropdownOpen) return;
+    const handleOutsideClick = (e) => {
+      if (!e.target.closest('.cat-dropdown-wrapper')) {
+        setCatDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, [catDropdownOpen]);
+
 
   const getProjectYear = (project) => {
     if (!project.finished) return 2026;
@@ -97,6 +112,14 @@ export default function PortfolioDome() {
       if (!matchTitle && !matchDesc && !matchTech && !matchCategory) {
         return false;
       }
+    }
+
+    // 4. Development Style Filter
+    if (devStyle === 'vibeCoded' && !project.vibeCoded) {
+      return false;
+    }
+    if (devStyle === 'handCoded' && project.vibeCoded) {
+      return false;
     }
 
     return true;
@@ -134,7 +157,7 @@ export default function PortfolioDome() {
         {/* Advanced Holographic Filter Deck */}
         <div className="bubbly-panel portfolio-filter-panel">
 
-          <div className="filter-deck-layout">
+          <div className="filter-primary-row">
 
             {/* Search Input Box */}
             <div className="filter-search-col">
@@ -161,87 +184,156 @@ export default function PortfolioDome() {
               </div>
             </div>
 
-            {/* Sort Order Selector */}
-            <div className="filter-sort-col">
+            {/* Category Dropdown Selector */}
+            <div className="cat-dropdown-col">
               <label className="filter-col-label">
-                ARCHIVE CHRONO SORT ORDER
+                SECTOR CLASSIFICATION
               </label>
-              <div className="filter-sort-row">
+              <div className="cat-dropdown-wrapper">
                 <button
-                  onClick={() => setSortOrder('desc')}
-                  className={`category-pill filter-sort-btn ${sortOrder === 'desc' ? 'active' : ''}`}
+                  type="button"
+                  onClick={() => setCatDropdownOpen(!catDropdownOpen)}
+                  className={`cat-dropdown-trigger ${catDropdownOpen ? 'open' : ''}`}
                 >
-                  ⏳ RECENTS
+                  <span className="cat-dropdown-value">
+                    {category.toUpperCase()}
+                  </span>
+                  <span className="cat-dropdown-arrow">
+                    {catDropdownOpen ? '▲' : '▼'}
+                  </span>
                 </button>
-                <button
-                  onClick={() => setSortOrder('asc')}
-                  className={`category-pill filter-sort-btn ${sortOrder === 'asc' ? 'active' : ''}`}
-                >
-                  ⌛ OLDEST
-                </button>
+                {catDropdownOpen && (
+                  <div className="cat-dropdown-menu custom-scroll">
+                    {CATEGORIES.map(cat => (
+                      <button
+                        key={cat}
+                        type="button"
+                        onClick={() => {
+                          setCategory(cat);
+                          setCatDropdownOpen(false);
+                        }}
+                        className={`cat-dropdown-item ${category === cat ? 'active' : ''}`}
+                      >
+                        {cat.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Date Range Control (Sliders side-by-side) */}
-            <div className="filter-sliders-container">
-              <div className="range-slider-group">
-                <div className="filter-year-header">
-                  <span className="range-slider-label">MIN COMPLETED YEAR</span>
-                  <span className="filter-year-value">{minYear}</span>
+            {/* Actions Column: Development Style + Advanced Button */}
+            <div className="filter-actions-col">
+              <div className="filter-action-item">
+                <label className="filter-col-label">DEVELOPMENT TYPE</label>
+                <div className="dev-style-segmented-control">
+                  <button
+                    type="button"
+                    onClick={() => setDevStyle('all')}
+                    className={`segment-btn ${devStyle === 'all' ? 'active active-all' : ''}`}
+                  >
+                    ALL
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDevStyle('vibeCoded')}
+                    className={`segment-btn ${devStyle === 'vibeCoded' ? 'active active-vibe' : ''}`}
+                  >
+                    AI CO-CREATIONS
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setDevStyle('handCoded')}
+                    className={`segment-btn ${devStyle === 'handCoded' ? 'active active-hand' : ''}`}
+                  >
+                    HAND-CODED
+                  </button>
                 </div>
-                <input
-                  type="range"
-                  min="2014"
-                  max="2026"
-                  value={minYear}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    setMinYear(val);
-                    if (val > maxYear) setMaxYear(val);
-                  }}
-                  className="range-slider-control"
-                />
               </div>
 
-              <div className="range-slider-group">
-                <div className="filter-year-header">
-                  <span className="range-slider-label">MAX COMPLETED YEAR</span>
-                  <span className="filter-year-value">{maxYear}</span>
-                </div>
-                <input
-                  type="range"
-                  min="2014"
-                  max="2026"
-                  value={maxYear}
-                  onChange={(e) => {
-                    const val = parseInt(e.target.value);
-                    setMaxYear(val);
-                    if (val < minYear) setMinYear(val);
-                  }}
-                  className="range-slider-control"
-                />
+              <div className="filter-action-item">
+                <label className="filter-col-label">DIAGNOSTIC MODE</label>
+                <button
+                  type="button"
+                  onClick={() => setShowAdvanced(!showAdvanced)}
+                  className={`advanced-toggle-btn ${showAdvanced ? 'active' : ''}`}
+                >
+                  ⚙️ {showAdvanced ? 'HIDE FILTERS' : 'ADVANCED FILTERS'}
+                </button>
               </div>
             </div>
 
           </div>
 
-          {/* Category Tag Pills Row */}
-          <div className="filter-category-section">
-            <span className="filter-category-label">
-              SECTOR CLASSIFICATION TAGS
-            </span>
-            <div className="category-pills-row">
-              {CATEGORIES.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setCategory(cat)}
-                  className={`category-pill ${category === cat ? 'active' : ''}`}
-                >
-                  {cat.toUpperCase()}
-                </button>
-              ))}
+          {showAdvanced && (
+            <div className="filter-advanced-row animate-fade-in">
+
+              {/* Sort Order Selector */}
+              <div className="filter-sort-col">
+                <label className="filter-col-label">
+                  ARCHIVE CHRONO SORT ORDER
+                </label>
+                <div className="filter-sort-row">
+                  <button
+                    type="button"
+                    onClick={() => setSortOrder('desc')}
+                    className={`category-pill filter-sort-btn ${sortOrder === 'desc' ? 'active' : ''}`}
+                  >
+                    ⏳ RECENTS
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setSortOrder('asc')}
+                    className={`category-pill filter-sort-btn ${sortOrder === 'asc' ? 'active' : ''}`}
+                  >
+                    ⌛ OLDEST
+                  </button>
+                </div>
+              </div>
+
+              {/* Date Range Control (Sliders side-by-side) */}
+              <div className="filter-sliders-container">
+                <div className="range-slider-group">
+                  <div className="filter-year-header">
+                    <span className="range-slider-label">MIN COMPLETED YEAR</span>
+                    <span className="filter-year-value">{minYear}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="2014"
+                    max="2026"
+                    value={minYear}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value);
+                      setMinYear(val);
+                      if (val > maxYear) setMaxYear(val);
+                    }}
+                    className="range-slider-control"
+                  />
+                </div>
+
+                <div className="range-slider-group">
+                  <div className="filter-year-header">
+                    <span className="range-slider-label">MAX COMPLETED YEAR</span>
+                    <span className="filter-year-value">{maxYear}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="2014"
+                    max="2026"
+                    value={maxYear}
+                    onChange={(e) => {
+                      const val = parseInt(e.target.value);
+                      setMaxYear(val);
+                      if (val < minYear) setMinYear(val);
+                    }}
+                    className="range-slider-control"
+                  />
+                </div>
+              </div>
+
             </div>
-          </div>
+          )}
 
         </div>
 
@@ -262,7 +354,7 @@ export default function PortfolioDome() {
                 <div
                   key={project.id}
                   onClick={() => setActiveProject(project)}
-                  className="project-card"
+                  className={`project-card ${project.vibeCoded ? 'vibe-coded-card' : ''}`}
                 >
                   <div>
                     <div className="project-card-header">
@@ -323,12 +415,12 @@ export default function PortfolioDome() {
           >
             {/* Modal Header */}
             <div className="portfolio-modal-header">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div className="portfolio-modal-title-bar">
                 <span className="portfolio-modal-title">
                   // HOLOGRAM_SECTOR: {activeProject.category.toUpperCase()}
                 </span>
                 {activeProject.vibeCoded && (
-                  <span className="badge-vibe-coded" style={{ verticalAlign: 'middle' }}>
+                  <span className="badge-vibe-coded badge-vibe-coded--aligned">
                     🤖 VIBE CODED WITH AI
                   </span>
                 )}
@@ -364,14 +456,13 @@ export default function PortfolioDome() {
                       />
                     </div>
                   ) : (
-                    /* Holographic Media Gallery Grid */
                     <div className="modal-gallery-wrapper">
-                      <div className="modal-gallery-grid" style={{ gridTemplateColumns: activeProject.images ? 'repeat(2, 1fr)' : '1fr' }}>
+                      <div className={`modal-gallery-grid ${activeProject.images ? 'modal-gallery-grid--multi' : ''}`}>
                         {activeProject.images ? (
                           activeProject.images.slice(0, 4).map((img, idx) => {
                             const isLastVisible = idx === 3;
                             const hasMore = activeProject.images.length > 4;
-                            const remainingCount = activeProject.images.length - 4;
+                            const remainingCount = activeProject.images.length - 3;
 
                             return (
                               <div
@@ -384,16 +475,15 @@ export default function PortfolioDome() {
                                   alt={`${activeProject.title} screenshot ${idx + 1}`}
                                   className="gallery-thumb-img"
                                 />
-                                {isLastVisible && hasMore ? (
+                                {isLastVisible && hasMore && (
                                   <div className="gallery-thumbnail-overlay">
                                     <span className="gallery-overlay-count">+{remainingCount}</span>
                                     <span className="gallery-overlay-text">more screenshots</span>
                                   </div>
-                                ) : (
-                                  <div className="gallery-thumb-label">
-                                    [ EXPAND SCREENSHOT {idx + 1} 🔍 ]
-                                  </div>
                                 )}
+                                <div className="gallery-thumb-label">
+                                  {isLastVisible && hasMore ? '[ VIEW ALL SCREENSHOTS 🔍 ]' : `[ EXPAND SCREENSHOT ${idx + 1} 🔍 ]`}
+                                </div>
                               </div>
                             );
                           })
@@ -541,7 +631,6 @@ export default function PortfolioDome() {
                                   download
                                   onClick={() => setDownloadDropdownOpen(false)}
                                   className="modal-download-item dropdown-item-hover"
-                                  style={{ borderBottom: idx < downloadLinks.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}
                                 >
                                   📄 {link.description}
                                 </a>

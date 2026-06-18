@@ -1,0 +1,777 @@
+@keyframes scanline-sweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+@keyframes rotate-reticle {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+@keyframes pulse-ring {
+  0% { transform: scale(0.6); opacity: 0.8; }
+  100% { transform: scale(1.6); opacity: 0; }
+}
+@keyframes alert-flash {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.6; }
+}
+@keyframes snap-scale {
+  0% { transform: scale(0.7); opacity: 0; filter: blur(4px); }
+  100% { transform: scale(1); opacity: 1; filter: blur(0); }
+}
+@keyframes system-snap-scale {
+  0% { transform: translateX(-50%) scale(0.7); opacity: 0; filter: blur(4px); }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; filter: blur(0); }
+}
+@keyframes wave-pulse {
+  0%, 100% { height: 10px; }
+  50% { height: 35px; }
+}
+.gaze-ring-overlay {
+  pointer-events: none;
+  position: absolute;
+  border: 1.5px solid var(--color-accent);
+  border-radius: 50%;
+  animation: pulse-ring 1.8s infinite linear;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.apple-headline {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: -0.8px;
+  line-height: 1.15;
+  background: linear-gradient(180deg, #ffffff 30%, #888888 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.apple-sub {
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  font-weight: 400;
+}
+@media (max-width: 900px) {
+  html, body {
+    overflow: auto !important;
+    height: auto !important;
+  }
+  .nanobot-pill-content-container {
+    padding-top: 10px !important;
+    height: auto !important;
+    overflow: visible !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+  .research-grid-deck {
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    overflow: visible !important;
+    gap: 16px !important;
+  }
+  .research-grid-deck > div:nth-child(1) {
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding-bottom: 16px !important;
+  }
+  .desktop-visual-column {
+    display: none !important;
+  }
+  .touch-slide-card::-webkit-scrollbar {
+    display: none !important;
+  }
+  .touch-slide-card {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    width: 100% !important;
+    gap: 0 !important;
+    padding: 14px 0 !important;
+    box-sizing: border-box !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+  .card-text-slide {
+    width: 85% !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start !important;
+    padding-left: 26px !important;
+    padding-right: 14px !important;
+    box-sizing: border-box !important;
+  }
+  .card-visual-slide {
+    width: 85% !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: end !important;
+    padding-left: 14px !important;
+    padding-right: 26px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-self: center !important;
+  }
+  .viewport-mobile-frame {
+    width: 100% !important;
+    height: 260px !important;
+    background: rgba(2, 3, 6, 0.98) !important;
+    border: 1px solid rgba(0, 240, 255, 0.2) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    position: relative !important;
+  }
+  .stage5-card {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    padding: 0 !important;
+  }
+  .stage5-slider {
+    display: flex !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    width: 100% !important;
+    gap: 0 !important;
+    padding: 14px 0 0 0 !important;
+    box-sizing: border-box !important;
+    -ms-overflow-style: none !important;
+    scrollbar-width: none !important;
+  }
+  .stage5-slider::-webkit-scrollbar {
+    display: none !important;
+  }
+  .scenario-bottom-dock {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    padding: 10px 26px 18px 26px !important;
+  }
+  .scenarios-grid-deck {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    overflow: visible !important;
+  }
+  .scenario-pill-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 6px 12px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    flex-shrink: 0 !important;
+    height: 28px !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+  }
+  .scenario-pill-btn:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-2px) !important;
+    color: #ffffff !important;
+  }
+  .scenario-pill-btn.active-btn {
+    background: rgba(var(--color-accent-rgb), 0.15) !important;
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
+    color: var(--color-accent) !important;
+  }
+  .scenario-pill-title {
+    font-family: var(--font-tech), monospace;
+    font-size: 0.58rem !important;
+    color: inherit !important;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+}
+@media (min-width: 901px) {
+  .card-visual-slide {
+    display: none !important;
+  }
+  .stage5-slider {
+    width: 100%;
+  }
+  .scenario-bottom-dock {
+    width: 100%;
+    margin-top: 15px;
+  }
+  .scenarios-grid-deck {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+    gap: 10px !important;
+    width: 100% !important;
+    justify-content: flex-start !important;
+    overflow: visible !important;
+  }
+  .scenario-pill-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    padding: 8px 14px !important;
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.06) !important;
+    border-radius: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    flex-shrink: 0 !important;
+    height: 32px !important;
+    color: rgba(255, 255, 255, 0.65) !important;
+  }
+  .scenario-pill-btn:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-2px) !important;
+    color: #ffffff !important;
+  }
+  .scenario-pill-btn.active-btn {
+    background: rgba(var(--color-accent-rgb), 0.15) !important;
+    border-color: var(--color-accent) !important;
+    box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
+    color: var(--color-accent) !important;
+  }
+  .scenario-pill-title {
+    font-family: var(--font-tech), monospace;
+    font-size: 0.62rem !important;
+    color: inherit !important;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+}
+
+/* Layout & Spacing Utility Classes */
+.pill-details-container {
+  display: flex !important;
+  flex-direction: column !important;
+  width: 100% !important;
+  gap: 15px !important;
+  max-width: 1080px !important;
+  margin: 0 auto !important;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+.pill-details-header {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+}
+.pill-details-back-btn {
+  width: fit-content !important;
+}
+.pill-details-logo {
+  font-size: 0.62rem !important;
+  color: var(--color-accent) !important;
+  font-family: var(--font-tech), monospace !important;
+  font-weight: bold !important;
+  letter-spacing: 1px !important;
+}
+.pill-details-tabs-panel {
+  padding: 8px 12px !important;
+  background: rgba(6, 9, 20, 0.45) !important;
+  flex-shrink: 0 !important;
+}
+.pill-details-tabs-list {
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+.pill-details-tab-btn {
+  flex: 1 !important;
+  font-size: 0.68rem !important;
+}
+.pill-details-grid {
+  display: grid !important;
+  grid-template-columns: 1.2fr 1.3fr !important;
+  gap: 20px !important;
+  flex: 1 !important;
+  min-height: 0 !important;
+  height: 100% !important;
+}
+.pill-details-story-column {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 24px !important;
+  height: 100% !important;
+  overflow-y: auto !important;
+}
+.pill-details-story-card {
+  min-height: 330px !important;
+  padding: 22px 26px !important;
+  justify-content: flex-start !important;
+  background: rgba(6, 9, 20, 0.5) !important;
+  flex-shrink: 0 !important;
+}
+
+/* Card Spacing & Typography */
+.pill-card-label {
+  font-size: 0.6rem !important;
+  color: var(--color-accent) !important;
+  font-weight: bold !important;
+  letter-spacing: 1px !important;
+  margin-bottom: 10px !important;
+}
+.pill-card-label-block {
+  display: block !important;
+  font-size: 0.6rem !important;
+  color: var(--color-accent) !important;
+  margin-bottom: 5px !important;
+}
+.pill-card-title {
+  font-size: 1.8rem !important;
+  margin-bottom: 14px !important;
+}
+.pill-card-sub {
+  margin-bottom: 15px !important;
+}
+.pill-card-text {
+  font-size: 0.78rem !important;
+  color: var(--text-secondary) !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+}
+.pill-card-metadata {
+  margin-top: 20px !important;
+  display: flex !important;
+  gap: 20px !important;
+  font-size: 0.62rem !important;
+  font-family: monospace !important;
+  color: var(--text-secondary) !important;
+}
+
+/* Viewport Shell & Diagnostics */
+.viewport-outer-panel {
+  flex: 1 !important;
+  padding: 12px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  min-height: 380px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background: rgba(6, 9, 20, 0.75) !important;
+}
+.viewport-frame-box {
+  flex: 1 !important;
+  background: rgba(2, 3, 6, 0.98) !important;
+  border: 1px solid rgba(var(--color-accent-rgb), 0.2) !important;
+  border-radius: 12px !important;
+  position: relative !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  overflow: hidden !important;
+  cursor: default !important;
+}
+.viewport-diagnostics-table {
+  margin-top: 10px !important;
+  border-top: 1px dashed rgba(255, 255, 255, 0.08) !important;
+  padding-top: 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 5px !important;
+  font-size: 0.6rem !important;
+  font-family: monospace !important;
+}
+.viewport-diagnostics-row {
+  display: flex !important;
+  justify-content: space-between !important;
+}
+.viewport-diagnostics-label {
+  color: var(--text-secondary) !important;
+}
+
+/* Viewport Sub-scenarios (Ingestion, Ingestion Overlay, etc.) */
+.viewport-relative-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+}
+.viewport-overlay-bg {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+}
+.viewport-bg-opacity-60 {
+  opacity: 0.6 !important;
+}
+.viewport-bg-opacity-55 {
+  opacity: 0.55 !important;
+}
+.viewport-bg-opacity-85 {
+  opacity: 0.85 !important;
+}
+.viewport-svg-overlay-centered {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 80% !important;
+  height: 80% !important;
+  object-fit: contain !important;
+  z-index: 2 !important;
+}
+.viewport-calibration-footer {
+  position: absolute !important;
+  bottom: 10px !important;
+  left: 10px !important;
+  right: 10px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  font-family: monospace !important;
+  font-size: 0.55rem !important;
+  color: var(--text-secondary) !important;
+  z-index: 3 !important;
+}
+.text-accent-green {
+  color: #00ff88 !important;
+}
+.text-accent-red {
+  color: #ff4400 !important;
+}
+.text-accent-amber {
+  color: #ffb300 !important;
+}
+.text-accent-cyan {
+  color: #00f0ff !important;
+}
+.text-pure-white {
+  color: #ffffff !important;
+}
+
+/* Telepathy Simulation Elements */
+.telepathy-status-badge {
+  position: absolute !important;
+  top: 12px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(2, 6, 16, 0.6) !important;
+  border: 1px solid rgba(0, 240, 255, 0.2) !important;
+  border-radius: 20px !important;
+  padding: 4px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  z-index: 5 !important;
+  font-family: monospace, var(--font-tech) !important;
+  font-size: 0.52rem !important;
+  color: #00f0ff !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+.pulse-dot-cyan {
+  width: 5px !important;
+  height: 5px !important;
+  border-radius: 50% !important;
+  background: #00f0ff !important;
+  box-shadow: 0 0 6px #00f0ff !important;
+}
+.pulse-dot-green {
+  width: 3px !important;
+  height: 3px !important;
+  border-radius: 50% !important;
+  background: #00ff88 !important;
+  box-shadow: 0 0 4px #00ff88 !important;
+}
+.telepathy-bubble-wrapper {
+  position: absolute !important;
+  display: flex !important;
+  flex-direction: column !important;
+  transition: opacity 0.3s ease, transform 0.3s ease !important;
+}
+.telepathy-bubble-sender {
+  font-size: 0.45rem !important;
+  font-family: monospace !important;
+  margin-bottom: 2px !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8) !important;
+}
+.telepathy-bubble-content {
+  border-radius: 12px !important;
+  padding: 8px 12px !important;
+  font-size: 0.62rem !important;
+  font-family: monospace !important;
+  color: #ffffff !important;
+  line-height: 1.35 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+.telepathy-calendar-card {
+  margin-top: 4px !important;
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid rgba(0, 240, 255, 0.25) !important;
+  border-radius: 8px !important;
+  padding: 8px 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 4px !important;
+  text-align: left !important;
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+.telepathy-calendar-card-header {
+  display: flex !important;
+  align-items: center !important;
+  gap: 4px !important;
+  border-bottom: 1px solid rgba(0, 240, 255, 0.15) !important;
+  padding-bottom: 3px !important;
+  margin-bottom: 2px !important;
+}
+.telepathy-calendar-card-title {
+  font-size: 0.52rem !important;
+  color: #ffffff !important;
+  font-weight: bold !important;
+}
+.telepathy-calendar-card-body {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2px !important;
+  font-size: 0.52rem !important;
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.telepathy-calendar-sync-status {
+  margin-top: 4px !important;
+  background: rgba(0, 255, 136, 0.08) !important;
+  border: 1px solid rgba(0, 255, 136, 0.3) !important;
+  border-radius: 3px !important;
+  padding: 2px 4px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+}
+.telepathy-calendar-sync-text {
+  font-size: 0.45rem !important;
+  color: #00ff88 !important;
+  font-weight: bold !important;
+}
+
+/* Memories Simulation Elements */
+.memories-share-alert {
+  position: absolute !important;
+  bottom: 55px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  background: rgba(0, 255, 136, 0.9) !important;
+  border: 1px solid #00ff88 !important;
+  border-radius: 6px !important;
+  padding: 4px 12px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.2) !important;
+  animation: snap-scale 0.25s ease-out forwards !important;
+  z-index: 10 !important;
+}
+.memories-share-text {
+  font-size: 0.55rem !important;
+  color: #000000 !important;
+  font-weight: bold !important;
+  font-family: monospace !important;
+}
+.memories-control-bar {
+  position: absolute !important;
+  bottom: 10px !important;
+  left: 12px !important;
+  right: 12px !important;
+  height: 35px !important;
+  background: rgba(2, 6, 16, 0.8) !important;
+  border: 1px solid rgba(0, 240, 255, 0.25) !important;
+  border-radius: 8px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  padding: 0 8px !important;
+  z-index: 5 !important;
+}
+.memories-control-btn {
+  font-size: 0.52rem !important;
+  padding: 3px 6px !important;
+  margin: 0 !important;
+  height: auto !important;
+  min-width: 0 !important;
+}
+.memories-share-btn {
+  font-size: 0.52rem !important;
+  padding: 3px 8px !important;
+  margin: 0 !important;
+  height: auto !important;
+  min-width: 0 !important;
+  border-color: #00ff88 !important;
+  color: #00ff88 !important;
+}
+.viewport-parallax-wrapper {
+  position: absolute !important;
+  top: -15px !important;
+  left: -15px !important;
+  right: -15px !important;
+  bottom: -15px !important;
+  z-index: 1 !important;
+  background: radial-gradient(circle at 50% 50%, rgba(4, 6, 12, 0.4) 0%, rgba(4, 6, 12, 1) 90%) !important;
+  transition: transform 0.1s ease-out !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+.viewport-superhuman-box {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  padding: 12px !important;
+}
+.biometrics-summary-row {
+  display: flex !important;
+  gap: 8px !important;
+  width: 100% !important;
+  justify-content: space-between !important;
+  flex-wrap: wrap !important;
+}
+
+.viewport-svg-overlay-stretched {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  z-index: 2 !important;
+  pointer-events: none !important;
+}
+
+.viewport-parallax-bg {
+  width: 110% !important;
+  height: 110% !important;
+  object-fit: cover !important;
+  opacity: 0.85 !important;
+}
+
+.viewport-interactive-container {
+  width: 100% !important;
+  height: 100% !important;
+  position: relative !important;
+  overflow: hidden !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  padding: 12px !important;
+}
+
+.memories-btn-group {
+  display: flex !important;
+  gap: 4px !important;
+}
+
+.scenario-pill-icon-wrapper {
+  display: flex !important;
+  align-items: center !important;
+  height: 14px !important;
+  width: 14px !important;
+  flex-shrink: 0 !important;
+}
+
+.pill-details-story-card-compact {
+  min-height: 330px !important;
+  padding: 20px 24px !important;
+  justify-content: flex-start !important;
+  background: rgba(6, 9, 20, 0.5) !important;
+  flex-shrink: 0 !important;
+}
+
+.pill-card-title-fixed-height {
+  font-size: 1.8rem !important;
+  margin-bottom: 14px !important;
+  min-height: 52px !important;
+}
+
+.pill-card-sub-fixed-height {
+  margin-bottom: 16px !important;
+  font-size: 0.88rem !important;
+  min-height: 70px !important;
+}
+
+.pill-card-metadata-wrap {
+  margin-top: 20px !important;
+  display: flex !important;
+  gap: 15px !important;
+  flex-wrap: wrap !important;
+  font-size: 0.62rem !important;
+  font-family: monospace !important;
+  color: var(--text-secondary) !important;
+}
+
+.desktop-visual-column {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 15px !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.font-bold {
+  font-weight: bold !important;
+}
+
+/* Telepathy bubble types */
+.telepathy-bubble-content--system {
+  background: rgba(0, 240, 255, 0.14) !important;
+  border: 1px solid rgba(0, 240, 255, 0.45) !important;
+  text-align: center !important;
+}
+.telepathy-bubble-content--self {
+  background: rgba(255, 87, 34, 0.24) !important;
+  border: 1px solid rgba(255, 87, 34, 0.45) !important;
+  text-align: left !important;
+}
+.telepathy-bubble-content--peer {
+  background: rgba(0, 255, 136, 0.18) !important;
+  border: 1px solid rgba(0, 255, 136, 0.4) !important;
+  text-align: left !important;
+}
+
+/* Memories active button state */
+.memories-control-btn--active {
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}
+
+/* Diagnostic tab highlights */
+.diagnostic-active-status {
+  color: #00ff88 !important;
+}
+.diagnostic-inactive-status {
+  color: var(--color-accent) !important;
+}
+
+/* Tab button active overrides */
+.pill-details-tab-btn.active-tab-override {
+  border-color: var(--color-accent) !important;
+  background: rgba(var(--color-accent-rgb), 0.1) !important;
+  color: var(--color-accent) !important;
+}
+
+

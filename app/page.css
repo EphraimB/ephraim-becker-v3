@@ -1,0 +1,15 @@
+.terminal-left-pane,
+.terminal-right-pane {
+  z-index: 2;
+}
+
+.interest-tab-btn:not(.interest-tab-btn--active):hover {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+.interest-back-btn:hover {
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  background: rgba(255, 255, 255, 0.06) !important;
+}

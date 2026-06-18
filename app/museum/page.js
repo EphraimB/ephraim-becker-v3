@@ -187,6 +187,8 @@ export default function AresMuseum() {
           font-family: monospace;
           font-size: 0.62rem;
           color: rgba(255, 255, 255, 0.45);
+          white-space: nowrap;
+          flex-shrink: 0;
         }
 
         .plaque-title {

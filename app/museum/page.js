@@ -254,7 +254,7 @@ export default function AresMuseum() {
 
         .telemetry-grid {
           display: grid;
-          grid-template-columns: 1.25fr 0.75fr;
+          grid-template-columns: 1.1fr 0.9fr;
           gap: 4px 12px;
         }
 
@@ -268,6 +268,7 @@ export default function AresMuseum() {
 
         .telemetry-label {
           color: rgba(255, 255, 255, 0.55);
+          white-space: nowrap;
         }
 
         .telemetry-value {
@@ -375,13 +376,10 @@ export default function AresMuseum() {
           <h4 className="plaque-title">Traditional 2D Web & SEO Pathways</h4>
           <div className="plaque-body">
             <p>
-              Immersive spaces often suffer from a discoverability crisis; portals built inside heavy 3D canvases are <span className="highlight-cyan">invisible to search engine crawlers (SEOs)</span>.
+              Immersive spaces often suffer from a discoverability crisis since heavy 3D canvases are <span className="highlight-cyan">invisible to search engine crawlers (SEOs)</span>. To solve this, this site is a <span className="highlight-amber">native Next.js 2D HTML5 application</span>, allowing search spiders to index archives directly.
             </p>
             <p>
-              To solve this, this site is engineered as a <span className="highlight-amber">native Next.js 2D HTML5 application</span>. Search spiders can index the citizen's portfolio archives and research files directly.
-            </p>
-            <p>
-              Despite using a traditional 2D structure, immersion is preserved through <span className="highlight-cyan">realistic background environments</span> and a location-shifting navigation system, making transitions between pages feel like traveling to <span className="highlight-amber">new physical sectors</span>.
+              Immersion is preserved through <span className="highlight-cyan">realistic background environments</span> and a location-shifting navigation system, making page transitions feel like traveling to <span className="highlight-amber">new physical sectors</span>.
             </p>
           </div>
         </div>

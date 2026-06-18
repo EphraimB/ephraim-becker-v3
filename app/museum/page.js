@@ -359,7 +359,7 @@ export default function AresMuseum() {
           <h4 className="plaque-title">The Sci-Fi Passion & Ares Outpost</h4>
           <div className="plaque-body">
             <p>
-              The journey to building this digital outpost began with a lifelong <span className="highlight-cyan">passion for science fiction</span>. Sci-fi inspires us to push human potential and reimagine technology.
+              The journey to building this digital outpost began with a lifelong <span className="highlight-cyan">passion for science fiction</span>. Sci-fi inspires me to push human potential and reimagine technology.
             </p>
             <p>
               Choosing a Martian habitat theme for this website was a natural evolution of this passion, transforming a standard developer portfolio into an ambient simulation of <span className="highlight-amber">Ares City</span>.
@@ -396,7 +396,7 @@ export default function AresMuseum() {
               Designing a navigation system that aligns with a sci-fi OS console theme while remaining responsive on mobile datapads was a major UX bottleneck.
             </p>
             <p>
-              Initially, the plan was to build a fully responsive city map like Google Maps, but it wouldn't respond well. We found the perfect compromise with a <span className="highlight-cyan">locator tab and a slide-out, list-based map drawer</span> that kept the transit distance metrics intact.
+              Initially, the plan was to build a fully responsive city map like Google Maps, but it wouldn't respond well. I found the perfect compromise with a <span className="highlight-cyan">locator tab and a slide-out, list-based map drawer</span> that kept the transit distance metrics intact.
             </p>
           </div>
         </div>

@@ -529,10 +529,10 @@ export default function NanobotPillDetails() {
                 {(() => {
                   const activeMsgs = [];
                   if (telepathicMsgIndex >= 0) {
-                    activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex], isCurrent: true });
+                    activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex], isCurrent: true, msgIndex: telepathicMsgIndex });
                   }
                   if (!isMobile && telepathicMsgIndex > 0) {
-                    activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex - 1], isCurrent: false });
+                    activeMsgs.push({ ...TELEPATHIC_MESSAGES[telepathicMsgIndex - 1], isCurrent: false, msgIndex: telepathicMsgIndex - 1 });
                   }
 
                   return activeMsgs.map((msg, idx) => {
@@ -543,7 +543,7 @@ export default function NanobotPillDetails() {
                     
                     return (
                       <div 
-                        key={`${telepathicMsgIndex}-${idx}`} 
+                        key={msg.msgIndex} 
                         style={{ 
                           position: 'absolute',
                           top: isMobile ? (msg.hasCalendarCard ? '16%' : '35%') : msg.top,

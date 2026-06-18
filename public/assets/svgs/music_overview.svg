@@ -1,4 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 90" width="100%" height="90px" style="background:#0a0d17;border-radius:8px;border:1px solid rgba(255,179,0,0.2);box-shadow:inset 0 0 8px rgba(0,0,0,0.4)">
+  <style>
+    @keyframes barGrow1 { 0%, 100% { height: 25px; y: 5px; } 50% { height: 16px; y: 14px; } }
+    @keyframes barGrow2 { 0%, 100% { height: 30px; y: 0px; } 50% { height: 20px; y: 10px; } }
+    @keyframes barGrow3 { 0%, 100% { height: 22px; y: 8px; } 50% { height: 29px; y: 1px; } }
+    @keyframes barGrow4 { 0%, 100% { height: 18px; y: 12px; } 50% { height: 26px; y: 4px; } }
+    @keyframes waveOscillate { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(1.4); } }
+    @keyframes dashflow { from { stroke-dashoffset: 12; } to { stroke-dashoffset: 0; } }
+    .organ-bar-1 { animation: barGrow1 1.2s infinite ease-in-out; }
+    .organ-bar-2 { animation: barGrow2 1.8s infinite ease-in-out; }
+    .organ-bar-3 { animation: barGrow3 1.5s infinite ease-in-out; }
+    .organ-bar-4 { animation: barGrow4 1.4s infinite ease-in-out; }
+    .voice-wave { animation: waveOscillate 1.5s infinite ease-in-out; transform-origin: 20px 20px; }
+    .synapse-dash { animation: dashflow 1.5s linear infinite; }
+  </style>
   <rect x="0" y="0" width="320" height="15" fill="#1b1508"/>
   <circle cx="10" cy="7.5" r="3" fill="#ea4335"/>
   <circle cx="20" cy="7.5" r="3" fill="#ffb300"/>
@@ -9,22 +23,22 @@
     <line x1="160" y1="15" x2="160" y2="90" stroke="#ffb300" stroke-width="0.5"/>
   </g>
   <g transform="translate(15, 20)">
-    <rect x="5" y="5" width="4" height="25" fill="#ffb300" opacity="0.8"/>
-    <rect x="11" y="0" width="4" height="30" fill="#ffe082"/>
-    <rect x="17" y="8" width="4" height="22" fill="#ffb300" opacity="0.8"/>
-    <rect x="23" y="3" width="4" height="27" fill="#ffe082"/>
-    <rect x="29" y="12" width="4" height="18" fill="#ffb300" opacity="0.8"/>
+    <rect x="5" y="5" width="4" height="25" fill="#ffb300" opacity="0.8" class="organ-bar-1"/>
+    <rect x="11" y="0" width="4" height="30" fill="#ffe082" class="organ-bar-2"/>
+    <rect x="17" y="8" width="4" height="22" fill="#ffb300" opacity="0.8" class="organ-bar-3"/>
+    <rect x="23" y="3" width="4" height="27" fill="#ffe082" class="organ-bar-4"/>
+    <rect x="29" y="12" width="4" height="18" fill="#ffb300" opacity="0.8" class="organ-bar-1"/>
     <text x="17" y="52" fill="rgba(255,255,255,0.6)" font-size="5.5" font-family="monospace" text-anchor="middle">PIPE ORGAN CORES</text>
   </g>
   <g transform="translate(110, 45)">
-    <path d="M 10,0 Q 50,10 90,0" fill="none" stroke="rgba(255,179,0,0.3)" stroke-width="1" stroke-dasharray="2 2"/>
+    <path d="M 10,0 Q 50,10 90,0" fill="none" stroke="rgba(255,179,0,0.3)" stroke-width="1" stroke-dasharray="6 3" class="synapse-dash"/>
     <text x="50" y="4" fill="#00ff88" font-size="5" font-family="monospace" text-anchor="middle" font-weight="bold">SYNAPSE</text>
   </g>
   <g transform="translate(225, 20)">
     <circle cx="20" cy="15" r="5" fill="none" stroke="#00ff88" stroke-width="1.2"/>
     <line x1="20" y1="20" x2="20" y2="30" stroke="#00ff88" stroke-width="1.5"/>
     <line x1="15" y1="30" x2="25" y2="30" stroke="#00ff88" stroke-width="1.2"/>
-    <path d="M 5,20 Q 20,40 35,20" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <path d="M 5,20 Q 20,40 35,20" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1" class="voice-wave"/>
     <text x="20" y="52" fill="rgba(255,255,255,0.6)" font-size="5.5" font-family="monospace" text-anchor="middle">VOCAL CHANNELS</text>
   </g>
   <text x="10" y="84" fill="rgba(255,255,255,0.4)" font-size="5.5" font-family="monospace" text-anchor="start">SYSTEM: acoustical_sync_v1.2</text>

@@ -1,11 +1,37 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import './page.css';
 
 import INTERESTS from '../data/interests.json';
 import PERSONAL from '../data/personal.json';
 import InterestVisuals from '../components/InterestVisuals';
+import InterestIconSvg from '../components/InterestIconSvg';
+import SocialIconSvg from '../components/SocialIconSvg';
 
+const getBrandColor = (name) => {
+  switch (name.toLowerCase()) {
+    case 'github': return '#22c55e';
+    case 'linkedin': return '#00a2ff';
+    case 'x': return '#f3f4f6';
+    case 'youtube': return '#ef4444';
+    case 'instagram': return '#ec4899';
+    case 'facebook': return '#3b82f6';
+    default: return '#00f0ff';
+  }
+};
+
+const getBrandColorRgb = (name) => {
+  switch (name.toLowerCase()) {
+    case 'github': return '34, 197, 94';
+    case 'linkedin': return '0, 162, 255';
+    case 'x': return '243, 244, 246';
+    case 'youtube': return '239, 68, 68';
+    case 'instagram': return '236, 72, 153';
+    case 'facebook': return '59, 130, 246';
+    default: return '0, 240, 255';
+  }
+};
 
 export default function AresDashboard() {
   const birthDate = new Date(PERSONAL.birthDate);
@@ -79,7 +105,7 @@ export default function AresDashboard() {
         <div className="dashboard-scanline-overlay"></div>
 
         {/* LEFT PANE: Avatar, Stats, and Social Matrix */}
-        <div className="terminal-left-pane" style={{ zIndex: 2 }}>
+        <div className="terminal-left-pane">
           {/* Profile Avatar Frame - holographic transparent layout */}
           <div className="profile-avatar-frame">
             <img 
@@ -109,15 +135,22 @@ export default function AresDashboard() {
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="social-link-port dashboard-social-link"
+                style={{
+                  '--brand-color': getBrandColor(social.name),
+                  '--brand-color-rgb': getBrandColorRgb(social.name)
+                }}
               >
-                {social.name}
+                <span className="social-icon-wrapper">
+                  <SocialIconSvg brand={social.name.toLowerCase()} />
+                </span>
+                <span className="social-name-text">{social.name}</span>
               </a>
             ))}
           </div>
         </div>
 
         {/* RIGHT PANE: Biography Log and Classified Interests */}
-        <div className="terminal-right-pane" style={{ zIndex: 2 }}>
+        <div className="terminal-right-pane">
           {/* Biography Block */}
           <div className="dashboard-bio-block">
             <span className="dashboard-section-label">// CITIZEN BIOGRAPHY LOG</span>
@@ -130,15 +163,29 @@ export default function AresDashboard() {
           <div className="dashboard-interests-block">
             <span className="dashboard-section-label">// CLASSIFIED INTEREST REGISTRY</span>
             
-            <div className="left-card-column dashboard-interests-list">
+            <div className="dashboard-interests-list">
               {INTERESTS.map((interest) => (
                 <button
                   key={interest.id}
                   onClick={() => setActiveInterest(interest)}
-                  className="hud-badge dashboard-left-col-badge-btn"
+                  className="bento-interest-card"
+                  style={{
+                    '--interest-color': interest.themeColor || '#00f0ff',
+                    '--interest-bg': interest.themeBg || 'rgba(0, 240, 255, 0.08)',
+                  }}
                 >
-                  <span>[{interest.tag}]</span>
-                  <span className="interest-icon-span">{interest.icon}</span>
+                  {/* Tech corners */}
+                  <span className="bento-corner bento-corner--tl"></span>
+                  <span className="bento-corner bento-corner--tr"></span>
+                  <span className="bento-corner bento-corner--bl"></span>
+                  <span className="bento-corner bento-corner--br"></span>
+
+                  {/* Clean inline SVG icon in the top-right */}
+                  <div className="bento-card-icon-wrapper">
+                    <InterestIconSvg type={interest.id} />
+                  </div>
+                  <span className="bento-interest-tag">{interest.tag}</span>
+                  <span className="bento-chevron">➔</span>
                 </button>
               ))}
             </div>
@@ -198,20 +245,6 @@ export default function AresDashboard() {
                                 background: activeInterest.themeBg,
                                 color: activeInterest.themeColor,
                               } : {}}
-                              onMouseEnter={(e) => {
-                                if (!isActive) {
-                                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
-                                  e.currentTarget.style.color = 'rgba(255,255,255,0.9)';
-                                  e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
-                                }
-                              }}
-                              onMouseLeave={(e) => {
-                                if (!isActive) {
-                                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
-                                  e.currentTarget.style.color = 'rgba(255,255,255,0.6)';
-                                  e.currentTarget.style.background = 'transparent';
-                                }
-                              }}
                             >
                               [ {slide.label} ]
                             </button>
@@ -235,14 +268,6 @@ export default function AresDashboard() {
                              <button
                                onClick={() => setActiveSlide(0)}
                                className="hud-btn interest-back-btn"
-                               onMouseEnter={(e) => {
-                                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-                                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
-                               }}
-                               onMouseLeave={(e) => {
-                                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-                                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-                               }}
                              >
                                [ ↩ BACK TO OVERVIEW ]
                              </button>

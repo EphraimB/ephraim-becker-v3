@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import HudBar from './HudBar';
 import CityGridMap from './CityGridMap';
+import NavIconSvg from './NavIconSvg';
 
 export default function ClientLayoutWrapper({ children }) {
   const pathname = usePathname();
@@ -121,15 +122,16 @@ export default function ClientLayoutWrapper({ children }) {
       {/* Floating Left Peeking Locator Tab (Universal across all pages, desktop & mobile) */}
       <button 
         onClick={() => setMapDrawerOpen(true)}
-        className="mobile-locator-btn"
-        style={{
-          opacity: mapDrawerOpen ? 0 : 1,
-          pointerEvents: mapDrawerOpen ? 'none' : 'auto'
-        }}
+        className={`mobile-locator-btn ${mapDrawerOpen ? 'mobile-locator-btn--open' : ''}`}
       >
         <span className="locator-pulse-light"></span>
         <div className="layout-name-stack">
-          <span className="locator-location-name">📍 {primaryLoc}</span>
+          <span className="locator-location-name locator-location-name--flex">
+            <span className="svg-icon-wrapper--locator">
+              <NavIconSvg type="pin" />
+            </span>
+            {primaryLoc}
+          </span>
           {middleLoc && (
             <span className="locator-middle-name locator-middle-name--override">
               ↳ {middleLoc}
@@ -146,6 +148,7 @@ export default function ClientLayoutWrapper({ children }) {
 
       {/* Slide-out Tactical Map Drawer overlay (Universal across all pages, desktop & mobile) */}
       <div className={`global-map-drawer ${mapDrawerOpen ? 'drawer-active' : ''}`}>
+        <div className="global-map-drawer-seal" />
         
         {/* Drawer header close button */}
         <div className="global-map-drawer-close-bar">

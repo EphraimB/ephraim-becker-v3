@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="overlay" viewBox="0 0 100 100">
+  <circle cx="50" cy="50" r="15" fill="none" stroke="rgba(0, 255, 136, 0.3)" stroke-width="0.5" stroke-dasharray="1,3" />
+  <circle cx="50" cy="50" r="25" fill="none" stroke="rgba(0, 255, 136, 0.2)" stroke-width="0.5" stroke-dasharray="2,4" />
+  <g transform="translate(50, 50)">
+    <circle cx="0" cy="0" r="3" fill="#00ff88" opacity="0.9">
+      <animate attributeName="r" values="1;4;1" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+    <line x1="-35" y1="-35" x2="-5" y2="-5" stroke="#00ff88" stroke-width="0.4" stroke-dasharray="1,1" opacity="0.6" />
+    <circle cx="-35" cy="-35" r="1.5" fill="#00ff88">
+      <animate attributeName="transform" type="translate" values="0,0; 30,30" dur="3s" repeatCount="indefinite" />
+    </circle>
+    <circle cx="35" cy="35" r="1.5" fill="#00ff88">
+      <animate attributeName="transform" type="translate" values="0,0; -30,-30" dur="2.5s" repeatCount="indefinite" />
+    </circle>
+  </g>
+  <text x="12" y="16" fill="#00ff88" font-size="2.8" font-family="monospace" font-weight="bold">● PHARMACY LINK: SECURE [MARS_EAST_DOME]</text>
+  <text x="12" y="22" fill="#ffffff" font-size="2.4" font-family="monospace">IMMUNIZATION RECEPTOR SYNC: 100%</text>
+  <text x="12" y="88" fill="#00ff88" font-size="2.2" font-family="monospace">✓ NO-SHOT VAC-DOCK: ACTIVE [INFLUENZA-M56]</text>
+</svg>

@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round">
+  <style>
+    @keyframes laserBeam {
+      0%, 100% { stroke-width: 1; opacity: 0.2; }
+      50% { stroke-width: 2.2; opacity: 1; stroke: #fff; filter: drop-shadow(0 0 2px currentColor); }
+    }
+    .laser-beam-line {
+      animation: laserBeam 1s infinite alternate ease-in-out;
+    }
+  </style>
+  <path d="M6 18h8" />
+  <path d="M10 18v-3" />
+  <path d="M14 15a4 4 0 0 0-4-4h-2" />
+  <path d="M8 7h4v4H8z" transform="rotate(-30 10 9)" />
+  <rect x="4" y="18" width="16" height="2" rx="0.5" fill="currentColor" fill-opacity="0.2" />
+  <line x1="11.5" y1="11" x2="14.5" y2="16" class="laser-beam-line" />
+</svg>

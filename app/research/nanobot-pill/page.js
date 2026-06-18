@@ -29,6 +29,9 @@ export default function NanobotPillDetails() {
   const [timeString, setTimeString] = useState('');
   const [telepathicMsgIndex, setTelepathicMsgIndex] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const [memoryViewMode, setMemoryViewMode] = useState('diary'); // 'diary' or 'summary'
+  const [memoryShared, setMemoryShared] = useState(false);
+  const [memoryPlaybackActive, setMemoryPlaybackActive] = useState(false);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -396,6 +399,12 @@ export default function NanobotPillDetails() {
       icon: '🧠',
       title: 'Telepathic Link',
       description: 'Establish direct neural communication with other citizens. Exchange thoughts and coordinate events seamlessly.'
+    },
+    {
+      id: 'memories',
+      icon: '📸',
+      title: 'Continuous Memories',
+      description: 'Always-on visual/auditory neural recording. Instantly replay memories, share clips with friends, view AI summaries, or auto-transcribe logs into a personal diary.'
     }
   ];
 
@@ -529,6 +538,8 @@ export default function NanobotPillDetails() {
                     ? '/assets/images/bci/bci_entertainment.png' 
                     : activeScenario === 'telepathy'
                     ? '/assets/images/bci/bci_telepathy.png'
+                    : activeScenario === 'memories'
+                    ? '/assets/images/bci/bci_memories.png'
                     : '/assets/images/bci/bci_traverse.png'
                 } 
                 alt={`Martian BCI OS - ${activeScenario}`} 
@@ -687,6 +698,103 @@ export default function NanobotPillDetails() {
                     );
                   });
                 })()}
+              </>
+            )}
+
+            {activeScenario === 'memories' && (
+              <>
+                {/* Share Notification Alert */}
+                {memoryShared && (
+                  <div 
+                    style={{ 
+                      position: 'absolute',
+                      bottom: '55px',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      background: 'rgba(0, 255, 136, 0.9)',
+                      border: '1px solid #00ff88',
+                      borderRadius: '6px', 
+                      padding: '4px 12px', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center',
+                      boxShadow: '0 4px 12px rgba(0,255,136,0.2)',
+                      animation: 'snap-scale 0.25s ease-out forwards',
+                      zIndex: 10
+                    }}
+                  >
+                    <span style={{ fontSize: '0.55rem', color: '#000000', fontWeight: 'bold', fontFamily: 'monospace' }}>
+                      ✓ CLIP COPIED & SHARED WITH VANCE K.
+                    </span>
+                  </div>
+                )}
+
+                {/* Bottom playback & sharing control bar */}
+                <div 
+                  style={{
+                    position: 'absolute',
+                    bottom: '10px',
+                    left: '12px',
+                    right: '12px',
+                    height: '35px',
+                    background: 'rgba(2, 6, 16, 0.8)',
+                    border: '1px solid rgba(0, 240, 255, 0.25)',
+                    borderRadius: '8px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    padding: '0 8px',
+                    zIndex: 5
+                  }}
+                >
+                  <div style={{ display: 'flex', gap: '4px' }}>
+                    <button 
+                      onClick={() => {
+                        setMemoryPlaybackActive(true);
+                      }}
+                      className="hud-btn" 
+                      style={{ fontSize: '0.52rem', padding: '3px 6px', margin: 0, height: 'auto', minWidth: 0 }}
+                      title="Rewind 10 Seconds"
+                    >
+                      ⏮ REW
+                    </button>
+                    <button 
+                      onClick={() => setMemoryPlaybackActive(!memoryPlaybackActive)}
+                      className="hud-btn" 
+                      style={{ 
+                        fontSize: '0.52rem', 
+                        padding: '3px 6px', 
+                        margin: 0, 
+                        height: 'auto', 
+                        minWidth: 0,
+                        borderColor: memoryPlaybackActive ? 'var(--color-accent)' : 'rgba(255,255,255,0.08)',
+                        color: memoryPlaybackActive ? 'var(--color-accent)' : '#ffffff'
+                      }}
+                    >
+                      {memoryPlaybackActive ? '⏸ PAUSE' : '▶ PLAY'}
+                    </button>
+                    <button 
+                      onClick={() => {
+                        setMemoryPlaybackActive(true);
+                      }}
+                      className="hud-btn" 
+                      style={{ fontSize: '0.52rem', padding: '3px 6px', margin: 0, height: 'auto', minWidth: 0 }}
+                      title="Forward 10 Seconds"
+                    >
+                      ⏭ FWD
+                    </button>
+                  </div>
+                  <button 
+                    onClick={() => {
+                      setMemoryShared(true);
+                      setTimeout(() => setMemoryShared(false), 3500);
+                    }}
+                    className="hud-btn" 
+                    style={{ fontSize: '0.52rem', padding: '3px 8px', margin: 0, height: 'auto', minWidth: 0, borderColor: '#00ff88', color: '#00ff88' }}
+                  >
+                    📤 SHARE CLIP
+                  </button>
+                </div>
               </>
             )}
           </div>

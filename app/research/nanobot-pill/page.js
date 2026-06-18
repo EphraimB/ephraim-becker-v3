@@ -1179,21 +1179,24 @@ export default function NanobotPillDetails() {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
             flex-shrink: 0 !important;
             height: 28px !important;
+            color: rgba(255, 255, 255, 0.65) !important;
           }
           .scenario-pill-btn:hover {
             background: rgba(255, 255, 255, 0.08) !important;
             border-color: rgba(255, 255, 255, 0.15) !important;
             transform: translateY(-2px) !important;
+            color: #ffffff !important;
           }
           .scenario-pill-btn.active-btn {
             background: rgba(var(--color-accent-rgb), 0.15) !important;
             border-color: var(--color-accent) !important;
             box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
+            color: var(--color-accent) !important;
           }
           .scenario-pill-title {
             font-family: var(--font-tech), monospace;
             font-size: 0.58rem !important;
-            color: #ffffff;
+            color: inherit !important;
             font-weight: bold;
             letter-spacing: 0.5px;
             margin: 0 !important;
@@ -1231,21 +1234,24 @@ export default function NanobotPillDetails() {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
             flex-shrink: 0 !important;
             height: 32px !important;
+            color: rgba(255, 255, 255, 0.65) !important;
           }
           .scenario-pill-btn:hover {
             background: rgba(255, 255, 255, 0.08) !important;
             border-color: rgba(255, 255, 255, 0.15) !important;
             transform: translateY(-2px) !important;
+            color: #ffffff !important;
           }
           .scenario-pill-btn.active-btn {
             background: rgba(var(--color-accent-rgb), 0.15) !important;
             border-color: var(--color-accent) !important;
             box-shadow: 0 0 12px rgba(var(--color-accent-rgb), 0.3) !important;
+            color: var(--color-accent) !important;
           }
           .scenario-pill-title {
             font-family: var(--font-tech), monospace;
             font-size: 0.62rem !important;
-            color: #ffffff;
+            color: inherit !important;
             font-weight: bold;
             letter-spacing: 0.5px;
             margin: 0 !important;

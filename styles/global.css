@@ -3859,3 +3859,145 @@ html.modal-open, html.modal-open body {
   overflow: hidden !important;
 }
 
+/* Refactored inline styles to classes */
+
+/* SVG and Visual wrappers */
+.svg-icon-full {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.interest-visuals-img {
+  display: block;
+  border-radius: 8px;
+}
+
+/* HudBar */
+.system-hud-bar--centered {
+  justify-content: center !important;
+}
+
+/* SolClock */
+.sol-clock-container {
+  display: inline-flex;
+  align-items: center;
+}
+.sol-clock-text {
+  color: var(--color-accent);
+  text-shadow: 0 0 5px rgba(var(--color-accent-rgb), 0.3);
+}
+
+/* TransmitterForm */
+.transmitter-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+.transmitter-select {
+  cursor: pointer;
+}
+.transmitter-textarea-wrapper {
+  flex: 1;
+}
+.transmitter-submit-btn--secured {
+  border-color: var(--neon-emerald) !important;
+  color: var(--neon-emerald) !important;
+}
+
+/* TransporterConsole */
+.transporter-panel {
+  flex: 1;
+}
+.transporter-desc {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  line-height: 1.45;
+  margin-bottom: 15px;
+}
+.transporter-sectors-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.transporter-sector-card {
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all var(--transition-fast);
+}
+.transporter-sector-icon {
+  font-size: 1.4rem;
+}
+.transporter-sector-name {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+.transporter-sector-coords {
+  font-size: 0.55rem;
+  font-family: var(--font-tech);
+}
+.transporter-controls-row {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  padding-top: 15px;
+}
+.transporter-ring-wrapper {
+  flex-shrink: 0;
+}
+.transporter-stats-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.transporter-status-readout {
+  font-family: var(--font-tech);
+  font-size: 0.7rem;
+}
+.transporter-status-indicator {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  font-family: var(--font-tech);
+}
+
+/* ClientLayoutWrapper */
+.mobile-locator-btn--open {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.locator-location-name--flex {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.svg-icon-wrapper--locator {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  flex-shrink: 0;
+  color: currentColor;
+}
+
+/* Helper text color classes */
+.text-color-accent-override {
+  color: var(--color-accent) !important;
+}
+.text-color-primary-override {
+  color: var(--text-primary) !important;
+}
+.text-color-secondary-override {
+  color: var(--text-secondary) !important;
+}
+.text-color-emerald-override {
+  color: var(--neon-emerald) !important;
+}
+.text-color-btn-full {
+  width: 100% !important;
+}
+

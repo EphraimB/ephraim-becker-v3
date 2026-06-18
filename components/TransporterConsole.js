@@ -72,14 +72,14 @@ export default function TransporterConsole() {
   const activeSector = SECTORS.find(s => s.path === pathname) || SECTORS[0];
 
   return (
-    <section className="hud-panel" style={{ flex: 1 }}>
+    <section className="hud-panel transporter-panel">
       <h2 class="hud-panel-title">QUANTUM TRANSPORTER <span>COM-NODE</span></h2>
-      <p style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', lineHeight: 1.45, marginBottom: '15px' }}>
+      <p className="transporter-desc">
         Select destination coordinates inside Ares City and activate the quantum teleportation channel:
       </p>
 
       {/* Grid of Sector Nodes */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px', marginBottom: '15px' }}>
+      <div className="transporter-sectors-grid">
         {SECTORS.map((sector) => {
           const isCurrent = sector.path === pathname;
           const isTarget = selectedSector?.id === sector.id;
@@ -102,24 +102,18 @@ export default function TransporterConsole() {
               style={{
                 border: `1px solid ${borderStyle}`,
                 background: bgStyle,
-                borderRadius: '8px',
-                padding: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
                 cursor: isCalibrating ? 'default' : 'pointer',
-                transition: 'all var(--transition-fast)',
                 opacity: isCurrent ? 1 : 0.75,
                 transform: isTarget && !isCurrent ? 'scale(1.03)' : 'scale(1)'
               }}
-              className="transporter-sector-node"
+              className="transporter-sector-node transporter-sector-card"
             >
-              <span style={{ fontSize: '1.4rem' }}>{sector.icon}</span>
+              <span className="transporter-sector-icon">{sector.icon}</span>
               <div>
-                <div style={{ fontSize: '0.75rem', fontWeight: 600, color: isCurrent ? 'var(--color-accent)' : 'var(--text-primary)' }}>
+                <div className={`transporter-sector-name ${isCurrent ? 'text-color-accent-override' : 'text-color-primary-override'}`}>
                   {sector.name}
                 </div>
-                <div style={{ fontSize: '0.55rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-tech)' }}>
+                <div className="transporter-sector-coords text-color-secondary-override">
                   {sector.coords} {isCurrent && '[ACTIVE]'}
                 </div>
               </div>
@@ -129,34 +123,33 @@ export default function TransporterConsole() {
       </div>
 
       {/* Holographic Radar & Button Controls */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: '20px', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: '15px' }}>
-        <div className="transporter-ring-graphic" style={{ flexShrink: 0 }}>
+      <div className="transporter-controls-row">
+        <div className="transporter-ring-graphic transporter-ring-wrapper">
           <div className="transporter-ring-pulse"></div>
           <div className="transporter-ring-core"></div>
         </div>
 
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div className="transporter-stats-column">
           {isCalibrating ? (
-            <div style={{ fontFamily: 'var(--font-tech)', fontSize: '0.7rem' }}>
-              <span style={{ color: 'var(--color-accent)' }}>CALIBRATING CORES... {calibrationPercent}%</span>
+            <div className="transporter-status-readout">
+              <span className="text-color-accent-override">CALIBRATING CORES... {calibrationPercent}%</span>
               <div className="hud-progress-container">
                 <div className="hud-progress-fill" style={{ width: `${calibrationPercent}%` }}></div>
               </div>
             </div>
           ) : (
-            <div style={{ fontSize: '0.65rem', color: 'var(--text-secondary)', fontFamily: 'var(--font-tech)' }}>
-              DEST: <span style={{ color: 'var(--text-primary)' }}>{selectedSector?.name.toUpperCase() || 'NONE'}</span><br/>
-              LOCK: <span style={{ color: selectedSector?.path === pathname ? 'var(--text-secondary)' : 'var(--neon-emerald)' }}>
+            <div className="transporter-status-indicator">
+              DEST: <span className="text-color-primary-override">{selectedSector?.name.toUpperCase() || 'NONE'}</span><br/>
+              LOCK: <span className={selectedSector?.path === pathname ? 'text-color-secondary-override' : 'text-color-emerald-override'}>
                 {selectedSector?.path === pathname ? 'SYSTEM LOCKED' : 'COORDINATES ACQUIRED'}
               </span>
             </div>
           )}
 
           <button
-            className="hud-btn"
+            className="hud-btn text-color-btn-full"
             disabled={!selectedSector || selectedSector.path === pathname || isCalibrating}
             onClick={handleActivate}
-            style={{ width: '100%' }}
           >
             {isCalibrating ? 'TRANSMITTING...' : 'ACTIVATE TRANSPORTER'}
           </button>

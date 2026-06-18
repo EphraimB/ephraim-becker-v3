@@ -1,0 +1,17 @@
+.portfolio-modal-title-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge-vibe-coded--aligned {
+  vertical-align: middle;
+}
+
+.modal-gallery-grid--multi {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+
+.modal-download-item:not(:last-child) {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06) !important;
+}

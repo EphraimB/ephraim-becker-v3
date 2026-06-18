@@ -11,7 +11,7 @@ export default function NavIconSvg({ type }) {
       strokeWidth="1.3"
       strokeLinecap="round"
       strokeLinejoin="round"
-      style={{ display: 'block', width: '100%', height: '100%' }}
+      className="svg-icon-full"
     >
       <use href={`/assets/svgs/nav_${type}.svg#icon`} />
     </svg>

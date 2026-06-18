@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
+import './page.css';
 
 import INTERESTS from '../data/interests.json';
 import PERSONAL from '../data/personal.json';
@@ -104,7 +105,7 @@ export default function AresDashboard() {
         <div className="dashboard-scanline-overlay"></div>
 
         {/* LEFT PANE: Avatar, Stats, and Social Matrix */}
-        <div className="terminal-left-pane" style={{ zIndex: 2 }}>
+        <div className="terminal-left-pane">
           {/* Profile Avatar Frame - holographic transparent layout */}
           <div className="profile-avatar-frame">
             <img 
@@ -149,7 +150,7 @@ export default function AresDashboard() {
         </div>
 
         {/* RIGHT PANE: Biography Log and Classified Interests */}
-        <div className="terminal-right-pane" style={{ zIndex: 2 }}>
+        <div className="terminal-right-pane">
           {/* Biography Block */}
           <div className="dashboard-bio-block">
             <span className="dashboard-section-label">// CITIZEN BIOGRAPHY LOG</span>
@@ -244,20 +245,6 @@ export default function AresDashboard() {
                                 background: activeInterest.themeBg,
                                 color: activeInterest.themeColor,
                               } : {}}
-                              onMouseEnter={(e) => {
-                                if (!isActive) {
-                                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.3)';
-                                  e.currentTarget.style.color = 'rgba(255,255,255,0.9)';
-                                  e.currentTarget.style.background = 'rgba(255,255,255,0.02)';
-                                }
-                              }}
-                              onMouseLeave={(e) => {
-                                if (!isActive) {
-                                  e.currentTarget.style.borderColor = 'rgba(255,255,255,0.15)';
-                                  e.currentTarget.style.color = 'rgba(255,255,255,0.6)';
-                                  e.currentTarget.style.background = 'transparent';
-                                }
-                              }}
                             >
                               [ {slide.label} ]
                             </button>
@@ -281,14 +268,6 @@ export default function AresDashboard() {
                              <button
                                onClick={() => setActiveSlide(0)}
                                className="hud-btn interest-back-btn"
-                               onMouseEnter={(e) => {
-                                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.4)';
-                                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
-                               }}
-                               onMouseLeave={(e) => {
-                                 e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.25)';
-                                 e.currentTarget.style.background = 'rgba(255, 255, 255, 0.03)';
-                               }}
                              >
                                [ ↩ BACK TO OVERVIEW ]
                              </button>

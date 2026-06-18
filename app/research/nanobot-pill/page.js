@@ -595,16 +595,11 @@ export default function NanobotPillDetails() {
                           {isSystem ? '[SYSTEM // RETINA OS]' : (isSelf ? '[MY_RETINA // SELF]' : `[PEER // ${msg.sender.toUpperCase()}]`)}
                         </span>
                         <div 
-                          className="telepathy-bubble-content"
-                          style={{
-                            background: isSystem 
-                              ? 'rgba(0, 240, 255, 0.14)' 
-                              : (isSelf ? 'rgba(255, 87, 34, 0.24)' : 'rgba(0, 255, 136, 0.18)'),
-                            border: `1px solid ${isSystem 
-                              ? 'rgba(0, 240, 255, 0.45)' 
-                              : (isSelf ? 'rgba(255, 87, 34, 0.45)' : 'rgba(0, 255, 136, 0.4)')}`,
-                            textAlign: isSystem ? 'center' : 'left'
-                          }}
+                          className={`telepathy-bubble-content ${
+                            isSystem 
+                              ? 'telepathy-bubble-content--system' 
+                              : (isSelf ? 'telepathy-bubble-content--self' : 'telepathy-bubble-content--peer')
+                          }`}
                         >
                           <div>{msg.text}</div>
 
@@ -658,11 +653,7 @@ export default function NanobotPillDetails() {
                     </button>
                     <button 
                       onClick={() => setMemoryPlaybackActive(!memoryPlaybackActive)}
-                      className="hud-btn memories-control-btn" 
-                      style={{ 
-                        borderColor: memoryPlaybackActive ? 'var(--color-accent)' : 'rgba(255,255,255,0.08)',
-                        color: memoryPlaybackActive ? 'var(--color-accent)' : '#ffffff'
-                      }}
+                      className={`hud-btn memories-control-btn ${memoryPlaybackActive ? 'memories-control-btn--active' : ''}`}
                     >
                       {memoryPlaybackActive ? '⏸ PAUSE' : '▶ PLAY'}
                     </button>
@@ -783,11 +774,6 @@ export default function NanobotPillDetails() {
                 key={tab.id}
                 onClick={() => scrollToSection(tab.id)}
                 className={`hud-btn pill-details-tab-btn ${activeTab === tab.id ? 'active-tab-override' : ''}`}
-                style={{
-                  borderColor: activeTab === tab.id ? 'var(--color-accent)' : 'rgba(255,255,255,0.08)',
-                  background: activeTab === tab.id ? 'rgba(var(--color-accent-rgb), 0.1)' : 'transparent',
-                  color: activeTab === tab.id ? 'var(--color-accent)' : 'var(--text-secondary)'
-                }}
               >
                 {tab.label}
               </button>
@@ -1045,7 +1031,7 @@ export default function NanobotPillDetails() {
               <div className="biometrics-table-desktop viewport-diagnostics-table">
                 <div className="viewport-diagnostics-row">
                   <span className="viewport-diagnostics-label">GENETIC AI CORE STATE:</span>
-                  <span className="font-bold" style={{ color: activeTab === 'eclipse' || activeTab === 'superhuman' ? '#00ff88' : 'var(--color-accent)' }}>
+                  <span className={`font-bold ${activeTab === 'eclipse' || activeTab === 'superhuman' ? 'diagnostic-active-status' : 'diagnostic-inactive-status'}`}>
                     {activeTab === 'eclipse' || activeTab === 'superhuman' ? 'ACTIVE (100% DNA MATCH)' : stats.systemState}
                   </span>
                 </div>

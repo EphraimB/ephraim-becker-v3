@@ -32,8 +32,8 @@ export default function SolClock() {
   }, []);
 
   return (
-    <div style={{ display: 'inline-flex', alignItems: 'center' }}>
-      <span style={{ color: 'var(--color-accent)', textShadow: '0 0 5px rgba(var(--color-accent-rgb), 0.3)' }}>{clockStr}</span>
+    <div className="sol-clock-container">
+      <span className="sol-clock-text">{clockStr}</span>
     </div>
   );
 }

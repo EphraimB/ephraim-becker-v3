@@ -122,16 +122,12 @@ export default function ClientLayoutWrapper({ children }) {
       {/* Floating Left Peeking Locator Tab (Universal across all pages, desktop & mobile) */}
       <button 
         onClick={() => setMapDrawerOpen(true)}
-        className="mobile-locator-btn"
-        style={{
-          opacity: mapDrawerOpen ? 0 : 1,
-          pointerEvents: mapDrawerOpen ? 'none' : 'auto'
-        }}
+        className={`mobile-locator-btn ${mapDrawerOpen ? 'mobile-locator-btn--open' : ''}`}
       >
         <span className="locator-pulse-light"></span>
         <div className="layout-name-stack">
-          <span className="locator-location-name" style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-            <span style={{ width: '12px', height: '12px', display: 'inline-block', flexShrink: 0, color: 'currentColor' }}>
+          <span className="locator-location-name locator-location-name--flex">
+            <span className="svg-icon-wrapper--locator">
               <NavIconSvg type="pin" />
             </span>
             {primaryLoc}

@@ -9,7 +9,7 @@ export default function InterestIconSvg({ type }) {
       fill="none"
       stroke="currentColor"
       strokeWidth={1.2}
-      style={{ display: 'block', width: '100%', height: '100%' }}
+      className="svg-icon-full"
     >
       <use href={`/assets/svgs/interest_${type}.svg#icon`} />
     </svg>

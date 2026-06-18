@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 
 import PROJECTS from '../../data/projects.json';
+import './styles.css';
 
 
 const CATEGORIES = [
@@ -414,12 +415,12 @@ export default function PortfolioDome() {
           >
             {/* Modal Header */}
             <div className="portfolio-modal-header">
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+              <div className="portfolio-modal-title-bar">
                 <span className="portfolio-modal-title">
                   // HOLOGRAM_SECTOR: {activeProject.category.toUpperCase()}
                 </span>
                 {activeProject.vibeCoded && (
-                  <span className="badge-vibe-coded" style={{ verticalAlign: 'middle' }}>
+                  <span className="badge-vibe-coded badge-vibe-coded--aligned">
                     🤖 VIBE CODED WITH AI
                   </span>
                 )}
@@ -455,9 +456,8 @@ export default function PortfolioDome() {
                       />
                     </div>
                   ) : (
-                    /* Holographic Media Gallery Grid */
                     <div className="modal-gallery-wrapper">
-                      <div className="modal-gallery-grid" style={{ gridTemplateColumns: activeProject.images ? 'repeat(2, 1fr)' : '1fr' }}>
+                      <div className={`modal-gallery-grid ${activeProject.images ? 'modal-gallery-grid--multi' : ''}`}>
                         {activeProject.images ? (
                           activeProject.images.slice(0, 4).map((img, idx) => {
                             const isLastVisible = idx === 3;
@@ -631,7 +631,6 @@ export default function PortfolioDome() {
                                   download
                                   onClick={() => setDownloadDropdownOpen(false)}
                                   className="modal-download-item dropdown-item-hover"
-                                  style={{ borderBottom: idx < downloadLinks.length - 1 ? '1px solid rgba(255,255,255,0.06)' : 'none' }}
                                 >
                                   📄 {link.description}
                                 </a>

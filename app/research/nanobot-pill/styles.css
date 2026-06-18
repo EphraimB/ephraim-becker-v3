@@ -736,4 +736,42 @@
   font-weight: bold !important;
 }
 
+/* Telepathy bubble types */
+.telepathy-bubble-content--system {
+  background: rgba(0, 240, 255, 0.14) !important;
+  border: 1px solid rgba(0, 240, 255, 0.45) !important;
+  text-align: center !important;
+}
+.telepathy-bubble-content--self {
+  background: rgba(255, 87, 34, 0.24) !important;
+  border: 1px solid rgba(255, 87, 34, 0.45) !important;
+  text-align: left !important;
+}
+.telepathy-bubble-content--peer {
+  background: rgba(0, 255, 136, 0.18) !important;
+  border: 1px solid rgba(0, 255, 136, 0.4) !important;
+  text-align: left !important;
+}
+
+/* Memories active button state */
+.memories-control-btn--active {
+  border-color: var(--color-accent) !important;
+  color: var(--color-accent) !important;
+}
+
+/* Diagnostic tab highlights */
+.diagnostic-active-status {
+  color: #00ff88 !important;
+}
+.diagnostic-inactive-status {
+  color: var(--color-accent) !important;
+}
+
+/* Tab button active overrides */
+.pill-details-tab-btn.active-tab-override {
+  border-color: var(--color-accent) !important;
+  background: rgba(var(--color-accent-rgb), 0.1) !important;
+  color: var(--color-accent) !important;
+}
+
 

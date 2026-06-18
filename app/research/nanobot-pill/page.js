@@ -790,10 +790,73 @@ export default function NanobotPillDetails() {
             overflow: hidden !important;
             position: relative !important;
           }
+          .stage5-card {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: flex-start !important;
+            padding: 0 !important;
+          }
+          .stage5-slider {
+            display: flex !important;
+            flex-direction: row !important;
+            overflow-x: auto !important;
+            scroll-snap-type: x mandatory !important;
+            width: 100% !important;
+            gap: 0 !important;
+            padding: 14px 0 0 0 !important;
+            box-sizing: border-box !important;
+            -ms-overflow-style: none !important;
+            scrollbar-width: none !important;
+          }
+          .stage5-slider::-webkit-scrollbar {
+            display: none !important;
+          }
+          .scenario-bottom-dock {
+            width: 100% !important;
+            box-sizing: border-box !important;
+            padding: 10px 26px 18px 26px !important;
+          }
+          .scenarios-grid-deck {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr) !important;
+            gap: 8px !important;
+            width: 100% !important;
+            overflow-x: visible !important;
+            padding-bottom: 0 !important;
+          }
+          .scenario-btn-card {
+            flex: none !important;
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 8px !important;
+            align-items: center !important;
+            justify-content: flex-start !important;
+            text-align: left !important;
+            padding: 8px 12px !important;
+            scroll-snap-align: none !important;
+          }
+          .scenario-icon {
+            margin-bottom: 0 !important;
+            font-size: 1.1rem !important;
+          }
+          .scenario-title {
+            font-size: 0.65rem !important;
+            margin: 0 !important;
+          }
+          .scenario-desc {
+            display: none !important;
+          }
         }
         @media (min-width: 901px) {
           .card-visual-slide {
             display: none !important;
+          }
+          .stage5-slider {
+            width: 100%;
+          }
+          .scenario-bottom-dock {
+            width: 100%;
+            margin-top: 15px;
           }
         }
       `}} />
@@ -988,21 +1051,31 @@ export default function NanobotPillDetails() {
             </div>
 
             {/* Story Card 5 */}
-            <div id="eclipse" className="bubbly-panel touch-slide-card" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
-              <div className="card-text-slide">
-                <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px' }}>
-                  STAGE 05 // RETINA BCI OS
-                </span>
-                <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
-                  HUD-Free. Screen-Free.
-                </h2>
-                <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
-                  The visual field is completely clean. Virtual screens, clocks, maps, and guides anchor to the physical environment only when you need them. Select a scenario below to experience it.
-                </p>
-                
-                {/* Horizontal scroll selector deck */}
+            <div id="eclipse" className="bubbly-panel stage5-card" style={{ minHeight: '330px', padding: '20px 24px', justifyContent: 'flex-start', background: 'rgba(6,9,20,0.5)', flexShrink: 0 }}>
+              <div className="stage5-slider">
+                <div className="card-text-slide">
+                  <span className="net-label" style={{ fontSize: '0.6rem', color: 'var(--color-accent)', fontWeight: 'bold', letterSpacing: '1px', marginBottom: '10px', display: 'block' }}>
+                    STAGE 05 // RETINA BCI OS
+                  </span>
+                  <h2 className="apple-headline" style={{ fontSize: '1.8rem', marginBottom: '14px' }}>
+                    HUD-Free. Screen-Free.
+                  </h2>
+                  <p className="apple-sub" style={{ marginBottom: '16px', fontSize: '0.88rem' }}>
+                    The visual field is completely clean. Virtual screens, clocks, maps, and guides anchor to the physical environment only when you need them. Select a scenario below to experience it.
+                  </p>
+                </div>
+
+                <div className="card-visual-slide">
+                  <div className="viewport-mobile-frame">
+                    {renderViewportContent('eclipse')}
+                  </div>
+                </div>
+              </div>
+
+              {/* Bottom scenario dock bar */}
+              <div className="scenario-bottom-dock">
                 <div 
-                  className="hide-scrollbar" 
+                  className="hide-scrollbar scenarios-grid-deck" 
                   style={{ 
                     display: 'flex', 
                     gap: '10px', 
@@ -1016,6 +1089,7 @@ export default function NanobotPillDetails() {
                     <div 
                       key={sc.id} 
                       onClick={() => setActiveScenario(sc.id)}
+                      className="scenario-btn-card"
                       style={{
                         flex: '0 0 190px',
                         scrollSnapAlign: 'start',
@@ -1027,17 +1101,11 @@ export default function NanobotPillDetails() {
                         transition: 'all 0.25s ease'
                       }}
                     >
-                      <span style={{ fontSize: '1.2rem', display: 'block', marginBottom: '6px' }}>{sc.icon}</span>
-                      <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: '#ffffff', margin: '0 0 4px 0' }}>{sc.title}</h4>
-                      <p style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.3 }}>{sc.description}</p>
+                      <span style={{ fontSize: '1.2rem', display: 'block', marginBottom: '6px' }} className="scenario-icon">{sc.icon}</span>
+                      <h4 style={{ fontFamily: 'var(--font-tech)', fontSize: '0.72rem', color: '#ffffff', margin: '0 0 4px 0' }} className="scenario-title">{sc.title}</h4>
+                      <p style={{ fontSize: '0.62rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.3 }} className="scenario-desc">{sc.description}</p>
                     </div>
                   ))}
-                </div>
-              </div>
-
-              <div className="card-visual-slide">
-                <div className="viewport-mobile-frame">
-                  {renderViewportContent('eclipse')}
                 </div>
               </div>
             </div>

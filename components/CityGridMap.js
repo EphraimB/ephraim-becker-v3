@@ -113,7 +113,7 @@ function ScrambledText({ text, animate }) {
   return <span>{displayText}</span>;
 }
 
-export default function CityGridMap({ isDrawer = false }) {
+export default function CityGridMap({ isDrawer = false, onTransitStart }) {
   const router = useRouter();
   const pathname = usePathname();
   const [mapHoverNode, setMapHoverNode] = useState(null);
@@ -142,14 +142,57 @@ export default function CityGridMap({ isDrawer = false }) {
   // Helper to check if a route is currently active
   const isRouteActive = (route) => pathname === route;
 
-  // Teleportation navigator
-  const handleTeleport = (route) => {
+  // Transit navigator (rebranded from teleportation)
+  const handleTransit = (route) => {
     if (!route || chargingRoute) return;
-    setChargingRoute(route);
-    setTimeout(() => {
-      router.push(route);
-      setChargingRoute(null);
-    }, 300);
+
+    const fromPath = pathname || '/';
+    
+    // Calculate walking vs. cycling details
+    const from = COORDS[fromPath] || COORDS['/'];
+    const to = COORDS[route] || COORDS['/'];
+
+    const isResearchWalk = fromPath.startsWith('/research') && route.startsWith('/research');
+    const isParkWalk = (fromPath.startsWith('/park') || fromPath.startsWith('/neurodiversity')) && 
+                       (route.startsWith('/park') || route.startsWith('/neurodiversity'));
+    
+    const isWalk = isResearchWalk || isParkWalk;
+    let mode, distance, speed, duration;
+
+    if (isWalk) {
+      mode = 'walk';
+      distance = WALK_DISTANCE; // 50m
+      speed = WALK_SPEED; // 1.35 m/s
+      duration = Math.round(distance / speed); // ~37s
+    } else {
+      mode = 'cycle';
+      const dx = to.x - from.x;
+      const dy = to.y - from.y;
+      distance = Math.round(Math.sqrt(dx * dx + dy * dy)) * 10;
+      speed = 5.0; // 5.0 m/s
+      duration = Math.round(distance / speed);
+    }
+
+    const transitData = {
+      route,
+      fromName: from.name || 'ACTIVE BASE',
+      toName: to.name,
+      mode,
+      distance,
+      speed,
+      duration
+    };
+
+    if (onTransitStart) {
+      onTransitStart(transitData);
+    } else {
+      // Fallback direct navigation
+      setChargingRoute(route);
+      setTimeout(() => {
+        router.push(route);
+        setChargingRoute(null);
+      }, 300);
+    }
   };
 
   // 2. Real-Time Spatial Biking Distance & Time Calculator (Cycle at 5.0 m/s with 10x spatial coordinate scale for realism)
@@ -469,7 +512,7 @@ export default function CityGridMap({ isDrawer = false }) {
                 if (isAcad) {
                   setAcademicSyncActive(!academicSyncActive);
                 } else {
-                  handleTeleport(sector.route);
+                  handleTransit(sector.route);
                 }
               }}
               onMouseEnter={() => {
@@ -498,10 +541,10 @@ export default function CityGridMap({ isDrawer = false }) {
                 flexShrink: 0
               }}
             >
-              {/* Teleport Charge Overlay */}
+              {/* Transit Charge Overlay */}
               {chargingRoute === sector.route && (
                 <div
-                  className="teleport-charge-overlay"
+                  className="transit-charge-overlay"
                   style={{
                     background: `rgba(${sector.rgb}, 0.25)`,
                     boxShadow: `inset 0 0 20px rgba(${sector.rgb}, 0.5)`
@@ -540,7 +583,7 @@ export default function CityGridMap({ isDrawer = false }) {
                   </span>
                 </span>
                 <span style={{ fontSize: '0.58rem', color: isCurrentActive ? sector.color : 'rgba(255, 255, 255, 0.4)', fontFamily: 'monospace', fontWeight: 600, flexShrink: 0, whiteSpace: 'nowrap', marginTop: '3px' }}>
-                  {isAcad ? (academicSyncActive ? '[TAP TO BREAK SYNC]' : '[TAP TO SYNC DATA]') : (isCurrentActive ? '[📍 CURRENT LOCATION]' : '[➔ TELEPORT]')}
+                  {isAcad ? (academicSyncActive ? '[TAP TO BREAK SYNC]' : '[TAP TO SYNC DATA]') : (isCurrentActive ? '[📍 CURRENT LOCATION]' : '[➔ CYCLE]')}
                 </span>
               </div>
 
@@ -589,7 +632,7 @@ export default function CityGridMap({ isDrawer = false }) {
                   {/* Item 1: Habitat Entrance Plaza & Gardens */}
                   <div
                     onClick={() => {
-                      handleTeleport('/park');
+                      handleTransit('/park');
                     }}
                     className="touch-card-sublink"
                     style={{
@@ -663,7 +706,7 @@ export default function CityGridMap({ isDrawer = false }) {
                           <div
                             key={subSector.route}
                             onClick={() => {
-                              handleTeleport(subSector.route);
+                              handleTransit(subSector.route);
                             }}
                             className="touch-card-sublink"
                             style={{
@@ -719,7 +762,7 @@ export default function CityGridMap({ isDrawer = false }) {
                   {/* Item 1: Lab Entrance */}
                   <div
                     onClick={() => {
-                      handleTeleport('/research');
+                      handleTransit('/research');
                     }}
                     className="touch-card-sublink"
                     style={{
@@ -741,10 +784,10 @@ export default function CityGridMap({ isDrawer = false }) {
                       gap: '12px'
                     }}
                   >
-                    {/* Teleport Charge Overlay */}
+                    {/* Transit Charge Overlay */}
                     {chargingRoute === '/research' && (
                       <div
-                        className="teleport-charge-overlay"
+                        className="transit-charge-overlay"
                         style={{
                           background: `rgba(${sector.rgb}, 0.25)`,
                           boxShadow: `inset 0 0 10px rgba(${sector.rgb}, 0.4)`
@@ -769,7 +812,7 @@ export default function CityGridMap({ isDrawer = false }) {
                   {/* Item 2: BCI Pill Bay */}
                   <div
                     onClick={() => {
-                      handleTeleport('/research/nanobot-pill');
+                      handleTransit('/research/nanobot-pill');
                     }}
                     className="touch-card-sublink"
                     style={{
@@ -791,10 +834,10 @@ export default function CityGridMap({ isDrawer = false }) {
                       gap: '12px'
                     }}
                   >
-                    {/* Teleport Charge Overlay */}
+                    {/* Transit Charge Overlay */}
                     {chargingRoute === '/research/nanobot-pill' && (
                       <div
-                        className="teleport-charge-overlay"
+                        className="transit-charge-overlay"
                         style={{
                           background: `rgba(${sector.rgb}, 0.25)`,
                           boxShadow: `inset 0 0 10px rgba(${sector.rgb}, 0.4)`

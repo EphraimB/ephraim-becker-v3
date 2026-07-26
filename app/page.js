@@ -36,7 +36,7 @@ const getBrandColorRgb = (name) => {
 export default function AresDashboard() {
   const birthDate = new Date(PERSONAL.birthDate);
   
-  const [marsAge, setMarsAge] = useState('15.8 MY');
+  const [marsAge, setMarsAge] = useState('15.800 MY');
   const [activeInterest, setActiveInterest] = useState(null);
   const [isMounted, setIsMounted] = useState(false);
 
@@ -87,7 +87,7 @@ export default function AresDashboard() {
       const diffDays = diffTime / (1000 * 60 * 60 * 24);
       
       // Mars orbit is 686.98 Earth Days
-      const my = (diffDays / 686.98).toFixed(1);
+      const my = (diffDays / 686.98).toFixed(3);
       setMarsAge(`${my} MY`);
     };
     calculateAge();
@@ -124,7 +124,7 @@ export default function AresDashboard() {
           {/* Core Stats Readout - Dynamic Hydration Gated */}
           <div className="dashboard-stats-readout">
             <div>CITIZEN: <span className="dashboard-stats-value">{PERSONAL.name}</span></div>
-            <div>MARS AGE: <span className="dashboard-stats-value">{isMounted ? marsAge : '15.8 MY'}</span></div>
+            <div>MARS AGE: <span className="dashboard-stats-value">{isMounted ? marsAge : '15.800 MY'}</span></div>
           </div>
 
           {/* Complete 6-Link Social Registry Matrix */}

@@ -303,7 +303,10 @@
       {
         "label": "02 // AMTRAK ADVENTURE",
         "content": "For me, the journey itself is the destination! To prove it, I chose to take a long-distance Amtrak train ride all the way from NY Penn Station to Deerfield Beach, Florida instead of taking a quick commercial flight—simply for the pure thrill and relaxation of watching the eastern seaboard scenery roll past. Traveling by rail let me experience the unique sights, sounds, and spatial geography of the country first-hand!",
-        "svgType": "trains_amtrak"
+        "svgType": "trains_amtrak",
+        "image": "/assets/images/amtrak-deerfield-beach.jpg",
+        "imageLabel": "// AMTRAK DEERFIELD BEACH TERMINAL PHOTO",
+        "imageCaption": "Amtrak Silver Meteor arrival at Deerfield Beach Station, Florida"
       }
     ]
   }

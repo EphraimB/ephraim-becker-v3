@@ -41,6 +41,7 @@ export default function AresDashboard() {
   const [isMounted, setIsMounted] = useState(false);
 
   const [activeSlide, setActiveSlide] = useState(0);
+  const [interestLightboxImg, setInterestLightboxImg] = useState(null);
   const activeTabRef = useRef(null);
 
   // Scroll active slide button into view smoothly
@@ -308,10 +309,75 @@ export default function AresDashboard() {
                   </div>
                 )}
 
+                {/* Photo Transmission Card */}
+                {activeInterest.slides?.[activeSlide]?.image && (
+                  <div 
+                    className="interest-photo-card" 
+                    style={{ 
+                      borderColor: activeInterest.themeColor || 'rgba(0, 210, 255, 0.4)',
+                      boxShadow: `0 0 15px ${activeInterest.themeColor ? activeInterest.themeColor + '22' : 'rgba(0, 210, 255, 0.12)'}`
+                    }}
+                  >
+                    <span className="interest-photo-label" style={{ color: activeInterest.themeColor || '#00d2ff' }}>
+                      {activeInterest.slides[activeSlide].imageLabel || '// PHOTO TRANSMISSION'}
+                    </span>
+                    <div 
+                      className="interest-photo-frame"
+                      onClick={() => setInterestLightboxImg({
+                        src: activeInterest.slides[activeSlide].image,
+                        caption: activeInterest.slides[activeSlide].imageCaption,
+                        label: activeInterest.slides[activeSlide].imageLabel
+                      })}
+                    >
+                      <img 
+                        src={activeInterest.slides[activeSlide].image} 
+                        alt={activeInterest.slides[activeSlide].imageCaption || 'Interest Photo'} 
+                        className="interest-photo-img"
+                      />
+                      <div className="interest-photo-zoom-hint" style={{ borderColor: activeInterest.themeColor || '#00d2ff', color: activeInterest.themeColor || '#00d2ff' }}>
+                        <span>🔍 CLICK TO EXPAND</span>
+                      </div>
+                    </div>
+                    {activeInterest.slides[activeSlide].imageCaption && (
+                      <div className="interest-photo-caption">
+                        {activeInterest.slides[activeSlide].imageCaption}
+                      </div>
+                    )}
+                  </div>
+                )}
+
               </div>
             </div>
 
           </div>
+        </div>
+      )}
+
+      {/* Interest Photo Full-Res Lightbox */}
+      {interestLightboxImg && (
+        <div className="lightbox-overlay" onClick={() => setInterestLightboxImg(null)}>
+          <div className="lightbox-hud">
+            <div className="lightbox-label" style={{ color: activeInterest?.themeColor || '#00d2ff' }}>
+              {interestLightboxImg.label || '// PHOTO TRANSMISSION // FULL_RES_VIEW'}
+            </div>
+            <button className="hud-btn lightbox-close-btn" onClick={() => setInterestLightboxImg(null)}>
+              [ CLOSE ]
+            </button>
+          </div>
+          <div className="lightbox-stage" onClick={(e) => e.stopPropagation()}>
+            <div className="lightbox-image-box" style={{ borderColor: activeInterest?.themeColor || '#00d2ff' }}>
+              <img
+                src={interestLightboxImg.src}
+                alt={interestLightboxImg.caption || 'Interest Photo'}
+                className="lightbox-image"
+              />
+            </div>
+          </div>
+          {interestLightboxImg.caption && (
+            <div style={{ marginTop: '16px', fontFamily: 'var(--font-tech), monospace', fontSize: '0.75rem', color: 'rgba(255, 255, 255, 0.7)', letterSpacing: '0.5px', textAlign: 'center' }}>
+              {interestLightboxImg.caption}
+            </div>
+          )}
         </div>
       )}
 

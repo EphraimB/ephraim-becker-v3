@@ -213,5 +213,30 @@
         "type": "github"
       }
     ]
+  },
+  {
+    "id": 11,
+    "category": "Web development",
+    "title": "Virtual Friend",
+    "description": "An early pre-AI virtual companion and interactive avatar simulator built with HTML, CSS, JavaScript, and Web Speech APIs, featuring animated avatars, voice synthesis, 3D red/cyan glasses support, and simulated conversation state machines.",
+    "technologies": ["JavaScript", "HTML", "CSS", "PHP", "Speech Synthesis & Recognition", "Anaglyph 3D"],
+    "details": "Created long before LLMs and generative AI, Virtual Friend was an early exploration into human-computer interaction and avatar simulation. Over a 4-month development period (ending in a development reset in February 2016), it evolved to include pure HTML/CSS character figures ('Person One' and 'Person Two'), Text-to-Speech and Speech-to-Text integration, stereoscopic red/cyan 3D pop-out effects, custom VBScript dev automation, user authentication forms, and an embedded virtual smartphone iframe held by the avatar.",
+    "takeaways": "Developing a voice-enabled, 3D-compatible virtual companion prior to modern AI required manual state management, rule-based text processing, and creative CSS/DOM manipulation. Navigating early development resets and experimenting with browser speech APIs provided foundational lessons in state architecture and UI iteration.",
+    "started": "2015-11-10",
+    "finished": "2016-02-19",
+    "status": "Finished",
+    "image": "/projects/virtual-friend-screenshot.png",
+    "links": [
+      {
+        "src": "https://github.com/EphraimB/Virtual-Friend",
+        "description": "GitHub Repository",
+        "type": "github"
+      },
+      {
+        "src": "https://ephraimb.github.io/Virtual-Friend/",
+        "description": "Live Demo",
+        "type": "demo"
+      }
+    ]
   }
 ]

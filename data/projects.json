@@ -213,5 +213,30 @@
         "type": "github"
       }
     ]
+  },
+  {
+    "id": 11,
+    "category": "Web development",
+    "title": "Virtual Friend",
+    "description": "An early pre-AI virtual companion and interactive avatar simulator built with HTML, CSS, and JavaScript, featuring animated avatars, simulated messaging, and an embedded virtual smartphone display.",
+    "technologies": ["JavaScript", "HTML", "CSS", "PHP"],
+    "details": "Created before modern AI conversational models existed, Virtual Friend was an early experiment in building an interactive virtual companion interface. The application features pure HTML and CSS character avatars ('Person One' and 'Person Two') with animated facial expressions, interactive text response inputs, user registration and login forms, and even an embedded virtual smartphone iframe screen held in the companion avatar's hand.",
+    "takeaways": "Designing a responsive, interactive companion using pre-AI traditional web technologies required creative CSS layout techniques, manual DOM state tracking, and rule-based interaction logic. It serves as an early milestone in exploring human-computer interaction and avatar simulation long before LLMs were available.",
+    "started": "2015-11-10",
+    "finished": "2015-12-01",
+    "status": "Finished",
+    "image": "/projects/virtual-friend-screenshot.png",
+    "links": [
+      {
+        "src": "https://github.com/EphraimB/Virtual-Friend",
+        "description": "GitHub Repository",
+        "type": "github"
+      },
+      {
+        "src": "https://ephraimb.github.io/Virtual-Friend/",
+        "description": "Live Demo",
+        "type": "demo"
+      }
+    ]
   }
 ]

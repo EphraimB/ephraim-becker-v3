@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import './page.css';
 
 import INTERESTS from '../data/interests.json';
@@ -43,6 +43,203 @@ export default function AresDashboard() {
   const [activeSlide, setActiveSlide] = useState(0);
   const [interestLightboxImg, setInterestLightboxImg] = useState(null);
   const activeTabRef = useRef(null);
+
+  // Neuroadaptive container & element registration refs
+  const containerRef = useRef(null);
+  const elementsRef = useRef({});
+  const attentionStateRef = useRef({
+    cursorX: -1000,
+    cursorY: -1000,
+    activeZoneId: null,
+    dwellStartTime: 0,
+    smoothedFocus: {},
+    targetFocus: {},
+    isReducedMotion: false,
+    lastActiveTime: 0,
+  });
+
+  const [focusedZone, setFocusedZone] = useState(null);
+
+  // Register DOM element for attention bounding box tracking
+  const registerZone = useCallback((id, domNode) => {
+    if (!domNode) {
+      delete elementsRef.current[id];
+      delete attentionStateRef.current.smoothedFocus[id];
+      delete attentionStateRef.current.targetFocus[id];
+      return;
+    }
+    elementsRef.current[id] = {
+      id,
+      node: domNode,
+      rect: domNode.getBoundingClientRect(),
+    };
+    if (attentionStateRef.current.smoothedFocus[id] === undefined) {
+      attentionStateRef.current.smoothedFocus[id] = 0;
+      attentionStateRef.current.targetFocus[id] = 0;
+    }
+  }, []);
+
+  // Update bounding rects on resize/scroll
+  useEffect(() => {
+    const updateRects = () => {
+      for (const id in elementsRef.current) {
+        const item = elementsRef.current[id];
+        if (item?.node) {
+          item.rect = item.node.getBoundingClientRect();
+        }
+      }
+    };
+
+    window.addEventListener('resize', updateRects);
+    window.addEventListener('scroll', updateRects, { passive: true });
+    return () => {
+      window.removeEventListener('resize', updateRects);
+      window.removeEventListener('scroll', updateRects);
+    };
+  }, []);
+
+  // Mouse tracking and attention inference engine (Desktop & Mobile)
+  useEffect(() => {
+    const state = attentionStateRef.current;
+
+    // Check prefers-reduced-motion
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    state.isReducedMotion = motionQuery.matches;
+    const handleMotionChange = (e) => {
+      state.isReducedMotion = e.matches;
+    };
+    motionQuery.addEventListener('change', handleMotionChange);
+
+    // Mouse movement listener (Natural movement within region does not reset attention)
+    const handleMouseMove = (e) => {
+      state.cursorX = e.clientX;
+      state.cursorY = e.clientY;
+      state.lastActiveTime = performance.now();
+    };
+
+    const handleMouseLeave = () => {
+      state.cursorX = -1000;
+      state.cursorY = -1000;
+      state.activeZoneId = null;
+      state.dwellStartTime = 0;
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('mouseleave', handleMouseLeave);
+
+    // Core RAF Continuous Attention Loop with Asymmetric Hysteresis
+    let animId;
+    let lastReactSync = 0;
+
+    const runAttentionEngine = (now) => {
+      const elements = elementsRef.current;
+      const { cursorX, cursorY, smoothedFocus, targetFocus, isReducedMotion } = state;
+
+      // 1. Identify Candidate Region (cursor within bounds or generous proximity threshold)
+      let candidateId = null;
+
+      for (const id in elements) {
+        const item = elements[id];
+        if (!item?.rect) continue;
+        const r = item.rect;
+
+        // Bounding box hit test with generous 24px proximity padding
+        const isInside =
+          cursorX >= r.left - 24 &&
+          cursorX <= r.right + 24 &&
+          cursorY >= r.top - 24 &&
+          cursorY <= r.bottom + 24;
+
+        if (isInside) {
+          candidateId = id;
+          break;
+        }
+      }
+
+      // 2. Accumulate Dwell (Natural movement within region preserves dwell)
+      if (candidateId) {
+        if (state.activeZoneId !== candidateId) {
+          state.activeZoneId = candidateId;
+          state.dwellStartTime = now;
+        }
+
+        const dwellDuration = now - state.dwellStartTime;
+
+        // Progressive Focus curve based on sustained dwell:
+        // 0 to 300ms: Interest (~0.35)
+        // 300ms to 1600ms: Focus (~0.65)
+        // 1600ms to 3500ms+: Deep Focus (0.85 -> 1.0)
+        let computedFocus = 0.3;
+        if (dwellDuration > 300 && dwellDuration <= 1600) {
+          computedFocus = 0.35 + ((dwellDuration - 300) / 1300) * 0.3;
+        } else if (dwellDuration > 1600) {
+          computedFocus = 0.65 + Math.min((dwellDuration - 1600) / 1900, 1) * 0.35;
+        }
+
+        for (const id in targetFocus) {
+          targetFocus[id] = id === candidateId ? computedFocus : 0;
+        }
+      } else {
+        state.activeZoneId = null;
+        state.dwellStartTime = 0;
+        for (const id in targetFocus) {
+          targetFocus[id] = 0;
+        }
+      }
+
+      // 3. Asymmetric Smooth Interpolation (Quick rise: 0.085, Gentle decay: 0.038)
+      let maxFocus = 0;
+      let dominantId = null;
+
+      for (const id in smoothedFocus) {
+        const target = targetFocus[id] || 0;
+        const current = smoothedFocus[id] || 0;
+
+        if (isReducedMotion) {
+          smoothedFocus[id] = target;
+        } else {
+          const lerpRate = target > current ? 0.085 : 0.038;
+          smoothedFocus[id] = current + (target - current) * lerpRate;
+        }
+
+        if (smoothedFocus[id] > maxFocus) {
+          maxFocus = smoothedFocus[id];
+          if (smoothedFocus[id] > 0.2) {
+            dominantId = id;
+          }
+        }
+
+        // Write per-element focus variable directly to DOM for hardware-accelerated CSS
+        if (elements[id]?.node) {
+          elements[id].node.style.setProperty('--focus-val', smoothedFocus[id].toFixed(3));
+        }
+      }
+
+      // Update container variables
+      if (containerRef.current) {
+        containerRef.current.style.setProperty('--global-focus', maxFocus.toFixed(3));
+        const peripheralOpacity = (1 - maxFocus * 0.18).toFixed(3); // Strict floor ~0.82
+        containerRef.current.style.setProperty('--peripheral-opacity', peripheralOpacity);
+      }
+
+      // Throttled React state sync
+      if (now - lastReactSync > 80) {
+        lastReactSync = now;
+        setFocusedZone(dominantId);
+      }
+
+      animId = requestAnimationFrame(runAttentionEngine);
+    };
+
+    animId = requestAnimationFrame(runAttentionEngine);
+
+    return () => {
+      motionQuery.removeEventListener('change', handleMotionChange);
+      window.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseleave', handleMouseLeave);
+      cancelAnimationFrame(animId);
+    };
+  }, []);
 
   // Scroll active slide button into view smoothly
   useEffect(() => {
@@ -92,13 +289,16 @@ export default function AresDashboard() {
     };
     calculateAge();
     
-    // Interval check every minute
     const interval = setInterval(calculateAge, 60000);
     return () => clearInterval(interval);
   }, [isMounted]);
 
   return (
-    <div className="dashboard-main-container">
+    <div 
+      ref={containerRef}
+      className={`dashboard-main-container neuroadaptive-container ${focusedZone ? 'has-active-focus' : ''}`}
+      data-focused-zone={focusedZone || 'none'}
+    >
 
       {/* THE CENTRAL PROFILE TERMINAL CARD */}
       <div className="dashboard-left-col">
@@ -107,53 +307,70 @@ export default function AresDashboard() {
 
         {/* LEFT PANE: Avatar, Stats, and Social Matrix */}
         <div className="terminal-left-pane">
-          {/* Profile Avatar Frame - holographic transparent layout */}
-          <div className="profile-avatar-frame">
-            <img 
-              src={PERSONAL.avatar} 
-              alt={`${PERSONAL.name} Profile`} 
-              className="profile-avatar-img"
-            />
-            {/* Subtle Corner Telemetry Accents */}
-            <div className="avatar-corner avatar-corner--tl"></div>
-            <div className="avatar-corner avatar-corner--tr"></div>
-            <div className="avatar-corner avatar-corner--bl"></div>
-            <div className="avatar-corner avatar-corner--br"></div>
-          </div>
+          
+          {/* Profile Avatar & Stats Attention Zone */}
+          <div 
+            ref={(el) => registerZone('avatar-stats', el)}
+            className="adaptive-zone avatar-stats-zone"
+            tabIndex={0}
+          >
+            {/* Profile Avatar Frame - holographic transparent layout */}
+            <div className="profile-avatar-frame">
+              <img 
+                src={PERSONAL.avatar} 
+                alt={`${PERSONAL.name} Profile`} 
+                className="profile-avatar-img"
+              />
+              {/* Subtle Corner Telemetry Accents */}
+              <div className="avatar-corner avatar-corner--tl"></div>
+              <div className="avatar-corner avatar-corner--tr"></div>
+              <div className="avatar-corner avatar-corner--bl"></div>
+              <div className="avatar-corner avatar-corner--br"></div>
+            </div>
 
-          {/* Core Stats Readout - Dynamic Hydration Gated */}
-          <div className="dashboard-stats-readout">
-            <div>CITIZEN: <span className="dashboard-stats-value">{PERSONAL.name}</span></div>
-            <div>MARS AGE: <span className="dashboard-stats-value">{isMounted ? marsAge : '15.800 MY'}</span></div>
+            {/* Core Stats Readout - Dynamic Hydration Gated */}
+            <div className="dashboard-stats-readout">
+              <div>CITIZEN: <span className="dashboard-stats-value">{PERSONAL.name}</span></div>
+              <div>MARS AGE: <span className="dashboard-stats-value">{isMounted ? marsAge : '15.800 MY'}</span></div>
+            </div>
           </div>
 
           {/* Complete 6-Link Social Registry Matrix */}
           <div className="dashboard-socials-grid">
-            {PERSONAL.socials.map((social) => (
-              <a 
-                key={social.name}
-                href={social.url} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="social-link-port dashboard-social-link"
-                style={{
-                  '--brand-color': getBrandColor(social.name),
-                  '--brand-color-rgb': getBrandColorRgb(social.name)
-                }}
-              >
-                <span className="social-icon-wrapper">
-                  <SocialIconSvg brand={social.name.toLowerCase()} />
-                </span>
-                <span className="social-name-text">{social.name}</span>
-              </a>
-            ))}
+            {PERSONAL.socials.map((social) => {
+              const socialId = `social-${social.name.toLowerCase()}`;
+              return (
+                <a 
+                  key={social.name}
+                  ref={(el) => registerZone(socialId, el)}
+                  href={social.url} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="social-link-port dashboard-social-link adaptive-zone adaptive-social-link"
+                  style={{
+                    '--brand-color': getBrandColor(social.name),
+                    '--brand-color-rgb': getBrandColorRgb(social.name)
+                  }}
+                >
+                  <span className="social-icon-wrapper">
+                    <SocialIconSvg brand={social.name.toLowerCase()} />
+                  </span>
+                  <span className="social-name-text">{social.name}</span>
+                </a>
+              );
+            })}
           </div>
         </div>
 
         {/* RIGHT PANE: Biography Log and Classified Interests */}
         <div className="terminal-right-pane">
-          {/* Biography Block */}
-          <div className="dashboard-bio-block">
+          
+          {/* Biography Block Attention Zone */}
+          <div 
+            ref={(el) => registerZone('bio-log', el)}
+            className="dashboard-bio-block adaptive-zone adaptive-bio-block"
+            tabIndex={0}
+          >
             <span className="dashboard-section-label">// CITIZEN BIOGRAPHY LOG</span>
             <p className="dashboard-bio-text">
               {PERSONAL.bio}
@@ -165,30 +382,34 @@ export default function AresDashboard() {
             <span className="dashboard-section-label">// CLASSIFIED INTEREST REGISTRY</span>
             
             <div className="dashboard-interests-list">
-              {INTERESTS.map((interest) => (
-                <button
-                  key={interest.id}
-                  onClick={() => setActiveInterest(interest)}
-                  className="bento-interest-card"
-                  style={{
-                    '--interest-color': interest.themeColor || '#00f0ff',
-                    '--interest-bg': interest.themeBg || 'rgba(0, 240, 255, 0.08)',
-                  }}
-                >
-                  {/* Tech corners */}
-                  <span className="bento-corner bento-corner--tl"></span>
-                  <span className="bento-corner bento-corner--tr"></span>
-                  <span className="bento-corner bento-corner--bl"></span>
-                  <span className="bento-corner bento-corner--br"></span>
+              {INTERESTS.map((interest) => {
+                const interestId = `interest-${interest.id}`;
+                return (
+                  <button
+                    key={interest.id}
+                    ref={(el) => registerZone(interestId, el)}
+                    onClick={() => setActiveInterest(interest)}
+                    className="bento-interest-card adaptive-zone adaptive-interest-card"
+                    style={{
+                      '--interest-color': interest.themeColor || '#00f0ff',
+                      '--interest-bg': interest.themeBg || 'rgba(0, 240, 255, 0.08)',
+                    }}
+                  >
+                    {/* Tech corners */}
+                    <span className="bento-corner bento-corner--tl"></span>
+                    <span className="bento-corner bento-corner--tr"></span>
+                    <span className="bento-corner bento-corner--bl"></span>
+                    <span className="bento-corner bento-corner--br"></span>
 
-                  {/* Clean inline SVG icon in the top-right */}
-                  <div className="bento-card-icon-wrapper">
-                    <InterestIconSvg type={interest.id} />
-                  </div>
-                  <span className="bento-interest-tag">{interest.tag}</span>
-                  <span className="bento-chevron">➔</span>
-                </button>
-              ))}
+                    {/* Clean inline SVG icon in the top-right */}
+                    <div className="bento-card-icon-wrapper">
+                      <InterestIconSvg type={interest.id} />
+                    </div>
+                    <span className="bento-interest-tag">{interest.tag}</span>
+                    <span className="bento-chevron">➔</span>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -281,12 +502,10 @@ export default function AresDashboard() {
                   </div>
                 </div>
 
-                  {/* Tactical SVG Graphic Canvas */}
-                  <div>
+                {/* Tactical SVG Graphic Canvas */}
+                <div>
                   <span className="interest-visual-label">// VISUAL CORE GRAPHIC</span>
-                  
                   <InterestVisuals svgType={activeInterest.slides?.[activeSlide]?.svgType} />
-
                 </div>
 
                 {/* Embedded YouTube Transmission Deck */}

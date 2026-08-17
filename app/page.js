@@ -47,6 +47,9 @@ export default function AresDashboard() {
   // Neuroadaptive container & element registration refs
   const containerRef = useRef(null);
   const elementsRef = useRef({});
+  const interestsBlockRef = useRef(null);
+  const socialsGridRef = useRef(null);
+
   const attentionStateRef = useRef({
     cursorX: -1000,
     cursorY: -1000,
@@ -61,7 +64,7 @@ export default function AresDashboard() {
   const [focusedZone, setFocusedZone] = useState(null);
 
   // Register DOM element for attention bounding box tracking
-  const registerZone = useCallback((id, domNode) => {
+  const registerZone = useCallback((id, domNode, metadata = {}) => {
     if (!domNode) {
       delete elementsRef.current[id];
       delete attentionStateRef.current.smoothedFocus[id];
@@ -72,6 +75,7 @@ export default function AresDashboard() {
       id,
       node: domNode,
       rect: domNode.getBoundingClientRect(),
+      ...metadata,
     };
     if (attentionStateRef.current.smoothedFocus[id] === undefined) {
       attentionStateRef.current.smoothedFocus[id] = 0;
@@ -110,7 +114,7 @@ export default function AresDashboard() {
     };
     motionQuery.addEventListener('change', handleMotionChange);
 
-    // Mouse movement listener (Natural movement within region does not reset attention)
+    // Mouse movement listener (Natural cursor movement within region preserves dwell)
     const handleMouseMove = (e) => {
       state.cursorX = e.clientX;
       state.cursorY = e.clientY;
@@ -127,7 +131,7 @@ export default function AresDashboard() {
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave);
 
-    // Core RAF Continuous Attention Loop with Asymmetric Hysteresis
+    // Core RAF Continuous Attention & Restrained Spatial Redistribution Loop
     let animId;
     let lastReactSync = 0;
 
@@ -135,7 +139,7 @@ export default function AresDashboard() {
       const elements = elementsRef.current;
       const { cursorX, cursorY, smoothedFocus, targetFocus, isReducedMotion } = state;
 
-      // 1. Identify Candidate Region (cursor within bounds or generous proximity threshold)
+      // 1. Identify Candidate Region (cursor within bounds or generous 24px proximity threshold)
       let candidateId = null;
 
       for (const id in elements) {
@@ -143,7 +147,6 @@ export default function AresDashboard() {
         if (!item?.rect) continue;
         const r = item.rect;
 
-        // Bounding box hit test with generous 24px proximity padding
         const isInside =
           cursorX >= r.left - 24 &&
           cursorX <= r.right + 24 &&
@@ -165,15 +168,15 @@ export default function AresDashboard() {
 
         const dwellDuration = now - state.dwellStartTime;
 
-        // Progressive Focus curve based on sustained dwell:
-        // 0 to 300ms: Interest (~0.35)
-        // 300ms to 1600ms: Focus (~0.65)
-        // 1600ms to 3500ms+: Deep Focus (0.85 -> 1.0)
-        let computedFocus = 0.3;
-        if (dwellDuration > 300 && dwellDuration <= 1600) {
-          computedFocus = 0.35 + ((dwellDuration - 300) / 1300) * 0.3;
-        } else if (dwellDuration > 1600) {
-          computedFocus = 0.65 + Math.min((dwellDuration - 1600) / 1900, 1) * 0.35;
+        // Progressive Focus curve (Neutral -> Noticing -> Attention -> Sustained -> Deep)
+        // 0 to 350ms: Noticing (~0.30)
+        // 350ms to 1500ms: Attention (~0.60)
+        // 1500ms to 3500ms+: Deep Focus (0.85 -> 1.0)
+        let computedFocus = 0.25;
+        if (dwellDuration > 350 && dwellDuration <= 1500) {
+          computedFocus = 0.30 + ((dwellDuration - 350) / 1150) * 0.35;
+        } else if (dwellDuration > 1500) {
+          computedFocus = 0.65 + Math.min((dwellDuration - 1500) / 2000, 1) * 0.35;
         }
 
         for (const id in targetFocus) {
@@ -187,7 +190,7 @@ export default function AresDashboard() {
         }
       }
 
-      // 3. Asymmetric Smooth Interpolation (Quick rise: 0.085, Gentle decay: 0.038)
+      // 3. Asymmetric Smooth Interpolation (Onset: 0.085, Gentle Hysteresis Decay: 0.038)
       let maxFocus = 0;
       let dominantId = null;
 
@@ -209,16 +212,140 @@ export default function AresDashboard() {
           }
         }
 
-        // Write per-element focus variable directly to DOM for hardware-accelerated CSS
+        // Apply per-element focus variable directly to DOM
         if (elements[id]?.node) {
           elements[id].node.style.setProperty('--focus-val', smoothedFocus[id].toFixed(3));
+        }
+      }
+
+      // 4. Restrained Spatial Parting Redistribution
+      if (!isReducedMotion) {
+        // --- A. Interest Grid Spatial Parting (Nearest available space first) ---
+        let activeInterestId = null;
+        let activeInterestFocus = 0;
+        let activeRow = -1;
+        let activeCol = -1;
+
+        for (const id in elements) {
+          if (id.startsWith('interest-') && smoothedFocus[id] > 0.05) {
+            if (smoothedFocus[id] > activeInterestFocus) {
+              activeInterestFocus = smoothedFocus[id];
+              activeInterestId = id;
+              activeRow = elements[id].row ?? -1;
+              activeCol = elements[id].col ?? -1;
+            }
+          }
+        }
+
+        for (const id in elements) {
+          if (!id.startsWith('interest-')) continue;
+          const item = elements[id];
+          if (!item.node) continue;
+
+          if (activeInterestFocus > 0.05 && activeRow !== -1 && activeCol !== -1) {
+            if (id === activeInterestId) {
+              item.node.style.setProperty('--parting-x', '0px');
+              item.node.style.setProperty('--parting-y', '0px');
+            } else {
+              const r = item.row ?? 0;
+              const c = item.col ?? 0;
+              const dRow = r - activeRow;
+              const dCol = c - activeCol;
+
+              // Nearest horizontal neighbor in same row shifts 2.5px to 4px
+              let px = 0;
+              let py = 0;
+
+              if (dRow === 0 && dCol !== 0) {
+                px = dCol * activeInterestFocus * 4; // max 4px
+              } else if (Math.abs(dRow) === 1) {
+                // Immediate row above/below shifts 2.5px to 3.5px
+                py = Math.sign(dRow) * activeInterestFocus * 3.5;
+                if (dCol !== 0) {
+                  px = dCol * activeInterestFocus * 1.5;
+                }
+              } else if (Math.abs(dRow) > 1) {
+                // Further rows shift gently 1.5px
+                py = Math.sign(dRow) * activeInterestFocus * 2;
+              }
+
+              item.node.style.setProperty('--parting-x', `${px.toFixed(2)}px`);
+              item.node.style.setProperty('--parting-y', `${py.toFixed(2)}px`);
+            }
+          } else {
+            item.node.style.setProperty('--parting-x', '0px');
+            item.node.style.setProperty('--parting-y', '0px');
+          }
+        }
+
+        // --- B. Social Matrix Spatial Parting ---
+        let activeSocialId = null;
+        let activeSocialFocus = 0;
+        let activeSocRow = -1;
+        let activeSocCol = -1;
+
+        for (const id in elements) {
+          if (id.startsWith('social-') && smoothedFocus[id] > 0.05) {
+            if (smoothedFocus[id] > activeSocialFocus) {
+              activeSocialFocus = smoothedFocus[id];
+              activeSocialId = id;
+              activeSocRow = elements[id].row ?? -1;
+              activeSocCol = elements[id].col ?? -1;
+            }
+          }
+        }
+
+        for (const id in elements) {
+          if (!id.startsWith('social-')) continue;
+          const item = elements[id];
+          if (!item.node) continue;
+
+          if (activeSocialFocus > 0.05 && activeSocRow !== -1 && activeSocCol !== -1) {
+            if (id === activeSocialId) {
+              item.node.style.setProperty('--parting-x', '0px');
+              item.node.style.setProperty('--parting-y', '0px');
+            } else {
+              const r = item.row ?? 0;
+              const c = item.col ?? 0;
+              const dRow = r - activeSocRow;
+              const dCol = c - activeSocCol;
+
+              let px = 0;
+              let py = 0;
+              if (dRow === 0 && dCol !== 0) {
+                px = dCol * activeSocialFocus * 3.5;
+              } else if (Math.abs(dRow) >= 1) {
+                py = Math.sign(dRow) * activeSocialFocus * 2.5;
+              }
+
+              item.node.style.setProperty('--parting-x', `${px.toFixed(2)}px`);
+              item.node.style.setProperty('--parting-y', `${py.toFixed(2)}px`);
+            }
+          } else {
+            item.node.style.setProperty('--parting-x', '0px');
+            item.node.style.setProperty('--parting-y', '0px');
+          }
+        }
+
+        // --- C. Biography -> Interest Registry Downward Yield (8px to 12px max) ---
+        const bioFocus = smoothedFocus['bio-log'] || 0;
+        if (interestsBlockRef.current) {
+          const bioDisplacement = (bioFocus * 11).toFixed(2);
+          interestsBlockRef.current.style.setProperty('--bio-displacement', `${bioDisplacement}px`);
+        }
+
+        // --- D. Avatar/Stats -> Social Matrix Downward Yield (6px to 8px max) ---
+        const avatarFocus = smoothedFocus['avatar-stats'] || 0;
+        if (socialsGridRef.current) {
+          const avatarDisplacement = (avatarFocus * 7.5).toFixed(2);
+          socialsGridRef.current.style.setProperty('--avatar-displacement', `${avatarDisplacement}px`);
         }
       }
 
       // Update container variables
       if (containerRef.current) {
         containerRef.current.style.setProperty('--global-focus', maxFocus.toFixed(3));
-        const peripheralOpacity = (1 - maxFocus * 0.18).toFixed(3); // Strict floor ~0.82
+        const peripheralOpacity = (1 - maxFocus * 0.15).toFixed(3); // Strict floor ~0.85
         containerRef.current.style.setProperty('--peripheral-opacity', peripheralOpacity);
       }
 
@@ -336,13 +463,18 @@ export default function AresDashboard() {
           </div>
 
           {/* Complete 6-Link Social Registry Matrix */}
-          <div className="dashboard-socials-grid">
-            {PERSONAL.socials.map((social) => {
+          <div 
+            ref={socialsGridRef}
+            className="dashboard-socials-grid adaptive-socials-container"
+          >
+            {PERSONAL.socials.map((social, idx) => {
               const socialId = `social-${social.name.toLowerCase()}`;
+              const row = Math.floor(idx / 2);
+              const col = idx % 2;
               return (
                 <a 
                   key={social.name}
-                  ref={(el) => registerZone(socialId, el)}
+                  ref={(el) => registerZone(socialId, el, { row, col })}
                   href={social.url} 
                   target="_blank" 
                   rel="noopener noreferrer" 
@@ -378,16 +510,21 @@ export default function AresDashboard() {
           </div>
 
           {/* Clickable Interests Mini-Tags (One-Scan Dashboard View) */}
-          <div className="dashboard-interests-block">
+          <div 
+            ref={interestsBlockRef}
+            className="dashboard-interests-block adaptive-interests-container"
+          >
             <span className="dashboard-section-label">// CLASSIFIED INTEREST REGISTRY</span>
             
             <div className="dashboard-interests-list">
-              {INTERESTS.map((interest) => {
+              {INTERESTS.map((interest, idx) => {
                 const interestId = `interest-${interest.id}`;
+                const row = Math.floor(idx / 2);
+                const col = idx % 2;
                 return (
                   <button
                     key={interest.id}
-                    ref={(el) => registerZone(interestId, el)}
+                    ref={(el) => registerZone(interestId, el, { row, col })}
                     onClick={() => setActiveInterest(interest)}
                     className="bento-interest-card adaptive-zone adaptive-interest-card"
                     style={{

@@ -19,7 +19,7 @@
 }
 
 /* --------------------------------------------------------------------------
-   Neuroadaptive Interaction Layer (Smooth Transitions & Hysteresis)
+   Neuroadaptive Interaction Layer (Restrained Spatial Redistribution)
    -------------------------------------------------------------------------- */
 
 .neuroadaptive-container {
@@ -40,7 +40,7 @@
   outline: none;
 }
 
-/* Subtle peripheral recession when another element is actively attended */
+/* Subtle peripheral recession (Strict floor at ~0.85) */
 .has-active-focus .adaptive-zone:not(:hover):not(:focus-within) {
   opacity: var(--peripheral-opacity, 1);
 }
@@ -63,8 +63,8 @@
     transform 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
     box-shadow 0.45s cubic-bezier(0.25, 0.8, 0.25, 1),
     border-color 0.45s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transform: scale(calc(1 + var(--focus-val, 0) * 0.035));
-  box-shadow: 0 calc(4px + var(--focus-val, 0) * 10px) calc(14px + var(--focus-val, 0) * 18px) rgba(0, 240, 255, calc(0.08 + var(--focus-val, 0) * 0.16));
+  transform: scale(calc(1 + var(--focus-val, 0) * 0.03));
+  box-shadow: 0 calc(4px + var(--focus-val, 0) * 8px) calc(14px + var(--focus-val, 0) * 14px) rgba(0, 240, 255, calc(0.08 + var(--focus-val, 0) * 0.15));
 }
 
 .avatar-stats-zone .avatar-corner {
@@ -79,20 +79,25 @@
 }
 
 /* --------------------------------------------------------------------------
-   Section B: Social Matrix Adaptive Styling
+   Section B: Social Matrix Adaptive Styling & Spatial Parting
    -------------------------------------------------------------------------- */
+
+.adaptive-socials-container {
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: translateY(var(--avatar-displacement, 0px));
+}
 
 .adaptive-social-link {
   position: relative;
-  transform: translateY(calc(var(--focus-val, 0) * -3px)) scale(calc(1 + var(--focus-val, 0) * 0.025));
+  transform: translate(var(--parting-x, 0px), calc(var(--parting-y, 0px) + var(--focus-val, 0) * -2px)) scale(calc(1 + var(--focus-val, 0) * 0.02));
   border-color: rgba(var(--brand-color-rgb, 0, 240, 255), calc(0.15 + var(--focus-val, 0) * 0.75));
-  background: rgba(var(--brand-color-rgb, 0, 240, 255), calc(0.04 + var(--focus-val, 0) * 0.14));
-  box-shadow: 0 calc(2px + var(--focus-val, 0) * 6px) calc(6px + var(--focus-val, 0) * 14px) rgba(var(--brand-color-rgb, 0, 240, 255), calc(var(--focus-val, 0) * 0.28));
+  background: rgba(var(--brand-color-rgb, 0, 240, 255), calc(0.04 + var(--focus-val, 0) * 0.12));
+  box-shadow: 0 calc(2px + var(--focus-val, 0) * 5px) calc(6px + var(--focus-val, 0) * 12px) rgba(var(--brand-color-rgb, 0, 240, 255), calc(var(--focus-val, 0) * 0.25));
 }
 
 .adaptive-social-link .social-icon-wrapper {
   transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transform: scale(calc(1 + var(--focus-val, 0) * 0.08));
+  transform: scale(calc(1 + var(--focus-val, 0) * 0.06));
 }
 
 /* --------------------------------------------------------------------------
@@ -101,38 +106,43 @@
 
 .adaptive-bio-block {
   border-left: calc(2px + var(--focus-val, 0) * 1px) solid rgba(0, 240, 255, calc(0.2 + var(--focus-val, 0) * 0.7));
-  background: rgba(0, 240, 255, calc(var(--focus-val, 0) * 0.035));
+  background: rgba(0, 240, 255, calc(var(--focus-val, 0) * 0.03));
   border-radius: 0 8px 8px 0;
-  padding: calc(10px + var(--focus-val, 0) * 6px) calc(12px + var(--focus-val, 0) * 6px);
-  margin-bottom: calc(16px + var(--focus-val, 0) * 6px);
+  padding: calc(10px + var(--focus-val, 0) * 5px) calc(12px + var(--focus-val, 0) * 5px);
+  margin-bottom: calc(16px + var(--focus-val, 0) * 4px);
 }
 
 .adaptive-bio-block .dashboard-bio-text {
   transition: line-height 0.45s ease, color 0.45s ease;
-  line-height: calc(1.55 + var(--focus-val, 0) * 0.15);
+  line-height: calc(1.55 + var(--focus-val, 0) * 0.12);
   color: rgba(242, 246, 252, calc(0.85 + var(--focus-val, 0) * 0.15));
 }
 
 .adaptive-bio-block .dashboard-section-label {
-  transition: color 0.35s ease, letter-spacing 0.35s ease;
+  transition: color 0.35s ease;
   color: rgba(0, 240, 255, calc(0.6 + var(--focus-val, 0) * 0.4));
 }
 
 /* --------------------------------------------------------------------------
-   Section D: Classified Interest Cards Adaptive Styling
+   Section D: Classified Interest Cards Adaptive Styling & Spatial Parting
    -------------------------------------------------------------------------- */
+
+.adaptive-interests-container {
+  transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform: translateY(var(--bio-displacement, 0px));
+}
 
 .adaptive-interest-card {
   position: relative;
-  transform: translateY(calc(var(--focus-val, 0) * -3px)) scale(calc(1 + var(--focus-val, 0) * 0.03));
+  transform: translate(var(--parting-x, 0px), calc(var(--parting-y, 0px) + var(--focus-val, 0) * -2px)) scale(calc(1 + var(--focus-val, 0) * 0.025));
   border-color: rgba(var(--interest-color-rgb, 0, 240, 255), calc(0.2 + var(--focus-val, 0) * 0.8));
   background: var(--interest-bg);
-  box-shadow: 0 calc(3px + var(--focus-val, 0) * 8px) calc(10px + var(--focus-val, 0) * 18px) rgba(0, 240, 255, calc(var(--focus-val, 0) * 0.25));
+  box-shadow: 0 calc(3px + var(--focus-val, 0) * 6px) calc(10px + var(--focus-val, 0) * 16px) rgba(0, 240, 255, calc(var(--focus-val, 0) * 0.22));
 }
 
 .adaptive-interest-card .bento-chevron {
   transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1), color 0.35s ease;
-  transform: translateX(calc(var(--focus-val, 0) * 4px));
+  transform: translateX(calc(var(--focus-val, 0) * 3px));
 }
 
 .adaptive-interest-card .bento-corner {
@@ -145,7 +155,9 @@
    -------------------------------------------------------------------------- */
 
 @media (prefers-reduced-motion: reduce) {
-  .adaptive-zone {
+  .adaptive-zone,
+  .adaptive-socials-container,
+  .adaptive-interests-container {
     transition: 
       border-color 0.2s ease,
       box-shadow 0.2s ease,
@@ -154,22 +166,10 @@
     transform: none !important;
   }
 
-  .avatar-stats-zone .profile-avatar-frame {
-    transform: none !important;
-  }
-
-  .adaptive-social-link {
-    transform: none !important;
-  }
-
-  .adaptive-social-link .social-icon-wrapper {
-    transform: none !important;
-  }
-
-  .adaptive-interest-card {
-    transform: none !important;
-  }
-
+  .avatar-stats-zone .profile-avatar-frame,
+  .adaptive-social-link,
+  .adaptive-social-link .social-icon-wrapper,
+  .adaptive-interest-card,
   .adaptive-interest-card .bento-chevron {
     transform: none !important;
   }
